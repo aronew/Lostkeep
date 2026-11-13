@@ -29,13 +29,14 @@ without its ability and **open** for a cautious player with it.
 |---|---|---|---|---|---|
 | 0 | Base kit | run, jump, slash, light | 0:00 | — | Ironbark Hollow |
 | 1 | **Ironbark Ward** | parry / bash | 0:50 | Captain's shield, Lost Keep gatehouse | Ironbark Guard |
+| 1b | **Anima Spark** (spell) | shoot | 1:15 | Shrine: the Prism-shard shrine | Ironbark Guard |
 | 2 | **Emberwick** | burn | 1:40 | Boss: the Cinder Warden | Dusk-Drifter Kindred |
 | 3 | **Barkgrip** | cling / wall-jump | 2:30 | Ironbark smith (rescued from a Hearth-Plains cocoon) | Hearth-Plains Kindred |
 | 4 | **Wing-Cloak** | glide | 3:30 | Boss: the Carapax Prototype guarding the first vat | Carapax Foundry |
 | 5 | **Deep-Glow Breath** | swim / dive | 4:30 | Sora, freed | Deep-Glow Caverns |
 | 6 | **Memory-Meld** | remember (phase into the past) | 5:30 | Vesper, freed; the Reveal | High-Spire Scribes |
 | 7 | **Thorn-Line** | grapple / pull | 6:30 | Shrine: Morvath's Trial | Morvath's Observatory |
-| 8 | **Anima Siphon** | drain / power | 7:30 | Stolen from a Vexari Shepherd | Sovereign Spire |
+| 8 | **Anima Siphon + Anima Lance** | drain / channel | 7:30 | Stolen from a Vexari Shepherd | Sovereign Spire |
 
 There's a new verb roughly every 50–60 min and no stat-only droughts. Each
 region except the last plants visible locks for at least two later
@@ -221,6 +222,50 @@ abilities.
 - **Found:** taken from the first Vexari Shepherd she defeats in the Spire.
 
 ---
+
+## 2b. Spells: Kleo's Anima magic (teal bar)
+
+Kleo casts with the teal bar, which is her Anima. Both spells are teal
+because teal means Anima. The mockups show them: the orb in the Silk Mother
+fight, the beam in the Alchemist's works.
+
+### S1 · Anima Spark (orb)
+- **Verb:** shoot.
+- **Numbers (provisional):** a slow orb, about 10 tiles of range, costs 1/6
+  of the bar, refills by hitting enemies with the sword.
+- **Vocabulary:**
+  1. Hit **Anima crystals** out of reach to open doors or start lifts.
+  2. Strike a **cocoon's strand** from far away (it doesn't burn it: the
+     cocoon swings, which gives Emberwick its own job).
+  3. Light **dead Oru'Vex lamps** for a few seconds in dark rooms.
+  4. Knock spiders and skulkers off ceilings.
+  5. Ward can parry Kleo's own orb back at a new angle (**stage 5**: bank a
+     shot around a corner).
+- **Gate look:** a teal crystal set in stone, high up or behind bars.
+- **Combat:** safe chip damage at range, and breaking the shields of flying
+  enemies.
+- **Bypass:** **Soft.** A well-timed Ward parry of an enemy shot can hit a
+  crystal early.
+- **Found (proposed):** about **1:15** at the Prism-shard shrine in Ironbark
+  (a shrine source), after the Ward. It's needed by the Silk Mother fight.
+
+### S2 · Anima Lance (beam)
+- **Verb:** channel.
+- **Numbers (provisional):** hold to fire a full-screen beam that drains the
+  bar continuously; Kleo can't move while she channels.
+- **Vocabulary:**
+  1. Power Oru'Vex conduits from a distance (lines of teal tiles).
+  2. Burn through **Carapax cores** and Vexari shields.
+  3. Hold a beam on a machine to keep it running while it's in use (a
+     two-step puzzle with a Barkgrip climb).
+  4. Burn **Blight tendrils** away for good.
+- **Gate look:** a dark conduit line ending at a sealed lens.
+- **Combat:** a big commitment: huge damage, but no movement.
+- **Proposed link:** the **release half of Anima Siphon**. Siphon *takes*
+  Anima (from enemies and Blight crystals), and the Lance *gives* it back as
+  a beam. One late ability with two sides: the Vexari's own technology,
+  turned back on them. If that makes Siphon too big, the Lance can be its
+  own reward at about 7:00 from the Alchemist's lab.
 
 ## 3. Gate looks (keep these for the whole game)
 
