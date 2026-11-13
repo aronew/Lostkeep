@@ -1,0 +1,26 @@
+asset,required_width,required_height,actual_width,actual_height,dimensions_pass,pixel_scale,uniform_grid_pass,partial_alpha_pixels,status
+IB1,1024,1024,1254,1254,False,8,False,0,FAIL - requires production pixel editing
+IB2,3072,1024,2172,724,False,8,False,1157602,FAIL - requires production pixel editing
+IB3,2048,2048,1254,1254,False,8,False,953609,FAIL - requires production pixel editing
+IB4,3072,1536,1774,887,False,8,False,890892,FAIL - requires production pixel editing
+K1,1024,1024,1254,1254,False,8,False,0,FAIL - requires production pixel editing
+K2,3072,1536,1774,887,False,8,False,1081728,FAIL - requires production pixel editing
+K3,3072,1536,1774,887,False,8,False,950899,FAIL - requires production pixel editing
+P1,3072,1440,1832,859,False,4,False,0,FAIL - requires production pixel editing
+P2,3072,1440,2172,724,False,4,False,589329,FAIL - requires production pixel editing
+P3,3072,1440,2172,724,False,4,False,1541215,FAIL - requires production pixel editing
+P4,3072,1440,2172,724,False,4,False,1187394,FAIL - requires production pixel editing
+P5,3072,1440,2172,724,False,4,False,566400,FAIL - requires production pixel editing
+S1,2048,2048,1254,1254,False,8,False,1200318,FAIL - requires production pixel editing
+S2,2048,2048,1254,1254,False,8,False,1055559,FAIL - requires production pixel editing
+S3,3072,1536,2172,724,False,8,False,975054,FAIL - requires production pixel editing
+S4,3072,1024,2172,724,False,8,False,596602,FAIL - requires production pixel editing
+S5,3072,1536,1774,887,False,8,False,1206670,FAIL - requires production pixel editing
+D1,2048,1024,1774,887,False,8,False,425703,FAIL - requires production pixel editing
+D2,2048,1024,1774,887,False,8,False,996632,FAIL - requires production pixel editing
+D3,2048,2048,1254,1254,False,8,False,955510,FAIL - requires production pixel editing
+D4,2048,1024,1774,887,False,8,False,716239,FAIL - requires production pixel editing
+G1,2048,1024,1774,887,False,8,False,838300,FAIL - requires production pixel editing
+G2,2048,1024,1774,887,False,8,False,617928,FAIL - requires production pixel editing
+G3,1024,512,1774,887,False,8,False,917944,FAIL - requires production pixel editing
+G4,1024,512,1774,887,False,8,False,971009,FAIL - requires production pixel editing
