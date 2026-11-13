@@ -247,9 +247,13 @@ She steps forward with every hit.
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
   each is painted as an object of its own and the floor under it keeps its edge.
-  `TerrainSkin` paints the bands along every exposed edge, keeps slabs lit and
-  fades only deep rock to the void. Stone walking edges get a pale lip so ledges
-  read. In the editor, paint or erase tiles and the skin follows.
+  `TerrainSkin` paints shallow bands along every exposed edge (tops, then
+  walls, then undersides), each stepping down to the void; the inside of every
+  mass is black. Stone walking edges get a pale lip so ledges read. In the
+  editor, paint or erase tiles and the skin follows.
+- **The foreground:** `ForegroundFringe`, `ForegroundHang` and
+  `ForegroundTrunks` are `Parallax2D` at scroll (1.3, 0): silhouettes from
+  `tools/make_silhouettes.py`, drawn flat by `shaders/silhouette.gdshader`.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
@@ -273,8 +277,8 @@ She steps forward with every hit.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
   16 px; Kleo's measured envelope is in `design/pillars.md`. Black box first;
   the parallax camera (`Parallax2D` sky 0.05, far 0.15, mid 0.35, ruins 0.72,
-  playfield 1.0); `CanvasModulate`, `PointLight2D` lanterns, fog and the
-  vignette. Glows are never baked into tiles.
+  playfield 1.0, foreground silhouettes 1.3); `CanvasModulate`, `PointLight2D`
+  lanterns, fog and the vignette. Glows are never baked into tiles.
 - **Each room gets a spec** in `design/rooms/`, with its validation.
 
 ### Art pipeline
@@ -296,7 +300,12 @@ She steps forward with every hit.
 
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
-  P2, P3 and P5 taller, with transparent skies.
+  P2, P3 and P5 taller, with transparent skies (P3 v2 is in Book 1: whole
+  crowns; until then a haze band hides its cut canopy).
+- Generate **IB5** (earth cut faces, corners, pillar caps; replaces IB3, whose
+  wall band reads as clutter) and **K4** (masonry faces, arch ends, corners).
+  The skin fakes these with narrow soil and stone faces until they arrive; it
+  will then need corner placement in `terrain_skin.gd`.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
 - **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
   images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.

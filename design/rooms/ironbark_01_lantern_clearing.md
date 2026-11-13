@@ -12,7 +12,7 @@
 | **Idea** | Under the Great Ironbark, a mossy clearing runs east to the broken bridge, with the guard's crypt beneath it |
 | **Purpose** | Establishes a landmark (the Great Ironbark, the save shrine); introduces running, jumping, the ledge catch and the combo (a training yard); shows five locks before their keys; folds a shortcut back to the save; gives breath |
 | **Size** | 138 × 40 tiles (2208 × 640 px): 3.5 screens wide, 1.8 tall |
-| **Spaces and masses** | Terrace (west, top 24) over the west hall (stone, 8 tall); clearing (top 28, 4 thick) over the crypt (stone, 5 tall); the drop (4 wide) into the crypt; the lift shaft; a 3-tall capstone in the hall; a floating island (top 21) and the root shelf (top 17) above the clearing; the moat; the bridge's two spans with an 11-tile gap; the far bank |
+| **Spaces and masses** | Terrace (west, top 24) over the west hall (stone, 8 tall); clearing (top 28, 4 thick) over the crypt (stone, 5 tall); the drop (4 wide) into the crypt; the lift shaft; a floating island (top 21) and the root shelf (top 17) above the clearing; the moat; the bridge's two spans with an 11-tile gap; the far bank |
 | **Exits** | West upper at the terrace (height 24), west lower door from the hall (32–37), east across the gap (Wing-Cloak) |
 | **Lines** | Main: terrace → clearing → the drop → the crypt west → the hall → the west door (a switchback). Upper (optional): terrace → island → ledge catch → root shelf pocket → drop to the clearing. Lower: the crypt |
 | **Shortcut** | The guard's lift: jammed at the top, worked from below with the winch; it links the hall to the shrine |
@@ -26,7 +26,7 @@
 
 `python3 tools/check_room.py` on the exported collision:
 
-- Floors: longest run 64 tiles (rule ≥ 20); 96% in runs of 8+ (rule ≥ 60%).
+- Floors: longest run 86 tiles (rule ≥ 20); 98% in runs of 8+ (rule ≥ 60%).
 - Small steps: 0 (rule ≤ 2). Staircases: 0. Masses thinner than 2 tiles: 0.
 - Gates hold with the base kit: the far bank (G1) and the sealed pocket (E1).
 - Both west exits are reached; 100% of the ungated floor is reached with the
@@ -40,6 +40,20 @@ Walked in the engine with real physics (`tests/playtest.gd`):
   shelf (a ledge catch and the handstand climb) → the long drop (a hard landing)
   → a heavy blow (the knockback slide). Completed.
 
+Camera on the main line (`tools/camera_report.py`): drift 1%, sway 0 px,
+wobble 0 frames.
+
 Not yet checked: enemies (none yet), the room's doors to its neighbours (they
 are walls until those rooms exist), and the generous model on the gates (the
 gap is 11 tiles against a 6.27-tile running jump, so it holds by a wide margin).
+
+## Revision 2: the creative lead's first notes
+
+| Note | Change |
+| --- | --- |
+| The gap between the floor and the crypt's corbels should be black, not stone | Every mass is now the void inside (`fade_tiles` 0). Only the edge bands are painted: grass and a shallow soil band that steps down to the void, then black, then the arches |
+| Too much going on in the floor tiles: overlaps, several tiles in one space | A slab is one material from the grass down (stone starts at the crypt ceilings); the soil band is 12 px lit + 10 px fading instead of 40 px; walls are drawn after tops so a corner is one straight face; a column open on both sides gives each face half its width |
+| The ledge in the hall looks out of place | The fallen capstone (a 4 × 3 stone mass skinned with floor tiles) is removed; the hall is one clean floor |
+| The rock faces of the drop and the piers look odd | IB3's wall band (ferns and mushrooms growing from the rock) is replaced by the floor's own soil turned on its side, 20 px deep. Real art is requested as IB5 and K4 |
+| Background tree tops are cut off | P3 was generated cropped through the canopy. A haze band on the mid layer lets the trees rise into mist; P3 v2 (taller, whole crowns) is requested |
+| A foreground silhouette layer for depth | Three `Parallax2D` layers at scroll 1.3 (held on screen vertically): fern and grass clumps along the bottom, moss and vines from the top, and two tree trunks. Flat near-void shapes with a 1 px moonlit rim (`shaders/silhouette.gdshader`), made by `tools/make_silhouettes.py` |

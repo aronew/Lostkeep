@@ -9,16 +9,17 @@ extends Resource
 ## The inside of a mass, repeating; it fades to the void with depth.
 @export var fill: Texture2D
 ## How many tiles deep the fill takes to fade from full brightness to the void.
-## Large enough that slabs between two spaces stay lit; only deep ground fades.
-@export var fade_tiles := 5.0
+## 0 paints the whole inside as the void, so a slab between a floor and the
+## ceiling below it is black between its two painted bands (the house style).
+@export var fade_tiles := 0.0
 
 @export_group("Walking tops")
 ## A horizontal band whose `top_line` row sits exactly on the walking line.
 @export var top_band: Texture2D
 @export var top_line := 22
-## How many pixels below the walking line the band stays lit. On thin slabs the
-## band stops here, so its dark tail never meets the ceiling below as a stripe.
-@export var top_lit := 24
+## How many pixels below the walking line the band may reach. The bands end in
+## the void, so this is normally the whole band.
+@export var top_lit := 64
 ## A one-pixel highlight along every walking line, so ledges read at a glance.
 ## Transparent for none (earth's moss lip already reads).
 @export var lip_color := Color(0, 0, 0, 0)

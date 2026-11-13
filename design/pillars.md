@@ -50,12 +50,17 @@ non-negotiables.
    (`TileMapLayer` "Solid", colour `#0B0812`). It's the skeleton: flat floors
    and ceilings, height from separate masses, few platforms.
 2. **Tiles are painted on the black box.** Terrain edges (moss lips, wall
-   faces, undersides) are autotiled onto the masses. Each mass's interior
-   **fades to the void colour**, so the black box itself becomes the natural
-   shadow and depth.
+   faces, undersides) are autotiled onto the masses as shallow bands that step
+   down to the void. **The inside of every mass is the void colour**, so the
+   black box itself becomes the natural shadow and depth: a slab between a
+   floor and the ceiling below it is grass and soil, then black, then the
+   ceiling's edge. One material per face; never several bands stacked in one
+   space.
 3. **Parallax camera:** `Camera2D` plus `Parallax2D` layers, at roughly
    sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · **playfield 1.0** ·
-   foreground 1.25–1.5.
+   foreground 1.3. The foreground is near-void silhouettes that frame the
+   screen's top and bottom edges (held there vertically) and a few trunks that
+   sweep past; they never sit over the floor Kleo walks for long.
 4. **Atmosphere:** a screen vignette (a `CanvasLayer` shader), depth fog per
    layer, light shafts, particles, and `PointLight2D` for lanterns
    (`CanvasModulate` darkens the scene). Glows are lights or additive

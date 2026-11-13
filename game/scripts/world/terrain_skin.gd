@@ -208,12 +208,14 @@ func _draw_edges(p: Dictionary) -> void:
 	var solid: Callable = p["solid"]
 	var canvas: Node2D = p["edges"]
 	var list := cells.keys()
-	for c in list:
-		if not _skip.has(c):
-			_draw_walls(canvas, cells, solid, c)
+	# Tops first, then walls over them: at a corner the rock face runs straight
+	# down from the grass, instead of the soil band ending in a ragged stub.
 	for c in list:
 		if not _skip.has(c):
 			_draw_top(canvas, cells, solid, c)
+	for c in list:
+		if not _skip.has(c):
+			_draw_walls(canvas, cells, solid, c)
 	for c in list:
 		if not _skip.has(c):
 			_draw_under(canvas, cells, solid, c)
@@ -237,6 +239,16 @@ func _run(cells: Dictionary, c: Vector2i, step: Vector2i) -> int:
 	return n
 
 
+## How far (px) a wall band may reach into the mass from its face, going `step`.
+## A column open on both sides gives each face half its width, so the two bands
+## meet in the middle instead of painting over each other.
+func _wall_room(cells: Dictionary, solid: Callable, c: Vector2i, step: Vector2i) -> float:
+	var n := _run(cells, c, step)
+	if n < MAX_DEPTH and not solid.call(c + step * n):
+		return n * TILE * 0.5
+	return n * TILE
+
+
 func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
 	var m := _mat(cells, c)
 	if not m or not m.wall_band:
@@ -245,11 +257,11 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 	var bw := m.wall_face + 1
 	var sy := float(posmod(c.y * TILE, m.wall_band.get_height()))
 	if not solid.call(c + Vector2i.RIGHT):
-		var depth: float = min(bw, _run(cells, c, Vector2i.LEFT) * TILE)
+		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.LEFT))
 		canvas.draw_texture_rect_region(m.wall_band,
 			Rect2(p.x + TILE - depth, p.y, depth, TILE), Rect2(bw - depth, sy, depth, TILE))
 	if not solid.call(c + Vector2i.LEFT):
-		var depth: float = min(bw, _run(cells, c, Vector2i.RIGHT) * TILE)
+		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.RIGHT))
 		# Negative width mirrors the band so its face lands on the cell's left edge.
 		canvas.draw_texture_rect_region(m.wall_band,
 			Rect2(p.x + depth, p.y, -depth, TILE), Rect2(bw - depth, sy, depth, TILE))

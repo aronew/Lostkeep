@@ -12,3 +12,4 @@ fill = ExtResource("1_r6psl")
 top_band = ExtResource("3_g7cwh")
 under_band = ExtResource("4_ivoxu")
 wall_band = ExtResource("5_sxiad")
+wall_face = 19

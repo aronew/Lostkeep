@@ -38,14 +38,15 @@ const SPACES := [
 ]
 ## Masses put back: [x, y, w, h, material]
 const MASSES := [
-	[18, 34, 4, 3, 1],    # a fallen capstone in the hall (3 tall: jumpable)
 	[33, 21, 15, 2, 0],   # the floating island (upper line)
 	[52, 17, 15, 2, 0],   # the root shelf (upper line, its pocket)
 	[96, 28, 6, 2, 0],    # the bridge's west span
 	[113, 28, 7, 2, 0],   # the bridge's east span (the gap: Wing-Cloak lock G1)
 ]
-## Solid cells inside these become stone (the crypts' masonry).
-const STONE := [[6, 26, 24, 14], [30, 29, 61, 11]]
+## Solid cells inside these become stone (the crypts' masonry). They start at
+## the crypts' ceilings, so a slab is earth from the grass down and only the
+## arches under it are masonry: one material per face, never two stacked.
+const STONE := [[6, 28, 24, 12], [30, 31, 61, 9]]
 ## Cells painted by placed art instead of the skin.
 const SKIP := [[33, 21, 15, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
 ## Back walls behind enclosed spaces.
@@ -59,8 +60,9 @@ var _root: Node2D
 
 
 func _initialize() -> void:
-	var earth := _material("earth", 22, 38, 55, 5.0, Color(0, 0, 0, 0))
-	var stone := _material("stone", 13, 20, 47, 4.5, Color("#b3a2b9"))
+	# Fade 0: the inside of every mass is the void; only the edge bands are painted.
+	var earth := _material("earth", 22, 38, 19, 0.0, Color(0, 0, 0, 0))
+	var stone := _material("stone", 13, 20, 19, 0.0, Color("#b3a2b9"))
 	var tileset := _tileset()
 	_build_kleo()
 	_build_room(tileset, earth, stone)
@@ -81,7 +83,7 @@ func _material(kind: String, top_line: int, under_line: int, wall_face: int, fad
 	m.wall_face = wall_face
 	m.fade_tiles = fade
 	m.lip_color = lip
-	m.top_lit = 24 if kind == "earth" else 30
+	m.top_lit = 64  # the whole band: it ends in the void
 	ResourceSaver.save(m, "res://scenes/world/terrain_%s.tres" % kind)
 	return load("res://scenes/world/terrain_%s.tres" % kind)
 
@@ -229,6 +231,7 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	_build_props(behind, placed, front)
 	_build_machines()
 	_build_atmosphere(front)
+	_build_foreground()
 
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
@@ -336,13 +339,40 @@ func _build_parallax() -> void:
 	fog_far.scroll_scale = Vector2(0.25, 0.12)
 	fog_far.z_index = -10
 	_fog(fog_far, Rect2(-200, 210, 2400, 150), Color("#6f9a9a"), 0.32, Vector2(0.004, 0.0))
-	_parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 118.0, Color("#234753"))
+	var mid := _parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 118.0, Color("#234753"))
+	# The mid layer's art (P3) was generated cropped through the canopy, so its trees
+	# have no crowns. Haze laid along its crown line lets them rise into mist instead
+	# of ending at an edge. (The real fix is P3 regenerated taller: see REVIEW.md.)
+	_haze(mid, Rect2(0, 118.0 - 22.0, 720, 130), Color("#4a4068"), 0.9, 0.42)
 	var fog_mid := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
 	fog_mid.scroll_scale = Vector2(0.5, 0.35)
 	fog_mid.z_index = -10
 	_fog(fog_mid, Rect2(-200, 260, 2600, 160), Color("#5f8a8c"), 0.26, Vector2(0.007, 0.0))
 	var ruins := _parallax("Ruins", Vector2(0.72, 0.6), PARALLAX + "wall.png", 470.0 - 256.0)
 	ruins.get_node("Art").modulate = Color(0.6, 0.64, 0.74)  # hazier than the playfield
+
+
+func _haze(parent: Node, rect: Rect2, tint: Color, density: float, peak: float) -> void:
+	var r := _node(ColorRect.new(), "Haze", parent) as ColorRect
+	r.position = rect.position
+	r.size = rect.size
+	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var m := ShaderMaterial.new()
+	m.shader = load("res://shaders/haze.gdshader")
+	var nt := NoiseTexture2D.new()
+	nt.width = 256
+	nt.height = 64
+	nt.seamless = true
+	var n := FastNoiseLite.new()
+	n.frequency = 0.02
+	n.fractal_octaves = 3
+	nt.noise = n
+	m.set_shader_parameter("noise", nt)
+	m.set_shader_parameter("tint", tint)
+	m.set_shader_parameter("density", density)
+	m.set_shader_parameter("peak", peak)
+	m.set_shader_parameter("scale", Vector2(2.0, 0.6))  # whole repeats across the layer
+	r.material = m
 
 
 func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> void:
@@ -523,16 +553,6 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 		root.name = "CollapseRoots"
 		root.modulate = Color(0.8, 0.8, 0.85)
 
-	# Foreground: canopy across the top, ferns in front of the rock at the bottom.
-	for x in [-40.0, 680.0, 1400.0]:
-		var top := _sprite(front, PARALLAX + "fg.png", Rect2(0, 0, 720, 92), Vector2(x, -6))
-		top.name = "Canopy"
-		top.modulate = Color(0.55, 0.55, 0.62)
-	# Below the walking floors only, so nothing hides where Kleo walks.
-	for f in [[Rect2(0, 168, 260, 88), Vector2(-30, 602)], [Rect2(380, 168, 300, 88), Vector2(1420, 604)]]:
-		var fern := _sprite(front, PARALLAX + "fg.png", f[0], f[1])
-		fern.name = "Ferns"
-		fern.modulate = Color(0.5, 0.5, 0.58)
 
 
 func _build_machines() -> void:
@@ -668,6 +688,57 @@ func _build_atmosphere(front: Node) -> void:
 	amber.initial_velocity_min = 4.0
 	amber.initial_velocity_max = 10.0
 	amber.z_index = 14
+
+
+# --- Foreground silhouettes -------------------------------------------------------------
+
+## The foreground plane scrolls faster than the playfield. Its pieces hold their
+## height on screen (scroll y 0), so they always frame the screen's edges and
+## never drift over the floor Kleo walks. On screen, x = local x - FG * camera left.
+const FG := 1.3
+
+
+func _build_foreground() -> void:
+	var mat := ShaderMaterial.new()
+	mat.shader = load("res://shaders/silhouette.gdshader")
+	# Ferns and grass along the bottom edge, and moss and vines from the top edge.
+	var fringe := _fg_layer("ForegroundFringe", 720)
+	_fg_sprite(fringe, "fg_fringe.png", Rect2(0, 0, 720, 72), Vector2(0, 360 - 72 + 3), mat)
+	var hang := _fg_layer("ForegroundHang", 720)
+	_fg_sprite(hang, "fg_hang.png", Rect2(0, 0, 720, 110), Vector2(-170, -3), mat)
+	# Two trunks: one framing the shrine at the start, one passing between the
+	# graveyard and the training yard. Each is placed by where its axis should be
+	# on screen when the camera's left edge is at a given x.
+	var trunks := _fg_layer("ForegroundTrunks", 0)
+	# Trunk A (its limb reaches right, its axis at x 96 of its 220): at the screen's
+	# left edge while the camera rests at the room's west end.
+	_fg_sprite(trunks, "fg_trunks.png", Rect2(0, 0, 220, 400), Vector2(_fg_x(8.0, 0.0) - 96.0, 360 - 400 + 6), mat)
+	# Trunk B (its limb reaches left, axis at x 124): mid-screen when the camera is
+	# centred on x 850, the open ground past the fresh grave.
+	_fg_sprite(trunks, "fg_trunks.png", Rect2(220, 0, 220, 400), Vector2(_fg_x(320.0, 850.0 - 320.0) - 124.0, 360 - 400 + 6), mat)
+
+
+## Local x for a foreground piece that should sit at `screen_x` when the camera's
+## left edge is at `cam_left`.
+func _fg_x(screen_x: float, cam_left: float) -> float:
+	return screen_x + FG * cam_left
+
+
+func _fg_layer(name: String, repeat: int) -> Parallax2D:
+	var p := _node(Parallax2D.new(), name, _root) as Parallax2D
+	p.scroll_scale = Vector2(FG, 0.0)
+	p.z_index = 30  # in front of everything in the room, under the screen vignette
+	if repeat > 0:
+		p.repeat_size = Vector2(repeat, 0)
+		p.repeat_times = 3
+	return p
+
+
+func _fg_sprite(parent: Node, file: String, region: Rect2, pos: Vector2, mat: Material) -> Sprite2D:
+	var s := _sprite(parent, PARALLAX + file, region, pos)
+	s.name = "Silhouette"
+	s.material = mat
+	return s
 
 
 func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rect2) -> CPUParticles2D:

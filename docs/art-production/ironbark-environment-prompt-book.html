@@ -398,8 +398,10 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   var AUDIT = [
     ["Black-box collision masses", "Not built", "code", "Drawn in Godot"],
     ["Forest earth: fill, walkable tops, undersides, walls, corners", "Nothing", "need", "IB1 to IB3"],
+    ["Earth cut faces, corners and pillar caps (v2: IB3 read as clutter)", "Faked in code", "need", "IB5"],
     ["Floating islands (three sizes)", "Nothing", "need", "IB4"],
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
+    ["Keep masonry faces, arch ends, corners", "Arcades end mid-arch", "need", "K4"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
     ["Sky with the three moons", "Nothing", "need", "P1"],
     ["Far horizon with the Sovereign Spire", "Nothing", "need", "P2"],
@@ -538,6 +540,26 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Island 3 has a small ironbark sapling rooted near one end (no more than 3 tiles tall) and a few red-capped mushrooms.",
         "- They must look like landforms the world made, not floating game platforms."
       ] },
+    { id: "IB5", group: "terrain", file: "ironbark_earth_faces_corners", title: "Earth cut faces and corners (v2, replaces IB3)",
+      about: "IB3's wall band grew ferns, mushrooms and moss ledges out of the rock, which reads as leafy clutter on the short faces of the drop, the lift shaft and the piers. The game now paints only a shallow band of soil along every edge and leaves the inside of each mass black, so these pieces must do the same: a clean, narrow face, then the void.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 32 × 256, 4 corners 48 × 48 and 2 pillar caps, cut apart", attach: ["A", "B", "Your approved IB2"],
+      text: [
+        "TASK: the cut faces and corners of Ironbark's forest earth, on one transparent canvas, matching the attached approved IB2 exactly in colour and detail. These are the vertical sides of solid ground seen in cross-section, like the wall of a trench dug through the forest floor.",
+        "",
+        "1. A face band on the left (x = 64 to 320), running from the top edge to the bottom edge of the canvas and joining a copy of itself top to bottom. The exposed face points RIGHT and is a perfectly straight vertical line at x = 320. From the face inward: 96 px of packed earth #3E2E4A and #241A2E with embedded stones and a few roots #3A2420 cut through where the face was dug, then 96 px stepping down to plain void #0B0812, then void to x = 64.",
+        "- NO ferns, NO mushrooms, NO moss ledges or plants growing out of the face. At most a thin moss strand hanging over the face every 600 px or so.",
+        "",
+        "2. Four corner pieces, each in a cell 384 × 384, separated by transparent space, from x = 448 rightward:",
+        "   a. An outer top corner: a walkable top (as IB2's band 1, its walking line 176 px below the cell's top) turns down into a face pointing right. The grass and moss roll over the edge and hang a little down the face.",
+        "   b. An inner floor corner: a walkable floor meets a face rising on its left (the floor runs right from the bottom of the face).",
+        "   c. An outer ceiling corner: a ceiling underside (as IB2's band 2) turns up into a face pointing right, with roots hanging from the corner.",
+        "   d. An inner ceiling corner: a ceiling meets a face that drops below it on its left.",
+        "",
+        "3. Two pillar caps: the top of a narrow column of earth seen in cross-section, with a walkable top and faces on BOTH sides. One 256 px wide (2 tiles), one 384 px wide (3 tiles), each 384 px tall, grass on top rolling over both edges, the inside darkening to void below.",
+        "",
+        "- Every walking line, ceiling line and face is perfectly straight, and they meet at exact right angles. Only plants and roots overlap them.",
+        "- Below every walking line the soil is shallow (about 96 px) and then steps down to void, so each corner joins a face band and a floor band seamlessly on either side."
+      ] },
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
       about: "The inside of the fortress walls, floors and pillars. Dark, quiet, dressed stone.",
@@ -575,6 +597,20 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "4. A short, narrow rope-and-plank walkway, 768 px wide, with a straight top line: the only small platform in the kit, made to look like a repair someone built.",
         "5. A slanted shingled roof edge, 1536 px wide, as on the shack in mockup C, with moss and a hanging lantern hook."
       ] },
+    { id: "K4", group: "keep", file: "keep_stone_faces_ends", title: "Keep masonry faces, arch ends and corners",
+      about: "The crypts' arcades (K2 band 2) currently stop mid-arch wherever they meet a wall: at the drop, the silk pocket and the hall. These pieces end them properly, and give the masonry a dressed vertical face and corners.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 32 × 128, 2 arch ends 64 × 48, 2 corners 48 × 48, cut apart", attach: ["A", "B", "D", "H", "Your approved K2"],
+      text: [
+        "TASK: the ends and edges of the Lost Keep's crypt masonry, on one transparent canvas, matching the attached approved K2 exactly in colour, stone size and wear.",
+        "",
+        "1. A face band on the left (x = 64 to 320), top edge to bottom edge, joining a copy of itself top to bottom. The face points RIGHT: a perfectly straight vertical edge at x = 320 of dressed quoin stones #5E4C68 and #8C7A92, alternating long and short, chipped, with moss in the joints. Inward: 96 px of coursed stone, then 96 px stepping down to void #0B0812.",
+        "",
+        "2. Two arch ends, each in a cell 512 × 384, separated by transparent space: K2's arcade (band 2) arriving at a wall and ending on a half-pier (a respond) built against that wall, so the last arch springs from it. One where the wall is on the right of the arcade, one where it is on the left. The ceiling line at the top of the arches and the pier's foot are straight and level.",
+        "",
+        "3. Two corners, each in a cell 384 × 384: an outer top corner where K2's flagstone floor (band 1) turns down into the face, and an outer ceiling corner where the arcade's underside meets the face.",
+        "",
+        "- Old, patched and overgrown, like the rest of the Keep. Every line straight, every corner an exact right angle; only ivy and moss overlap them."
+      ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
       about: "The deepest layer (scroll 0.05). The Triad of Vaelora's moons, near alignment: the eclipse that frames the whole story.",
@@ -600,13 +636,14 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- The layer is solid from the skyline down to the bottom edge, fading to a flat mist colour at the bottom.",
         "- The left and right edges must join; keep the Spire away from both edges."
       ] },
-    { id: "P3", group: "parallax", file: "ironbark_bg_mid", title: "Mid forest of ironbark trunks", scale: 4, pilot: true,
-      about: "Scroll 0.35. The layer that gives the region its mood: huge trunks, hanging moss and soft mist, between the far horizon and the playfield.",
-      canvas: BG, game: "768 × 360, repeating left to right", attach: ["A", "B"],
+    { id: "P3", group: "parallax", file: "ironbark_bg_mid", title: "Mid forest of ironbark trunks (v2, taller)", scale: 4, pilot: true,
+      about: "Scroll 0.35. The layer that gives the region its mood: huge trunks, hanging moss and soft mist, between the far horizon and the playfield. v2: the first version came back at 3:1 with the canopy cut off by the top edge, so the trees had no crowns. The game hides that with haze for now; this version must show every crown whole, with sky above it.",
+      canvas: "3072×1728 px (art 768 × 432 at x4, 16:9)", game: "768 × 432, repeating left to right", attach: ["A", "B"],
       text: [
-        "TASK: a mid-distance parallax layer of the ironbark forest, transparent where the sky shows through.",
+        "TASK: a mid-distance parallax layer of the ironbark forest, transparent where the sky shows through. A 16:9 canvas, not a wide strip.",
         "",
-        "- Five to seven enormous ironbark trunks of different widths, with roots spreading at the bottom and canopy masses at the top, in deep teal #1F4A4A and #13282B with a cool rim of #3C7472 on the sides facing the moonlight.",
+        "- THE CROWNS ARE WHOLE: every tree's canopy ends inside the image, with its rounded top below y = 320. Everything above the treetops is fully transparent sky: no tree, leaf or branch touches the top edge, and nothing is cropped.",
+        "- Five to seven enormous ironbark trunks of different widths, with roots spreading at the bottom and broad, layered canopy masses at the top, in deep teal #1F4A4A and #13282B with a cool rim of #3C7472 on the sides facing the moonlight.",
         "- Between them: ruined stone arches and a broken aqueduct, half swallowed by the trees.",
         "- Long hanging moss and vines from the canopy. Soft bands of mist across the lower third.",
         "- Lower contrast than the playfield and higher than P2. No warm colours except two tiny, distant lantern points #F2B04A.",

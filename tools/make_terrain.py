@@ -1,8 +1,10 @@
 """Cut the processed Ironbark sheets into seamless, game-ready textures.
 
 Generated bands rarely tile cleanly, so each texture is made seamless with a
-dithered cross-fade at its wrap (an ordered Bayer pattern keeps every pixel
-crisp). Output: game/assets/environment/ironbark/terrain/ and .../parallax/.
+minimum-error cut at its wrap (or cut at a whole number of repeats for regular
+patterns), keeping every pixel crisp. Every band steps down to the void at its
+inner end, because the inside of each mass is painted black.
+Output: game/assets/environment/ironbark/terrain/ and .../parallax/.
 
 Usage: python3 tools/make_terrain.py
 """
@@ -102,35 +104,63 @@ def first_full_row(a, start, frac=0.95):
     return start
 
 
+# Every band ends in the void: the inside of a mass is black (the black box is
+# the shadow), so each band steps down to the void colour at its inner end and
+# nothing else is painted between a floor's soil and the ceiling below it.
+SOIL_LIT = 12   # rows of lit soil kept under a walking line
+SOIL_FADE = 10  # rows over which the soil then steps down to the void
+WALL_LIT = 12   # columns of lit rock behind a wall face
+WALL_FADE = 8   # columns over which it then steps down to the void
+
+
+def degreen(a):
+    """Replace foliage (green-dominant pixels) with the first non-green pixel below."""
+    out = a.copy()
+    rgb = a[..., :3].astype(int)
+    green = rgb[..., 1] >= rgb[..., 0] - 2  # soil is purple-brown: red well above green
+    h = a.shape[0]
+    for x in range(a.shape[1]):
+        for y in range(h):
+            if green[y, x]:
+                k = y
+                while k < h - 1 and green[k, x]:
+                    k += 1
+                out[y, x] = a[k, x]
+    return out
+
+
+def soil(top, line):
+    """Keep the walking band's grass and a short lit soil, then fade to the void."""
+    a = top[: line + SOIL_LIT + SOIL_FADE]
+    return darken_rows(a, SOIL_FADE, toward_bottom=True)
+
+
 def main():
     # --- earth -------------------------------------------------------------
     edges = load("ironbark_earth_edges.png")
     top = edges[0:62]
     line = first_full_row(top, 0, 0.97)
-    save(wrap_x(top, 32), TERRAIN, "earth_top.png")
+    save(wrap_x(soil(top, line), 32), TERRAIN, "earth_top.png")
     print("  earth top walking line row", line)
 
     under = edges[74:127, 58:382]
     # ceiling line: the last row that is still (nearly) full width
     full = [(under[y, :, 3] > 0).mean() for y in range(under.shape[0])]
     ceil_line = max(y for y, f in enumerate(full) if f > 0.97) + 1
-    under = darken_rows(under, 14, floor=0.55)
+    under = darken_rows(under, 14)
     save(wrap_x(under, 32), TERRAIN, "earth_under.png")
     print("  earth under ceiling line row", ceil_line)
 
-    corners = load("ironbark_earth_walls_corners.png")
-    band = corners[:, 0:128]
-    faces = []
-    for y in range(band.shape[0]):
-        xs = np.nonzero(band[y, :, 3] > 0)[0]
-        if len(xs):
-            faces.append(xs.max())
-    face = int(np.median(faces))
-    wall = band[:, max(0, face - 55): face + 1]
-    # straighten the face: clear anything right of it (already cropped) and fill gaps
-    # darken toward the interior (left side)
-    wall = np.transpose(darken_rows(np.transpose(wall, (1, 0, 2)), 18, floor=0.55), (1, 0, 2))
-    save(wrap_y(wall, 32), TERRAIN, "earth_wall.png")
+    # The wall: the floor's own soil turned on its side, so a cut face (the drop,
+    # a shaft, a pier) is the same earth as the ground above it. (IB3's wall band
+    # grows ferns and mushrooms out of the rock, which reads as leafy clutter on
+    # short faces.) The soil starts under the grass, with the vines that hang
+    # into it replaced by the soil beneath them, so no leaf lies sideways.
+    soil_rows = degreen(wrap_x(top, 32)[line + 7: line + 7 + 30])[: WALL_LIT + WALL_FADE]
+    wall = np.transpose(soil_rows, (1, 0, 2))[:, ::-1].copy()  # face (right) = nearest the grass
+    wall[:, -1, :3] = np.minimum(wall[:, -1, :3].astype(float) * 1.25 + 6, 255).astype(np.uint8)
+    wall = np.transpose(darken_rows(np.transpose(wall, (1, 0, 2)), WALL_FADE), (1, 0, 2))
+    save(wall, TERRAIN, "earth_wall.png")  # already seamless: it is the wrapped top band
     print("  earth wall face column", wall.shape[1] - 1)
 
     fill = load("ironbark_earth_fill.png")
@@ -139,10 +169,11 @@ def main():
     # --- stone (the Lost Keep's crypts) -----------------------------------------
     k2 = load("keep_stone_edges.png")
     stop = k2[12:59]
-    save(wrap_x(stop, 32), TERRAIN, "stone_top.png")
-    print("  stone top walking line row", first_full_row(stop, 0, 0.97))
+    sline = first_full_row(stop, 0, 0.97)
+    save(wrap_x(soil(stop, sline), 32), TERRAIN, "stone_top.png")
+    print("  stone top walking line row", sline)
     sunder = k2[75:122]
-    sunder = darken_rows(sunder, 8, floor=0.6)
+    sunder = darken_rows(sunder, 10)
     save(wrap_period(sunder, 107, 3), TERRAIN, "stone_under.png")  # the arches repeat every 107 px
     course = k2[134:184]
     save(wrap_period(course, 148, 2), TERRAIN, "stone_course.png")  # the carved panels every 148 px
@@ -150,11 +181,11 @@ def main():
     sfill = wrap_y(wrap_x(k1, 16), 16)
     save(sfill, TERRAIN, "stone_fill.png")
     # stone wall: a strip of the fill with a worn face on the right
-    sw = np.tile(sfill[:, :48], (1, 1, 1)).astype(float)
+    sw = sfill[:, :WALL_LIT + WALL_FADE].astype(float)
     sw[:, -1, :3] = [37, 27, 44]
     sw[:, -2, :3] = np.minimum(sw[:, -2, :3] * 1.45 + 12, 255)
     sw[:, -3, :3] = np.minimum(sw[:, -3, :3] * 1.2 + 6, 255)
-    sw = np.transpose(darken_rows(np.transpose(sw.astype(np.uint8), (1, 0, 2)), 16, floor=0.6), (1, 0, 2))
+    sw = np.transpose(darken_rows(np.transpose(sw.astype(np.uint8), (1, 0, 2)), WALL_FADE), (1, 0, 2))
     save(sw, TERRAIN, "stone_wall.png")
 
     # --- parallax -----------------------------------------------------------

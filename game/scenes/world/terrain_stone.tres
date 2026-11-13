@@ -9,12 +9,10 @@
 [resource]
 script = ExtResource("2_e7ppf")
 fill = ExtResource("1_tvly8")
-fade_tiles = 4.5
 top_band = ExtResource("3_nk02v")
 top_line = 13
-top_lit = 30
 lip_color = Color(0.7019608, 0.63529414, 0.7254902, 1)
 under_band = ExtResource("4_hscuy")
 under_line = 20
 wall_band = ExtResource("5_esnv0")
-wall_face = 47
+wall_face = 19

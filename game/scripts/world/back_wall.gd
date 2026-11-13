@@ -38,6 +38,8 @@ const TILE := 16
 		queue_redraw()
 ## Regions shorter than this (in tiles) get no course.
 @export var course_min_tiles := 5
+## Regions narrower than this (in tiles) get no course: a shaft is bare rock.
+@export var course_min_width := 8
 
 
 func _ready() -> void:
@@ -57,7 +59,7 @@ func _draw() -> void:
 	for r in regions:
 		var px := Rect2(Vector2(r.position * TILE), Vector2(r.size * TILE))
 		draw_texture_rect_region(fill, px, px, tint)
-		if course and r.size.y >= course_min_tiles:
+		if course and r.size.y >= course_min_tiles and r.size.x >= course_min_width:
 			var h := course.get_height()
 			var y := px.end.y - course_height - h
 			var cr := Rect2(px.position.x, y, px.size.x, h)
