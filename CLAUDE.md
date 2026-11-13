@@ -222,8 +222,10 @@ She steps forward with every hit.
 - **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is the
   Ironbark test room). Renderer: GL Compatibility. `godot` is on the path in
   cloud sessions (the environment's setup script installs it to `/opt/godot/`).
-- **Controls:** move A/D or arrows; jump Space/Z/K; attack X/J; interact E/C or
-  up; gamepad too. **Debug:** F1 black-box view, F2 overlay, F3 slow motion,
+- **Controls:** move A/D or arrows; jump Space/Z/K; attack **left click** or X/J;
+  interact E/C or up; gamepad too. **Right click** (or V/L, gamepad B) is the
+  `spell` action, reserved for Kleo's Anima spells: it does nothing until they
+  are built. **Debug:** F1 black-box view, F2 overlay, F3 slow motion,
   F5 restart, H a heavy hit.
 - **Layout:**
   - `scripts/player/kleo.gd`: the controller and its tuning.

@@ -7,6 +7,7 @@ extends Node
 ##   shots    screenshots of the room's key places, with art and as the black box
 ##   tour     the main line, scripted, every second frame saved (for a video)
 ##   upper    the upper line: island, ledge climb, hard landing, knockback
+##   click    checks that a left click attacks and a right click is the spell action
 ##   map      the whole room in screen-sized tiles, with art and as the black box
 ##            (stitch with tools/stitch_map.py)
 ##   measure  measures the jump, running jump and ledge reach; prints the numbers
@@ -44,6 +45,8 @@ func _ready() -> void:
 			await _upper()
 		"map":
 			await _map()
+		"click":
+			await _click()
 		"measure":
 			await _measure()
 	get_tree().quit()
@@ -211,6 +214,35 @@ func _upper() -> void:
 	await _tap("attack")
 	await _wait(30)
 	_release_all()
+
+
+# --- Mouse ---------------------------------------------------------------------------------------
+
+func _click() -> void:
+	_place(40.0, 28)
+	await _frames(10)
+	var lines := []
+	for button in [MOUSE_BUTTON_LEFT, MOUSE_BUTTON_RIGHT]:
+		var ev := InputEventMouseButton.new()
+		ev.button_index = button
+		ev.position = Vector2(320, 180)
+		ev.pressed = true
+		Input.parse_input_event(ev)
+		await get_tree().physics_frame
+		var attack := Input.is_action_pressed("attack")
+		var spell := Input.is_action_pressed("spell")
+		await _frames(3)
+		var state: String = Kleo.State.keys()[kleo.state]
+		var anim := String(kleo.sprite.animation)
+		ev = ev.duplicate()
+		ev.pressed = false
+		Input.parse_input_event(ev)
+		await _frames(40)
+		lines.append("%s click: attack action %s, spell action %s, Kleo %s (%s)" %
+			["left" if button == MOUSE_BUTTON_LEFT else "right", attack, spell, state, anim])
+	var text := "\n".join(lines)
+	print(text)
+	FileAccess.open(out_dir + "/click.txt", FileAccess.WRITE).store_string(text + "\n")
 
 
 # --- Map ---------------------------------------------------------------------------------------

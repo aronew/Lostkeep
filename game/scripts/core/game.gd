@@ -11,8 +11,9 @@ extends Node
 
 signal box_view_changed(on: bool)
 
-## Default bindings: keyboard keys and gamepad buttons, kept apart because their
-## codes overlap. Bindings set in the project settings take precedence.
+## Default bindings: keyboard keys, gamepad buttons and mouse buttons, kept
+## apart because their codes overlap. Bindings set in the project settings take
+## precedence. `spell` is reserved for Kleo's Anima spells (right click).
 const KEYS := {
 	"move_left": [KEY_A, KEY_LEFT],
 	"move_right": [KEY_D, KEY_RIGHT],
@@ -20,6 +21,7 @@ const KEYS := {
 	"move_down": [KEY_S, KEY_DOWN],
 	"jump": [KEY_SPACE, KEY_Z, KEY_K],
 	"attack": [KEY_X, KEY_J],
+	"spell": [KEY_V, KEY_L],
 	"interact": [KEY_E, KEY_C],
 }
 const PADS := {
@@ -29,7 +31,12 @@ const PADS := {
 	"move_down": [JOY_BUTTON_DPAD_DOWN],
 	"jump": [JOY_BUTTON_A],
 	"attack": [JOY_BUTTON_X],
+	"spell": [JOY_BUTTON_B],
 	"interact": [JOY_BUTTON_Y],
+}
+const MOUSE := {
+	"attack": [MOUSE_BUTTON_LEFT],
+	"spell": [MOUSE_BUTTON_RIGHT],
 }
 
 var box_view := false
@@ -64,6 +71,10 @@ func _setup_input() -> void:
 			var pad := InputEventJoypadButton.new()
 			pad.button_index = button
 			InputMap.action_add_event(action, pad)
+		for button in MOUSE.get(action, []):
+			var click := InputEventMouseButton.new()
+			click.button_index = button
+			InputMap.action_add_event(action, click)
 		# The left stick moves too.
 		match action:
 			"move_left": _add_axis(action, JOY_AXIS_LEFT_X, -1.0)

@@ -302,6 +302,7 @@ func _parallax(name: String, scale: Vector2, tex_path: String, y: float, base_co
 	if base_color.a > 0.0:
 		var base := _node(ColorRect.new(), "Base", p) as ColorRect
 		base.color = base_color
+		base.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		base.position = Vector2(0, y + tex.get_height() - 1)
 		base.size = Vector2(tex.get_width(), 420)
 	return p
