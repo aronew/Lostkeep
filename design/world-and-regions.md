@@ -32,9 +32,9 @@ Companion to `ability-atlas.md`. Based on the macro map mockup
 - **Kleo isn't immune.** Blight exposure (Blightwater, Blight mist) builds
   up a status effect. Anima Siphon can drain Blight crystals, which is the
   same technology that caused the disaster.
-- **Spider Matriarch → Silkbound Kindred.** She's the Silkbound's own
-  matron, twisted by Blight. Her cocoons started as a way to *hide* her
-  people from Vexari harvesters; the Blight turned protection into
+- **Spider Matriarch → Hearth-Plains Kindred** (see §1b). She's the Hearth-Plains' own
+  great silk-spinner, twisted by Blight. Her cocoons started as a way to *hide*
+  the villagers from Vexari harvesters; the Blight turned protection into
   imprisonment. The first boss is a victim, not just a monster.
 
 ## 1b. Peoples of Vaelora
@@ -101,8 +101,8 @@ suspicious of one another so nobody notices villagers vanishing.
 
 - **Its directions mean something.** North is Vexari power (the Spire), south
   is the source (the Prism), the hub sits on the axis between them; west is
-  living nature (Thornveil, Deep-Glow, Tideborn) and east is industry and fire
-  (Ashforge, the Carapax Foundry). The world tells the story on its own.
+  living nature (Fen-Stalker, Deep-Glow, Tide-Weaver) and east is industry and fire
+  (Dusk-Drifter, the Carapax Foundry). The world tells the story on its own.
 - **A central hub with a vertical spine:** Spire, Refuge, Vats and Prism are
   one column, the Tether made physical, and a landmark you can't get lost
   around.
@@ -139,10 +139,10 @@ suspicious of one another so nobody notices villagers vanishing.
 |---|---|---|---|---|---|---|
 | 1 | **Ironbark Guard** (the Lost Keep) | Kleo's home; the start | Ironbark Ward | The Keep's fallen warden | base | Emberwick, Thorn-Line, Breath |
 | 2 | **The Refuge** | Hub; fills with the rescued | — | — | Ward | Breath (flooded undercroft), Siphon (Prism sockets) |
-| 3 | **Dusk-Drifter Kindred** (Ash-Walkers) | Ash wanderers, fire-craft | **Emberwick** (forge-shrine) | Ashforge boss | Ward | Barkgrip, Glide |
+| 3 | **Dusk-Drifter Kindred** (Ash-Walkers) | Ash wanderers, fire-craft | **Emberwick** (forge-shrine) | Dusk-Drifter boss | Ward | Barkgrip, Glide |
 | 4 | **Hearth-Plains Kindred** | Silk farms, Rootling village; cocoons | — (rescues the smith → **Barkgrip**) | **Spider Matriarch** (rename? see §3.7) | Emberwick | Meld, Thorn-Line |
 | 5 | **Carapax Foundry** | Vexari war-works | **Wing-Cloak** (first vat broken at the Foundry's vat wing) | Carapax prototype | Ward, Barkgrip | Siphon, Meld |
-| 6 | **Fen-Stalker Kindred** (Mire-Kin) | Swamp hunters | — | Thornveil boss | Glide | Thorn-Line, Breath |
+| 6 | **Fen-Stalker Kindred** (Mire-Kin) | Swamp hunters | — | Fen-Stalker boss | Glide | Thorn-Line, Breath |
 | 7 | **Deep-Glow Caverns** | Sora's kindred | **Deep-Glow Breath** (Sora) | Deep-Glow boss | Glide, Emberwick | Meld, Siphon |
 | 8 | **Tide-Weaver Kindred** (Nautil) | Water folk; return region | — | — | Breath | Thorn-Line, Siphon |
 | 9 | **High-Spire** (Aetheri) | Vesper's kindred; the High Voice | **Memory-Meld** (Vesper) → **the Reveal** | Tower boss | Barkgrip, Glide | Thorn-Line, Siphon |
@@ -166,7 +166,7 @@ suspicious of one another so nobody notices villagers vanishing.
 ```
 
 About 9 h on the critical path; about 12–15 h with rescues, secrets and the
-Tideborn and Orun content.
+Tide-Weaver and Orun content.
 
 ## 4b. Gate legend (the map's coloured bars)
 
