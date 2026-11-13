@@ -124,10 +124,13 @@ villagers vanishing.
   the last place taken back.
 
 ### Named characters and bosses
-- **Kleo:** young Lirien of the Ironbark Guard. Navy hair in a long high
-  ponytail, brown leather jerkin, short dark cloak lined in red (her folded,
-  dormant wings), a short sword, a brass lantern at her hip. She casts **teal
-  Anima magic**. Later she wears a wide-brimmed hat and long coat.
+- **Kleo:** young Lirien of the Ironbark Guard, in **short chibi proportions**:
+  a big rounded head about half her height, short legs, and plain solid dark
+  vertical-rectangle eyes. Navy hair in a long high ponytail, a small brown
+  leather jerkin with bronze fastenings, a teal neck accent and a gold collar
+  clasp, a short dark cloak lined in red (her folded, dormant wings), a short
+  silver sword in her right hand, and a brass lantern at her left hip. She casts
+  **teal Anima magic**. Later she wears a wide-brimmed hat and long coat.
 - **Sora, Vesper:** allies freed mid-game. **Morvath:** mentor, tests Kleo.
 - **Bosses so far:**
   - **The Keep's fallen warden** (an armoured giant on a throne): Ironbark.
@@ -241,7 +244,10 @@ She steps forward with every hit.
    the old purple Prism.
 4. **Generator IDs vs book IDs:** the user's generator renames IDs. S1–S5 are
    L1–L5, D1–D4 are PR1–PR4, and G1–G4 are GT1–GT4.
-5. **Judge art in the game,** not on its own.
+5. **Kleo's sprites:** `python3 tools/process_sprites.py art/source/kleo
+   game/assets/characters/kleo` makes 64 × 64 frame strips (anchor at x 32,
+   y 56; Kleo 28 px tall; one shared palette).
+6. **Judge art in the game,** not on its own.
 
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
