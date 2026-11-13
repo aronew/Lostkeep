@@ -312,7 +312,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     <section id="landmarks" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Landmarks</h2>
-      <p>The four things a player remembers Ironbark by and uses to find their way.</p>
+      <p>The things a player remembers Ironbark by and uses to find their way, and the hall where its keeper waits.</p>
       <div class="cards" id="cards-landmarks"></div>
     </section>
     <section id="props" class="group-section">
@@ -410,6 +410,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["The Lost Keep gate", "Nothing", "need", "L2"],
     ["The Prism-shard shrine (save point)", "Nothing", "need", "L3"],
     ["The broken arch bridge", "Nothing", "need", "L4"],
+    ["The warden's throne hall (boss arena)", "Nothing", "need", "L5"],
     ["Lanterns, graveyard, flora, the guard's belongings", "Nothing", "need", "PR1 to PR4"],
     ["Bark-plate, silk and cocoon, thorn knot, Prism socket", "Nothing", "need", "GT1 to GT4"],
     ["Water surface and moat, fog, light shafts, fireflies, vignette", "Code", "code", "Stays code by design"],
@@ -423,6 +424,11 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["D", "D-shrine.jpg", "Shrine mockup", "Keep masonry and the Prism-shard shrine."],
     ["E", "E-silk-nest.jpg", "Silk nest mockup", "Silk walls and hanging cocoons, for GT2."],
     ["F", "F-silk-mother-arena.jpg", "Silk Mother arena", "Gothic arches and a back-wall depth, for P4."],
+    ["H", "H-keep-throne-hall.jpg", "Keep throne hall", "Inside the Lost Keep: carved pillars, red banners, the warden's throne. For K1, K2, L2 and L5."],
+    ["I", "I-alchemist-works.jpg", "Alchemist works", "For a later book (Carapax Foundry and Anima Vats). Not used here."],
+    ["J", "J-canal-village.jpg", "Canal village", "For a later book (Hearth-Plains or Tide-Weaver). Not used here."],
+    ["K", "K-raider-camp.jpg", "Raider camp", "For a later book. Its floor-over-cells section is a good storey reference."],
+    ["L", "L-silk-cavern.jpg", "Silk cavern", "For the Silk Mother's book. Not used here."],
     ["G", "G-macro-map.jpg", "Macro map", "Where Ironbark sits in Vaelora. For reference only; never attach it to a card."]
   ];
 
@@ -533,7 +539,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
       about: "The inside of the fortress walls, floors and pillars. Dark, quiet, dressed stone.",
-      canvas: "1024×1024 px (art 128 × 128 px at x8)", game: "128 × 128 px, repeating on all sides", attach: ["A", "B", "D"],
+      canvas: "1024×1024 px (art 128 × 128 px at x8)", game: "128 × 128 px, repeating on all sides", attach: ["A", "B", "D", "H"],
       background: "Opaque: the stone fills the whole canvas edge to edge.",
       text: [
         "TASK: the inside of a solid mass of the Lost Keep's masonry, seen flat-on, as one seamless repeating texture.",
@@ -545,7 +551,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "K2", group: "keep", file: "keep_stone_edges", title: "Keep walkable tops, undersides and walls",
       about: "Flagstone floors with moss in the cracks, vaulted undersides, and wall faces for the fortress.",
-      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 bands, cut apart, repeating", attach: ["A", "B", "D", "Your approved K1"],
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 bands, cut apart, repeating", attach: ["A", "B", "D", "H", "Your approved K1"],
       text: [
         "TASK: three horizontal bands of the Lost Keep's masonry on one transparent canvas, matching the attached shrine mockup D and the approved K1. Each band runs edge to edge and joins a copy of itself left to right.",
         "",
@@ -641,7 +647,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "L2", group: "landmarks", file: "landmark_keep_gate", title: "The Lost Keep gate",
       about: "The entrance of the Ironbark Guard's fortress, closed and barred: the opening's visible goal (the Warden's Seal-Ring opens its inner doors later).",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A large prop on the playfield", attach: ["A", "B", "D"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A large prop on the playfield", attach: ["A", "B", "D", "H"],
       text: [
         "TASK: the gatehouse of the Lost Keep, as one large prop on a transparent canvas, like the chapel gate in mockup A but grander and martial.",
         "",
@@ -675,6 +681,19 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- The broken ends are jagged, with a few loose stones and roots hanging off them.",
         "- On the left end, a tall pole with a long torn Ironbark banner streaming out over the gap, as if in a strong wind.",
         "- The gap between the two ends is 1152 px wide and completely transparent."
+      ] },
+    { id: "L5", group: "landmarks", file: "landmark_warden_throne", title: "The warden's throne hall",
+      about: "The Ironbark boss arena from mockup H. The fallen warden waits on this throne; he is drawn separately, so the throne is painted empty.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "A set piece at the back of the arena", attach: ["A", "B", "H"],
+      text: [
+        "TASK: the throne and dais of the Lost Keep's warden, as one set piece on a transparent canvas, matching mockup H. The throne is EMPTY: no figure, no armour, no weapon on it.",
+        "",
+        "- A wide stone dais with three broad steps and a red carpet #7A1F2C with a worn gold cross-and-leaf motif running down the middle. The bottom ground line is perfectly straight.",
+        "- A tall throne of pale carved stone with a crown of stone fins and a round window carving at the top, a deep red tufted back, gold-capped posts and two small teal gems.",
+        "- On each side of the dais, a stone plinth with a caged brazier (flame only, no halo) and a few small heaps of old gold coins.",
+        "- Two tall red banners with the gold cross-and-leaf, hanging behind the throne from the top edge.",
+        "- Ivy and moss creep over the lower steps; a sword and a round shield lie abandoned against one plinth.",
+        "- It must feel grand but long neglected: dust, cracks, a torn corner of the carpet."
       ] },
     // ------------------------------------------------------------- props
     { id: "PR1", group: "props", file: "props_lanterns", title: "Lanterns",
@@ -799,7 +818,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
   function attachLine(card) {
-    var names = { A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", F: "F: the Silk Mother arena mockup" };
+    var names = { A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
     var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
     return "\n\nATTACHED: " + list.join("; ") + ".";
   }
