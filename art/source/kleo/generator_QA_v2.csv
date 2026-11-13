@@ -1,0 +1,9 @@
+sheet,required_width,required_height,actual_width,actual_height,dimensions_pass,uniform_8x8_pass,partial_alpha_pixels,exact_opaque_green_pixels
+idle_sway_v2,1536,1152,1448,1086,False,False,947471,0
+idle_personality,1536,1536,1254,1254,False,False,894963,0
+ledge_handstand_green,1536,1536,1254,1254,False,False,680054,0
+combo1_backhand_v2,1536,1152,1448,1086,False,False,855896,0
+combo2_forehand_v2,1536,1152,1448,1086,False,False,791362,0
+combo3_overhead_v2,1536,1152,1448,1086,False,False,898589,0
+wall_green_v2,1536,1152,1448,1086,False,False,952016,0
+damage_knockback_v2,1536,1536,1254,1254,False,False,946519,0

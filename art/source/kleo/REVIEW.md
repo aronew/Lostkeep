@@ -17,3 +17,20 @@ CLAUDE.md are updated to match it.
 
 Next: load the strips into Godot and judge them in the test room at game
 speed, with hit-stop and FX, before regenerating anything.
+
+## Round 2 (revised sheets)
+
+The eight redo sheets replace their first versions, which are kept in `v1/`.
+`generator_QA_v2.csv` is the generator's report.
+
+- **Idle** sways clearly now. **Long idle:** only the yawn (frames 1–8) is
+  used; the sap-gum bubble was cut by the creative lead because it grew too big.
+- **Ledge:** grab, hang, a handstand on the edge, and a roll onto her feet.
+  The key-green ledge is removed in processing. Hanging frames are pinned by
+  her hands at y 6; frames on the ledge top are pinned to the anchor.
+- **Wall:** she grips the key-green wall (removed in processing).
+- **Combo hits 1–3:** big crescent smears, deep lunges and held wind-ups.
+- **Knockback:** launched off her feet, then skids back with a hand down.
+
+Processing now scales every sheet by the area of Kleo's hair, which stays
+steady across poses, so all 24 animations match in size.

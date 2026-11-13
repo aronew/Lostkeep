@@ -242,7 +242,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <h2>How to use this book</h2>
       <div class="pilot">
         <strong>Next: the redo cards, marked "redo".</strong>
-        <p>KL1 idle (now with a real sway), KL1b long idle (a yawn and a sap-gum bubble), KL5 ledge (now up into a handstand), KL6 to KL8 combo hits 1–3 (bigger smears, deeper lunges, held wind-ups), KL15 wall and KL20 knockback with a slide. The ledge and wall cards paint the surface in flat key-green so she visibly grips it; I remove it in processing. Attach each card's first version where it asks, so the generator can see what to improve.</p>
+        <p>KL1 idle (now with a real sway), KL1b long idle (a yawn and stretch), KL5 ledge (now up into a handstand), KL6 to KL8 combo hits 1–3 (bigger smears, deeper lunges, held wind-ups), KL15 wall and KL20 knockback with a slide. The ledge and wall cards paint the surface in flat key-green so she visibly grips it; I remove it in processing. Attach each card's first version where it asks, so the generator can see what to improve.</p>
       </div>
       <ol class="steps">
         <li><div><strong>Attach the images each card lists.</strong> They are in <code>docs/art-production/lostkeep-attach/</code>. After KL0 is approved, attach it to every card as "your approved KL0".</div></li>
@@ -579,28 +579,20 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "Swaying forward again: eyes open, the ponytail swings forward.",
         "Almost at centre, ready to loop into frame 1."
       ] },
-    { id: "KL1b", group: "moving", file: "kleo_idle_long", title: "Long idle: a yawn and a sap-gum bubble", rows: 4, v2: true,
-      about: "New. When the player leaves her standing for about 8 seconds, she plays one of these two little scenes, then returns to the idle. Pure charm.",
+    { id: "KL1b", group: "moving", file: "kleo_idle_long", title: "Long idle: a yawn and a stretch", rows: 2, v2: true,
+      about: "Done. After about 8 seconds standing still she yawns, stretches, shakes her head and slaps her cheek awake. (A sap-gum bubble scene was tried and cut: the bubble grew bigger than her head.)",
       attach: ["A", "Your approved KL0", "B"],
-      anims: [["idle_yawn", "1–8", 10, false, "After ~8 s idle; back to idle"], ["idle_bubble", "9–16", 10, false, "Alternates with the yawn"]],
-      task: "Two short idle scenes for Kleo, 16 frames in total. Both start and end in her idle stance, so they blend into the idle loop. Big, readable, cute expressions: this is personality, not combat. In scene 2 she chews Ironbark sap-gum, a local treat: the bubble is pale amber-honey #F7D58A with a lighter shine #FFF1C4 (never pink or magenta).",
+      anims: [["idle_yawn", "1–8", 10, false, "After ~8 s idle; back to idle"]],
+      task: "A short idle scene for Kleo, 8 frames. It starts and ends in her idle stance so it blends into the idle loop. Big, readable, cute expressions: this is personality, not combat.",
       frames: [
-        "YAWN: from the idle stance, her shoulders rise and her eyes squeeze shut (eyes become short lines).",
-        "YAWN: a huge yawn, the mouth wide open, her head tipped back, the free hand coming up to cover her mouth.",
-        "YAWN: stretching, the free arm reaching high above her head, back arched, the sword arm stretched out to the side.",
-        "YAWN: holding the big stretch, up on her toes, the ponytail hanging straight down her back.",
-        "YAWN: arms dropping, her whole body slumping, shoulders low.",
-        "YAWN: she shakes her head, the ponytail flicking side to side.",
-        "YAWN: she slaps her cheek with her free hand to wake herself up, eyes wide.",
-        "YAWN: back in the alert idle stance, a determined look.",
-        "BUBBLE: in the idle stance, she starts chewing, cheeks moving.",
-        "BUBBLE: a small amber bubble appears at her lips.",
-        "BUBBLE: the bubble grows to the size of her fist, her eyes crossing slightly to look at it.",
-        "BUBBLE: the bubble grows bigger than her head, her eyes wide.",
-        "BUBBLE: POP: the bubble bursts, a flat splat of amber gum stuck across her face and bangs, her body jolting back.",
-        "BUBBLE: she freezes, embarrassed, gum on her face, the ponytail still swinging.",
-        "BUBBLE: she peels the gum off her face with her free hand, glancing to the side as if hoping no one saw.",
-        "BUBBLE: back in the idle stance, cheeks slightly flushed #E8A890."
+        "From the idle stance, her shoulders rise and her eyes squeeze shut (eyes become short lines).",
+        "A huge yawn, the mouth wide open, her head tipped back, the free hand coming up to cover her mouth.",
+        "Stretching, the free arm reaching high above her head, back arched, the sword arm stretched out to the side.",
+        "Holding the big stretch, up on her toes, the ponytail hanging straight down her back.",
+        "Arms dropping, her whole body slumping, shoulders low.",
+        "She shakes her head, the ponytail flicking side to side.",
+        "She slaps her cheek with her free hand to wake herself up, eyes wide.",
+        "Back in the alert idle stance, a determined look."
       ] },
     { id: "KL2", group: "moving", file: "kleo_run", title: "Run: fast and grounded", rows: 3, pilot: true,
       about: "A fast, athletic run with a strong forward lean. The ponytail and cloak stream behind her; her feet strike and push hard.",

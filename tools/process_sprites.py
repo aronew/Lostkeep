@@ -19,19 +19,25 @@ CELL = 64
 ANCHOR = (32, 56)
 HEIGHT = 28  # Kleo standing, boot soles to the top of her head
 
-# Sheets whose first frame is Kleo standing upright: each is scaled on its own
-# so she is exactly HEIGHT px tall (the generator drew some sheets larger).
+# Every character sheet is scaled so Kleo's hair covers the same area as in
+# the idle sheet: the generator draws sheets at different sizes, and hair area
+# stays steady across poses (height does not). STANDING_FIRST is kept for
+# reference: these sheets open with her standing upright.
 STANDING_FIRST = {
-    "01_idle", "02_run", "03_start_stop_turn", "07_combo_backhand", "08_combo_forehand",
+    "01_idle", "01b_idle_long", "02_run", "03_start_stop_turn", "07_combo_backhand", "08_combo_forehand",
     "12_ironbark_ward", "13_anima_spark_cast", "14_anima_lance_channel", "15_emberwick",
     "19_thorn_line", "20_memory_siphon", "21_damage", "22_death", "23_heal_rest", "24_rescue_interact",
 }
+
+# Sheets where only the first N frames are used (the sap-gum bubble scene in
+# 01b_idle_long was cut: the bubble grew bigger than her head).
+KEEP = {"01b_idle_long": 8}
 
 # file stem -> (rows, mode). mode: "ground" snaps feet to the anchor,
 # "air" keeps in-cell motion, "fx" centres the effect.
 SHEETS = {
     "01_idle": (3, "ground"), "01b_idle_long": (4, "ground"), "02_run": (3, "ground"), "03_start_stop_turn": (3, "ground"),
-    "04_jump_rise": (2, "air"), "05_fall_land": (3, "air"), "06_ledge": (4, "air"),
+    "04_jump_rise": (2, "air"), "05_fall_land": (3, "air"), "06_ledge": (4, "ledge"),
     "07_combo_backhand": (3, "ground"), "08_combo_forehand": (3, "ground"),
     "09_combo_overhead": (3, "ground"), "10_combo_finisher": (4, "air"),
     "11_directional_strikes": (3, "air"), "12_ironbark_ward": (3, "ground"),
@@ -64,6 +70,20 @@ def mask_bbox(im):
     a = np.asarray(im)[..., 3] > 128
     ys, xs = np.nonzero(a)
     return xs.min(), ys.min(), xs.max() + 1, ys.max() + 1
+
+
+def hair_area(frame):
+    """Pixels of Kleo's navy hair: it is about the same size in every pose."""
+    a = np.asarray(frame).astype(int)
+    r, g, b, al = a[..., 0], a[..., 1], a[..., 2], a[..., 3]
+    return int(((al > 128) & (b > r + 25) & (b > g + 15) & (b < 190) & (r < 90)).sum())
+
+
+def sheet_scale(raw, ref_area, ref_scale):
+    """Scale a sheet so her hair has the same area as in the idle sheet."""
+    areas = sorted(hair_area(f) for f in raw)
+    med = areas[len(areas) // 2]
+    return ref_scale * (ref_area / med) ** 0.5
 
 
 def scale_of(src_dir):
@@ -104,18 +124,22 @@ def torso_x(frame):
     return int(np.median(xs[band]))
 
 
-def place(frame, mode, ref):
+def place(frame, mode, ref, index=0):
     out = Image.new("RGBA", (CELL, CELL), (0, 0, 0, 0))
     if not np.asarray(frame)[..., 3].any():
         return out
     x0, y0, x1, y1 = mask_bbox(frame)
-    if mode == "ground":
+    if mode == "ledge" and index < 7:
+        # hanging: her hands (the top of her) grip the ledge corner at y 6
+        dx, dy = ANCHOR[0] - torso_x(frame), 6 - y0
+    elif mode in ("ground", "ledge"):
+        # on top of the ledge, whatever touches it (feet or hands) is on the anchor
         dx, dy = ANCHOR[0] - torso_x(frame), ANCHOR[1] - y1
     elif mode == "air":
         dx, dy = ref  # one offset for the whole sheet: keeps the animator's motion
     else:
         dx, dy = CELL // 2 - (x0 + x1) // 2, CELL // 2 - (y0 + y1) // 2
-    out.alpha_composite(frame, (int(dx), int(dy))) if dx >= 0 and dy >= 0 else out.paste(frame, (int(dx), int(dy)), frame)
+    out.paste(frame, (int(dx), int(dy)), frame)
     return out
 
 
@@ -123,15 +147,15 @@ def main(src_dir, out_dir, preview_dir=None):
     os.makedirs(out_dir, exist_ok=True)
     s = scale_of(src_dir)
     print(f"scale {s:.4f}")
+    idle = list(cells(os.path.join(src_dir, "01_idle.png"), 3))
+    idle_areas = sorted(hair_area(f) for f in idle)
+    ref_area = idle_areas[len(idle_areas) // 2]
     sheets = {}
     for stem, (rows, mode) in SHEETS.items():
         path = os.path.join(src_dir, stem + ".png")
         if os.path.exists(path):
-            raw = list(cells(path, rows))
-            k = s
-            if stem in STANDING_FIRST:
-                x0, y0, x1, y1 = mask_bbox(raw[0])
-                k = HEIGHT / (y1 - y0)
+            raw = list(cells(path, rows))[:KEEP.get(stem)]
+            k = s if mode == "fx" else sheet_scale(raw, ref_area, s)
             sheets[stem] = [shrink(f, k) for f in raw]
     pal = build_palette([f for k, fs in sheets.items() if not k.startswith("25") for f in fs])
     for stem, frames in sheets.items():
@@ -141,7 +165,7 @@ def main(src_dir, out_dir, preview_dir=None):
         if mode == "air":
             x0, y0, x1, y1 = mask_bbox(frames[0])
             ref = (ANCHOR[0] - torso_x(frames[0]), ANCHOR[1] - y1)
-        placed = [place(f, mode, ref) for f in frames]
+        placed = [place(f, mode, ref, i) for i, f in enumerate(frames)]
         strip = Image.new("RGBA", (CELL * len(placed), CELL), (0, 0, 0, 0))
         for i, f in enumerate(placed):
             strip.alpha_composite(f, (i * CELL, 0))
