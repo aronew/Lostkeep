@@ -27,7 +27,7 @@ without its ability and **open** for a cautious player with it.
 
 | # | Ability | Verb | Found ≈ | From | Region (tentative) |
 |---|---|---|---|---|---|
-| 0 | Base kit | run, jump, slash, light | 0:00 | — | Ironbark Hollow |
+| 0 | Base kit | run, jump, slash, light | 0:00 | — | Ironbark Guard |
 | 1 | **Ironbark Ward** | parry / bash | 0:50 | Captain's shield, Lost Keep gatehouse | Ironbark Guard |
 | 1b | **Anima Spark** (spell) | shoot | 1:15 | Shrine: the Prism-shard shrine | Ironbark Guard |
 | 2 | **Emberwick** | burn | 1:40 | Boss: the Cinder Warden | Dusk-Drifter Kindred |
