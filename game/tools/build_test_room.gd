@@ -229,6 +229,7 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	_build_props(behind, placed, front)
 	_build_machines()
 	_build_atmosphere(front)
+	_edge_shades()
 
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
@@ -670,6 +671,35 @@ func _build_atmosphere(front: Node) -> void:
 	amber.z_index = 14
 
 
+## The room's west and east edges fade into darkness, in front of Kleo, so the
+## room ends in passages leading on instead of an invisible wall.
+func _edge_shades() -> void:
+	var w := float(ROOM.size.x * TILE)
+	var h := float(ROOM.size.y * TILE)
+	var void_col := Color(0.043, 0.031, 0.071)
+	for side in [[0.0, 1.0], [w, -1.0]]:
+		var x: float = side[0]
+		var inward: float = side[1]
+		var shade := _node(Polygon2D.new(), "EdgeShade", _root) as Polygon2D
+		shade.z_index = 25
+		var depth := 64.0
+		# Four bands, stepped like the rest of the pixel art.
+		var pts := PackedVector2Array()
+		var cols := PackedColorArray()
+		for i in 5:
+			var t := float(i) / 4.0
+			var a := pow(1.0 - t, 1.6)
+			pts.append(Vector2(x + inward * depth * t, 0))
+			cols.append(Color(void_col, a))
+		for i in range(4, -1, -1):
+			var t := float(i) / 4.0
+			var a := pow(1.0 - t, 1.6)
+			pts.append(Vector2(x + inward * depth * t, h))
+			cols.append(Color(void_col, a))
+		shade.polygon = pts
+		shade.vertex_colors = cols
+
+
 func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rect2) -> CPUParticles2D:
 	var p := _node(CPUParticles2D.new(), name, _root) as CPUParticles2D
 	p.texture = tex
@@ -707,6 +737,7 @@ func _breakable(tex_path: String, region: Rect2, x: float, floor_y: float, chips
 	b.position = Vector2(x, floor_y).round()
 	b.z_index = 6
 	b.set("chip_color", chips)
+	b.set("piece_mask", _piece_mask(tex_path, region))
 	var art := _sprite(b, tex_path, region, Vector2(-roundf(region.size.x * 0.5), -region.size.y + 1))
 	art.name = "Art"
 	var hb := _node(Area2D.new(), "Hurtbox", b) as Area2D
@@ -720,6 +751,27 @@ func _breakable(tex_path: String, region: Rect2, x: float, floor_y: float, chips
 	hs.position = Vector2(0, -region.size.y * 0.5)
 	_node(hs, "Shape", hb)
 	return b
+
+
+## Which grid pieces of a sprite region have pixels (see Breakable.grid_for).
+func _piece_mask(tex_path: String, region: Rect2) -> int:
+	var img := Image.load_from_file(ProjectSettings.globalize_path(tex_path))
+	if img == null:
+		return 0
+	var grid := Vector2i(3 if region.size.x >= 26.0 else 2, 3 if region.size.y >= 26.0 else 2)
+	var pw := floorf(region.size.x / grid.x)
+	var ph := floorf(region.size.y / grid.y)
+	var mask := 0
+	for i in grid.x:
+		for j in grid.y:
+			var count := 0
+			for x in range(int(region.position.x + i * pw), int(region.position.x + (i + 1) * pw)):
+				for y in range(int(region.position.y + j * ph), int(region.position.y + (j + 1) * ph)):
+					if img.get_pixel(x, y).a > 0.5:
+						count += 1
+			if count >= 6:
+				mask |= 1 << (i * grid.y + j)
+	return mask
 
 
 # --- Helpers ------------------------------------------------------------------------------

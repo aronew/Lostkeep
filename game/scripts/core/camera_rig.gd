@@ -1,25 +1,25 @@
 class_name CameraRig
 extends Camera2D
-## A calm platformer camera. It never moves on its own:
-## - Horizontally, Kleo moves freely inside a small window; the camera follows
-##   only when she pushes its edge, so it moves exactly as she does.
-## - It looks ahead only while she keeps running one way, at a steady pace, and
-##   holds that look-ahead when she stops or turns to fight (no swinging).
+## A calm platformer camera. It never moves on its own and never moves faster
+## than Kleo:
+## - Horizontally, she moves inside a small window. As she moves out from its
+##   centre the camera picks up speed smoothly, reaching her speed exactly at the
+##   window's edge; it never moves when she is still, and never faster than her.
+##   There is no look-ahead: a camera that runs ahead of her slides the whole
+##   world past her.
 ## - Vertically, it holds the height of the floor she last stood on. Jumps don't
 ##   move it; it follows if she rises far above or falls below, and eases to a
 ##   new floor once she lands there.
+## - At the room's edges it slows down smoothly over the last stretch instead of
+##   stopping dead (`bounds`, set by the room).
 ## - It updates on the physics tick, with Kleo, in whole pixels, so she never
 ##   shimmers against the world.
 
+const VIEW := Vector2(640, 360)
+
 @export var target: Node2D
 ## Half-width of the window she moves in without the camera following (px).
-@export var window_x := 12
-## How far ahead the view settles while she keeps running one way (px).
-@export var lookahead := 32
-## How fast the look-ahead shifts while she runs (px per second).
-@export var lookahead_speed := 40.0
-## How long she must keep running one way before the look-ahead shifts (s).
-@export var lookahead_delay := 0.3
+@export var window_x := 16
 ## Where her feet sit relative to the screen centre (negative: below centre).
 @export var vertical_offset := -58
 ## She can rise this far above the last floor (a jump) before the camera follows.
@@ -28,14 +28,17 @@ extends Camera2D
 @export var band_down := 20.0
 ## How quickly the view settles on a new floor's height after she lands.
 @export var floor_ease := 7.0
+## Over how many pixels the camera slows to a stop at the room's edges.
+@export var edge_ease := 64.0
 ## Shake strength at full trauma (px). Kept small: impacts, not earthquakes.
 @export var max_shake := 3.0
 
+## The room, in pixels. The view stays inside it, easing in at the edges.
+var bounds := Rect2()
+
 var _x := 0.0
 var _y := 0.0
-var _look := 0.0
-var _run_time := 0.0
-var _run_dir := 0
+var _last_px := 0.0
 var _trauma := 0.0
 var _t := 0.0
 var _noise := FastNoiseLite.new()
@@ -55,8 +58,7 @@ func snap_to_target() -> void:
 		return
 	_x = target.global_position.x
 	_y = target.global_position.y
-	_look = 0.0
-	_run_time = 0.0
+	_last_px = _x
 	_apply()
 
 
@@ -69,29 +71,21 @@ func _physics_process(delta: float) -> void:
 		return
 	var p := target.global_position
 	var grounded := true
-	var running := false
-	var face := 1
 	if target is Kleo:
 		var k := target as Kleo
 		grounded = k.is_on_floor() or k.state == Kleo.State.LEDGE_HANG or k.state == Kleo.State.LEDGE_CLIMB
-		running = absf(k.velocity.x) > k.run_speed * 0.8 and k.state == Kleo.State.NORMAL
-		face = k.facing
 
-	# Horizontal window: follow only when she pushes its edge.
-	if p.x > _x + window_x:
-		_x = p.x - window_x
-	elif p.x < _x - window_x:
-		_x = p.x + window_x
-
-	# Look-ahead: only while she keeps running the same way.
-	var dir := face if running else 0
-	if dir != 0 and dir == _run_dir:
-		_run_time += delta
-	else:
-		_run_time = 0.0
-		_run_dir = dir
-	if _run_time > lookahead_delay:
-		_look = move_toward(_look, float(_run_dir * lookahead), lookahead_speed * delta)
+	# Horizontal window: while she moves out from its centre, the camera follows a
+	# growing share of her movement (none near the centre, all of it at the edge),
+	# so it starts smoothly; she can never leave the window.
+	var moved := p.x - _last_px
+	_last_px = p.x
+	var off := p.x - _x
+	if moved * off > 0.0:
+		_x += moved * smoothstep(0.3, 1.0, absf(off) / window_x)
+	off = p.x - _x
+	if absf(off) > window_x:
+		_x = p.x - signf(off) * window_x
 
 	# Vertical: hold the floor's height; follow outside the band; ease to new floors.
 	if p.y < _y - band_up:
@@ -112,4 +106,24 @@ func _physics_process(delta: float) -> void:
 
 
 func _apply() -> void:
-	global_position = Vector2(_x + roundf(_look), _y + vertical_offset).round()
+	var c := Vector2(_x, _y + vertical_offset)
+	if bounds.size != Vector2.ZERO:
+		var lo := bounds.position + VIEW * 0.5
+		var hi := bounds.end - VIEW * 0.5
+		c.x = _soft_clamp(c.x, lo.x, hi.x, edge_ease)
+		c.y = _soft_clamp(c.y, lo.y, hi.y, edge_ease * 0.75)
+	global_position = c.round()
+
+
+## Clamps `v` to [lo, hi], easing into each end over `m` pixels: the result
+## follows `v` exactly until it is `m` from an end, then slows smoothly (same
+## speed where the easing starts, approaching the end without ever stopping dead).
+static func _soft_clamp(v: float, lo: float, hi: float, m: float) -> float:
+	if hi <= lo:
+		return (lo + hi) * 0.5
+	m = minf(m, (hi - lo) * 0.5)
+	if v < lo + m:
+		return lo + m * exp((v - lo - m) / m)
+	if v > hi - m:
+		return hi - m * exp((hi - m - v) / m)
+	return v
