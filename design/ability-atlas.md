@@ -1,5 +1,6 @@
 # Lost Keep — Ability Atlas (draft v0.1)
 
+> How each ability is obtained, and every lock, is in `lock-and-key.md`.
 > Regions now follow the macro map; see `world-and-regions.md`.
 >
 > Progression first: every room in the game is written with these verbs, so
@@ -28,12 +29,12 @@ without its ability and **open** for a cautious player with it.
 |---|---|---|---|---|---|
 | 0 | Base kit | run, jump, slash, light | 0:00 | — | Ironbark Hollow |
 | 1 | **Ironbark Ward** | parry / bash | 0:50 | Captain's shield, Lost Keep gatehouse | Ironbark Guard |
-| 2 | **Emberwick** | burn | 1:40 | Dusk-Drifter forge-shrine | Dusk-Drifter Kindred |
+| 2 | **Emberwick** | burn | 1:40 | Boss: the Cinder Warden | Dusk-Drifter Kindred |
 | 3 | **Barkgrip** | cling / wall-jump | 2:30 | Ironbark smith (rescued from a Hearth-Plains cocoon) | Hearth-Plains Kindred |
-| 4 | **Wing-Cloak** | glide | 3:30 | Wings wake when the first vat is broken | Carapax Foundry |
+| 4 | **Wing-Cloak** | glide | 3:30 | Boss: the Carapax Prototype guarding the first vat | Carapax Foundry |
 | 5 | **Deep-Glow Breath** | swim / dive | 4:30 | Sora, freed | Deep-Glow Caverns |
 | 6 | **Memory-Meld** | remember (phase into the past) | 5:30 | Vesper, freed; the Reveal | High-Spire Scribes |
-| 7 | **Thorn-Line** | grapple / pull | 6:30 | Morvath | Morvath's Observatory |
+| 7 | **Thorn-Line** | grapple / pull | 6:30 | Shrine: Morvath's Trial | Morvath's Observatory |
 | 8 | **Anima Siphon** | drain / power | 7:30 | Stolen from a Vexari Shepherd | Sovereign Spire |
 
 There's a new verb roughly every 50–60 min and no stat-only droughts. Each
@@ -93,7 +94,7 @@ abilities.
      opening a room-wide route.
 - **Gate look:** silver silk sheets with glowing eggs at the corners
   (mockup 3).
-- **Combat:** ignites webs mid-fight. In the **Spider Matriarch** arena, the
+- **Combat:** ignites webs mid-fight. In the **Silk Mother** arena, the
   ceiling webs she climbs to can be burned away, which forces her down to the
   floor.
 - **Combines with:** Ward (parried embers); Glide (updraft columns); Deep-Glow
@@ -105,7 +106,7 @@ abilities.
 - **Found:** the Prism-shard shrine (mockup 5) deep in Silkfall Ossuary. The
   ability arrives inside the problem it solves: the rest of the Ossuary is
   built for fire.
-- **Story:** the cocoons hold the **missing Lirien**. The Matriarch is a
+- **Story:** the cocoons hold the **missing Lirien**. The Silk Mother is a
   Vexari-bred collector that harvests them for the vats. Killing her frees the
   great cocoon (mockup 3's skull nest), and the first big rescue, **the
   merchant**, opens the hub shop.
@@ -248,4 +249,4 @@ rescued could affect the ending.
 - [ ] Macro map: place three locks per ability on two routes before each key.
 - [ ] Decide which era (present or past) every gate exists in, for Meld.
 - [ ] Decide whether Anima Siphon's corruption is a real branch or flavor.
-- [ ] Spider Matriarch: a 2-phase spec (ceiling phase, burned → floor phase).
+- [ ] Silk Mother: a 2-phase spec (ceiling phase, burned → floor phase).

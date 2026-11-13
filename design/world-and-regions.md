@@ -32,7 +32,7 @@ Companion to `ability-atlas.md`. Based on the macro map mockup
 - **Kleo isn't immune.** Blight exposure (Blightwater, Blight mist) builds
   up a status effect. Anima Siphon can drain Blight crystals, which is the
   same technology that caused the disaster.
-- **Spider Matriarch → Hearth-Plains Kindred** (see §1b). She's the Hearth-Plains' own
+- **The Silk Mother → Hearth-Plains Kindred** (see §1b). She's the Hearth-Plains' own
   great silk-spinner, twisted by Blight. Her cocoons started as a way to *hide*
   the villagers from Vexari harvesters; the Blight turned protection into
   imprisonment. The first boss is a victim, not just a monster.
@@ -71,7 +71,7 @@ shaped each Kindred's body, philosophy and stance toward the Vexari.
 | **Deep-Glow** | Lumen | Deep-Glow Caverns | Cave-dwellers who make their own light. Sora's people |
 | **Tide-Weaver** | Nautil | *Tideborn* | Water folk |
 | **Fen-Stalker** | Mire-Kin | *Thornveil* | Swamp hunters, scorned as "primitive" by High-Spire |
-| **Hearth-Plains** | Ioam-Born (Loam-Born?) | *Silkbound* | Farmers and silk-growers, neighbours of the Rootlings; distrust Ironbark |
+| **Hearth-Plains** | Loam-Born | *Silkbound* | Farmers and silk-growers, neighbours of the Rootlings; distrust Ironbark |
 | **Dusk-Drifter** | Ash-Walker | *Ashforge* | Wanderers of the ash wastes; fire-craft (Emberwick) |
 
 **Silkbound → Hearth-Plains:** the spiders stay. The Hearth-Plains farm
@@ -129,9 +129,8 @@ suspicious of one another so nobody notices villagers vanishing.
 5. **Many corridors are only one cell wide.** That's fine in a mockup, but
    each one needs an idea (`room-construction`) or it becomes filler.
 6. ~~New lore terms~~: resolved in §1b.
-7. **A name clash:** the Kindreds are ruled by *Sovereign Matriarchs*, and the
-   first boss is the *Spider Matriarch*. Rename one of them (e.g. the boss
-   becomes **the Silk Mother** or **the Brood-Weaver**).
+7. ~~Name clash~~: resolved. The boss is **the Silk Mother**; *Sovereign
+   Matriarch* belongs to the Kindred Voices only.
 
 ## 4. Region registry (aligned with the atlas)
 
@@ -140,7 +139,7 @@ suspicious of one another so nobody notices villagers vanishing.
 | 1 | **Ironbark Guard** (the Lost Keep) | Kleo's home; the start | Ironbark Ward | The Keep's fallen warden | base | Emberwick, Thorn-Line, Breath |
 | 2 | **The Refuge** | Hub; fills with the rescued | — | — | Ward | Breath (flooded undercroft), Siphon (Prism sockets) |
 | 3 | **Dusk-Drifter Kindred** (Ash-Walkers) | Ash wanderers, fire-craft | **Emberwick** (forge-shrine) | Dusk-Drifter boss | Ward | Barkgrip, Glide |
-| 4 | **Hearth-Plains Kindred** | Silk farms, Rootling village; cocoons | — (rescues the smith → **Barkgrip**) | **Spider Matriarch** (rename? see §3.7) | Emberwick | Meld, Thorn-Line |
+| 4 | **Hearth-Plains Kindred** | Silk farms, Rootling village; cocoons | — (rescues the smith → **Barkgrip**) | **The Silk Mother** | Emberwick | Meld, Thorn-Line |
 | 5 | **Carapax Foundry** | Vexari war-works | **Wing-Cloak** (first vat broken at the Foundry's vat wing) | Carapax prototype | Ward, Barkgrip | Siphon, Meld |
 | 6 | **Fen-Stalker Kindred** (Mire-Kin) | Swamp hunters | — | Fen-Stalker boss | Glide | Thorn-Line, Breath |
 | 7 | **Deep-Glow Caverns** | Sora's kindred | **Deep-Glow Breath** (Sora) | Deep-Glow boss | Glide, Emberwick | Meld, Siphon |
@@ -156,7 +155,7 @@ suspicious of one another so nobody notices villagers vanishing.
 
 ```
 0:00 Ironbark Guard ──(Ward 0:50)──► 1:00 Refuge (hub opens)
-        ├─ East: Dusk-Drifter (Emberwick 1:40) ─► Hearth-Plains (Matriarch, smith → Barkgrip 2:30)
+        ├─ East: Dusk-Drifter (Emberwick 1:40) ─► Hearth-Plains (Silk Mother, smith → Barkgrip 2:30)
         └─ Carapax Foundry (first vat → Wing-Cloak 3:30)
 3:30 West: Fen-Stalker ─► Deep-Glow (Sora → Breath 4:30) ─► (Tide-Weaver, optional)
 5:00 High-Spire (Vesper → Memory-Meld 5:30, THE REVEAL; Refuge renamed; Blight act 2)

@@ -1,0 +1,913 @@
+<title>Ironbark Guard Prompt Book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+/* Layout: a working manual. Sticky control bar, a contents rail on wide screens,
+   one reading column of rules and specs, and prompt cards you copy from.
+   Palette: Lost Keep's own colours (void, plum stone, Anima teal, lantern amber). */
+:root {
+  color-scheme: dark;
+  --bg: #0f0b16; --panel: #171221; --panel-2: #211a2e; --line: #34294a;
+  --fg: #ede3d3; --muted: #a99fb0; --accent: #3fe0c8; --accent-ink: #0b0812;
+  --brass: #f2b04a; --red: #e07a8c; --code: #0b0812;
+  --font-display: "Marcellus", "Cormorant Garamond", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #efe8dc; --panel: #f9f4ea; --panel-2: #e6ddd0; --line: #cfc3b3;
+    --fg: #1b1424; --muted: #5b5163; --accent: #157a6c; --accent-ink: #f9f4ea;
+    --brass: #8a5a1c; --red: #a03a55; --code: #fbf8f1;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #efe8dc; --panel: #f9f4ea; --panel-2: #e6ddd0; --line: #cfc3b3;
+  --fg: #1b1424; --muted: #5b5163; --accent: #157a6c; --accent-ink: #f9f4ea;
+  --brass: #8a5a1c; --red: #a03a55; --code: #fbf8f1;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel); }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; font-weight: 400; margin: 0; }
+h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: 0.01em; }
+h2 { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; }
+h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.08rem; }
+p { margin: 0; max-width: 68ch; }
+code, kbd { font-family: var(--font-mono); font-size: 0.88em; background: var(--panel-2); padding: 0.05em 0.35em; border-radius: 4px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); }
+
+.page { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; padding-block: 28px 80px; }
+@media (min-width: 1100px) { .page { grid-template-columns: 210px minmax(0, 1fr); } }
+.rail { display: none; }
+@media (min-width: 1100px) {
+  .rail { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); align-self: start; }
+  .rail nav { display: grid; gap: 2px; font-size: 0.9rem; }
+  .rail a { color: var(--muted); text-decoration: none; padding: 4px 10px; border-left: 2px solid var(--line); }
+  .rail a:hover { color: var(--fg); border-left-color: var(--accent); }
+  .rail .group { margin-top: 12px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); padding-left: 12px; }
+}
+main { min-width: 0; display: grid; gap: 64px; }
+section { display: grid; gap: 20px; scroll-margin-top: 110px; }
+.lede { font-size: 1.12rem; color: var(--muted); }
+
+.hero { display: grid; gap: 14px; padding-block: 12px 4px; }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+
+.controls {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--panel); border-bottom: 1px solid var(--line);
+}
+.controls .inner { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+.controls .title { font-family: var(--font-display); font-size: 1.15rem; margin-right: auto; }
+.field { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.seg button { font: inherit; font-size: 0.84rem; color: var(--fg); background: transparent; border: 0; padding: 5px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.progress { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 12px; }
+ol.steps li { counter-increment: step; display: grid; grid-template-columns: 2.2rem 1fr; gap: 10px; align-items: start; }
+ol.steps li::before { content: counter(step); font-family: var(--font-display); font-size: 1.3rem; color: var(--accent); line-height: 1.3; text-align: right; }
+ol.steps li > div { min-width: 0; }
+
+.note { border-left: 3px solid var(--brass); padding: 10px 14px; background: var(--panel); border-radius: 0 6px 6px 0; max-width: 72ch; }
+.note.warn { border-left-color: var(--red); }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); font-weight: 500; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td code { white-space: nowrap; }
+
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.swatch { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; font-size: 0.84rem; }
+.swatch i { width: 34px; height: 34px; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.swatch b { font-weight: 500; display: block; }
+.swatch span { font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted); }
+
+.cols { display: grid; gap: 24px; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.figure { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.figure svg { width: 100%; height: auto; display: block; }
+.figure figcaption { font-size: 0.84rem; color: var(--muted); }
+svg .ln { stroke: var(--muted); }
+svg .acc { stroke: var(--accent); }
+svg .accf { fill: var(--accent); }
+svg .redl { stroke: var(--red); }
+svg .txt { fill: var(--fg); font-family: var(--font-mono); font-size: 11px; }
+svg .txt-m { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+
+.refs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.ref { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.ref img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; background: var(--code); }
+.ref div { padding: 10px 12px; display: grid; gap: 2px; font-size: 0.86rem; }
+.ref span { color: var(--muted); font-size: 0.8rem; }
+
+.cards { display: grid; gap: 18px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.card.is-done { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.tag { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-ink); background: var(--brass); padding: 1px 8px; border-radius: 999px; }
+.card-head h3 { margin-right: auto; }
+.done { display: inline-flex; align-items: center; gap: 6px; font-size: 0.84rem; color: var(--muted); cursor: pointer; }
+.done input { accent-color: var(--accent); width: 16px; height: 16px; }
+.card .about { color: var(--muted); font-size: 0.93rem; }
+dl.spec { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; font-size: 0.88rem; }
+dl.spec dt { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); padding-top: 3px; }
+dl.spec dd { margin: 0; min-width: 0; }
+@media (max-width: 520px) { dl.spec { grid-template-columns: 1fr; } dl.spec dd { margin-bottom: 6px; } }
+.anims { display: flex; flex-wrap: wrap; gap: 6px; }
+.anim { font-family: var(--font-mono); font-size: 0.76rem; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; background: var(--panel-2); white-space: nowrap; }
+.prompt { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; min-width: 0; }
+.prompt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 8px 12px; background: var(--panel-2); font-size: 0.82rem; color: var(--muted); }
+.prompt-bar strong { color: var(--fg); font-weight: 600; margin-right: auto; }
+.copy { font: inherit; font-size: 0.84rem; font-weight: 600; color: var(--accent-ink); background: var(--accent); border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; }
+.copy:hover { filter: brightness(1.06); }
+.copy.copied { background: var(--brass); }
+pre { margin: 0; padding: 14px 16px; background: var(--code); font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 420px; overflow-y: auto; }
+details.full summary { cursor: pointer; font-size: 0.82rem; color: var(--muted); padding: 8px 12px; border-top: 1px solid var(--line); }
+details.full pre { max-height: 360px; border-top: 1px solid var(--line); }
+
+ul.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+ul.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: start; max-width: 78ch; }
+ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; border: 2px solid var(--accent); border-radius: 3px; }
+.kv { display: grid; gap: 4px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+.shots { display: grid; gap: 16px; }
+.shot { position: relative; margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--code); }
+.shot img { display: block; width: 100%; height: auto; }
+.pin { position: absolute; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1; font-weight: 500; text-decoration: none; color: #08131c; background: #9cf2c2; border: 2px solid #071220; border-radius: 999px; padding: 3px 6px; white-space: nowrap; }
+.pin:hover { background: #fff; }
+.pin.hero { background: #ddf936; }
+@media (max-width: 620px) { .pin { font-size: 0.56rem; padding: 2px 3px; border-width: 1px; } }
+.group-head { display: grid; gap: 6px; }
+.status { font-family: var(--font-mono); font-size: 0.74rem; white-space: nowrap; }
+.status.need { color: var(--red); }
+.status.ok { color: var(--accent); }
+.status.code { color: var(--muted); }
+.thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
+.thumb { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); background: var(--panel-2); border-radius: 6px; padding: 4px 10px 4px 4px; text-decoration: none; }
+.thumb img { width: 44px; height: 30px; object-fit: cover; border-radius: 3px; background: #fff; display: block; }
+.thumb b { color: var(--fg); font-weight: 600; }
+.guide { background: var(--panel-2); border-radius: 8px; padding: 10px; display: grid; gap: 6px; max-width: 460px; font-size: 0.8rem; color: var(--muted); }
+.guide img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.pack img { aspect-ratio: 2 / 1; }
+.pilot { border: 1px solid var(--accent); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; background: var(--panel); }
+.pilot strong { color: var(--accent); font-weight: 600; }
+
+</style>
+
+<div class="controls" role="region" aria-label="Prompt options">
+  <div class="inner">
+    <span class="title">Ironbark Guard Prompt Book</span>
+    <label class="field" for="include-rules"><input type="checkbox" id="include-rules" checked> Copy shared rules with each prompt</label>
+    <span class="progress" id="progress">0 done</span>
+  </div>
+</div>
+
+<div class="page">
+  <aside class="rail" aria-label="Contents">
+    <nav>
+      <span class="group">Start</span>
+      <a href="#needs">What the region needs</a>
+      <a href="#workflow">How to use this book</a>
+      <a href="#build">How the art is assembled</a>
+      <a href="#pack">Images to attach</a>
+      <span class="group">Prompts</span>
+      <a href="#terrain">Terrain on the black box</a>
+      <a href="#keep">The Lost Keep masonry</a>
+      <a href="#parallax">Parallax layers</a>
+      <a href="#landmarks">Landmarks</a>
+      <a href="#props">Lived-in dressing</a>
+      <a href="#gates">Locks you see first</a>
+      <span class="group">Finish</span>
+      <a href="#checks">Check every result</a>
+      <a href="#fixes">If the image falls short</a>
+      <a href="#after">What happens next</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <span class="eyebrow">Lost Keep · art production · Book 1</span>
+      <h1>Ironbark Guard</h1>
+      <p class="lede">The environment kit for the opening region and the Lost Keep itself: terrain painted onto black-box collision, five parallax depths, landmarks, the props that make it feel lived in and then abandoned, and the first locks the player will want to open.</p>
+      <div class="meta"><span id="count">0 images</span><span>Base 640 × 360, ×3 to 1080p</span><span>1 tile = 16 px in game</span><span>Masters painted at ×8 (×4 for backgrounds)</span><span>Godot 4.7.2</span></div>
+    </header>
+
+    <section id="needs">
+      <span class="eyebrow">Start</span>
+      <h2>What the region needs</h2>
+      <p>Ironbark Guard is Kleo's home, emptied: a great ironbark forest, a graveyard, a broken arch bridge over a dark moat, and the fortress of the Ironbark Guard, the Lost Keep. It is also where the player meets the lock of almost every later ability, so it has to be read at a glance and remembered. Nothing is built yet, so every piece starts as a need.</p>
+      <div class="shots">
+        <figure class="shot">
+          <img src="lostkeep-attach/A-style-ironbark.jpg" alt="Mockup of Ironbark Guard: a great tree with a hanging lantern, a ruined arch, an arch bridge over water, graves and a chapel gate" width="1672" height="941">
+          <a class="pin" href="#IB2" style="left:16%;top:66%">IB2</a>
+          <a class="pin" href="#IB1" style="left:20%;top:84%">IB1</a>
+          <a class="pin" href="#L4" style="left:48%;top:66%">L4</a>
+          <a class="pin hero" href="#L1" style="left:15%;top:30%">L1</a>
+          <a class="pin" href="#L2" style="left:88%;top:22%">L2</a>
+          <a class="pin" href="#P3" style="left:62%;top:30%">P3</a>
+          <a class="pin" href="#P2" style="left:56%;top:16%">P2</a>
+          <a class="pin" href="#PR1" style="left:9%;top:52%">PR1</a>
+          <a class="pin" href="#PR2" style="left:72%;top:52%">PR2</a>
+          <a class="pin" href="#P5" style="left:4%;top:92%">P5</a>
+          <a class="pin" href="#IB3" style="left:76%;top:70%">IB3</a>
+        </figure>
+      </div>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Piece in the region</th><th>Today</th><th>Status</th></tr></thead>
+        <tbody id="audit"></tbody>
+      </table></div>
+      <p class="note">There are no characters, enemies or HUD in this book. Kleo, the Carapax scouts and the HUD get their own books. Water, fog, light, the vignette and the Memory-Meld outline are drawn by the game, not painted.</p>
+    </section>
+
+    <section id="workflow">
+      <span class="eyebrow">Start</span>
+      <h2>How to use this book</h2>
+      <div class="pilot">
+        <strong>Start with the pilot: IB1, IB2 and P3.</strong>
+        <p>Those three decide the look of every room. Make the rest only once they read well in a test room in Godot.</p>
+      </div>
+      <ol class="steps">
+        <li><div><strong>Attach the images each card lists.</strong> They are in <code>docs/art-production/lostkeep-attach/</code>. Image A, the Ironbark mockup, goes with every card.</div></li>
+        <li><div><strong>Press Copy and paste the prompt into your image model.</strong> The copy includes the shared rules unless you untick the box at the top.</div></li>
+        <li><div><strong>Check the result</strong> against <a href="#checks">the checklist</a>. If it falls short, use a fix from <a href="#fixes">If the image falls short</a>.</div></li>
+        <li><div><strong>Save it under the card's file name and hand it to me.</strong> I reduce it to true pixel scale, snap it to the palette, cut it, and set it up in Godot.</div></li>
+        <li><div><strong>Tick it done.</strong> Ticks are saved in this browser only.</div></li>
+      </ol>
+    </section>
+
+    <section id="build">
+      <span class="eyebrow">Start</span>
+      <h2>How the art is assembled</h2>
+      <p>The art is skin on a skeleton. These rules are why the cards ask for what they ask for.</p>
+      <div class="cols">
+        <div class="kv"><h3>Black box first</h3><ul class="checks">
+          <li>Every room is blocked out as solid black masses (<code>#0B0812</code>) with flat floors and ceilings. That is the collision.</li>
+          <li>Terrain art is painted onto the edges of those masses. The inside of each mass fades to the same black, so the box itself becomes the shadow and the depth.</li>
+          <li>So every edge band has a straight, exact walking line, and every band ends in plain void colour.</li>
+        </ul></div>
+        <div class="kv"><h3>Floors, not platforms</h3><ul class="checks">
+          <li>Height comes from big masses and storeys of floor, plus a few floating islands that read as landforms.</li>
+          <li>Small platforms are rare and disguised: a timber walkway, a root, a fallen beam.</li>
+          <li>So the kit is mostly masses, bands and islands, with only one platform card.</li>
+        </ul></div>
+        <div class="kv"><h3>Parallax camera</h3><ul class="checks">
+          <li><code>Camera2D</code> with <code>Parallax2D</code> layers: sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · playfield 1.0 · foreground 1.3.</li>
+          <li>Each far layer is lower in contrast and bluer, so depth reads at once.</li>
+          <li>Every parallax layer repeats left to right without a seam.</li>
+        </ul></div>
+        <div class="kv"><h3>Light by the engine</h3><ul class="checks">
+          <li><code>CanvasModulate</code> darkens the scene; lanterns are <code>PointLight2D</code>; there is a screen vignette and layered fog.</li>
+          <li>So the art paints the flame and the lit glass, never the halo around them.</li>
+          <li>Ambient light in the art is soft and from above, the same on every piece.</li>
+        </ul></div>
+      </div>
+      <div class="swatches" id="swatches"></div>
+    </section>
+
+    <section id="pack">
+      <span class="eyebrow">Start</span>
+      <h2>Images to attach</h2>
+      <p>Everything is in <code>docs/art-production/lostkeep-attach/</code>.</p>
+      <div class="refs pack" id="pack-list"></div>
+    </section>
+
+    <section id="terrain" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Terrain on the black box</h2>
+      <p>The forest ground of Ironbark: earth, roots and moss. It covers most of every screen, so it is the most important part of the book.</p>
+      <div class="cards" id="cards-terrain"></div>
+    </section>
+    <section id="keep" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>The Lost Keep masonry</h2>
+      <p>The fortress of the Ironbark Guard: dressed plum stone and great ironbark timber. The same black-box method, a second material.</p>
+      <div class="cards" id="cards-keep"></div>
+    </section>
+    <section id="parallax" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Parallax layers</h2>
+      <p>Five depths, back to front. The Sovereign Spire on the horizon is the world's landmark: the player sees where they will end up from the very first screen.</p>
+      <div class="cards" id="cards-parallax"></div>
+    </section>
+    <section id="landmarks" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Landmarks</h2>
+      <p>The four things a player remembers Ironbark by and uses to find their way.</p>
+      <div class="cards" id="cards-landmarks"></div>
+    </section>
+    <section id="props" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Lived-in dressing</h2>
+      <p>The guard lived here until recently. Meals left half-eaten, helmets on pegs, lanterns still lit: the story of the disappearances, told without words.</p>
+      <div class="cards" id="cards-props"></div>
+    </section>
+    <section id="gates" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Locks you see first</h2>
+      <p>Each later ability's lock appears in Ironbark long before its key. Each look is kept for the whole game, so it must be clear and distinctive (registry IDs from <code>design/lock-and-key.md</code>).</p>
+      <div class="cards" id="cards-gates"></div>
+    </section>
+
+    <section id="checks">
+      <span class="eyebrow">Finish</span>
+      <h2>Check every result</h2>
+      <div class="cols">
+        <div class="kv"><h3>Every image</h3><ul class="checks">
+          <li>Put it next to image A. It looks like the same artist made both.</li>
+          <li>It is real pixel art: hard square pixels on one even grid, no blur, no soft gradients, no anti-aliased edges.</li>
+          <li>No text, labels, grid lines, swatches or watermarks.</li>
+          <li>Transparent where the card says so, with no checkerboard or white fringe.</li>
+          <li>Magenta appears nowhere: it belongs to the Blight alone.</li>
+        </ul></div>
+        <div class="kv"><h3>Terrain and masonry</h3><ul class="checks">
+          <li>The walking line is dead straight: lay a ruler on it.</li>
+          <li>The band's far side ends in plain void colour, with no detail.</li>
+          <li>No two stones or roots look copied.</li>
+          <li>Fill textures stay dark and quiet when tiled 3 × 3.</li>
+          <li>Island tops are flat; only their undersides are organic.</li>
+        </ul></div>
+        <div class="kv"><h3>Parallax</h3><ul class="checks">
+          <li>Each layer is darker or hazier than the one in front of it.</li>
+          <li>The left and right edges join.</li>
+          <li>The Spire is visible but small on P2: a landmark, not a subject.</li>
+          <li>P5 is nearly black, so it frames rather than distracts.</li>
+        </ul></div>
+        <div class="kv"><h3>Landmarks, props and locks</h3><ul class="checks">
+          <li>Every lock in the gates group reads at game size, with its one colour cue.</li>
+          <li>Lanterns have a flame but no halo.</li>
+          <li>Each sheet's pieces are separated by clear transparent space.</li>
+        </ul></div>
+      </div>
+      <p>Seams and palette do not need to be perfect. I snap the palette and repair small joins when processing, so judge the painting first.</p>
+    </section>
+
+    <section id="fixes">
+      <span class="eyebrow">Finish</span>
+      <h2>If the image falls short</h2>
+      <div class="cards" id="fix-list"></div>
+    </section>
+
+    <section id="after">
+      <span class="eyebrow">Finish</span>
+      <h2>What happens next</h2>
+      <ol class="steps">
+        <li><div><strong>Godot project:</strong> I set up the Godot 4.7.2 project: pixel-perfect 640 × 360 view, the black-box <code>TileMapLayer</code> with terrain autotiling, the parallax camera, lighting and the vignette.</div></li>
+        <li><div><strong>Pilot room:</strong> IB1, IB2 and P3 go into one test room, black box first, and you judge it in the game.</div></li>
+        <li><div><strong>Full kit:</strong> once you approve, you make the rest and the whole Ironbark kit goes in.</div></li>
+        <li><div><strong>Then the world:</strong> with the kit ready, Ironbark's rooms are blocked out from the lock-and-key registry, one approved room at a time.</div></li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "lostkeep-ironbark-prompt-book";
+  var state = { rules: true, done: {} };
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+    if (typeof saved.rules === "boolean") state.rules = saved.rules;
+    if (saved.done && typeof saved.done === "object") state.done = saved.done;
+  } catch (e) { /* storage unavailable: defaults */ }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* not saved */ }
+  }
+
+  var AUDIT = [
+    ["Black-box collision masses", "Not built", "code", "Drawn in Godot"],
+    ["Forest earth: fill, walkable tops, undersides, walls, corners", "Nothing", "need", "IB1 to IB3"],
+    ["Floating islands (three sizes)", "Nothing", "need", "IB4"],
+    ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
+    ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
+    ["Sky with the three moons", "Nothing", "need", "P1"],
+    ["Far horizon with the Sovereign Spire", "Nothing", "need", "P2"],
+    ["Mid forest of ironbark trunks", "Nothing", "need", "P3"],
+    ["Back wall of ruined arches", "Nothing", "need", "P4"],
+    ["Foreground silhouettes", "Nothing", "need", "P5"],
+    ["The Great Ironbark", "Nothing", "need", "L1"],
+    ["The Lost Keep gate", "Nothing", "need", "L2"],
+    ["The Prism-shard shrine (save point)", "Nothing", "need", "L3"],
+    ["The broken arch bridge", "Nothing", "need", "L4"],
+    ["Lanterns, graveyard, flora, the guard's belongings", "Nothing", "need", "PR1 to PR4"],
+    ["Bark-plate, silk and cocoon, thorn knot, Prism socket", "Nothing", "need", "GT1 to GT4"],
+    ["Water surface and moat, fog, light shafts, fireflies, vignette", "Code", "code", "Stays code by design"],
+    ["Memory-Meld echo outline (M1)", "Code", "code", "A shader on existing art"]
+  ];
+
+  var PACK = [
+    ["A", "A-style-ironbark.jpg", "Ironbark mockup", "The style target for this region. Goes with every card."],
+    ["B", "B-palette.png", "Palette sheet", "The project's colours, with names and codes."],
+    ["C", "C-aqueducts.jpg", "Aqueducts mockup", "Water, the timber shack, lanterns and plum stone."],
+    ["D", "D-shrine.jpg", "Shrine mockup", "Keep masonry and the Prism-shard shrine."],
+    ["E", "E-silk-nest.jpg", "Silk nest mockup", "Silk walls and hanging cocoons, for GT2."],
+    ["F", "F-silk-mother-arena.jpg", "Silk Mother arena", "Gothic arches and a back-wall depth, for P4."],
+    ["G", "G-macro-map.jpg", "Macro map", "Where Ironbark sits in Vaelora. For reference only; never attach it to a card."]
+  ];
+
+  var SWATCHES = [
+    ["Void / collision", "#0B0812"], ["Deep stone", "#241A2E"], ["Plum stone", "#3E2E4A"], ["Worn stone", "#5E4C68"],
+    ["Stone light", "#8C7A92"], ["Forest shadow", "#13282B"], ["Canopy teal", "#1F4A4A"], ["Mist teal", "#3C7472"],
+    ["Moss", "#4F8A3A"], ["Moss light", "#8DC24E"], ["Bark", "#3A2420"], ["Ironbark", "#5C3A2C"],
+    ["Timber light", "#8A5A3C"], ["Lantern amber", "#F2B04A"], ["Flame core", "#FFE59A"], ["Water deep", "#16354A"],
+    ["Water", "#2B5D7A"], ["Anima teal", "#3FE0C8"], ["Prism amethyst", "#8A4FC0"], ["Blight magenta (reserved)", "#D02A86"]
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Shared text
+  // ---------------------------------------------------------------------------
+  function rules(card) {
+    var scale = card.scale || 8;
+    var bg = card.background || "Fully transparent (alpha) PNG. Never paint a checkerboard, paper texture, white or a scene behind the art. If transparency is impossible, use one flat pure blue #0000FF background with no gradient, noise or shadow (never magenta: that colour belongs to the Blight).";
+    return [
+      "STYLE AND TECHNICAL RULES (they apply to everything in this request)",
+      "Project: \"Lost Keep\", a 2D side-view Metroidvania made in Godot 4.7. Premium, top-tier pixel art. These images become game assets, so the technical rules matter as much as the look.",
+      "",
+      "Look",
+      "- High-end pixel art matching the attached mockup A: rich, moody and atmospheric, with natural, overgrown, lived-in forms. Readable clusters of pixels, deliberate dithering only in large soft areas, selective dark outlines (sel-out) on foreground forms.",
+      "- Pixel scale x" + scale + ": every art pixel is an exact " + scale + " x " + scale + " px square of one flat colour, aligned to a " + scale + " px grid from the top-left corner. No anti-aliasing, no blur, no smooth gradients, no sub-pixel detail, no soft brushes.",
+      "- Strict orthographic side view, like a 2D platformer: no perspective, no camera tilt, no visible top surfaces, no vanishing points.",
+      "- Soft ambient light from above, the same on every piece. No cast shadows onto the background, no bloom, no lens effects. Glows and halos around lights are made by the game: paint a lantern's flame and lit glass, never the halo around it.",
+      "- Colour rules: Lantern amber #F2B04A and flame #FFE59A mean warm light and safety. Anima teal #3FE0C8 means life-force and things the player can use. Prism amethyst #8A4FC0 belongs to the Prism. Blight magenta #D02A86 belongs to the Blight alone: never use it here. Moss #4F8A3A and #8DC24E are for living growth. Void #0B0812 is the deepest shadow and the inside of every solid mass.",
+      "",
+      "Canvas",
+      "- Exact canvas: " + card.canvas + ".",
+      "- Background: " + bg,
+      "- No grid lines, frames, borders, labels, numbers, captions, colour swatches, logos, signatures or watermarks. No text of any kind.",
+      "- No characters, creatures or people anywhere in the image unless the request says so."
+    ].join("\n");
+  }
+
+  var STYLE_LOCK = [
+    "MATCH THE MOCKUP AND MAKE IT FEEL REAL (this matters most)",
+    "- Attached image A is the target look for this region. Everything you paint must belong in it: the same pixel density, the same plum-purple stone, deep teal forest, rich greens, warm amber lights and the same hand-placed detail.",
+    "- The world is natural, old and lived in: worn edges, moss that grows where water runs, roots that push through stone, repairs made by people who lived here. Nothing is clean, symmetrical or freshly made.",
+    "- Hand-placed pixels, not a filter over a painting and not vector shapes. No two stones, roots or leaves are identical. At most five tones per material: deep shadow, shadow, base, light and one worn highlight.",
+    "- If a layout guide is attached, it only shows where things go. Match its silhouette and ignore its flat colours."
+  ].join("\n");
+
+  // Canvas sizes
+  var WIDE = "3072×1024 px (art 384 × 128 px at x8)";
+  var BG = "3072×1440 px (art 768 × 360 px at x4)";
+
+  var CARDS = [
+    // ------------------------------------------------------------- terrain
+    { id: "IB1", group: "terrain", file: "ironbark_earth_fill", title: "Earth and root fill", pilot: true,
+      about: "The inside of every forest mass, behind the edges. The game darkens it toward the void with depth, so it must stay dark and quiet.",
+      canvas: "1024×1024 px (art 128 × 128 px at x8)", game: "128 × 128 px, repeating on all sides", attach: ["A", "B"],
+      background: "Opaque: the earth fills the whole canvas edge to edge.",
+      text: [
+        "TASK: the inside of a solid mass of forest earth in Ironbark, seen flat-on, as one seamless repeating texture. It fills the body of every floor and wall behind its edges.",
+        "",
+        "- Packed dark earth #241A2E and #13282B with buried stones in #3E2E4A of uneven size, a few thin ironbark roots #3A2420 running through it, and rare flecks of #5E4C68.",
+        "- A very narrow range of values: nothing should catch the eye. When it repeats, no single stone or root may read as a repeat.",
+        "- No moss, no lights, no grass, nothing bright.",
+        "- It must join copies of itself on all four sides."
+      ] },
+    { id: "IB2", group: "terrain", file: "ironbark_earth_edges", title: "Walkable tops and undersides", pilot: true,
+      about: "The most important image in the book. Band 1 is every forest floor Kleo stands on, band 2 is every ceiling and overhang.",
+      canvas: WIDE, game: "2 bands, 384 × 48 each, repeating", attach: ["A", "B"],
+      text: [
+        "TASK: two long horizontal bands of forest ground for Ironbark, on one transparent canvas. Each band runs the full width of the canvas, edge to edge. The left and right ends of each band must join a copy of itself.",
+        "",
+        "BAND 1, a walkable surface, from y = 64 to y = 448:",
+        "- The walking line: at y = 128, a perfectly straight, perfectly horizontal top edge of the soil along the whole width. Kleo's feet stand on it, so it must not dip, bend or break.",
+        "- Above the line, from y = 64 to 128 only: grass tufts, small ferns, moss cushions and a few tiny white flowers #EDE3D3, overlapping the line slightly. Uneven, natural clumps with bare gaps between them.",
+        "- Below the line: a 48 px lip of thick moss #4F8A3A with #8DC24E highlights hanging over the earth's edge in uneven drapes, then earth #3E2E4A and #241A2E with embedded stones and roots, a few short hanging moss strands.",
+        "- The last 128 px darken step by step into plain void #0B0812 with no detail at all.",
+        "",
+        "BAND 2, the underside of a ceiling or overhang, from y = 576 to y = 960:",
+        "- 128 px of plain void #0B0812 with no detail.",
+        "- 192 px of earth growing lighter toward the bottom edge: dangling roots, small stones, a few hanging vines and moss strands that break the bottom edge and hang down to y = 960.",
+        "- The bottom edge of the earth itself is a straight horizontal line at y = 896; only roots and vines hang below it.",
+        "",
+        "Both bands are one continuous hand-made length of ground, not repeated blocks."
+      ] },
+    { id: "IB3", group: "terrain", file: "ironbark_earth_walls_corners", title: "Wall faces and corners",
+      about: "The sides of masses and the corners where they meet floors and ceilings. The game mirrors them for walls facing the other way.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band 48 × 256 and 4 corners 64 × 64, cut apart", attach: ["A", "B", "Your approved IB2"],
+      text: [
+        "TASK: a wall band and four corner pieces for Ironbark's forest earth, on one transparent canvas, matching the attached approved IB2 exactly in colour and detail.",
+        "",
+        "1. Left half of the canvas (x = 0 to 1024): one tall wall band that runs from the top edge to the bottom edge of the canvas and joins a copy of itself top to bottom. The exposed face of the wall points RIGHT. Its right edge, at x = 768, is a perfectly straight vertical line. From that face inward: 128 px of earth with roots, stones and hanging moss, then a step-by-step darkening to plain void #0B0812 at x = 384, then void to x = 0.",
+        "2. Right half (x = 1088 to 2048): four corner pieces in a 2 × 2 grid of cells about 448 × 448 each, with transparent space between them:",
+        "   a. Top-left cell: an outer corner where a walkable top meets a wall face pointing right, so moss rolls over the edge.",
+        "   b. Top-right cell: an inner corner where a floor meets a wall rising on its left.",
+        "   c. Bottom-left cell: an outer corner where a ceiling underside meets a wall face pointing right, with roots hanging.",
+        "   d. Bottom-right cell: an inner corner where a ceiling meets a wall.",
+        "- In every corner, the walking line, ceiling line and wall line are perfectly straight and meet at an exact right angle. Only plants overlap them."
+      ] },
+    { id: "IB4", group: "terrain", file: "ironbark_islands", title: "Floating islands",
+      about: "Three islands of earth broken away from the land. Flat tops to stand on, natural undersides. Used in place of rows of small platforms.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 islands, 6, 12 and 20 tiles wide", attach: ["A", "B", "Your approved IB2"],
+      text: [
+        "TASK: three floating islands of Ironbark forest earth on one transparent canvas, separated by transparent space, matching the approved IB2.",
+        "",
+        "- Island 1: 768 px wide (6 tiles). Island 2: 1536 px wide (12 tiles). Island 3: 2560 px wide (20 tiles), across the bottom of the canvas.",
+        "- Each top is a perfectly straight horizontal walking line, covered in the same grass, ferns and moss as IB2, with moss draping over both ends.",
+        "- Each underside is natural and organic: a hanging mass of earth and stone that tapers downward like a broken-off root ball, 1.5 to 2 times as deep as the island is tall at its ends, with dangling roots and vines and a few small stones about to fall.",
+        "- Island 3 has a small ironbark sapling rooted near one end (no more than 3 tiles tall) and a few red-capped mushrooms.",
+        "- They must look like landforms the world made, not floating game platforms."
+      ] },
+    // ------------------------------------------------------------- keep
+    { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
+      about: "The inside of the fortress walls, floors and pillars. Dark, quiet, dressed stone.",
+      canvas: "1024×1024 px (art 128 × 128 px at x8)", game: "128 × 128 px, repeating on all sides", attach: ["A", "B", "D"],
+      background: "Opaque: the stone fills the whole canvas edge to edge.",
+      text: [
+        "TASK: the inside of a solid mass of the Lost Keep's masonry, seen flat-on, as one seamless repeating texture.",
+        "",
+        "- Courses of dressed plum stone blocks #241A2E and #3E2E4A of uneven widths (3 to 8 art pixels tall per course, never a regular grid), thin darker joints, chipped corners, the occasional cracked or missing block.",
+        "- A narrow, dark range of values; rare #5E4C68 highlights only.",
+        "- No moss, no lights, no carvings that would read as a repeat.",
+        "- It must join copies of itself on all four sides."
+      ] },
+    { id: "K2", group: "keep", file: "keep_stone_edges", title: "Keep walkable tops, undersides and walls",
+      about: "Flagstone floors with moss in the cracks, vaulted undersides, and wall faces for the fortress.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 bands, cut apart, repeating", attach: ["A", "B", "D", "Your approved K1"],
+      text: [
+        "TASK: three horizontal bands of the Lost Keep's masonry on one transparent canvas, matching the attached shrine mockup D and the approved K1. Each band runs edge to edge and joins a copy of itself left to right.",
+        "",
+        "BAND 1, a walkable floor, from y = 64 to 448: a perfectly straight walking line at y = 128. Above it, only a few grass tufts and a little moss growing out of the joints. Below it, a 48 px course of worn flagstone edge #5E4C68 and #8C7A92 with chips and moss in the cracks, then dressed stone that darkens step by step into plain void #0B0812.",
+        "BAND 2, a ceiling underside, from y = 576 to 960: void at the top, then heavy corbelled stone and the start of a vault, a few ivy strands hanging below a straight bottom line at y = 896.",
+        "BAND 3, a decorative wall course, from y = 1088 to 1472: a carved string course of the Ironbark Guard, a repeating band of simple leaf-and-shield reliefs, very worn, with one empty iron torch bracket every 768 px.",
+        "",
+        "Everything is old, patched and overgrown: a fortress that people lived in until recently."
+      ] },
+    { id: "K3", group: "keep", file: "keep_timber_kit", title: "Ironbark timber kit",
+      about: "Great timber floors that make a storey, the posts and braces that hold them, and the one walkway platform in the kit.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Pieces cut apart", attach: ["A", "B", "C"],
+      text: [
+        "TASK: a kit of ironbark timber construction for the Lost Keep, on one transparent canvas, pieces separated by transparent space. Dark, ancient, iron-hard wood #3A2420, #5C3A2C and #8A5A3C with blackened iron fittings.",
+        "",
+        "1. A timber floor beam, 2048 px wide and 192 px tall, repeating left to right: a thick squared beam with a perfectly straight top walking line, iron straps and rivets, moss on top, worn edges.",
+        "2. A vertical support post, 128 px wide, 1024 px tall, repeating top to bottom.",
+        "3. Two diagonal braces (one per direction) and one iron-shod post foot, as separate pieces.",
+        "4. A short, narrow rope-and-plank walkway, 768 px wide, with a straight top line: the only small platform in the kit, made to look like a repair someone built.",
+        "5. A slanted shingled roof edge, 1536 px wide, as on the shack in mockup C, with moss and a hanging lantern hook."
+      ] },
+    // ------------------------------------------------------------- parallax
+    { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
+      about: "The deepest layer (scroll 0.05). The Triad of Vaelora's moons, near alignment: the eclipse that frames the whole story.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["A", "B"],
+      background: "Opaque: the sky fills the whole canvas.",
+      text: [
+        "TASK: the dusk sky over Ironbark, the farthest parallax layer.",
+        "",
+        "- A dusk gradient in banded pixel steps (no smooth gradient): deep violet #241A2E at the top, through dusty plum to a soft teal-grey mist near the bottom #3C7472.",
+        "- Three moons in the upper third, close together and almost aligned: one large pale moon, and two smaller crescents on either side. A faint thin ring of light where they nearly overlap. They are the brightest things in the image but still soft.",
+        "- A few long, soft strata of cloud in plum and rose, pixel-banded.",
+        "- Sparse stars only in the darkest part.",
+        "- The left and right edges must join. The moons must not touch either edge."
+      ] },
+    { id: "P2", group: "parallax", file: "ironbark_bg_far", title: "Far horizon and the Spire", scale: 4,
+      about: "Scroll 0.15. Silhouettes of distant ruined towers and, far off, the Sovereign Spire: the world's landmark, seen from the first screen.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["A", "B"],
+      text: [
+        "TASK: a far parallax layer of silhouettes for Ironbark, transparent above the skyline.",
+        "",
+        "- A soft, hazy line of distant forest canopy and the ruined towers and aqueduct arches of an old civilisation, in two flat-ish values of misty teal-grey #3C7472 and #1F4A4A, very low contrast.",
+        "- Once, off-centre, very small and far away: the Sovereign Spire, a tall, slender, impossibly high tower of pale stone with a faint amethyst #8A4FC0 glint at its tip. It is a landmark, not the subject: no more than one fifth of the canvas height.",
+        "- The layer is solid from the skyline down to the bottom edge, fading to a flat mist colour at the bottom.",
+        "- The left and right edges must join; keep the Spire away from both edges."
+      ] },
+    { id: "P3", group: "parallax", file: "ironbark_bg_mid", title: "Mid forest of ironbark trunks", scale: 4, pilot: true,
+      about: "Scroll 0.35. The layer that gives the region its mood: huge trunks, hanging moss and soft mist, between the far horizon and the playfield.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["A", "B"],
+      text: [
+        "TASK: a mid-distance parallax layer of the ironbark forest, transparent where the sky shows through.",
+        "",
+        "- Five to seven enormous ironbark trunks of different widths, with roots spreading at the bottom and canopy masses at the top, in deep teal #1F4A4A and #13282B with a cool rim of #3C7472 on the sides facing the moonlight.",
+        "- Between them: ruined stone arches and a broken aqueduct, half swallowed by the trees.",
+        "- Long hanging moss and vines from the canopy. Soft bands of mist across the lower third.",
+        "- Lower contrast than the playfield and higher than P2. No warm colours except two tiny, distant lantern points #F2B04A.",
+        "- The left and right edges must join."
+      ] },
+    { id: "P4", group: "parallax", file: "ironbark_bg_wall", title: "Back wall of ruined arches", scale: 4,
+      about: "Scroll 0.7. Just behind the playfield: the ruined galleries of the Keep and the forest edge, darkened so the playfield reads in front of it.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["A", "B", "F"],
+      text: [
+        "TASK: a near-background parallax layer for Ironbark, directly behind the playfield. Transparent above the ruins' tops.",
+        "",
+        "- A long ruined gallery of gothic stone arches and quatrefoil windows, like the back wall of mockup F, in dark plum stone #241A2E and #3E2E4A, overgrown with ivy and moss in desaturated greens.",
+        "- Through some of the arches, dark forest; some arches collapsed; one with a torn Ironbark banner (a dull red shield-and-leaf) hanging inside.",
+        "- Clearly darker and lower in contrast than the playfield: it must never be mistaken for something to stand on. No straight horizontal ledges.",
+        "- The left and right edges must join."
+      ] },
+    { id: "P5", group: "parallax", file: "ironbark_fg", title: "Foreground silhouettes", scale: 4,
+      about: "Scroll 1.3, in front of Kleo. Dark leaves, ferns and hanging vines that frame the screen and add depth, like the edges of mockup A.",
+      canvas: BG, game: "Top strip and bottom strip, each repeating", attach: ["A", "B"],
+      text: [
+        "TASK: two foreground strips of near-black plant silhouettes, on a transparent canvas.",
+        "",
+        "- Bottom strip, from y = 1000 to 1440: large fern fronds, broad leaves and grass blades rising from the bottom edge, in near-black teal #0B0812 and #13282B with only a faint edge highlight. Tall clumps with wide gaps between them, so the playfield shows through more than half the width.",
+        "- Top strip, from y = 0 to 400: hanging vines, canopy leaves and a thick root arching in from the top edge, same colours.",
+        "- Everything between y = 400 and 1000 is transparent.",
+        "- The left and right edges of both strips must join."
+      ] },
+    // ------------------------------------------------------------- landmarks
+    { id: "L1", group: "landmarks", file: "landmark_great_ironbark", title: "The Great Ironbark",
+      about: "The tree from mockup A: the region's heart and its first save. Its crown holds the closed-eyed thorn knots (lock T1).",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A large prop behind the playfield", attach: ["A", "B"],
+      text: [
+        "TASK: the Great Ironbark, an ancient, enormous tree, as one large prop on a transparent canvas.",
+        "",
+        "- A massive twisting trunk #3A2420 and #5C3A2C with deep bark grooves and moss, roots that spread wide at the bottom edge and grip stones, and a broad canopy of deep teal and green leaf masses that fills the top half.",
+        "- One long branch reaches out to the right with an iron chain and a hanging lantern on it (paint the lantern lit: amber glass and flame, no halo).",
+        "- Twisting through the bark of the crown: three or four dark red thorny roots, each ending in a knot with a single closed eye. They look dormant, almost asleep.",
+        "- A small Ironbark Guard shrine of stacked stones at the trunk's foot, with old offerings.",
+        "- The trunk's lower part is drawn to sit behind the playfield floor; leave the bottom 128 px as roots only."
+      ] },
+    { id: "L2", group: "landmarks", file: "landmark_keep_gate", title: "The Lost Keep gate",
+      about: "The entrance of the Ironbark Guard's fortress, closed and barred: the opening's visible goal (the Warden's Seal-Ring opens its inner doors later).",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A large prop on the playfield", attach: ["A", "B", "D"],
+      text: [
+        "TASK: the gatehouse of the Lost Keep, as one large prop on a transparent canvas, like the chapel gate in mockup A but grander and martial.",
+        "",
+        "- A gatehouse of dressed plum stone with a steep slate roof, two squat flanking towers, an arched gate with a heavy iron portcullis down, and stone steps before it. The flat ground line at the bottom is perfectly straight.",
+        "- Above the gate, a carved Ironbark crest: a shield over a leaf.",
+        "- A lit lantern on each side of the gate (amber, no halo), an iron fence with spear tips leading away, red-capped mushrooms and moss on the steps.",
+        "- Signs of sudden abandonment: a fallen banner, a spear left leaning against the wall, the gate's guard alcove empty.",
+        "- Only the closed gate: the open version is made later."
+      ] },
+    { id: "L3", group: "landmarks", file: "landmark_prism_shrine", title: "The Prism-shard shrine",
+      about: "The save point and ability shrine, from mockup D. Two states: dormant, and awakened when Kleo rests. Holds the empty Prism socket (lock S1).",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "2 states, side by side", attach: ["A", "B", "D"],
+      text: [
+        "TASK: an Oru'Vex Prism-shard shrine, in two states, side by side on a transparent canvas, each in a 1408 px wide cell with transparent space between.",
+        "",
+        "- A raised stone dais with a short flight of steps, inside a great carved octagonal stone frame with quatrefoil openings, as in mockup D. The ground line at the bottom is perfectly straight.",
+        "- Rising from the dais: a cluster of dark Prism crystal pillars #3E2E4A tinged with #8A4FC0, a stone brazier in front.",
+        "- In the base of the frame, on the right: a small empty socket shaped for a crystal, dark and lifeless.",
+        "- LEFT, dormant: the brazier is cold, the crystals dull.",
+        "- RIGHT, awakened: the brazier burns amber (flame only, no halo), the crystals hold a soft inner amethyst light, and thin lines of Anima teal #3FE0C8 trace the carvings.",
+        "- No Blight thorns in either state: this shrine is still clean."
+      ] },
+    { id: "L4", group: "landmarks", file: "landmark_arch_bridge", title: "The broken arch bridge",
+      about: "The stone bridge from mockup A, with its middle span fallen. The first sighting of the Wing-Cloak lock (G1): a torn banner flutters over the gap.",
+      canvas: "3072×1024 px (art 384 × 128 px at x8)", game: "2 bridge ends and their piers, cut apart", attach: ["A", "B"],
+      text: [
+        "TASK: the two surviving ends of an old stone arch bridge over a moat, on a transparent canvas, with a wide gap between them where the middle span has fallen.",
+        "",
+        "- Each end: one and a half arches of mossy plum stone with ivy, standing on stone piers that go down to the bottom edge (the water is added by the game).",
+        "- The walking line on top of each end is perfectly straight and at the same height on both sides.",
+        "- The broken ends are jagged, with a few loose stones and roots hanging off them.",
+        "- On the left end, a tall pole with a long torn Ironbark banner streaming out over the gap, as if in a strong wind.",
+        "- The gap between the two ends is 1152 px wide and completely transparent."
+      ] },
+    // ------------------------------------------------------------- props
+    { id: "PR1", group: "props", file: "props_lanterns", title: "Lanterns",
+      about: "The warm lights of the region. Each lantern is lit in one cell and unlit in the next; the game adds the glow.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "3 lanterns × 2 states", attach: ["A", "B", "C"],
+      text: [
+        "TASK: three kinds of lantern on a transparent canvas, in a grid of 3 columns and 2 rows of cells 640 × 448, separated by transparent space. Top row lit, bottom row the same lantern unlit (dark glass, no flame).",
+        "",
+        "1. A gallows lantern: a wooden post with a crossbeam and an iron lantern hanging on a short chain, as in mockup A.",
+        "2. A wall lantern on an iron bracket.",
+        "3. A hanging lantern on a long chain, for branches and ceilings; the chain's top end is cut flat.",
+        "- Lit lanterns: amber glass #F2B04A and a bright flame core #FFE59A. No halo, no light falling on anything around them."
+      ] },
+    { id: "PR2", group: "props", file: "props_graveyard", title: "Graveyard and fence",
+      about: "The Ironbark graveyard: the guard's dead, and a hint of how many have recently gone.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "Pieces cut apart", attach: ["A", "B"],
+      text: [
+        "TASK: graveyard pieces on a transparent canvas, separated by transparent space.",
+        "",
+        "- Five weathered headstones of different shapes and sizes, mossy and leaning; one with an engraved shield-and-leaf crest, one broken.",
+        "- One fresh, empty grave: a dug pit edge with a spade left beside it.",
+        "- An iron fence section with spear tips, 1024 px wide, that joins a copy of itself left to right, plus a matching fence post and a broken fence end.",
+        "- A small crypt plaque set into stone.",
+        "- Each piece stands on a flat bottom line."
+      ] },
+    { id: "PR3", group: "props", file: "props_flora", title: "Flora kit",
+      about: "Living growth to place by hand: what makes the stone feel taken back by the forest.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "Pieces cut apart", attach: ["A", "B"],
+      text: [
+        "TASK: a kit of plants on a transparent canvas, pieces separated by transparent space.",
+        "",
+        "- Six fern and grass clumps of different sizes, each on a flat bottom line.",
+        "- Four clusters of red-capped mushrooms with pale spots, two small and two large.",
+        "- Small white and pale violet flowers in three clumps.",
+        "- Three hanging vines of different lengths, whose middle section can repeat top to bottom, with leafy ends.",
+        "- Two curtains of hanging moss to drape over edges.",
+        "- Lily pads and reeds for the moat's surface."
+      ] },
+    { id: "PR4", group: "props", file: "props_guard_belongings", title: "The guard's belongings",
+      about: "Lived in, then abandoned: the evidence that people vanished in the middle of their lives.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "Pieces cut apart", attach: ["A", "B", "C"],
+      text: [
+        "TASK: everyday belongings of the Ironbark Guard on a transparent canvas, pieces separated by transparent space, each on a flat bottom line where it stands on the ground.",
+        "",
+        "- Crates, barrels and clay pots (three of each, in different sizes and states of wear).",
+        "- A weapon rack with two spears and an empty slot.",
+        "- A small table with an unfinished meal: a bowl, a cup on its side, bread.",
+        "- A helmet hanging from a peg, and a pair of boots left by a door.",
+        "- A cold campfire ring with a cooking pot on a tripod.",
+        "- A hanging Ironbark banner (a dull red cloth with a shield-over-leaf emblem), torn at the bottom."
+      ] },
+    // ------------------------------------------------------------- gates
+    { id: "GT1", group: "gates", file: "gate_bark_plate", title: "Bark-plate walls and floors (Ward: W1 to W3)",
+      about: "The first lock of the game, opened by Ironbark Ward's bash. Bronze, with a rune-shaped crack. Four stages, from intact to broken.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "Wall 2 × 4 tiles and floor 4 × 2 tiles, 4 stages each", attach: ["A", "B"],
+      text: [
+        "TASK: a breakable barrier on a transparent canvas, in two rows of four cells, separated by transparent space.",
+        "",
+        "- Top row: a vertical wall plate, 2 tiles wide and 4 tiles tall (256 × 512 px at this scale). Bottom row: a horizontal floor plate, 4 tiles wide and 2 tiles tall (512 × 256 px).",
+        "- The plate is a thick slab of petrified bark and pale bone-like resin, bound with tarnished bronze bands, with one clear rune-shaped crack glowing faintly bronze.",
+        "- The four cells show: intact; cracked further; half shattered with pieces missing; and only the broken stubs at the edges.",
+        "- It must read clearly as breakable, distinct from stone and earth, at game size."
+      ] },
+    { id: "GT2", group: "gates", file: "gate_silk_and_cocoon", title: "Silk wall and hanging cocoon (Emberwick: E1, E2)",
+      about: "The first thing the player wants: a tunnel sealed with silk, a shape in a cocoon behind it. Burned open only with Emberwick, an hour later.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "Silk wall 3 × 4 tiles, cocoon 2 × 3 tiles", attach: ["A", "B", "E"],
+      text: [
+        "TASK: on a transparent canvas, separated by transparent space:",
+        "",
+        "1. A sheet of thick silver-white silk sealing a tunnel opening, 3 tiles wide and 4 tiles tall, as in mockup E: layered strands, sagging, with a few glowing pale-teal eggs at the corners.",
+        "2. The same sheet burned through, with charred edges hanging at the sides.",
+        "3. A hanging cocoon on a single strand, 2 tiles wide and 3 tall, with the faint shape of a small round figure inside. The strand's top is cut flat.",
+        "4. The same cocoon split open and empty.",
+        "- No fire is shown: the game adds it."
+      ] },
+    { id: "GT3", group: "gates", file: "gate_thorn_knot", title: "Thorn knot (Thorn-Line: T1)",
+      about: "Morvath's anchor. Crimson, one eye. Dormant in Ironbark from the first minute; it wakes once Kleo has the Thorn-Line.",
+      canvas: "1024×512 px (art 128 × 64 px at x8)", game: "2 tiles × 2 tiles, 2 states", attach: ["A", "B"],
+      text: [
+        "TASK: a knot of dark red thorny roots with a single eye at its centre, in two states side by side on a transparent canvas.",
+        "",
+        "- LEFT, dormant: the eye is closed, the thorns dull dark red #6A1E28.",
+        "- RIGHT, awake: the eye is open, an amber-gold iris, and the thorns a brighter crimson #B0303C. It looks alert, not evil.",
+        "- Short root ends on all four sides, so it can sit inside bark or stone.",
+        "- Crimson must stay clearly different from magenta: this is Morvath, not the Blight."
+      ] },
+    { id: "GT4", group: "gates", file: "gate_prism_socket", title: "Prism socket (Anima Siphon: S1)",
+      about: "An empty Oru'Vex socket set in stone. Gold-edged, dark, and patient until the last act.",
+      canvas: "1024×512 px (art 128 × 64 px at x8)", game: "2 × 2 tiles, 2 states", attach: ["A", "B", "D"],
+      text: [
+        "TASK: a socket set into a carved stone block, in two states side by side on a transparent canvas.",
+        "",
+        "- LEFT, empty: a faceted hollow edged with tarnished gold, dark inside, the carved lines around it dead.",
+        "- RIGHT, powered: a Prism crystal seated in it, glowing amethyst #8A4FC0, and the carved lines around it filled with Anima teal #3FE0C8.",
+        "- The block's four edges are straight so it sits flush in a wall."
+      ] }
+  ];
+
+  var FIXES = [
+    ["It came back smooth or painterly, not pixel art", "This is a painting, not pixel art. Redo it as true pixel art: every pixel a hard square of one flat colour on an even grid at the stated scale, no anti-aliasing, no blur, no smooth gradients. Keep the same layout and canvas."],
+    ["The pixels are uneven sizes", "Keep the image, but make every art pixel exactly the same size and aligned to one even grid, starting at the top-left corner. No half pixels and no mixed pixel sizes."],
+    ["The walking line bends or dips", "Keep everything else, but make the walking line perfectly straight and perfectly horizontal along its whole length. Only plants may overlap it."],
+    ["The ends do not join", "Keep the image, but make the left and right edges match exactly, so it continues without a seam when placed beside a copy of itself."],
+    ["It is too bright or too busy for the playfield", "Keep the layout, but take everything a full value step darker and quieter, and remove the smallest details. Kleo must stand out in front of it."],
+    ["The background layer reads like the playfield", "This layer is far away. Lower its contrast, shift its colours toward misty teal-grey, and remove every straight horizontal ledge so nothing looks walkable."],
+    ["Lights have halos painted on", "Remove every halo, bloom and light falling on surfaces. Keep only the flame and lit glass themselves; the game adds the glow."],
+    ["It came back on white or a checkerboard", "Remove the background completely. If you cannot make it transparent, use one flat pure blue #0000FF background instead."]
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------------------
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "text") node.textContent = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
+    return node;
+  }
+
+  function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
+  function attachLine(card) {
+    var names = { A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", F: "F: the Silk Mother arena mockup" };
+    var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
+    return "\n\nATTACHED: " + list.join("; ") + ".";
+  }
+  function body(card) {
+    var text = Array.isArray(card.text) ? card.text.join("\n") : card.text;
+    return text + attachLine(card);
+  }
+  function fullPrompt(card) { return state.rules ? shared(card) + "\n\n" + body(card) : body(card); }
+
+  function copyText(text, button) {
+    function ok() {
+      var label = button.textContent;
+      button.textContent = "Copied";
+      button.classList.add("copied");
+      setTimeout(function () { button.textContent = label; button.classList.remove("copied"); }, 1400);
+    }
+    function fallback() {
+      var area = el("textarea", { readonly: "readonly", "aria-hidden": "true" });
+      area.value = text;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      try { if (document.execCommand("copy")) ok(); } catch (e) { /* select by hand */ }
+      document.body.removeChild(area);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback);
+    else fallback();
+  }
+
+  function progress() {
+    var n = CARDS.filter(function (c) { return state.done[c.id]; }).length;
+    document.getElementById("progress").textContent = n + " of " + CARDS.length + " done";
+  }
+
+  function thumb(letter) {
+    var item = PACK.filter(function (p) { return p[0] === letter; })[0];
+    if (!item) return el("span", { class: "thumb", style: "grid-template-columns:1fr;padding-left:10px", text: letter });
+    return el("a", { class: "thumb", href: "#pack" }, [
+      el("img", { src: "lostkeep-attach/" + item[1], alt: "", loading: "lazy" }),
+      el("span", {}, [el("b", { text: item[0] + " " }), document.createTextNode(item[2])])
+    ]);
+  }
+
+  function renderCard(card) {
+    var check = el("input", { type: "checkbox", id: "done-" + card.id });
+    check.checked = !!state.done[card.id];
+    var head = el("div", { class: "card-head" }, [
+      el("span", { class: "tag", text: card.id + (card.pilot ? " · pilot" : "") }),
+      el("h3", { text: card.title }),
+      el("label", { class: "done", for: "done-" + card.id }, [check, document.createTextNode("Done")])
+    ]);
+    var node = el("article", { class: "card" + (check.checked ? " is-done" : ""), id: card.id }, [head, el("p", { class: "about", text: card.about })]);
+    check.addEventListener("change", function () {
+      if (check.checked) state.done[card.id] = true; else delete state.done[card.id];
+      node.classList.toggle("is-done", check.checked);
+      save();
+      progress();
+    });
+    node.appendChild(el("dl", { class: "spec" }, [
+      el("dt", { text: "Save as" }), el("dd", {}, [el("code", { text: card.file + ".png" })]),
+      el("dt", { text: "Canvas" }), el("dd", { text: card.canvas }),
+      el("dt", { text: "In game" }), el("dd", { text: card.game })
+    ]));
+    node.appendChild(el("div", { class: "thumbs" }, card.attach.map(thumb)));
+    var pre = el("pre", { text: body(card) });
+    var button = el("button", { class: "copy", type: "button", text: "Copy", "aria-label": "Copy the prompt for " + card.id });
+    button.addEventListener("click", function () { copyText(fullPrompt(card), button); });
+    node.appendChild(el("div", { class: "prompt" }, [el("div", { class: "prompt-bar" }, [el("strong", { text: "Prompt" }), el("span", { text: "The shared rules are added when you copy" }), button]), pre]));
+    return node;
+  }
+
+  CARDS.forEach(function (card) { document.getElementById("cards-" + card.group).appendChild(renderCard(card)); });
+  document.getElementById("count").textContent = CARDS.length + " images";
+
+  AUDIT.forEach(function (row) {
+    document.getElementById("audit").appendChild(el("tr", {}, [
+      el("td", { text: row[0] }), el("td", { text: row[1] }),
+      el("td", {}, [el("span", { class: "status " + row[2], text: row[3] })])
+    ]));
+  });
+
+  SWATCHES.forEach(function (s) {
+    document.getElementById("swatches").appendChild(el("div", { class: "swatch" }, [
+      el("i", { style: "background:" + s[1] }), el("div", {}, [el("b", { text: s[0] }), el("span", { text: s[1] })])
+    ]));
+  });
+
+  PACK.forEach(function (p) {
+    document.getElementById("pack-list").appendChild(el("div", { class: "ref" }, [
+      el("img", { src: "lostkeep-attach/" + p[1], alt: p[2], loading: "lazy" }),
+      el("div", {}, [el("strong", { text: p[0] + ". " + p[2] }), el("span", { text: p[3] }), el("span", {}, [el("code", { text: p[1] })])])
+    ]));
+  });
+
+  FIXES.forEach(function (f) {
+    var button = el("button", { class: "copy", type: "button", text: "Copy" });
+    button.addEventListener("click", function () { copyText(f[1], button); });
+    document.getElementById("fix-list").appendChild(el("div", { class: "prompt" }, [
+      el("div", { class: "prompt-bar" }, [el("strong", { text: f[0] }), button]),
+      el("pre", { text: f[1] })
+    ]));
+  });
+
+  var rulesBox = document.getElementById("include-rules");
+  rulesBox.checked = state.rules;
+  rulesBox.addEventListener("change", function () { state.rules = rulesBox.checked; save(); });
+  progress();
+})();
+
+</script>
