@@ -243,15 +243,28 @@ She steps forward with every hit.
   `godot --headless --path game --script res://tools/build_test_room.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
   edit the scene by hand and stop rebuilding.
-- **The terrain:** the `Solid` TileMapLayer is the collision (tile atlas column
-  0 is earth, 1 is stone). `TerrainSkin` paints the bands along every exposed
-  edge and fades each mass to the void. In the editor, paint or erase tiles and
-  the skin follows.
+- **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
+  earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
+  holds the masses put back into the spaces (islands, shelves, capstones), so
+  each is painted as an object of its own and the floor under it keeps its edge.
+  `TerrainSkin` paints the bands along every exposed edge, keeps slabs lit and
+  fades only deep rock to the void. Stone walking edges get a pale lip so ledges
+  read. In the editor, paint or erase tiles and the skin follows.
+- **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
+  drops through with down + jump. Pots, barrels and crates are `Breakable`
+  (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
+  hit has an Area2D on layer 3 whose parent has `take_hit(hit) -> bool`.
+- **The camera** (`camera_rig.gd`) never moves on its own: a small dead-zone
+  window, a steady look-ahead only while running, a fixed height that ignores
+  jumps, physics-tick updates in whole pixels. `python3 tools/camera_report.py`
+  measures drift, sway and wobble from a tour's `camera.csv`; keep drift near
+  zero and wobble at zero.
 - **Test it** (use a virtual display in the cloud):
   - `xvfb-run -a godot --path game --fixed-fps 60 --audio-driver Dummy res://tests/playtest.tscn -- mode=X`
   - `mode=measure`: Kleo's jump, gap and ledge numbers.
   - `mode=shots`: screenshots, with art and as the black box.
   - `mode=tour` and `mode=upper`: the main and upper lines played by script.
+  - `mode=props`: breaking props, the crossbeam and dropping through it.
   - `mode=map`: the whole room plus its collision cells.
   - Then `python3 tools/stitch_map.py` makes the map images and the walked
     routes.
@@ -287,6 +300,8 @@ She steps forward with every hit.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
 - **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
   images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.
-- Polish noted in the first room: a softer edge treatment at hole and shaft
-  mouths; corner caps where tops meet walls; the sky's three moons are large
-  (consider regenerating P1 with smaller moons).
+- Polish noted in the first room: corner caps where tops meet walls; the sky's
+  three moons are large (consider regenerating P1 with smaller moons).
+- **Textures that tile** are cut with a minimum-error seam
+  (`tools/make_terrain.py`), never a dithered crossfade. Bands with a regular
+  pattern (arches, carved panels) are cut at a whole number of repeats.

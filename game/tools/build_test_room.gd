@@ -49,7 +49,9 @@ const STONE := [[6, 26, 24, 14], [30, 29, 61, 11]]
 ## Cells painted by placed art instead of the skin.
 const SKIP := [[33, 21, 15, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
 ## Back walls behind enclosed spaces.
-const BACK := [[8, 29, 22, 8], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [78, 28, 4, 4], [24, 24, 4, 5]]
+const BACK := [[8, 29, 22, 8], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 5]]
+## Back walls of raw earth: the collapse that drops into the crypt.
+const BACK_EARTH := [[78, 28, 4, 4]]
 
 const SPAWN := Vector2(232, 384)
 
@@ -57,8 +59,8 @@ var _root: Node2D
 
 
 func _initialize() -> void:
-	var earth := _material("earth", 22, 38, 55, 3.0)
-	var stone := _material("stone", 13, 20, 47, 2.4)
+	var earth := _material("earth", 22, 38, 55, 5.0, Color(0, 0, 0, 0))
+	var stone := _material("stone", 13, 20, 47, 4.5, Color("#b3a2b9"))
 	var tileset := _tileset()
 	_build_kleo()
 	_build_room(tileset, earth, stone)
@@ -68,7 +70,7 @@ func _initialize() -> void:
 
 # --- Resources --------------------------------------------------------------------------
 
-func _material(kind: String, top_line: int, under_line: int, wall_face: int, fade: float) -> Resource:
+func _material(kind: String, top_line: int, under_line: int, wall_face: int, fade: float, lip: Color) -> Resource:
 	var m: Resource = load("res://scripts/world/terrain_material.gd").new()
 	m.fill = load(TERRAIN + kind + "_fill.png")
 	m.top_band = load(TERRAIN + kind + "_top.png")
@@ -78,6 +80,8 @@ func _material(kind: String, top_line: int, under_line: int, wall_face: int, fad
 	m.wall_band = load(TERRAIN + kind + "_wall.png")
 	m.wall_face = wall_face
 	m.fade_tiles = fade
+	m.lip_color = lip
+	m.top_lit = 24 if kind == "earth" else 30
 	ResourceSaver.save(m, "res://scenes/world/terrain_%s.tres" % kind)
 	return load("res://scenes/world/terrain_%s.tres" % kind)
 
@@ -125,7 +129,7 @@ func _build_kleo() -> void:
 	k.name = "Kleo"
 	k.set_script(load("res://scripts/player/kleo.gd"))
 	k.collision_layer = 2
-	k.collision_mask = 1
+	k.collision_mask = 1 | 64  # the rock, and one-way platforms
 	k.floor_snap_length = 4.0
 	k.z_index = 10
 	var shape := CollisionShape2D.new()
@@ -194,11 +198,20 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	back.z_index = -2
 	back.set("fill", load(TERRAIN + "stone_fill.png"))
 	back.set("course", load(TERRAIN + "stone_course.png"))
+	back.set("brightness", 0.24)
+	back.set("course_brightness", 0.34)
+	var back_earth := _node(Node2D.new(), "EarthBackWalls", _root)
+	back_earth.set_script(load("res://scripts/world/back_wall.gd"))
+	back_earth.z_index = -2
+	back_earth.set("fill", load(TERRAIN + "earth_fill.png"))
+	back_earth.set("brightness", 0.4)
+	back_earth.set("regions", _rects(BACK_EARTH))
 	back.set("regions", _rects(BACK))
 
 	var behind := _node(Node2D.new(), "Behind", _root)  # landmarks and props behind Kleo
 	behind.z_index = 2
-	var solid := _build_solid(tileset)
+	var layers := _build_solid(tileset)
+	var solid: TileMapLayer = layers[0]
 	var skin := _node(Node2D.new(), "TerrainSkin", _root)
 	skin.set_script(load("res://scripts/world/terrain_skin.gd"))
 	skin.z_index = 4
@@ -206,6 +219,7 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	skin.set("materials", Array([earth, stone], TYPE_OBJECT, &"Resource", load("res://scripts/world/terrain_material.gd")))
 	skin.set("skip_regions", _rects(SKIP))
 	skin.set("solid_layer", solid)
+	skin.set("mass_layer", layers[1])
 	var placed := _node(Node2D.new(), "PlacedArt", _root)  # art that replaces the skin
 	placed.z_index = 5
 	var front := _node(Node2D.new(), "Front", _root)  # in front of Kleo
@@ -240,11 +254,15 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	_root.free()
 
 
-func _build_solid(tileset: TileSet) -> TileMapLayer:
+func _build_solid(tileset: TileSet) -> Array:
 	var layer := _node(TileMapLayer.new(), "Solid", _root) as TileMapLayer
 	layer.tile_set = tileset
 	layer.add_to_group("solid_tiles", true)
+	var masses := _node(TileMapLayer.new(), "Masses", _root) as TileMapLayer
+	masses.tile_set = tileset
+	masses.add_to_group("solid_tiles", true)
 	var cells := {}
+	var mass_cells := {}
 	for r in ROCK:
 		_fill_cells(cells, r, r[4])
 	for s in SPACES:
@@ -252,7 +270,7 @@ func _build_solid(tileset: TileSet) -> TileMapLayer:
 			for y in range(s[1], s[1] + s[3]):
 				cells.erase(Vector2i(x, y))
 	for m in MASSES:
-		_fill_cells(cells, m, m[4])
+		_fill_cells(mass_cells, m, m[4])
 	for st in STONE:
 		for x in range(st[0], st[0] + st[2]):
 			for y in range(st[1], st[1] + st[3]):
@@ -261,6 +279,8 @@ func _build_solid(tileset: TileSet) -> TileMapLayer:
 					cells[c] = 1
 	for c in cells:
 		layer.set_cell(c, 0, Vector2i(cells[c], 0))
+	for c in mass_cells:
+		masses.set_cell(c, 0, Vector2i(mass_cells[c], 0))
 	# The room's side walls: nothing passes the west or east edge.
 	for side in [[Vector2(0, 0), Vector2(1, 0)], [Vector2(ROOM.end.x * TILE, 0), Vector2(-1, 0)]]:
 		var wall := _node(StaticBody2D.new(), "Edge", _root)
@@ -270,7 +290,7 @@ func _build_solid(tileset: TileSet) -> TileMapLayer:
 		ws.shape = wb
 		_node(ws, "Shape", wall)
 		wall.position = side[0]
-	return layer
+	return [layer, masses]
 
 
 func _fill_cells(cells: Dictionary, r: Array, mat: int) -> void:
@@ -311,12 +331,12 @@ func _parallax(name: String, scale: Vector2, tex_path: String, y: float, base_co
 func _build_parallax() -> void:
 	var sky := _parallax("Sky", Vector2(0.05, 0.0), PARALLAX + "sky.png", -96.0, Color("#3b6d70"))
 	sky.get_node("Art").modulate = Color(0.78, 0.76, 0.86)
-	_parallax("Far", Vector2(0.15, 0.08), PARALLAX + "far.png", 92.0, Color("#2b4f52"))
+	_parallax("Far", Vector2(0.15, 0.08), PARALLAX + "far.png", 92.0, Color("#3d7070"))
 	var fog_far := _node(Parallax2D.new(), "FogFar", _root) as Parallax2D
 	fog_far.scroll_scale = Vector2(0.25, 0.12)
 	fog_far.z_index = -10
 	_fog(fog_far, Rect2(-200, 210, 2400, 150), Color("#6f9a9a"), 0.32, Vector2(0.004, 0.0))
-	_parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 118.0, Color("#10262a"))
+	_parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 118.0, Color("#234753"))
 	var fog_mid := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
 	fog_mid.scroll_scale = Vector2(0.5, 0.35)
 	fog_mid.z_index = -10
@@ -448,14 +468,26 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 
 	# The root shelf's pocket: a lookout someone kept.
 	_ground(behind, stuff, Rect2(120, 100, 28, 17), 64.2 * TILE, 17 * TILE, 1.0, "Boots")
-	_ground(behind, stuff, Rect2(184, 16, 27, 30), 54.0 * TILE, 17 * TILE, 1.0, "Pot")
-	_ground(behind, stuff, Rect2(161, 25, 19, 21), 56.0 * TILE, 17 * TILE, 1.0, "Keg")
+	_breakable(stuff, POT_BIG, 54.8 * TILE, 17 * TILE, CLAY)
+	_breakable(stuff, KEG, 57.0 * TILE, 17 * TILE, WOOD)
 	_sprite(behind, lan, Rect2(201, 1, 21, 60), Vector2(61.5 * TILE, 19 * TILE - 6)).name = "ShelfLantern"
 	_light(behind, Vector2(61.5 * TILE, 19 * TILE - 6) + Vector2(10, 46), Color(1.0, 0.76, 0.44), 0.9, 1.0, "ShelfLanternLight")
 
 	# The west hall and the crypt: stores, wall lanterns.
-	_ground(behind, stuff, Rect2(3, 11, 130, 35), 9.0 * TILE, 37 * TILE, 0.85, "Stores")
-	_ground(behind, stuff, Rect2(135, 18, 24, 28), 26.4 * TILE + 32, 37 * TILE, 0.85, "Barrel")
+	# The hall's stores: crates, barrels and pots, all breakable.
+	_breakable(stuff, CRATE_A, 10.0 * TILE, 37 * TILE, WOOD)
+	_breakable(stuff, CRATE_B, 12.1 * TILE, 37 * TILE, WOOD)
+	_breakable(stuff, BARREL_BIG, 14.2 * TILE, 37 * TILE, WOOD)
+	_breakable(stuff, POT, 16.0 * TILE, 37 * TILE, CLAY)
+	_breakable(stuff, BARREL, 28.6 * TILE, 37 * TILE, WOOD)
+	# The crypt: offerings left by the dead, and stores.
+	_breakable(stuff, POT_SMALL, 46.0 * TILE, 37 * TILE, CLAY)
+	_breakable(stuff, POT, 47.2 * TILE, 37 * TILE, CLAY)
+	_breakable(stuff, CRATE_C, 66.0 * TILE, 37 * TILE, WOOD)
+	_breakable(stuff, KEG, 68.0 * TILE, 37 * TILE, WOOD)
+	# The clearing: a pot by the graveyard lantern, a barrel by the training yard.
+	_breakable(stuff, POT_SMALL, 31.9 * TILE, floor_y, CLAY)
+	_breakable(stuff, BARREL, 76.6 * TILE, floor_y, WOOD)
 	for x in [13.0, 40.0, 57.0, 74.0]:
 		var y := 30.6 * TILE if x < 30.0 else 32.6 * TILE
 		_sprite(behind, lan, Rect2(110, 4, 42, 56), Vector2(x * TILE, y)).name = "WallLantern"
@@ -485,6 +517,12 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 		[Rect2(227, 126, 14, 88), 58.5, 302], [Rect2(171, 126, 15, 51), 65.0, 302]]:
 		_sprite(behind, flora, v[0], Vector2(v[1] * TILE, v[2])).name = "Vine"
 
+	# Roots hanging into the collapse over the crypt.
+	for v in [[Rect2(171, 126, 15, 51), 77.7], [Rect2(198, 126, 16, 71), 80.9]]:
+		var root := _sprite(behind, flora, v[0], Vector2(v[1] * TILE, 28 * TILE + 6))
+		root.name = "CollapseRoots"
+		root.modulate = Color(0.8, 0.8, 0.85)
+
 	# Foreground: canopy across the top, ferns in front of the rock at the bottom.
 	for x in [-40.0, 680.0, 1400.0]:
 		var top := _sprite(front, PARALLAX + "fg.png", Rect2(0, 0, 720, 92), Vector2(x, -6))
@@ -505,11 +543,22 @@ func _build_machines() -> void:
 	lift.position = Vector2(26 * TILE, 24 * TILE)
 	lift.z_index = 6
 	lift.set("bottom_y", 13.0 * TILE)
-	lift.set("rope_top", -46.0)
+	lift.set("rope_top", -34.0)
 	var frame := _node(Node2D.new(), "Frame", lift)
-	_sprite(frame, timber, Rect2(10, 6, 25, 52), Vector2(-40, -50))
-	_sprite(frame, timber, Rect2(10, 6, 25, 52), Vector2(15, -50))
-	_sprite(frame, timber, Rect2(42, 13, 96, 29), Vector2(-48, -56))
+	_sprite(frame, timber, Rect2(10, 22, 25, 36), Vector2(-40, -36))
+	_sprite(frame, timber, Rect2(10, 22, 25, 36), Vector2(15, -36))
+	# The crossbeam's solid top (the sprite's row 2) is 3 tiles up: a jump reaches it.
+	_sprite(frame, timber, Rect2(42, 13, 96, 29), Vector2(-48, -50))
+	var beam := _node(StaticBody2D.new(), "Crossbeam", lift) as StaticBody2D
+	beam.collision_layer = 64  # one-way platforms: drop through with down + jump
+	beam.collision_mask = 0
+	var bc := CollisionShape2D.new()
+	var br := RectangleShape2D.new()
+	br.size = Vector2(92, 8)
+	bc.shape = br
+	bc.position = Vector2(0, -44)
+	bc.one_way_collision = true
+	_node(bc, "Shape", beam)
 	var plat := _node(AnimatableBody2D.new(), "Platform", lift) as AnimatableBody2D
 	plat.collision_layer = 1
 	plat.collision_mask = 0
@@ -633,6 +682,44 @@ func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rec
 	p.direction = Vector2(1, 0.3)
 	p.spread = 60.0
 	return p
+
+
+# --- Breakables -------------------------------------------------------------------
+
+# The guard's belongings, cut from props_guard_belongings.png.
+const CRATE_A := Rect2(3, 15, 33, 31)
+const CRATE_B := Rect2(37, 23, 32, 23)
+const CRATE_C := Rect2(71, 21, 30, 25)
+const BARREL_BIG := Rect2(103, 11, 30, 35)
+const BARREL := Rect2(135, 18, 24, 28)
+const KEG := Rect2(161, 25, 19, 21)
+const POT_BIG := Rect2(184, 16, 27, 30)
+const POT := Rect2(212, 24, 20, 22)
+const POT_SMALL := Rect2(235, 30, 15, 20)
+const WOOD := Color(0.6, 0.42, 0.28)
+const CLAY := Color(0.7, 0.45, 0.32)
+
+
+## A breakable prop standing on the floor: `x` is its centre, `floor_y` the walking line.
+func _breakable(tex_path: String, region: Rect2, x: float, floor_y: float, chips: Color) -> Node2D:
+	var b := _node(Node2D.new(), "Breakable", _root) as Node2D
+	b.set_script(load("res://scripts/world/breakable.gd"))
+	b.position = Vector2(x, floor_y).round()
+	b.z_index = 6
+	b.set("chip_color", chips)
+	var art := _sprite(b, tex_path, region, Vector2(-roundf(region.size.x * 0.5), -region.size.y + 1))
+	art.name = "Art"
+	var hb := _node(Area2D.new(), "Hurtbox", b) as Area2D
+	hb.collision_layer = 4
+	hb.collision_mask = 0
+	hb.monitoring = false
+	var hs := CollisionShape2D.new()
+	var hr := RectangleShape2D.new()
+	hr.size = region.size - Vector2(4, 2)
+	hs.shape = hr
+	hs.position = Vector2(0, -region.size.y * 0.5)
+	_node(hs, "Shape", hb)
+	return b
 
 
 # --- Helpers ------------------------------------------------------------------------------

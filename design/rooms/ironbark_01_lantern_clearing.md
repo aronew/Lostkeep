@@ -18,6 +18,7 @@
 | **Shortcut** | The guard's lift: jammed at the top, worked from below with the winch; it links the hall to the shrine |
 | **Locks seen here** | W1 bark-plate floor (Ward), E1 silk seal and cocoon (Emberwick), G1 the broken bridge (Wing-Cloak), D1 the moat with a glint below (Breath), S1 the shrine's Prism socket (Siphon), T1 the tree's thorn knots (Thorn-Line) |
 | **Encounters** | Two practice posts in the training yard (no enemies yet) |
+| **Placed pieces** | The lift's crossbeam: a one-way perch 3 tiles above the terrace (drop through with down + jump). Thirteen breakable pots, barrels and crates in the hall, the crypt, the clearing and the root shelf |
 | **Landmark and story** | The Great Ironbark and its lantern; the guard's graveyard with one fresh, empty grave; the training yard with a meal left half-eaten; the Lost Keep's gate across the gap |
 | **Later reads** | Ward breaks W1 (a shortcut down into the crypt); Emberwick burns E1 (a rescue); Wing-Cloak crosses the gap to the Keep; Breath dives for the glint; Siphon wakes the socket; Thorn-Line reaches the tree's crown |
 

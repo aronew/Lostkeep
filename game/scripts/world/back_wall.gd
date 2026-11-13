@@ -52,7 +52,8 @@ func set_box_view(on: bool) -> void:
 func _draw() -> void:
 	if not fill:
 		return
-	var tint := Color(brightness, brightness, brightness * 1.06)
+	# Cooler and darker than the playfield, so floors and ledges stand in front.
+	var tint := Color(brightness * 0.84, brightness * 0.9, brightness * 1.14)
 	for r in regions:
 		var px := Rect2(Vector2(r.position * TILE), Vector2(r.size * TILE))
 		draw_texture_rect_region(fill, px, px, tint)
@@ -60,7 +61,7 @@ func _draw() -> void:
 			var h := course.get_height()
 			var y := px.end.y - course_height - h
 			var cr := Rect2(px.position.x, y, px.size.x, h)
-			var ct := Color(course_brightness, course_brightness, course_brightness * 1.05)
+			var ct := Color(course_brightness * 0.86, course_brightness * 0.9, course_brightness * 1.12)
 			draw_texture_rect_region(course, cr, Rect2(px.position.x, 0, px.size.x, h), ct)
 		# A soft shadow under the ceiling and above the floor, in pixel bands.
 		for i in range(4):

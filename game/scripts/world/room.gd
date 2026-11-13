@@ -12,7 +12,7 @@ const TILE := 16
 
 
 ## Art hidden in box view (F1), leaving the collision, Kleo and the machines.
-const ART_NODES := ["Behind", "PlacedArt", "Front", "PrismShrine/Art", "GuardLift/Frame"]
+const ART_NODES := ["Behind", "PlacedArt", "Front", "PrismShrine/Art", "GuardLift/Frame", "EarthBackWalls", "BackWalls"]
 
 
 func _ready() -> void:

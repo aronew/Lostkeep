@@ -73,7 +73,8 @@ const COMBO := ["attack_1", "attack_2", "attack_3", "attack_4"]
 
 var state := State.NORMAL
 var facing := 1
-var solid: TileMapLayer
+var solid: TileMapLayer  # the rock; shares its grid with the mass layer
+var _solids: Array[TileMapLayer] = []
 var last_safe := Vector2.ZERO
 
 var _input_x := 0.0
@@ -91,6 +92,7 @@ var _attack := ""
 var _combo := -1
 var _hit_window := -1
 var _hit_done := {}
+var _drop := 0.0  # dropping through a one-way platform
 var _queued := false  # the next combo hit, pressed during this one
 var _kb_flew := false  # the knockback has left the ground
 var _ledge_corner := Vector2.ZERO
@@ -105,9 +107,10 @@ func _ready() -> void:
 	add_to_group("player")
 	sprite.frame_changed.connect(_on_frame)
 	sprite.animation_finished.connect(_on_animation_finished)
-	var layers := get_tree().get_nodes_in_group("solid_tiles")
-	if not layers.is_empty():
-		solid = layers[0]
+	for layer in get_tree().get_nodes_in_group("solid_tiles"):
+		_solids.append(layer)
+	if not _solids.is_empty():
+		solid = _solids[0]
 	last_safe = global_position
 	_air_top = global_position.y
 	_play("idle")
@@ -121,6 +124,10 @@ func _physics_process(delta: float) -> void:
 	_jump_buffer = max(_jump_buffer - delta, 0.0)
 	_attack_buffer = max(_attack_buffer - delta, 0.0)
 	_lock = max(_lock - delta, 0.0)
+	if _drop > 0.0:
+		_drop -= delta
+		if _drop <= 0.0:
+			set_collision_mask_value(7, true)
 	_invuln = max(_invuln - delta, 0.0)
 	if Input.is_action_just_pressed("jump"):
 		_jump_buffer = jump_buffer_time
@@ -181,6 +188,14 @@ func _normal(delta: float) -> void:
 	if _turning:
 		velocity.x = move_toward(velocity.x, 0.0, ground_decel * delta)
 
+	# Drop through a one-way platform: hold down and jump.
+	if on_floor and _jump_buffer > 0.0 and Input.is_action_pressed("move_down") and _on_one_way():
+		_jump_buffer = 0.0
+		_coyote = 0.0
+		_drop = 0.22
+		set_collision_mask_value(7, false)
+		global_position.y += 2.0
+		_air_top = global_position.y
 	# Jump.
 	if _jump_buffer > 0.0 and _coyote > 0.0 and _lock <= 0.0:
 		_jump_buffer = 0.0
@@ -251,11 +266,19 @@ func _after_move() -> void:
 	_was_on_floor = on_floor
 
 
+func _on_one_way() -> bool:
+	for i in get_slide_collision_count():
+		var c := get_slide_collision(i)
+		var body := c.get_collider() as CollisionObject2D
+		if body and c.get_normal().y < -0.5 and body.get_collision_layer_value(7):
+			return true
+	return false
+
+
 func _standing_on_tiles() -> bool:
 	if not solid:
 		return true
-	var below := solid.local_to_map(solid.to_local(global_position + Vector2(0, 2)))
-	return solid.get_cell_source_id(below) != -1
+	return _solid_at(solid.local_to_map(solid.to_local(global_position + Vector2(0, 2))))
 
 
 func _choose_animation() -> void:
@@ -450,7 +473,10 @@ func _end_attack() -> void:
 # --- Ledges -----------------------------------------------------------------------
 
 func _solid_at(c: Vector2i) -> bool:
-	return solid != null and solid.get_cell_source_id(c) != -1
+	for layer in _solids:
+		if layer.get_cell_source_id(c) != -1:
+			return true
+	return false
 
 
 func _cell(p: Vector2) -> Vector2i:

@@ -38,6 +38,7 @@ window/stretch/scale_mode="integer"
 2d_physics/layer_4="player_hitbox"
 2d_physics/layer_5="enemy_hitbox"
 2d_physics/layer_6="interact"
+2d_physics/layer_7="one_way"
 2d_render/layer_1="world"
 2d_render/layer_2="kleo_light_only"
 

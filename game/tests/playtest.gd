@@ -7,6 +7,7 @@ extends Node
 ##   shots    screenshots of the room's key places, with art and as the black box
 ##   tour     the main line, scripted, every second frame saved (for a video)
 ##   upper    the upper line: island, ledge climb, hard landing, knockback
+##   props    breaks pots and barrels, stands on the lift's crossbeam, drops through it
 ##   click    checks that a left click attacks and a right click is the spell action
 ##   map      the whole room in screen-sized tiles, with art and as the black box
 ##            (stitch with tools/stitch_map.py)
@@ -47,6 +48,8 @@ func _ready() -> void:
 			await _map()
 		"click":
 			await _click()
+		"props":
+			await _props()
 		"measure":
 			await _measure()
 	get_tree().quit()
@@ -121,6 +124,7 @@ func _shots() -> void:
 
 var _n := 0
 var _log: FileAccess
+var _cam_log: FileAccess
 
 
 func _step() -> void:
@@ -130,6 +134,9 @@ func _step() -> void:
 		var sp := kleo.get_global_transform_with_canvas().origin
 		_log.store_line("%d,%d,%d,%s,%d,%d,%d" % [_n / 2, int(sp.x), int(sp.y), kleo.sprite.animation,
 			kleo.sprite.frame, int(kleo.global_position.x), int(kleo.global_position.y)])
+	# Every frame: Kleo and the view, for tools/camera_report.py.
+	var view := cam.get_screen_center_position()
+	_cam_log.store_line("%.2f,%.2f,%.2f,%.2f" % [kleo.global_position.x, kleo.global_position.y, view.x, view.y])
 	_n += 1
 
 
@@ -156,6 +163,7 @@ func _tap(action: String) -> void:
 
 func _start_tour() -> void:
 	_log = FileAccess.open(out_dir + "/kleo.csv", FileAccess.WRITE)
+	_cam_log = FileAccess.open(out_dir + "/camera.csv", FileAccess.WRITE)
 	_n = 0
 
 
@@ -216,6 +224,45 @@ func _upper() -> void:
 	_release_all()
 
 
+# --- Props ----------------------------------------------------------------------------------------
+
+func _props() -> void:
+	_start_tour()
+	var lines := []
+	# Break the hall's stores with the combo, walking along them.
+	var before := get_tree().get_nodes_in_group("breakable").size()
+	_place(8.0, 37, 1)
+	await _frames(6)
+	for i in 6:
+		await _tap("attack")
+		await _wait(12)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 13.5 * TILE, 120)
+	for i in 6:
+		await _tap("attack")
+		await _wait(12)
+	await _wait(40)
+	var after := get_tree().get_nodes_in_group("breakable").size()
+	lines.append("breakables: %d before, %d after the combo in the hall" % [before, after])
+	# Jump onto the crossbeam (3 tiles up) from the terrace beside it.
+	_place(21.0, 24, 1)
+	await _frames(6)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 22.6 * TILE, 60)
+	await _hold_until(["move_right", "jump"], func(): return kleo.is_on_floor() and kleo.global_position.y < 24 * TILE - 40, 80)
+	await _wait(20)
+	var on_beam := kleo.is_on_floor() and absf(kleo.global_position.y - (24 * TILE - 48)) < 1.0
+	lines.append("stood on the crossbeam: %s (feet at %.0f, beam top %d)" % [on_beam, kleo.global_position.y, 24 * TILE - 48])
+	# Drop back through it.
+	_press("move_down")
+	await _wait(2)
+	await _tap("jump")
+	await _wait(40)
+	_release_all()
+	lines.append("dropped through it: %s (feet at %.0f)" % [kleo.global_position.y > 24 * TILE - 4, kleo.global_position.y])
+	var text := "\n".join(lines)
+	print(text)
+	FileAccess.open(out_dir + "/props.txt", FileAccess.WRITE).store_string(text + "\n")
+
+
 # --- Mouse ---------------------------------------------------------------------------------------
 
 func _click() -> void:
@@ -274,10 +321,10 @@ func _map() -> void:
 				await _capture(name)
 				lines.append(name)
 	# The collision cells, for tools/check_room.py.
-	var solid: TileMapLayer = room.get_node("Solid")
 	var cells := []
-	for c in solid.get_used_cells():
-		cells.append([c.x, c.y, solid.get_cell_atlas_coords(c).x])
+	for layer in get_tree().get_nodes_in_group("solid_tiles"):
+		for c in layer.get_used_cells():
+			cells.append([c.x, c.y, layer.get_cell_atlas_coords(c).x])
 	var cf := FileAccess.open(out_dir + "/cells.json", FileAccess.WRITE)
 	cf.store_string(JSON.stringify({"room": [rect.position.x, rect.position.y, rect.size.x, rect.size.y], "cells": cells}))
 	var f := FileAccess.open(out_dir + "/tiles.txt", FileAccess.WRITE)
