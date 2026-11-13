@@ -198,21 +198,22 @@ abilities.
 - **Vocabulary:** swinging across Thorn Knot chains; pull a cocoon down from
   out of reach; rip shields off Carapax; drag a counterweight or bridge;
   yank a spider off a wall.
-- **Gate look:** a **red thorn knot with one closed eye** (the red vines in
-  mockup 5 are its early, dormant form).
+- **Gate look:** a **knot of pale, smooth bark with one closed amber-gold
+  eye** (copper on the map). It is deliberately *not* red: red tendrils are
+  the Blight.
 - **Combat:** a gap-closer, a shield-stripper, and a pull on small enemies.
 - **Combines with:** Glide (swing-release-glide), Ward (strip then bash),
   Meld (anchors that exist only in the past).
 - **Bypass:** **Hard.**
-- **Found:** from **Morvath**, who tests Kleo in her Observatory. The red
-  roots from minute 1 are her watching.
+- **Found:** from **Morvath**, who tests Kleo in her Observatory. The
+  closed-eyed knots from minute 1 are her watching.
 
 ### 8 · Anima Siphon (drain + power)
 - **Verb:** drain; give.
 - **Numbers:** a 3-tile tether. Draining heals and fills the Anima bar.
   Giving powers Oru'Vex machinery.
 - **Vocabulary:** power dead Spire lifts and doors; drain Blight crystals
-  (the purple growths in mockup 5) to clear Blightwater and Blight mist;
+  (the crimson growths in the mockups) to clear Blightwater and Blight mist;
   restore withered hub plants; drain enemies to heal.
 - **Gate look:** a **dark Prism crystal socket** (present from region 1).
 - **Combat:** a sustain/drain tether.
@@ -224,6 +225,9 @@ abilities.
 ---
 
 ## 2b. Spells: Kleo's Anima magic (teal bar)
+
+The caster in the Alchemist's works mockup (I) is Kleo, in a late-game
+look: the hat and long coat are an outfit she gains later.
 
 Kleo casts with the teal bar, which is her Anima. Both spells are teal
 because teal means Anima. The mockups show them: the orb in the Silk Mother
@@ -277,7 +281,7 @@ fight, the beam in the Alchemist's works.
 | Wing-Cloak | Chasm with a fluttering torn banner |
 | Deep-Glow | Dark, unlit deep water |
 | Memory-Meld | Flickering teal outline of a past structure |
-| Thorn-Line | Red thorn knot with a closed eye |
+| Thorn-Line | Pale bark knot with a closed amber-gold eye |
 | Anima Siphon | Empty dark-Prism socket |
 
 ## 4. Rescue tie-in (hub services)

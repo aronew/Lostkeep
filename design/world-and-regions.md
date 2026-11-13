@@ -20,7 +20,7 @@ Companion to `ability-atlas.md`. Based on the macro map mockup
    Vexari too.
 
 ### What it means in play
-- **The map tells it:** Blight veins (magenta) radiate *out of the Prism* at
+- **The map tells it:** Blight veins (crimson-magenta on the map, red tendrils in the world) radiate *out of the Prism* at
   the bottom of the map. A player who looks at the map can see where the
   rot comes from before anyone says it.
 - **It spreads by act.** The vein overlay grows at story beats, re-routing
@@ -167,11 +167,21 @@ suspicious of one another so nobody notices villagers vanishing.
 About 9 h on the critical path; about 12–15 h with rescues, secrets and the
 Tide-Weaver and Orun content.
 
+## 4a. Colour language (canon)
+
+| Thing | Colour | Notes |
+|---|---|---|
+| **The Sovereign Prism** and its shards | Icy blue-cyan `#9FE6F5`, deep `#3A7FB0` | Mockup N and the macro map |
+| **The Blight** | Crimson tendrils `#8E1E3A`, highlight `#C2385A`; magenta veins on the map | Mockups I, M, N |
+| **Anima** (Kleo's magic, life-force) | Teal `#3FE0C8` | Spark, Lance, vats |
+| **Morvath** (thorn knots) | Pale bark `#B8A58A`, amber-gold eye `#E8B04A`; copper on the map | Never red |
+| **Warm safety** | Lantern amber `#F2B04A` | Saves, the Refuge |
+
 ## 4b. Gate legend (the map's coloured bars)
 
 Each gate colour means exactly one requirement for the whole game, and each
 is paired with an icon shape so the map stays readable for colour-blind
-players. **Magenta is reserved for the Blight.**
+players. **Crimson and magenta are reserved for the Blight.**
 
 | Colour | Icon | Requirement |
 |---|---|---|
@@ -181,10 +191,10 @@ players. **Magenta is reserved for the Blight.**
 | Sky white | Feather | Wing-Cloak |
 | Teal | Droplet | Deep-Glow Breath |
 | Pale violet | Spiral eye | Memory-Meld |
-| Crimson | Thorn knot | Thorn-Line |
-| Prism gold | Diamond socket | Anima Siphon |
+| Copper | Thorn knot | Thorn-Line |
+| Prism ice-blue | Diamond socket | Anima Siphon |
 | Silver | Voice sigil | Story gate (a Kindred Voice convinced) |
-| Magenta | Vein | Blight: spreads by act, cleared later by Siphon |
+| Crimson-magenta | Vein | Blight: spreads by act, cleared later by Siphon |
 
 The bars on the mockup stay conceptual until the lock-and-key registry
 assigns each one.

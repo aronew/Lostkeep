@@ -133,10 +133,10 @@ rescue or a truth).
 | M4 | Foundry | Walls that didn't exist before the Vexari | Hard | ✔ | A bypass |
 | M5 | High-Spire | Critical path after the Reveal | Hard | — | — |
 
-### 7 · Thorn-Line: crimson bar, thorn-knot icon
+### 7 · Thorn-Line: copper bar, thorn-knot icon
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
-| T1 | Ironbark | Closed-eye thorn knots on the great tree's crown (the red roots that watch from minute 1) | Hard | ✔ | The tree's crown: a vista of the Spire and a Voice beat |
+| T1 | Ironbark | Closed-eyed bark knots on the great tree's crown (Morvath watching from minute 1) | Hard | ✔ | The tree's crown: a vista of the Spire and a Voice beat |
 | T2 | Hearth-Plains | Knots over the silk-farm ravine | Hard | ✔ | A secret |
 | T3 | Fen-Stalker | Knot chains across the bog | Hard | ✔ | The Observatory back door, a loop |
 | T4 | Tide-Weaver | Knots over the tide gate | Hard | ✔ | A Tide-Weaver rescue |
@@ -157,7 +157,7 @@ rescue or a truth).
 | V1 | Refuge → High-Spire | Hearth-Plains + Dusk-Drifter Voices convinced (the High-Spire won't receive an Ironbark guard otherwise) |
 | V2 | Sovereign Prism | All seven Voice Sigils united |
 
-### The Blight: magenta, a state, not a key
+### The Blight: crimson tendrils, a state, not a key
 Blight veins spread at **act 2** (after the Reveal) and **act 3** (after the
 Siphon), re-routing earlier regions. Anima Siphon drains Blight crystals,
 so the Blight is both a new lock and its own key.

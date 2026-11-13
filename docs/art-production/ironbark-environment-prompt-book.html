@@ -337,7 +337,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
           <li>It is real pixel art: hard square pixels on one even grid, no blur, no soft gradients, no anti-aliased edges.</li>
           <li>No text, labels, grid lines, swatches or watermarks.</li>
           <li>Transparent where the card says so, with no checkerboard or white fringe.</li>
-          <li>Magenta appears nowhere: it belongs to the Blight alone.</li>
+          <li>No crimson tendrils, red roots or magenta: those belong to the Blight alone.</li>
         </ul></div>
         <div class="kv"><h3>Terrain and masonry</h3><ul class="checks">
           <li>The walking line is dead straight: lay a ruler on it.</li>
@@ -439,7 +439,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Stone light", "#8C7A92"], ["Forest shadow", "#13282B"], ["Canopy teal", "#1F4A4A"], ["Mist teal", "#3C7472"],
     ["Moss", "#4F8A3A"], ["Moss light", "#8DC24E"], ["Bark", "#3A2420"], ["Ironbark", "#5C3A2C"],
     ["Timber light", "#8A5A3C"], ["Lantern amber", "#F2B04A"], ["Flame core", "#FFE59A"], ["Water deep", "#16354A"],
-    ["Water", "#2B5D7A"], ["Anima teal", "#3FE0C8"], ["Prism amethyst", "#8A4FC0"], ["Blight magenta (reserved)", "#D02A86"]
+    ["Water", "#2B5D7A"], ["Anima teal", "#3FE0C8"], ["Prism ice", "#9FE6F5"], ["Prism deep", "#3A7FB0"], ["Morvath bark", "#B8A58A"], ["Blight crimson (reserved)", "#8E1E3A"]
   ];
 
   // ---------------------------------------------------------------------------
@@ -457,7 +457,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       "- Pixel scale x" + scale + ": every art pixel is an exact " + scale + " x " + scale + " px square of one flat colour, aligned to a " + scale + " px grid from the top-left corner. No anti-aliasing, no blur, no smooth gradients, no sub-pixel detail, no soft brushes.",
       "- Strict orthographic side view, like a 2D platformer: no perspective, no camera tilt, no visible top surfaces, no vanishing points.",
       "- Soft ambient light from above, the same on every piece. No cast shadows onto the background, no bloom, no lens effects. Glows and halos around lights are made by the game: paint a lantern's flame and lit glass, never the halo around it.",
-      "- Colour rules: Lantern amber #F2B04A and flame #FFE59A mean warm light and safety. Anima teal #3FE0C8 means life-force and things the player can use. Prism amethyst #8A4FC0 belongs to the Prism. Blight magenta #D02A86 belongs to the Blight alone: never use it here. Moss #4F8A3A and #8DC24E are for living growth. Void #0B0812 is the deepest shadow and the inside of every solid mass.",
+      "- Colour rules: Lantern amber #F2B04A and flame #FFE59A mean warm light and safety. Anima teal #3FE0C8 means life-force and things the player can use. Icy blue #9FE6F5 and #3A7FB0 belong to the Prism and its shards. Crimson tendrils #8E1E3A and #C2385A belong to the Blight alone: never use crimson, blood-red or magenta here, and never paint red roots or vines. Moss #4F8A3A and #8DC24E are for living growth. Void #0B0812 is the deepest shadow and the inside of every solid mass.",
       "",
       "Canvas",
       "- Exact canvas: " + card.canvas + ".",
@@ -596,7 +596,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "TASK: a far parallax layer of silhouettes for Ironbark, transparent above the skyline.",
         "",
         "- A soft, hazy line of distant forest canopy and the ruined towers and aqueduct arches of an old civilisation, in two flat-ish values of misty teal-grey #3C7472 and #1F4A4A, very low contrast.",
-        "- Once, off-centre, very small and far away: the Sovereign Spire, a tall, slender, impossibly high tower of pale stone with a faint amethyst #8A4FC0 glint at its tip. It is a landmark, not the subject: no more than one fifth of the canvas height.",
+        "- Once, off-centre, very small and far away: the Sovereign Spire, a tall, slender, impossibly high tower of pale stone with a faint icy-blue #9FE6F5 glint at its tip. It is a landmark, not the subject: no more than one fifth of the canvas height.",
         "- The layer is solid from the skyline down to the bottom edge, fading to a flat mist colour at the bottom.",
         "- The left and right edges must join; keep the Spire away from both edges."
       ] },
@@ -643,7 +643,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "- A massive twisting trunk #3A2420 and #5C3A2C with deep bark grooves and moss, roots that spread wide at the bottom edge and grip stones, and a broad canopy of deep teal and green leaf masses that fills the top half.",
         "- One long branch reaches out to the right with an iron chain and a hanging lantern on it (paint the lantern lit: amber glass and flame, no halo).",
-        "- Twisting through the bark of the crown: three or four dark red thorny roots, each ending in a knot with a single closed eye. They look dormant, almost asleep.",
+        "- Grown into the bark of the crown: three or four knots of pale, smooth bark #B8A58A, each with a single closed eye. They look dormant, almost asleep. No red anywhere on the tree.",
         "- A small Ironbark Guard shrine of stacked stones at the trunk's foot, with old offerings.",
         "- The trunk's lower part is drawn to sit behind the playfield floor; leave the bottom 128 px as roots only."
       ] },
@@ -666,10 +666,10 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "TASK: an Oru'Vex Prism-shard shrine, in two states, side by side on a transparent canvas, each in a 1408 px wide cell with transparent space between.",
         "",
         "- A raised stone dais with a short flight of steps, inside a great carved octagonal stone frame with quatrefoil openings, as in mockup D. The ground line at the bottom is perfectly straight.",
-        "- Rising from the dais: a cluster of dark Prism crystal pillars #3E2E4A tinged with #8A4FC0, a stone brazier in front.",
+        "- Rising from the dais: a cluster of Prism crystal shards, icy blue #3A7FB0 with paler facets #9FE6F5, a stone brazier in front. (Mockup D shows purple crystals and thorns: ignore those colours.)",
         "- In the base of the frame, on the right: a small empty socket shaped for a crystal, dark and lifeless.",
         "- LEFT, dormant: the brazier is cold, the crystals dull.",
-        "- RIGHT, awakened: the brazier burns amber (flame only, no halo), the crystals hold a soft inner amethyst light, and thin lines of Anima teal #3FE0C8 trace the carvings.",
+        "- RIGHT, awakened: the brazier burns amber (flame only, no halo), the crystals hold a soft inner icy-blue light, and thin lines of Anima teal #3FE0C8 trace the carvings.",
         "- No Blight thorns in either state: this shrine is still clean."
       ] },
     { id: "L4", group: "landmarks", file: "landmark_arch_bridge", title: "The broken arch bridge",
@@ -772,15 +772,15 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- No fire is shown: the game adds it."
       ] },
     { id: "GT3", group: "gates", file: "gate_thorn_knot", title: "Thorn knot (Thorn-Line: T1)",
-      about: "Morvath's anchor. Crimson, one eye. Dormant in Ironbark from the first minute; it wakes once Kleo has the Thorn-Line.",
+      about: "Morvath's anchor. Pale bark, one amber eye, never red. Dormant in Ironbark from the first minute; it wakes once Kleo has the Thorn-Line.",
       canvas: "1024×512 px (art 128 × 64 px at x8)", game: "2 tiles × 2 tiles, 2 states", attach: ["A", "B"],
       text: [
-        "TASK: a knot of dark red thorny roots with a single eye at its centre, in two states side by side on a transparent canvas.",
+        "TASK: a knot of pale, smooth, twisted bark with short thorns and a single eye at its centre, in two states side by side on a transparent canvas.",
         "",
-        "- LEFT, dormant: the eye is closed, the thorns dull dark red #6A1E28.",
-        "- RIGHT, awake: the eye is open, an amber-gold iris, and the thorns a brighter crimson #B0303C. It looks alert, not evil.",
+        "- LEFT, dormant: the eye is closed, the bark a dull pale grey-brown #8C7B66.",
+        "- RIGHT, awake: the eye is open with an amber-gold iris #E8B04A, the bark brighter #B8A58A with thin copper veins. It looks alert, wise and old, not evil.",
         "- Short root ends on all four sides, so it can sit inside bark or stone.",
-        "- Crimson must stay clearly different from magenta: this is Morvath, not the Blight."
+        "- No red, crimson or magenta at all: red tendrils are the Blight, and this is Morvath."
       ] },
     { id: "GT4", group: "gates", file: "gate_prism_socket", title: "Prism socket (Anima Siphon: S1)",
       about: "An empty Oru'Vex socket set in stone. Gold-edged, dark, and patient until the last act.",
@@ -789,7 +789,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "TASK: a socket set into a carved stone block, in two states side by side on a transparent canvas.",
         "",
         "- LEFT, empty: a faceted hollow edged with tarnished gold, dark inside, the carved lines around it dead.",
-        "- RIGHT, powered: a Prism crystal seated in it, glowing amethyst #8A4FC0, and the carved lines around it filled with Anima teal #3FE0C8.",
+        "- RIGHT, powered: a Prism shard seated in it, glowing icy blue #9FE6F5, and the carved lines around it filled with Anima teal #3FE0C8.",
         "- The block's four edges are straight so it sits flush in a wall."
       ] }
   ];
