@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="TerrainMaterial" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_fill.png" id="1_r6psl"]
+[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_xbjsc"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_top.png" id="3_g7cwh"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_under.png" id="4_ivoxu"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_wall.png" id="5_sxiad"]
+
+[resource]
+script = ExtResource("2_xbjsc")
+fill = ExtResource("1_r6psl")
+top_band = ExtResource("3_g7cwh")
+under_band = ExtResource("4_ivoxu")
+wall_band = ExtResource("5_sxiad")

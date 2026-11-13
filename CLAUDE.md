@@ -45,6 +45,7 @@ so.
 | `design/world-and-regions.md` | Lore, peoples, Kindreds, regions, critical path, colour language, gate legend |
 | `docs/art-production/*-prompt-book.html` | Copy-ready image prompts (Book 1 Ironbark, Book 2 Kleo) |
 | `art/source/ironbark/REVIEW.md` | The state of the first generated art set |
+| `design/rooms/` | One spec per built room, with its validation |
 
 The design docs are canon. If you change a decision, update the doc in the
 same commit.
@@ -217,20 +218,49 @@ She steps forward with every hit.
   before applying a method widely.
 - The `metroidvania-level-design` skill holds the detailed method; use it.
 
-### Building rooms in Godot 4.7.2
-- `godot` is on the path (the cloud environment's setup script installs it to
-  `/opt/godot/`), so run the project headless to test and screenshot it.
-- Base resolution is **640×360**, integer-scaled. A tile is **16 px**. Kleo
-  is about **28 px** tall.
-- **Black-box collision first:** solid masses in `#0B0812` with flat floors and
-  ceilings. Terrain tiles are painted onto them, and each mass's interior fades
-  to the void so the box becomes the shadow.
-- **Parallax camera:** `Camera2D` plus `Parallax2D` layers at sky 0.05, far
-  0.15, mid 0.35, back wall 0.7, playfield 1.0 and foreground 1.3.
-- **Light and atmosphere:** `CanvasModulate`, `PointLight2D` lanterns, a
-  vignette shader, fog and particles. Glows are never baked into tiles.
-- Kleo is an `AnimatedSprite2D` using `SpriteFrames`. The animation table is in
-  the Kleo prompt book.
+### The Godot project (`game/`)
+- **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is the
+  Ironbark test room). Renderer: GL Compatibility. `godot` is on the path in
+  cloud sessions (the environment's setup script installs it to `/opt/godot/`).
+- **Controls:** move A/D or arrows; jump Space/Z/K; attack X/J; interact E/C or
+  up; gamepad too. **Debug:** F1 black-box view, F2 overlay, F3 slow motion,
+  F5 restart, H a heavy hit.
+- **Layout:**
+  - `scripts/player/kleo.gd`: the controller and its tuning.
+  - `scripts/world/terrain_skin.gd`: paints art onto the black-box tiles.
+  - `scripts/world/`: the room, back walls, the lift, the shrine, the moat,
+    practice posts.
+  - `scripts/core/`: the `Game` autoload (input, hit-stop, fades, debug) and
+    the camera.
+  - `scripts/fx/fx.gd`: dust, arcs, sparks.
+  - `shaders/`: terrain fill, water, fog, vignette, hit flash.
+- **A room is built from a plan.** `game/tools/build_test_room.gd` holds it, in
+  tiles: rock rectangles, then spaces carved out, then masses put back,
+  materials, the skin's skip regions, props, lights, machines. It saves an
+  ordinary scene:
+  `godot --headless --path game --script res://tools/build_test_room.gd`.
+  Re-running it overwrites the scene, so make lasting changes in the plan, or
+  edit the scene by hand and stop rebuilding.
+- **The terrain:** the `Solid` TileMapLayer is the collision (tile atlas column
+  0 is earth, 1 is stone). `TerrainSkin` paints the bands along every exposed
+  edge and fades each mass to the void. In the editor, paint or erase tiles and
+  the skin follows.
+- **Test it** (use a virtual display in the cloud):
+  - `xvfb-run -a godot --path game --fixed-fps 60 --audio-driver Dummy res://tests/playtest.tscn -- mode=X`
+  - `mode=measure`: Kleo's jump, gap and ledge numbers.
+  - `mode=shots`: screenshots, with art and as the black box.
+  - `mode=tour` and `mode=upper`: the main and upper lines played by script.
+  - `mode=map`: the whole room plus its collision cells.
+  - Then `python3 tools/stitch_map.py` makes the map images and the walked
+    routes.
+  - Then `python3 tools/check_room.py` checks the blockout rules: floors,
+    steps, mass thickness, gates, exits, coverage and traps.
+- **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
+  16 px; Kleo's measured envelope is in `design/pillars.md`. Black box first;
+  the parallax camera (`Parallax2D` sky 0.05, far 0.15, mid 0.35, ruins 0.72,
+  playfield 1.0); `CanvasModulate`, `PointLight2D` lanterns, fog and the
+  vignette. Glows are never baked into tiles.
+- **Each room gets a spec** in `design/rooms/`, with its validation.
 
 ### Art pipeline
 1. **Prompt books:** prompts live in `docs/art-production/*-prompt-book.html`
@@ -253,4 +283,8 @@ She steps forward with every hit.
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2, P3 and P5 taller, with transparent skies.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
-- Next build: the Godot project and the first Ironbark test room.
+- **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
+  images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.
+- Polish noted in the first room: a softer edge treatment at hole and shaft
+  mouths; corner caps where tops meet walls; the sky's three moons are large
+  (consider regenerating P1 with smaller moons).

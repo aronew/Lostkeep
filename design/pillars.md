@@ -63,8 +63,23 @@ non-negotiables.
 5. **Art comes after the blockout is approved** (the
    `metroidvania-level-design` workflow).
 
-## Provisional technical numbers
+## Technical numbers (measured in Godot)
 - Base resolution **640×360**, integer-scaled ×3 to 1080p and ×6 to 4K.
-- Tile **16 px**. Kleo is about **28 px** tall (≈1.75 tiles).
+- Tile **16 px**. Kleo is about **28 px** tall (≈1.75 tiles); her collision
+  box is 10 × 26 px.
 - Asset masters are painted at **×8** (one art pixel = an 8×8 block), then
   reduced with nearest-neighbour and quantised to the palette.
+
+### Kleo's movement envelope
+Measured by `tests/playtest.gd mode=measure`. Every gate is designed against
+these numbers; if any change, re-run the measure and the room checker.
+
+| Move | Measured | Design rule |
+| --- | --- | --- |
+| Standing jump (held) | 54 px = **3.37 tiles** | Clears a 3-tile mass, never a 4 |
+| Tapped jump | 10 px = 0.65 tiles | |
+| Running jump | 100 px = **6.27 tiles** | Gaps up to 5 for the cautious player; gates need 8+ |
+| Ledge catch | up to 84 px = **5.25 tiles** above the floor | 4–5 tile walls need a ledge catch; 6+ are gated |
+| Ledge catch across | 4 tiles of gap at 4 tiles up | |
+| Run speed | 140 px/s = 8.75 tiles/s | |
+| Hard landing | falls over 120 px (7.5 tiles) | |

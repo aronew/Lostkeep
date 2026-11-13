@@ -1,0 +1,18 @@
+[gd_resource type="Resource" script_class="TerrainMaterial" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/stone_fill.png" id="1_tvly8"]
+[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_e7ppf"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/stone_top.png" id="3_nk02v"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/stone_under.png" id="4_hscuy"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/stone_wall.png" id="5_esnv0"]
+
+[resource]
+script = ExtResource("2_e7ppf")
+fill = ExtResource("1_tvly8")
+fade_tiles = 2.4
+top_band = ExtResource("3_nk02v")
+top_line = 13
+under_band = ExtResource("4_hscuy")
+under_line = 20
+wall_band = ExtResource("5_esnv0")
+wall_face = 47

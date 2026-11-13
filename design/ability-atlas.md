@@ -8,17 +8,18 @@
 > **PROVISIONAL** until the movement feel is locked in-engine; when they
 > change, every gate must be re-checked.
 
-## 0. Movement envelope (provisional, in tiles)
+## 0. Movement envelope (measured in Godot, in tiles)
 
-| Symbol | Meaning | Proposed |
+| Symbol | Meaning | Value |
 | --- | --- | --- |
-| *tile* | Grid unit | 16 px (pixel-art scale of the mockups) |
-| *B* | Kleo's body height | 2 tiles (ponytail has no collision) |
-| *J* | Standing jump rise | ~3.5 — clears a 3-tile block, never a 4 |
-| *Jr* | Running jump gap | ~6 |
-| *Wd* | Ironbark Ward bash-dash | 3 (ground only, no air use) |
-| *Gl* | Glide | ~3 tiles across per 1 tile fallen |
-| *T* | Thorn-Line reach | 7 (to a Thorn Knot only) |
+| *tile* | Grid unit | 16 px |
+| *B* | Kleo's body height | 1.75 tiles (28 px; collision 10 × 26 px) |
+| *J* | Standing jump rise | **3.37** (measured): clears a 3-tile block, never a 4 |
+| *Jr* | Running jump gap | **6.27** (measured) |
+| *G* | Ledge catch | **5.25** above the floor (measured) |
+| *Wd* | Ironbark Ward bash-dash | 3 (ground only, no air use), not yet built |
+| *Gl* | Glide | ~3 tiles across per 1 tile fallen, not yet built |
+| *T* | Thorn-Line reach | 7 (to a Thorn Knot only), not yet built |
 
 Every gate below must stay **shut** for a generous (best-skill) player
 without its ability and **open** for a cautious player with it.
