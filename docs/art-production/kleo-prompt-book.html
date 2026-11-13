@@ -1,0 +1,1221 @@
+<title>Kleo Prompt Book</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Marcellus&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+
+
+/* Layout: a working manual. Sticky control bar, a contents rail on wide screens,
+   one reading column of rules and specs, and prompt cards you copy from.
+   Palette: Lost Keep's own colours (void, plum stone, Anima teal, lantern amber). */
+:root {
+  color-scheme: dark;
+  --bg: #0f0b16; --panel: #171221; --panel-2: #211a2e; --line: #34294a;
+  --fg: #ede3d3; --muted: #a99fb0; --accent: #3fe0c8; --accent-ink: #0b0812;
+  --brass: #f2b04a; --red: #e07a8c; --code: #0b0812;
+  --font-display: "Marcellus", "Cormorant Garamond", Georgia, serif;
+  --font-body: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    color-scheme: light;
+    --bg: #efe8dc; --panel: #f9f4ea; --panel-2: #e6ddd0; --line: #cfc3b3;
+    --fg: #1b1424; --muted: #5b5163; --accent: #157a6c; --accent-ink: #f9f4ea;
+    --brass: #8a5a1c; --red: #a03a55; --code: #fbf8f1;
+  }
+}
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #efe8dc; --panel: #f9f4ea; --panel-2: #e6ddd0; --line: #cfc3b3;
+  --fg: #1b1424; --muted: #5b5163; --accent: #157a6c; --accent-ink: #f9f4ea;
+  --brass: #8a5a1c; --red: #a03a55; --code: #fbf8f1;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--fg);
+  font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--panel); }
+a { color: var(--accent); }
+a:focus-visible, button:focus-visible, input:focus-visible, select:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+h1, h2, h3 { text-wrap: balance; font-weight: 400; margin: 0; }
+h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5vw, 3.4rem); line-height: 1.05; letter-spacing: 0.01em; }
+h2 { font-family: var(--font-display); font-size: 1.9rem; line-height: 1.15; }
+h3 { font-family: var(--font-body); font-weight: 600; font-size: 1.08rem; }
+p { margin: 0; max-width: 68ch; }
+code, kbd { font-family: var(--font-mono); font-size: 0.88em; background: var(--panel-2); padding: 0.05em 0.35em; border-radius: 4px; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.74rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); }
+
+.page { max-width: 1240px; margin: 0 auto; display: grid; grid-template-columns: 1fr; gap: 40px; padding-block: 28px 80px; }
+@media (min-width: 1100px) { .page { grid-template-columns: 210px minmax(0, 1fr); } }
+.rail { display: none; }
+@media (min-width: 1100px) {
+  .rail { display: block; position: sticky; top: calc(env(safe-area-inset-top, 0px) + 96px); align-self: start; }
+  .rail nav { display: grid; gap: 2px; font-size: 0.9rem; }
+  .rail a { color: var(--muted); text-decoration: none; padding: 4px 10px; border-left: 2px solid var(--line); }
+  .rail a:hover { color: var(--fg); border-left-color: var(--accent); }
+  .rail .group { margin-top: 12px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brass); padding-left: 12px; }
+}
+main { min-width: 0; display: grid; gap: 64px; }
+section { display: grid; gap: 20px; scroll-margin-top: 110px; }
+.lede { font-size: 1.12rem; color: var(--muted); }
+
+.hero { display: grid; gap: 14px; padding-block: 12px 4px; }
+.hero .meta { display: flex; flex-wrap: wrap; gap: 8px 18px; font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); }
+
+.controls {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 5;
+  margin-inline: calc(-1 * max(16px, env(safe-area-inset-left, 0px)));
+  padding: 10px max(16px, env(safe-area-inset-left, 0px));
+  background: var(--panel); border-bottom: 1px solid var(--line);
+}
+.controls .inner { max-width: 1240px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; }
+.controls .title { font-family: var(--font-display); font-size: 1.15rem; margin-right: auto; }
+.field { display: flex; align-items: center; gap: 8px; font-size: 0.86rem; color: var(--muted); }
+.seg { display: inline-flex; border: 1px solid var(--line); border-radius: 999px; overflow: hidden; }
+.seg button { font: inherit; font-size: 0.84rem; color: var(--fg); background: transparent; border: 0; padding: 5px 12px; cursor: pointer; }
+.seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
+.progress { font-family: var(--font-mono); font-size: 0.8rem; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+ol.steps { margin: 0; padding: 0; list-style: none; counter-reset: step; display: grid; gap: 12px; }
+ol.steps li { counter-increment: step; display: grid; grid-template-columns: 2.2rem 1fr; gap: 10px; align-items: start; }
+ol.steps li::before { content: counter(step); font-family: var(--font-display); font-size: 1.3rem; color: var(--accent); line-height: 1.3; text-align: right; }
+ol.steps li > div { min-width: 0; }
+
+.note { border-left: 3px solid var(--brass); padding: 10px 14px; background: var(--panel); border-radius: 0 6px 6px 0; max-width: 72ch; }
+.note.warn { border-left-color: var(--red); }
+
+table { border-collapse: collapse; width: 100%; font-size: 0.9rem; }
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; }
+th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); font-weight: 500; background: var(--panel); }
+tr:last-child td { border-bottom: 0; }
+td.num, th.num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+td code { white-space: nowrap; }
+
+.swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: 10px; }
+.swatch { display: grid; grid-template-columns: 34px 1fr; gap: 10px; align-items: center; font-size: 0.84rem; }
+.swatch i { width: 34px; height: 34px; border-radius: 6px; border: 1px solid var(--line); display: block; }
+.swatch b { font-weight: 500; display: block; }
+.swatch span { font-family: var(--font-mono); font-size: 0.76rem; color: var(--muted); }
+
+.cols { display: grid; gap: 24px; grid-template-columns: 1fr; }
+@media (min-width: 820px) { .cols { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); } }
+.figure { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 14px; display: grid; gap: 10px; min-width: 0; }
+.figure svg { width: 100%; height: auto; display: block; }
+.figure figcaption { font-size: 0.84rem; color: var(--muted); }
+svg .ln { stroke: var(--muted); }
+svg .acc { stroke: var(--accent); }
+svg .accf { fill: var(--accent); }
+svg .redl { stroke: var(--red); }
+svg .txt { fill: var(--fg); font-family: var(--font-mono); font-size: 11px; }
+svg .txt-m { fill: var(--muted); font-family: var(--font-mono); font-size: 10px; }
+
+.refs { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+.ref { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; display: grid; }
+.ref img { aspect-ratio: 16 / 10; object-fit: cover; width: 100%; background: var(--code); }
+.ref div { padding: 10px 12px; display: grid; gap: 2px; font-size: 0.86rem; }
+.ref span { color: var(--muted); font-size: 0.8rem; }
+
+.cards { display: grid; gap: 18px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; display: grid; gap: 14px; min-width: 0; }
+.card.is-done { border-color: color-mix(in srgb, var(--accent) 45%, var(--line)); }
+.card-head { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 12px; }
+.tag { font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-ink); background: var(--brass); padding: 1px 8px; border-radius: 999px; }
+.card-head h3 { margin-right: auto; }
+.done { display: inline-flex; align-items: center; gap: 6px; font-size: 0.84rem; color: var(--muted); cursor: pointer; }
+.done input { accent-color: var(--accent); width: 16px; height: 16px; }
+.card .about { color: var(--muted); font-size: 0.93rem; }
+dl.spec { margin: 0; display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: 6px 16px; font-size: 0.88rem; }
+dl.spec dt { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--brass); padding-top: 3px; }
+dl.spec dd { margin: 0; min-width: 0; }
+@media (max-width: 520px) { dl.spec { grid-template-columns: 1fr; } dl.spec dd { margin-bottom: 6px; } }
+.anims { display: flex; flex-wrap: wrap; gap: 6px; }
+.anim { font-family: var(--font-mono); font-size: 0.76rem; border: 1px solid var(--line); border-radius: 6px; padding: 2px 8px; background: var(--panel-2); white-space: nowrap; }
+.prompt { border: 1px solid var(--line); border-radius: 10px; overflow: hidden; min-width: 0; }
+.prompt-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; padding: 8px 12px; background: var(--panel-2); font-size: 0.82rem; color: var(--muted); }
+.prompt-bar strong { color: var(--fg); font-weight: 600; margin-right: auto; }
+.copy { font: inherit; font-size: 0.84rem; font-weight: 600; color: var(--accent-ink); background: var(--accent); border: 0; border-radius: 6px; padding: 6px 14px; cursor: pointer; }
+.copy:hover { filter: brightness(1.06); }
+.copy.copied { background: var(--brass); }
+pre { margin: 0; padding: 14px 16px; background: var(--code); font-family: var(--font-mono); font-size: 0.84rem; line-height: 1.6; white-space: pre-wrap; overflow-wrap: anywhere; max-height: 420px; overflow-y: auto; }
+details.full summary { cursor: pointer; font-size: 0.82rem; color: var(--muted); padding: 8px 12px; border-top: 1px solid var(--line); }
+details.full pre { max-height: 360px; border-top: 1px solid var(--line); }
+
+ul.checks { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+ul.checks li { display: grid; grid-template-columns: 22px 1fr; gap: 8px; align-items: start; max-width: 78ch; }
+ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; border: 2px solid var(--accent); border-radius: 3px; }
+.kv { display: grid; gap: 4px; }
+@media (prefers-reduced-motion: reduce) { * { scroll-behavior: auto !important; transition: none !important; } }
+.shots { display: grid; gap: 16px; }
+.shot { position: relative; margin: 0; border: 1px solid var(--line); border-radius: 10px; overflow: hidden; background: var(--code); }
+.shot img { display: block; width: 100%; height: auto; }
+.pin { position: absolute; transform: translate(-50%, -50%); font-family: var(--font-mono); font-size: 0.72rem; line-height: 1; font-weight: 500; text-decoration: none; color: #08131c; background: #9cf2c2; border: 2px solid #071220; border-radius: 999px; padding: 3px 6px; white-space: nowrap; }
+.pin:hover { background: #fff; }
+.pin.hero { background: #ddf936; }
+@media (max-width: 620px) { .pin { font-size: 0.56rem; padding: 2px 3px; border-width: 1px; } }
+.group-head { display: grid; gap: 6px; }
+.status { font-family: var(--font-mono); font-size: 0.74rem; white-space: nowrap; }
+.status.need { color: var(--red); }
+.status.ok { color: var(--accent); }
+.status.code { color: var(--muted); }
+.thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
+.thumb { display: grid; grid-template-columns: 44px minmax(0, 1fr); align-items: center; gap: 8px; font-size: 0.8rem; color: var(--muted); background: var(--panel-2); border-radius: 6px; padding: 4px 10px 4px 4px; text-decoration: none; }
+.thumb img { width: 44px; height: 30px; object-fit: cover; border-radius: 3px; background: #fff; display: block; }
+.thumb b { color: var(--fg); font-weight: 600; }
+.guide { background: var(--panel-2); border-radius: 8px; padding: 10px; display: grid; gap: 6px; max-width: 460px; font-size: 0.8rem; color: var(--muted); }
+.guide img { display: block; width: 100%; height: auto; border-radius: 4px; }
+.pack img { aspect-ratio: 2 / 1; }
+.pilot { border: 1px solid var(--accent); border-radius: 10px; padding: 14px 16px; display: grid; gap: 6px; background: var(--panel); }
+.pilot strong { color: var(--accent); font-weight: 600; }
+
+
+</style>
+
+<div class="controls" role="region" aria-label="Prompt options">
+  <div class="inner">
+    <span class="title">Kleo Prompt Book</span>
+    <label class="field" for="include-rules"><input type="checkbox" id="include-rules" checked> Copy shared rules with each prompt</label>
+    <span class="progress" id="progress">0 done</span>
+  </div>
+</div>
+
+<div class="page">
+  <aside class="rail" aria-label="Contents">
+    <nav>
+      <span class="group">Start</span>
+      <a href="#who">Who Kleo is</a>
+      <a href="#workflow">How to use this book</a>
+      <a href="#standard">The motion standard</a>
+      <a href="#combo">The four-hit combo</a>
+      <a href="#rules">Sheet rules</a>
+      <a href="#godot">Godot setup</a>
+      <a href="#table">Animation table</a>
+      <a href="#pack">Images to attach</a>
+      <span class="group">Prompts</span>
+      <a href="#model">Model sheets</a>
+      <a href="#moving">Moving</a>
+      <a href="#sword">The sword</a>
+      <a href="#ward">Ward and spells</a>
+      <a href="#abilities">Abilities</a>
+      <a href="#life">Hurt, heal and rest</a>
+      <a href="#effects">Her effects</a>
+      <span class="group">Finish</span>
+      <a href="#checks">Check every result</a>
+      <a href="#fixes">If the image falls short</a>
+      <a href="#after">What happens next</a>
+    </nav>
+  </aside>
+
+  <main>
+    <header class="hero">
+      <span class="eyebrow">Lost Keep · art production · Book 2</span>
+      <h1>Kleo</h1>
+      <p class="lede">Kleo of the Ironbark Guard, from model sheet to every move she makes: walking, the sword, the Ward, her Anima spells, each ability's motion, and the effects the game lays over them.</p>
+      <div class="meta"><span id="count">0 images</span><span>48 × 48 px cells in game</span><span>Masters at ×8: 384-px cells</span><span>Kleo 28 px tall</span><span>Godot 4.7.2</span></div>
+    </header>
+
+    <section id="who">
+      <span class="eyebrow">Start</span>
+      <h2>Who Kleo is</h2>
+      <p>A young Lirien of the Ironbark Guard: disciplined, stubborn, the last guard at a post that keeps getting emptier. Her short cloak is her folded, dormant wings, drawn as cloth until the Wing-Cloak wakes them. Later in the game she wears a wide-brimmed hat and a long coat (mockup I); that look gets its own model sheet and is not used in the animation cards yet.</p>
+      <div class="shots">
+        <figure class="shot">
+          <img src="lostkeep-attach/K-raider-camp.jpg" alt="Mockup of Kleo slashing at a hooded raider in a forest camp" width="1672" height="941">
+          <a class="pin hero" href="#KL6" style="left:45%;top:60%">KL6</a>
+          <a class="pin" href="#FX1" style="left:50%;top:52%">FX1</a>
+        </figure>
+        <figure class="shot">
+          <img src="lostkeep-attach/L-silk-cavern.jpg" alt="Mockup of Kleo casting a small teal orb at the Silk Mother" width="1672" height="941">
+          <a class="pin hero" href="#KL12" style="left:22%;top:66%">KL12</a>
+          <a class="pin" href="#FX2" style="left:28%;top:62%">FX2</a>
+        </figure>
+      </div>
+    </section>
+
+    <section id="workflow">
+      <span class="eyebrow">Start</span>
+      <h2>How to use this book</h2>
+      <div class="pilot">
+        <strong>Make KL0 first and approve it.</strong>
+        <p>The master model sheet is attached to every other card. If it is off, every animation will be off. After it, the pilot is KL1 (idle) and KL2 (run): the two you will see most.</p>
+      </div>
+      <ol class="steps">
+        <li><div><strong>Attach the images each card lists.</strong> They are in <code>docs/art-production/lostkeep-attach/</code>. After KL0 is approved, attach it to every card as "your approved KL0".</div></li>
+        <li><div><strong>Press Copy and paste the prompt into your image model.</strong> The copy includes Kleo's description and the sheet rules unless you untick the box at the top.</div></li>
+        <li><div><strong>Check the result</strong> against <a href="#checks">the checklist</a>. Flip through the frames: she must stay the same size and the same person.</div></li>
+        <li><div><strong>Save it under the card's file name and hand it to me.</strong> I reduce it to true pixel scale, snap it to the palette, line up the frames on the anchor and build the SpriteFrames in Godot.</div></li>
+        <li><div><strong>Tick it done.</strong> Ticks are saved in this browser only.</div></li>
+      </ol>
+    </section>
+
+    <section id="standard">
+      <span class="eyebrow">Start</span>
+      <h2>The motion standard</h2>
+      <p>Every animation in this book is held to the best hand-animated heroes in the genre. Nothing basic, nothing generic. Pixel art only feels this good when every frame is a deliberate drawing, so the cards give each move more frames than usual and describe every one.</p>
+      <div class="cols">
+        <div class="kv"><h3>How it should feel</h3><ul class="checks">
+          <li><strong>Anticipation, contact, follow-through:</strong> every action winds up, hits a sharp key pose, and carries through.</li>
+          <li><strong>Holds and speed:</strong> hold the strongest pose; move fast between poses. The game adds hit-stop on contact.</li>
+          <li><strong>Overlap:</strong> the ponytail and cloak lag behind her, overshoot and settle a frame or two later.</li>
+          <li><strong>Weight:</strong> she squashes into landings, pushes off the ground, and her hips lead her shoulders.</li>
+        </ul></div>
+        <div class="kv"><h3>Frame counts</h3><ul class="checks">
+          <li>Idle and run: 12 frames each, so they never look mechanical.</li>
+          <li>Each combo hit: 12 frames; the finisher 16.</li>
+          <li>Death: 16 frames. Ledge grab and pull-up: 12.</li>
+          <li>The game adds what pixels cannot: hit-stop, screen shake, dust, glow and light.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="combo">
+      <span class="eyebrow">Start</span>
+      <h2>The four-hit combo</h2>
+      <p>Each hit begins in the pose the last one ended in, so the string flows as one continuous motion, and she steps forward with every swing. The game moves her forward; the art shows the lunge.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Hit</th><th>Card</th><th>The swing</th><th class="num">Step forward</th><th>Feel</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td><a href="#KL6">KL6</a></td><td>Swipe left: a backhand from the right shoulder, across and down to the left</td><td class="num">6 px</td><td>Quick opener</td></tr>
+          <tr><td>2</td><td><a href="#KL7">KL7</a></td><td>Swipe right: a rising forehand back across to the right</td><td class="num">6 px</td><td>Snappy return</td></tr>
+          <tr><td>3</td><td><a href="#KL8">KL8</a></td><td>Overhead: both hands, straight down with her full weight</td><td class="num">8 px</td><td>Heavy, a little shake</td></tr>
+          <tr><td>4</td><td><a href="#KL9">KL9</a></td><td>Finisher: a spinning leap up, then a slashing slam down</td><td class="num">14 px</td><td>Spectacular: hit-stop, shake, dust</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section id="rules">
+      <span class="eyebrow">Start</span>
+      <h2>Sheet rules</h2>
+      <div class="cols">
+        <div class="kv"><h3>The grid</h3><ul class="checks">
+          <li>Every sheet is 4 columns of 384 × 384 px cells, with 2, 3 or 4 rows (8, 12 or 16 frames) as each card states. Frames run left to right, top to bottom.</li>
+          <li>In the game each cell is 48 × 48 px (one art pixel is 8 × 8 px in the master).</li>
+          <li>Kleo faces right in every frame. Godot mirrors her for left.</li>
+        </ul></div>
+        <div class="kv"><h3>The anchor</h3><ul class="checks">
+          <li>The point between her feet when standing is at x 192, y 344 in every cell (art pixel 24, 43).</li>
+          <li>Standing, she is 224 px tall (28 art pixels) from boot soles to the top of her head; the ponytail rises a little above.</li>
+          <li>In the air, her belt stays near y 264, where it is when standing, so she does not jump around the cell.</li>
+          <li>The sword, ponytail and cloak may swing out but stay 16 px inside every cell edge.</li>
+        </ul></div>
+        <div class="kv"><h3>Drawn in, and added by the game</h3><ul class="checks">
+          <li>Drawn into the frames: the ponytail, the cloak, the sword, the lantern at her hip.</li>
+          <li>Added by the game: slash arcs, the Spark orb, the Lance beam, the parry flash, glows, dust (the FX cards).</li>
+          <li>Never painted on Kleo: halos, light falling on her, motion blur.</li>
+        </ul></div>
+        <div class="kv"><h3>Motion</h3><ul class="checks">
+          <li>Strong silhouettes and clear key poses: readable at 48 px.</li>
+          <li>Anticipation before every strike, follow-through after it.</li>
+          <li>The ponytail and cloak lag behind the body and settle a frame later.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="godot">
+      <span class="eyebrow">Start</span>
+      <h2>Godot setup</h2>
+      <ol class="steps">
+        <li><div>Sheets go in <code>res://assets/characters/kleo/</code>. Import with Filter <code>Nearest</code>, Mipmaps off.</div></li>
+        <li><div>Create <code>kleo.tres</code> (SpriteFrames). For each animation: Add Frames from Sprite Sheet, Horizontal 4, Vertical 2, 3 or 4 as the sheet has, select the cells from the table in order, then set the FPS and loop flag.</div></li>
+        <li><div>The player has an <code>AnimatedSprite2D</code> with <code>centered</code> on and <code>offset</code> (0, −19), so the anchor sits on the player's origin; <code>flip_h</code> is on when she faces left.</div></li>
+        <li><div>The collision shape is a capsule about 10 × 26 px, independent of the art. Effects are separate scenes spawned at named points (the sword tip, her hand, the lantern).</div></li>
+      </ol>
+    </section>
+
+    <section id="table">
+      <span class="eyebrow">Start</span>
+      <h2>Animation table</h2>
+      <p>Frame rates are first guesses for the feel; I tune them once the moves are in the game.</p>
+      <div class="table-wrap"><table>
+        <thead><tr><th>Animation</th><th>Card</th><th>Cells</th><th class="num">FPS</th><th>Loop</th><th>Notes</th></tr></thead>
+        <tbody id="anim-table"></tbody>
+      </table></div>
+    </section>
+
+    <section id="pack">
+      <span class="eyebrow">Start</span>
+      <h2>Images to attach</h2>
+      <p>Everything is in <code>docs/art-production/lostkeep-attach/</code>. The mockups show Kleo at game size, so they set her proportions, not her detail.</p>
+      <div class="refs pack" id="pack-list"></div>
+    </section>
+
+    <section id="model" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Model sheets</h2>
+      <p>The reference for everything after. Not imported into Godot.</p>
+      <div class="cards" id="cards-model"></div>
+    </section>
+    <section id="moving" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Moving</h2>
+      <p>What she does every second: standing, running, turning, jumping and landing.</p>
+      <div class="cards" id="cards-moving"></div>
+    </section>
+    <section id="sword" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>The sword</h2>
+      <p>A guard's swordwork: compact, practical, and quick to recover. Three hits on the ground, plus up, down and air strikes.</p>
+      <div class="cards" id="cards-sword"></div>
+    </section>
+    <section id="ward" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Ward and spells</h2>
+      <p>The Ironbark Ward (parry and bash) and her Anima magic: the Spark orb and the Lance beam.</p>
+      <div class="cards" id="cards-ward"></div>
+    </section>
+    <section id="abilities" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Abilities</h2>
+      <p>One sheet per ability, in the order she finds them (<code>design/ability-atlas.md</code>).</p>
+      <div class="cards" id="cards-abilities"></div>
+    </section>
+    <section id="life" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Hurt, heal and rest</h2>
+      <p>Taking hits, falling, drinking a potion, resting at a shrine, and freeing someone from a cocoon.</p>
+      <div class="cards" id="cards-life"></div>
+    </section>
+    <section id="effects" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Her effects</h2>
+      <p>Drawn separately so the game can add glow and light to them. Teal is her Anima.</p>
+      <div class="cards" id="cards-effects"></div>
+    </section>
+
+    <section id="checks">
+      <span class="eyebrow">Finish</span>
+      <h2>Check every result</h2>
+      <div class="cols">
+        <div class="kv"><h3>Flip through it</h3><ul class="checks">
+          <li>Step through the cells in order. Her feet stay on the anchor in grounded frames, and she does not grow or shrink.</li>
+          <li>The motion reads at a glance: strong key poses, anticipation and follow-through.</li>
+          <li>Looping animations (idle, run, glide, swim) join their last frame to their first.</li>
+        </ul></div>
+        <div class="kv"><h3>Same character</h3><ul class="checks">
+          <li>Put it beside KL0. Same hair, face, jerkin, cloak, boots and sword in every frame.</li>
+          <li>The ponytail is on the same side of her head in every frame.</li>
+          <li>She faces right everywhere unless the card says otherwise.</li>
+        </ul></div>
+        <div class="kv"><h3>Pixel art</h3><ul class="checks">
+          <li>Hard square pixels on one even grid, no blur and no anti-aliasing.</li>
+          <li>Her silhouette is readable when the sheet is shrunk to one eighth.</li>
+        </ul></div>
+        <div class="kv"><h3>No painted effects</h3><ul class="checks">
+          <li>No slash trails, glows, halos or motion lines on Kleo's sheets: those are the FX cards.</li>
+          <li>No background, ground or wall drawn in any cell.</li>
+        </ul></div>
+      </div>
+    </section>
+
+    <section id="fixes">
+      <span class="eyebrow">Finish</span>
+      <h2>If the image falls short</h2>
+      <div class="cards" id="fix-list"></div>
+    </section>
+
+    <section id="after">
+      <span class="eyebrow">Finish</span>
+      <h2>What happens next</h2>
+      <ol class="steps">
+        <li><div><strong>Model sheet:</strong> you approve KL0.</div></li>
+        <li><div><strong>Pilot:</strong> KL1 and KL2 go into the Godot test room, together with the Ironbark pilot tiles, so we judge Kleo against the world she lives in.</div></li>
+        <li><div><strong>Base kit:</strong> KL3 to KL10, KL20 to KL22, FX1 and FX4 make her fully playable in Ironbark.</div></li>
+        <li><div><strong>Abilities:</strong> each ability's sheet is made when its ability goes into the game.</div></li>
+      </ol>
+    </section>
+  </main>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "lostkeep-kleo-prompt-book";
+  var state = { rules: true, done: {} };
+  try {
+    var saved = JSON.parse(localStorage.getItem(KEY) || "{}");
+    if (typeof saved.rules === "boolean") state.rules = saved.rules;
+    if (saved.done && typeof saved.done === "object") state.done = saved.done;
+  } catch (e) { /* storage unavailable: defaults */ }
+  function save() {
+    try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) { /* not saved */ }
+  }
+
+  var PACK = [
+    ["A", "A-style-ironbark.jpg", "Ironbark mockup", "Kleo standing with her sword: her proportions and colours."],
+    ["K", "K-raider-camp.jpg", "Raider camp", "Kleo mid-slash: the cloak and ponytail in motion."],
+    ["L", "L-silk-cavern.jpg", "Silk cavern", "Kleo casting the Spark."],
+    ["J", "J-canal-village.jpg", "Canal village", "Kleo standing, cloak at rest."],
+    ["I", "I-alchemist-works.jpg", "Alchemist works", "Kleo's late look and the Lance beam. For KL0L and FX3 only."],
+    ["C", "C-aqueducts.jpg", "Aqueducts mockup", "Water, for the swim card."],
+    ["D", "D-shrine.jpg", "Shrine mockup", "The Prism-shard shrine, for resting."],
+    ["E", "E-silk-nest.jpg", "Silk nest mockup", "Cocoons, for the rescue card."],
+    ["B", "B-palette.png", "Palette sheet", "The project's colours."]
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Shared text
+  // ---------------------------------------------------------------------------
+  var KLEO = [
+    "THE CHARACTER: KLEO (identical in every frame)",
+    "- Kleo, a young woman of the Ironbark Guard, the hero of a premium pixel-art Metroidvania. Stylised proportions as in the attached mockups: her head is about one third of her height, a slim athletic body, long legs for her size.",
+    "- Hair: dark navy blue #22305E with lighter strands #3A4F8F, side bangs framing her face, and a long high ponytail tied with a small brown band. The ponytail is long enough to swing and trail behind her.",
+    "- Face: pale warm skin #F0D2B8 with a soft shadow #C99A86, large dark eyes with one small highlight, a small determined mouth. Expressive but simple.",
+    "- Clothes: a fitted brown leather jerkin #5C3A2C with darker stitching #3A2420 over a dark tunic #2E2230, a belt with a small pouch, leather bracers, dark brown trousers, tall brown boots #3A2420.",
+    "- Cloak: a short dark cloak #2E2230 lined in deep red #7A1F2C, fastened at the collar, falling to mid-thigh. (It is her folded, dormant wings: draw it as cloth unless a frame says otherwise.)",
+    "- Sword: a straight short sword with a pale silver blade #C9D2DA, a simple crossguard and a brown leather grip, held in her right hand.",
+    "- A small round brass lantern #B28A5E clipped at her left hip.",
+    "- Only Kleo is in the image: no other people, creatures, ground, walls, shadows or scenery."
+  ].join("\n");
+
+  function rules(card) {
+    return [
+      "STYLE AND TECHNICAL RULES (they apply to everything in this request)",
+      "Project: \"Lost Keep\", a 2D side-view Metroidvania made in Godot 4.7, with top-tier, premium pixel-art animation. These images become game sprites, so the technical rules matter as much as the look.",
+      "",
+      "Look",
+      "- High-end pixel art matching the attached mockups: rich colour, clean readable clusters, selective dark outlines (sel-out), no noise.",
+      "- Pixel scale x8: every art pixel is an exact 8 × 8 px square of one flat colour, aligned to an 8 px grid from the top-left corner. No anti-aliasing, no blur, no smooth gradients, no soft brushes, no sub-pixel detail.",
+      "- Strict side view, like a 2D platformer. No perspective, no camera tilt.",
+      "- Soft light from above and slightly in front, the same in every frame. No cast shadows, no glow, no halo, no light falling on her, no motion lines, no blur.",
+      "",
+      "Canvas",
+      "- Exact canvas: " + card.canvas + ".",
+      "- Background: fully transparent (alpha) PNG. Never paint a checkerboard, white or a scene. If transparency is impossible, use one flat pure blue #0000FF background with no gradient, noise or shadow.",
+      "- No grid lines, frame numbers, labels, borders, text, logos or watermarks."
+    ].join("\n");
+  }
+
+  function sheetRules(card) {
+    if (card.effect) return [
+      "SHEET RULES",
+      "- Cells are 384 × 384 px: 4 columns × " + card.rows + " rows. Fill them left to right, top to bottom, one frame per cell, in the order listed.",
+      "- Each effect is centred in its cell and stays 16 px inside every cell edge.",
+      "- These are effects only: no character, no sword, no hand, no ground."
+    ].join("\n");
+    return [
+      "SHEET RULES",
+      "- Cells are 384 × 384 px: 4 columns × " + card.rows + " rows. Fill them left to right, top to bottom, one frame per cell, in the order listed.",
+      "- Kleo is 224 px tall standing (28 art pixels, boot soles to the top of her head) in every cell. Crouches, lunges and stretches change the pose, never the scale.",
+      "- Anchor: in every cell, the point between her feet when standing is at x = 192, y = 344. In grounded frames her boot soles rest on that line. In air frames her belt stays near y = 264 and the legs tuck or reach from there.",
+      "- She faces RIGHT in every cell unless a frame says otherwise. The ponytail always comes from the back of her head.",
+      "- Her body stays centred on x = 192. The sword, ponytail and cloak may swing out but stay at least 16 px inside every cell edge.",
+      "- The frames are consecutive frames of ONE animation. Change only what moves; keep her face, hair, costume, colours and proportions identical.",
+      card.travel ? "- Forward travel is added by the game: draw her lunging and stepping in place over the anchor, never sliding across the cell." : ""
+    ].filter(Boolean).join("\n");
+  }
+
+  var MOTION = [
+    "THE MOTION STANDARD (this matters most)",
+    "- This must look like the best hand-animated pixel-art hero in the genre: fluid, weighty, expressive and deeply satisfying. Nothing stiff, generic or symmetrical.",
+    "- Every action has clear anticipation, a sharp contact or key pose, and follow-through. Hold the strongest pose; move fast between poses.",
+    "- Overlapping action: the ponytail and cloak lag behind her body, overshoot and settle a frame or two later. They never move in lockstep with her.",
+    "- Weight: she squashes into landings and pushes off the ground; her hips lead and her shoulders follow; her feet plant firmly.",
+    "- Silhouette: every frame reads as a clear, dynamic shape when shrunk to 48 px. Strong lines of action, no limbs hidden behind the body at key moments.",
+    "- Character: she is a disciplined guard, quick and economical, with a fierce edge. Her face reacts: focus when she strikes, a wince when hit."
+  ].join("\n");
+
+  var LOCK = "MATCH THE MODEL SHEET\n- If the approved KL0 model sheet is attached, Kleo must match it exactly in every frame: the same face, hair, ponytail, clothes, cloak, sword and colours.";
+
+  // ---------------------------------------------------------------------------
+  // Cards
+  // ---------------------------------------------------------------------------
+  function canvas(rows) { return "1536×" + (rows * 384) + " px (4 × " + rows + " cells of 384 px; art 192 × " + (rows * 48) + " px at x8)"; }
+
+  var CARDS = [
+    // ------------------------------------------------------------ model
+    { id: "KL0", group: "model", file: "kleo_master", title: "Master model sheet", rows: 2, pilot: true, reference: true,
+      about: "The anchor for every other card. Not imported into Godot. Approve it before making anything else.",
+      attach: ["A", "K", "L", "J", "B"],
+      task: "A model sheet of Kleo in game proportions, used as the reference for every animation. Each cell is a still pose, not a frame of motion.",
+      frames: [
+        "Side view facing right, standing idle: relaxed guard stance, weight on the back foot, the sword held low in front of her, point angled down and forward.",
+        "Front view, standing straight: arms relaxed, the sword held point-down at her side. The cloak hangs behind both shoulders, the ponytail just visible behind her head.",
+        "Back view, standing: the back of the cloak with its red lining showing at the hem, the full length of the ponytail.",
+        "Three-quarter view facing right, mid-stride, the sword raised to her shoulder: shows the jerkin, belt, pouch and lantern clearly.",
+        "Side view facing right, sword raised high above her head with both hands, about to strike: her fiercest expression.",
+        "Side view facing right, one palm thrust forward, casting: her free hand open, fingers spread, the sword lowered in the other hand. (No magic is drawn.)",
+        "Side view facing right, crouched low and ready to spring, the cloak pooled behind her.",
+        "A close-up of her head and shoulders in side view, filling the cell, to show the face, bangs, ponytail tie and collar clasp in detail (the only cell at a larger scale)."
+      ] },
+    { id: "KL0L", group: "model", file: "kleo_master_late", title: "Late-game look", rows: 2, reference: true,
+      about: "Kleo later in the game, in the wide-brimmed hat and long coat from mockup I. Make this only when we reach that point in the story.",
+      attach: ["I", "Your approved KL0", "B"],
+      task: "A model sheet of Kleo's late-game look, matching the approved KL0 in face, hair and proportions. She now wears a wide-brimmed, tall-crowned dark hat #2E2230 with a worn brass band, and a long dark coat #2E2230 lined in deep red #7A1F2C that falls to her knees over the same jerkin. The ponytail still hangs below the hat.",
+      frames: [
+        "Side view facing right, standing idle with the sword lowered.",
+        "Front view, standing straight.",
+        "Back view, standing: the coat's full length and the ponytail below the hat.",
+        "Side view facing right, palm thrust forward, casting.",
+        "Side view facing right, mid-stride running, the coat flaring behind her.",
+        "Side view facing right, sword raised for a strike.",
+        "Side view facing right, crouched and ready.",
+        "A close-up of her head in the hat, side view, filling the cell."
+      ] },
+
+    // ------------------------------------------------------------ moving
+    { id: "KL1", group: "moving", file: "kleo_idle", title: "Idle: breathing and alive", rows: 3, pilot: true,
+      about: "The pose players see most. She is never frozen: breathing, the ponytail drifting, the cloak stirring, a hand flexing on the grip.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["idle", "1–12", 8, true, "1.5 s loop"]],
+      task: "Kleo's idle loop: 12 frames of a calm, alert guard standing her ground. Weight on the back foot, the sword held low and forward. The loop must flow seamlessly from frame 12 back to frame 1.",
+      frames: [
+        "Rest pose: shoulders relaxed, breathing out, the ponytail hanging still.",
+        "Breathing in begins: chest and shoulders rise by one art pixel.",
+        "Breathing in: shoulders up, the ponytail begins to drift back.",
+        "Top of the breath: the cloak's hem lifts slightly in a faint breeze.",
+        "Holding: her fingers flex and re-grip the sword's hilt.",
+        "Breathing out: shoulders sink, the cloak hem falls.",
+        "The ponytail swings forward past its rest point (overlap).",
+        "Settling: the ponytail swings back, her weight shifts subtly toward the front foot.",
+        "She glances slightly upward, her eyes alert.",
+        "Eyes return forward; the sword tip dips one art pixel.",
+        "The sword tip rises back; the cloak settles.",
+        "Almost the rest pose again, ready to loop into frame 1."
+      ] },
+    { id: "KL2", group: "moving", file: "kleo_run", title: "Run: fast and grounded", rows: 3, pilot: true,
+      about: "A fast, athletic run with a strong forward lean. The ponytail and cloak stream behind her; her feet strike and push hard.",
+      attach: ["K", "Your approved KL0", "B"],
+      anims: [["run", "1–12", 16, true, "A full cycle is two strides"]],
+      task: "Kleo's run loop: 12 frames, two full strides, a fast athletic sprint with the body leaning well forward, the sword held back and low along her right side. The loop must flow from frame 12 back to frame 1.",
+      frames: [
+        "Contact: the right foot strikes the ground ahead, the left leg extended behind, arms counter-swinging.",
+        "Down: the body sinks, the right knee bends to absorb the weight.",
+        "Passing: the left leg swings through under her body, the head at its lowest.",
+        "Push: the right leg drives back hard, the body launches forward and up.",
+        "Flight: both feet off the ground, legs scissored wide, the ponytail streaming straight back.",
+        "Flight ending: the left leg reaches forward to land, the cloak billowing.",
+        "Contact: the left foot strikes the ground ahead (the mirror of frame 1).",
+        "Down: the body sinks onto the left leg.",
+        "Passing: the right leg swings through.",
+        "Push: the left leg drives back, the body launches.",
+        "Flight: both feet off the ground, the cloak whipping.",
+        "Flight ending: the right leg reaches forward, ready to loop into frame 1."
+      ] },
+    { id: "KL3", group: "moving", file: "kleo_run_start_stop_turn", title: "Run start, skid stop and turn", rows: 3,
+      about: "The transitions that make running feel physical: an explosive start, a skidding stop, and a sharp turn.",
+      attach: ["K", "Your approved KL0", "B"],
+      anims: [["run_start", "1–4", 18, false, "Into the run loop"], ["run_stop", "5–8", 16, false, "Skid, then idle"], ["turn", "9–12", 20, false, "Flip at frame 11"]],
+      task: "Three short transitions for Kleo's run, 12 frames in total.",
+      frames: [
+        "START: from the idle pose, she drops her weight and leans forward (anticipation).",
+        "START: an explosive first push off the back foot, the body low and stretched forward.",
+        "START: the first long stride, the ponytail and cloak snapping back.",
+        "START: the second stride, matching the run's contact pose.",
+        "STOP: she plants her front foot and leans back, the heel skidding.",
+        "STOP: a deep skid, body leaning far back, the ponytail and cloak flying forward past her.",
+        "STOP: she rises from the skid, the ponytail whipping back over her shoulder.",
+        "STOP: settling into the idle pose, the cloak swinging and settling.",
+        "TURN: braking from the run, the body leaning back, still facing right.",
+        "TURN: pivoting on the front foot, the body side-on and twisting.",
+        "TURN: now facing LEFT, pushing off in the new direction, the ponytail and cloak still swinging from the old direction.",
+        "TURN: facing LEFT, the first stride of the new run."
+      ] },
+    { id: "KL4", group: "moving", file: "kleo_jump", title: "Jump: take-off, rise and apex", rows: 2,
+      about: "A springy, powerful jump. Squash before, stretch on take-off, and a hang-time moment at the apex.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["jump_takeoff", "1–2", 20, false, "Squash then launch"], ["jump_rise", "3–5", 14, false, ""], ["jump_apex", "6–8", 10, false, "Hang time"]],
+      task: "Kleo's jump from the ground to the apex: 8 frames.",
+      frames: [
+        "Squash: knees deeply bent, body compressed, arms back, ready to spring.",
+        "Launch: legs snapping straight, body stretched long and upward, the boots just leaving the ground, the cloak dragged down.",
+        "Rising: the body still stretched, one knee lifting, the sword arm swinging up for momentum.",
+        "Rising: both knees tucking, the cloak beginning to lift.",
+        "Near the apex: knees tucked, body compact, the ponytail floating up.",
+        "Apex: a weightless moment, body curled, the cloak and ponytail floating level.",
+        "Apex: the legs begin to extend downward, the ponytail starts to rise above her head.",
+        "Apex turning to fall: legs reaching down, arms opening for balance."
+      ] },
+    { id: "KL4b", group: "moving", file: "kleo_fall_land", title: "Fall, landing and hard landing", rows: 3,
+      about: "A fall that billows, a light landing that flows straight into a run, and a heavy landing after a long drop that thumps.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["fall", "1–4", 12, true, ""], ["land", "5–7", 20, false, "Cancellable into run"], ["land_hard", "8–12", 14, false, "After a long fall"]],
+      task: "Kleo falling and landing: 12 frames.",
+      frames: [
+        "Falling: legs extended down and slightly apart, arms out for balance, the cloak and ponytail billowing straight up.",
+        "Falling: the cloak flutters, the ponytail whips.",
+        "Falling: the cloak flutters the other way.",
+        "Falling: the ponytail settles back, ready to loop into frame 1.",
+        "Light landing, contact: boots touch the ground line, knees bending.",
+        "Light landing, squash: knees bent, body low, the cloak pooling and the ponytail swinging down past her shoulder.",
+        "Light landing, recover: rising halfway to standing.",
+        "Hard landing, impact: a deep crouch, one knee and one hand to the ground, the sword hand braced out to the side, the cloak spread wide.",
+        "Hard landing, hold: still crouched, head down, the ponytail falling forward over her shoulder.",
+        "Hard landing, rising: pushing up from the knee.",
+        "Hard landing, rising: almost standing, rolling her shoulders.",
+        "Hard landing, recovered: back in the idle pose, the cloak swinging and settling."
+      ] },
+    { id: "KL5", group: "moving", file: "kleo_ledge", title: "Ledge grab, hang and pull-up", rows: 3,
+      about: "Catching a ledge she just missed, hanging with her weight swinging, and hauling herself up: the move that turns near-misses into relief.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["ledge_grab", "1–2", 18, false, "Catch"], ["ledge_hang", "3–6", 6, true, "Loop"], ["ledge_climb", "7–12", 16, false, "Ends standing on top"]],
+      task: "Kleo grabbing a ledge, hanging and pulling herself up: 12 frames. An invisible ledge corner is in every cell at x = 240, y = 120 (the top of the wall to her right). Do NOT draw the ledge. In hanging frames both hands grip that exact point and her body hangs below it, facing the wall. In the last frames she ends standing on top with her boot soles on y = 120.",
+      frames: [
+        "Grab: arms flung up, both hands catching the ledge point, the body still moving upward, the ponytail flying up.",
+        "Catch: the weight drops onto her arms, elbows bending, legs swinging in toward the wall, the cloak swinging.",
+        "Hang: arms straight, body hanging, legs together, the sword held in her right hand along the wall.",
+        "Hang: the body swings slightly away from the wall, the ponytail swaying.",
+        "Hang: the body swings back, the cloak settling.",
+        "Hang: back at rest, ready to loop into frame 3.",
+        "Pull-up: she bends her elbows and hauls, her head rising to the ledge line, her boots scrambling against the wall.",
+        "Pull-up: chest above the ledge line, one elbow planted on top, the body twisting.",
+        "Pull-up: one knee swings up onto the ledge, the cloak dragging.",
+        "Pull-up: crouched on top of the ledge, both boots on y = 120.",
+        "Rising: pushing up from the crouch, the ponytail swinging forward.",
+        "Standing on top in the idle pose, the cloak settling."
+      ] },
+
+    // ------------------------------------------------------------ sword
+    { id: "KL6", group: "sword", file: "kleo_attack_1", title: "Combo hit 1: swipe left", rows: 3, travel: true,
+      about: "The opener. A fast backhand swipe that sweeps the blade from her right shoulder across and down to the left, with a step forward.",
+      attach: ["K", "Your approved KL0", "B"],
+      anims: [["attack_1", "1–12", 24, false, "Contact on frame 5; step 6 px forward; window to chain into hit 2 from frame 7"]],
+      task: "The first strike of Kleo's four-hit sword combo: 12 frames. A quick backhand swipe. She draws the blade back over her right shoulder, then whips it across her body in a wide flat arc toward the LEFT side of her body and down, stepping forward with the front foot as she cuts.",
+      frames: [
+        "Ready: from the idle stance, her weight shifts to the back foot.",
+        "Anticipation: the sword drawn back high over her right shoulder, body coiled and twisted away, the front foot lifting.",
+        "Anticipation peak: a held, tense pose, eyes locked forward.",
+        "Release: the front foot steps forward, the hips turn, the blade starts its arc high in front of her.",
+        "Contact: the blade fully extended in front of her chest at full speed, a short pixel smear trailing the blade's edge, her body lunging forward.",
+        "Follow-through: the blade sweeping on across and down to her left, the arm crossing her body.",
+        "Follow-through: the blade low at her left side, her torso twisted, the ponytail whipping around after the blade.",
+        "Hold: the strong finish pose, the cloak swinging forward past her.",
+        "Recover: the ponytail and cloak overshoot and swing back.",
+        "Recover: she begins to straighten, the blade rising slightly.",
+        "Recover: almost back to the guard stance.",
+        "Back in the idle stance, ready for hit 2."
+      ] },
+    { id: "KL7", group: "sword", file: "kleo_attack_2", title: "Combo hit 2: swipe right", rows: 3, travel: true,
+      about: "The return. From where hit 1 ended, the blade swings back the other way in a rising forehand swipe, with another step forward.",
+      attach: ["K", "Your approved KL0", "Your approved KL6", "B"],
+      anims: [["attack_2", "1–12", 24, false, "Starts from hit 1's frame 8; contact on frame 4; step 6 px"]],
+      task: "The second strike of the combo: 12 frames. It starts exactly where hit 1's follow-through ended (the blade low at her left side, torso twisted). She uncoils, stepping forward again, and swings a powerful forehand swipe back across her body toward the RIGHT and up, the blade rising as it travels.",
+      frames: [
+        "Start: the blade low at her left side, torso twisted (matches hit 1's finish pose).",
+        "Anticipation: she sinks lower, her weight loading onto the back foot, the blade dipping.",
+        "Release: she steps forward with the front foot, the hips snapping around, the blade sweeping forward low.",
+        "Contact: the blade at full extension in front of her, rising, a short pixel smear on its edge, her body lunging.",
+        "Follow-through: the blade continues up and to her right, the arm extending high.",
+        "Follow-through: the blade high behind her right shoulder, her body open, the cloak flaring outward.",
+        "Hold: a strong, open finishing pose, the ponytail whipping across.",
+        "Recover: the ponytail and cloak swing back.",
+        "Recover: she draws the blade down.",
+        "Recover: she settles her feet.",
+        "Almost back in guard.",
+        "Back in the idle stance, ready for hit 3."
+      ] },
+    { id: "KL8", group: "sword", file: "kleo_attack_3", title: "Combo hit 3: overhead strike", rows: 3, travel: true,
+      about: "The heavy one. Both hands, the blade raised high above her head, then brought straight down with her whole weight behind it.",
+      attach: ["K", "Your approved KL0", "Your approved KL7", "B"],
+      anims: [["attack_3", "1–12", 22, false, "Starts from hit 2's frame 6; contact on frame 6; step 8 px; screen shake on contact"]],
+      task: "The third strike of the combo: 12 frames. It starts from where hit 2 ended, with the blade high at her right. She brings both hands to the grip, rises onto her toes with the blade high above her head, then steps in and brings it straight down in front of her with all her weight.",
+      frames: [
+        "Start: the blade high behind her right shoulder (matches hit 2's open finish).",
+        "Gather: the left hand joins the grip, the blade lifting above her head.",
+        "Anticipation: up on her toes, the blade raised high overhead and tipping back behind her head, her back arched, the cloak lifting.",
+        "Anticipation peak: a held, coiled pose at the top of the arc.",
+        "Release: she steps in, the blade coming over the top, her body starting to drop.",
+        "Contact: the blade straight down in front of her at full extension, her knees bent deep, her whole weight behind it, a short pixel smear above the blade.",
+        "Impact: held low, the blade tip near the ground, the cloak and ponytail flying forward over her.",
+        "Impact hold: the ponytail drops down past her face.",
+        "Recover: she lifts the blade from the ground.",
+        "Recover: rising, one hand leaving the grip.",
+        "Recover: almost back in guard.",
+        "Back in the idle stance, ready for the finisher."
+      ] },
+    { id: "KL9", group: "sword", file: "kleo_attack_4", title: "Combo finisher: spinning leap and slam", rows: 4, travel: true,
+      about: "The payoff. She springs up, spins through the air with the blade circling, then drives down in a slashing slam. It must feel spectacular.",
+      attach: ["K", "Your approved KL0", "Your approved KL8", "B"],
+      anims: [["attack_4", "1–16", 24, false, "Starts from hit 3's frame 8; rises ~2 tiles; slam contact on frame 13; step 14 px; hit-stop and shake"]],
+      task: "The fourth and final strike of the combo: 16 frames. From the crouch after hit 3, she springs upward and forward, spins a full turn in the air with the blade held out so it circles around her, and at the top drives down in a diagonal slashing slam that ends with her landing low, the blade cutting down in front of her. Her belt rises to about y = 120 at the top of the leap (this card may break the air-frame rule) and returns to the anchor for the landing.",
+      frames: [
+        "Coil: crouched very low from hit 3, the blade held back low, the cloak pooled.",
+        "Launch: springing up and forward, the body stretched, the blade trailing low behind.",
+        "Rising spin: her body starts to turn, the blade sweeping up in front of her, the cloak wrapping around her.",
+        "Rising spin: side-on and turning away (her back to us for one frame), the blade circling behind her, the ponytail spiralling.",
+        "Rising spin: completing the turn, the blade sweeping overhead, the cloak flaring wide like opening wings.",
+        "Apex: facing right again at the top, the blade raised high above her head in both hands, body arched back, a held moment.",
+        "Apex hold: the strongest silhouette of the whole combo, the cloak and ponytail spread above her.",
+        "Dive: she tips forward and starts to drop, the blade coming over the top.",
+        "Dive: falling fast and diagonally forward, the blade slashing down in front of her, a long pixel smear on its edge.",
+        "Dive: the blade at full extension, pointing down and forward, her body stretched behind it.",
+        "Pre-impact: her boots reach for the ground, the blade low in front.",
+        "Landing: boots hit the ground line, knees bent deep.",
+        "Slam contact: the blade cuts down to the ground in front of her, her body low and braced, the cloak flung forward over her.",
+        "Impact hold: frozen low, the ponytail and cloak still flying forward.",
+        "Recover: the ponytail and cloak drop and settle, she rises halfway.",
+        "Recovered: back in the guard stance, blade lowered, breathing out."
+      ] },
+    { id: "KL10", group: "sword", file: "kleo_attack_air", title: "Up strike, air slash and down strike", rows: 3,
+      about: "Strikes for every direction: an upward cut, a slash in mid-air, and a downward strike that bounces off enemies and hazards.",
+      attach: ["K", "Your approved KL0", "B"],
+      anims: [["attack_up", "1–4", 22, false, "Contact frame 3"], ["attack_air", "5–8", 24, false, "Contact frame 6"], ["attack_down", "9–12", 22, false, "Contact frame 11; bounce on hit"]],
+      task: "Three directional strikes: 12 frames.",
+      frames: [
+        "UP: crouching slightly, the blade drawn down and back.",
+        "UP: driving upward, the body stretching tall, the blade sweeping up.",
+        "UP contact: the blade straight up above her head, a short smear, her body fully extended on her toes.",
+        "UP recover: the blade lowering, the ponytail falling.",
+        "AIR (mid-jump, belt at y = 264): the blade drawn back behind her, knees tucked.",
+        "AIR contact: a flat forward slash at full extension in front of her, a short smear, the cloak flaring.",
+        "AIR follow-through: the blade swept under and behind, her body curling.",
+        "AIR recover: back into the jump's apex pose.",
+        "DOWN (in the air): she pulls her knees up and lifts the blade above her.",
+        "DOWN: the body tipping forward, the blade pointing straight down beneath her.",
+        "DOWN contact: the blade thrust straight down below her boots, her body stacked above it, a short smear.",
+        "DOWN bounce: knocked upward by the hit, knees tucking, the cloak flying up."
+      ] },
+
+    // ------------------------------------------------------------ ward and spells
+    { id: "KL11", group: "ward", file: "kleo_ward", title: "Ironbark Ward: block, parry and bash", rows: 3,
+      about: "The guard's craft. A braced block, a razor-sharp parry, and a shoulder bash that breaks bark-plate walls.",
+      attach: ["K", "Your approved KL0", "B"],
+      anims: [["block", "1–2", 10, false, "Hold frame 2"], ["parry", "3–6", 24, false, "Frame 4 is the parry window pose"], ["bash", "7–12", 22, false, "3 tiles in 0.25 s"]],
+      task: "Kleo's Ironbark Ward: 12 frames. She uses her left forearm, wrapped in a reinforced bark bracer that flares into a small shield shape when she wards. The bracer is the only new detail; everything else matches KL0.",
+      frames: [
+        "BLOCK: bracing, the left forearm raising in front of her face, knees bending.",
+        "BLOCK hold: braced low, the bracer up, the sword ready behind it, gritted teeth.",
+        "PARRY: a sharp snap of the left forearm forward and up.",
+        "PARRY key pose: the bracer flung out and angled up at full extension, her body leaning into it, eyes wide and focused.",
+        "PARRY follow-through: the arm sweeping on, her body opening up, the sword drawn back for a riposte.",
+        "PARRY recover: back to guard.",
+        "BASH anticipation: she drops her shoulder, the bracer forward, crouching.",
+        "BASH launch: driving forward low and fast, shoulder and bracer leading, the cloak streaming back flat.",
+        "BASH: full speed, body horizontal and powerful, the ponytail streaming straight back.",
+        "BASH impact pose: shoulder and bracer driven forward at full extension.",
+        "BASH recover: skidding, rising, the cloak swinging forward.",
+        "BASH recovered: back in the guard stance."
+      ] },
+    { id: "KL12", group: "ward", file: "kleo_spark", title: "Anima Spark: casting the orb", rows: 3,
+      about: "A quick, flowing cast: she draws Anima to her palm and flicks it out. One version on the ground, one in the air. The orb is FX2.",
+      attach: ["L", "Your approved KL0", "B"],
+      anims: [["cast_spark", "1–8", 20, false, "Orb spawns on frame 4"], ["cast_spark_air", "9–12", 20, false, "Orb spawns on frame 11"]],
+      task: "Kleo casting the Anima Spark: 12 frames. She casts with her free LEFT hand; the sword stays lowered in her right. Draw her hand and body only: no orb, no glow, no particles (the game adds them).",
+      frames: [
+        "Draw-in: she pulls her left hand back to her chest, palm cupped, weight on the back foot, focused eyes.",
+        "Gather: her hand at her chest, fingers curling as if holding something, the cloak and ponytail lifting slightly as if in a rising draught.",
+        "Wind-up: a twist away, the left hand drawn back by her hip.",
+        "Release: a sharp thrust of the left arm forward, palm open and fingers spread, her body lunging into it.",
+        "Release hold: arm fully extended, the cloak and ponytail blown back by the release.",
+        "Follow-through: the arm drops slightly, the body recovering.",
+        "Recover: the hand returns to her side.",
+        "Back in the guard stance.",
+        "AIR (mid-jump): left hand drawn to the chest, knees tucked.",
+        "AIR: wind-up, twisting.",
+        "AIR release: arm thrust forward, palm open, the cloak blown back.",
+        "AIR recover: back into the jump's apex pose."
+      ] },
+    { id: "KL13", group: "ward", file: "kleo_lance", title: "Anima Lance: channelling the beam", rows: 3,
+      about: "The late-game spell from mockup I: a wide stance, both hands forward, holding back a torrent. The beam itself is FX3.",
+      attach: ["I", "Your approved KL0", "B"],
+      anims: [["lance_start", "1–4", 16, false, "Beam starts on frame 4"], ["lance_loop", "5–8", 12, true, "While channelling"], ["lance_end", "9–12", 14, false, ""]],
+      task: "Kleo channelling the Anima Lance: 12 frames. The sword is sheathed at her left hip in these frames. Draw her body only: no beam, no glow (the game adds them).",
+      frames: [
+        "Plant: she drops into a wide, low stance, both hands drawn back to her right hip as if gathering something heavy.",
+        "Gather: her shoulders hunched, the cloak and ponytail lifting in a rising draught.",
+        "Push: both arms driving forward, palms together and open.",
+        "Release: arms fully extended, palms forward, her whole body braced against a recoil, the cloak and ponytail blown straight back.",
+        "Channel: braced, arms trembling, the cloak flapping back hard.",
+        "Channel: the cloak flaps the other way, her back foot slides one art pixel.",
+        "Channel: gritted teeth, the ponytail whipping back.",
+        "Channel: the cloak settles slightly, ready to loop into frame 5.",
+        "End: the force cuts out and she staggers forward half a step.",
+        "End: her arms drop, her shoulders heave.",
+        "End: straightening, breathing hard.",
+        "End: back in the guard stance."
+      ] },
+
+    // ------------------------------------------------------------ abilities
+    { id: "KL14", group: "abilities", file: "kleo_emberwick", title: "Emberwick: the lantern's flame", rows: 2,
+      about: "She unclips the lantern and thrusts it forward; the flame cone is added by the game.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["emberwick", "1–8", 16, false, "Flame cone from frame 4 to 6"]],
+      task: "Kleo using Emberwick: 8 frames. She unclips the brass lantern from her hip with her left hand and thrusts it forward. Draw the lantern lit (amber glass and a flame inside) but no fire cone, glow or light around it.",
+      frames: [
+        "She reaches down to the lantern at her hip.",
+        "She unclips it and swings it up, the lantern swinging on its handle.",
+        "Wind-up: the lantern drawn back, her body coiled.",
+        "Thrust: the lantern pushed out at arm's length in front of her, her body leaning into it.",
+        "Hold: braced, the cloak and ponytail pushed back by heat.",
+        "Hold: the lantern swaying slightly.",
+        "She pulls the lantern back to her side.",
+        "She clips it back on her hip, returning to guard."
+      ] },
+    { id: "KL15", group: "abilities", file: "kleo_barkgrip", title: "Barkgrip: wall cling, slide and wall jump", rows: 3,
+      about: "Biting into the wall with her bracers, sliding with sparks of bark dust, and kicking off with real force.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["wall_cling", "1–3", 6, true, ""], ["wall_slide", "4–6", 12, true, ""], ["wall_jump", "7–12", 20, false, ""]],
+      task: "Kleo on a wall: 12 frames. An invisible vertical wall stands behind her at x = 160 in every cell. She faces RIGHT, away from the wall, her back and left hand against it. Nothing crosses x = 160 except her gripping hand and the flattened cloak. Do NOT draw the wall.",
+      frames: [
+        "Cling: pressed to the wall, knees bent, boots flat against it, the left hand gripping behind her, the sword ready in her right.",
+        "Cling: a breath, the ponytail swaying.",
+        "Cling: settling, ready to loop.",
+        "Slide: the same pose, the cloak and ponytail lifting upward from the slide.",
+        "Slide: the cloak flutters, her teeth gritted.",
+        "Slide: the ponytail flutters, ready to loop.",
+        "Wall jump, coil: knees bending deep against the wall.",
+        "Wall jump, push: legs driving off the wall, her body launching up and to the right, the cloak snapping.",
+        "Wall jump, flight: body stretched diagonally up and right.",
+        "Wall jump, flight: one knee tucking, the ponytail trailing back toward the wall.",
+        "Wall jump, flight: both knees tucking.",
+        "Matching the jump's apex pose."
+      ] },
+    { id: "KL16", group: "abilities", file: "kleo_glide", title: "Wing-Cloak: wings unfurl and glide", rows: 3,
+      about: "The cloak is revealed as folded wings. They unfurl into a pair of broad, translucent-edged Lirien wings, carry her, then fold back into cloth.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["glide_open", "1–4", 18, false, ""], ["glide", "5–9", 10, true, ""], ["glide_close", "10–12", 18, false, ""]],
+      task: "Kleo's Wing-Cloak: 12 frames. Her short cloak unfolds from her shoulders into two broad wings: the same dark #2E2230 outer surface and deep red #7A1F2C lining, ragged at the tips, with thin pale-teal veins #3FE0C8 tracing them (painted, not glowing). In the glide frames the wings spread wide above and behind her; the tips may reach the cell edges' 16 px margin.",
+      frames: [
+        "Open: mid-air, the cloak splits at the back, her shoulders rolling back.",
+        "Open: the folds lift and spread, revealing the red lining.",
+        "Open: the wings snap open wide, her body jolting upward.",
+        "Open: fully spread, her legs trailing below.",
+        "Glide: body hanging below the wings, leaning forward, legs together and trailing, the sword held back.",
+        "Glide: the wing tips flex up.",
+        "Glide: the wings flex down, the ponytail streaming.",
+        "Glide: the wing tips ripple.",
+        "Glide: back to frame 5's pose, ready to loop.",
+        "Close: the wings sweep in and down.",
+        "Close: folding back into the cloak's shape.",
+        "Closed: the ordinary cloak again, matching the fall pose."
+      ] },
+    { id: "KL17", group: "abilities", file: "kleo_swim", title: "Deep-Glow Breath: swim and dive", rows: 3,
+      about: "Graceful underwater movement: a smooth kicking swim, a hovering tread, and a quick dive-dash.",
+      attach: ["C", "Your approved KL0", "B"],
+      anims: [["swim", "1–6", 10, true, ""], ["swim_idle", "7–9", 6, true, ""], ["dive_dash", "10–12", 20, false, "4 tiles"]],
+      task: "Kleo underwater: 12 frames. Her hair and ponytail float freely, the cloak drifts like seaweed. No water, bubbles or light drawn (the game adds them). The sword is held along her body.",
+      frames: [
+        "Swim: body horizontal, arms sweeping back, legs kicking up.",
+        "Swim: legs kicking down, gliding forward.",
+        "Swim: the arms reaching forward again.",
+        "Swim: the arms pulling back.",
+        "Swim: legs kicking, the ponytail rippling.",
+        "Swim: gliding, ready to loop into frame 1.",
+        "Tread: upright, arms sculling slowly, the hair floating up.",
+        "Tread: legs pedalling, the cloak drifting.",
+        "Tread: back to frame 7, ready to loop.",
+        "Dive dash, coil: knees pulled in, arms back.",
+        "Dive dash: shooting forward like an arrow, arms forward, body straight, hair and cloak streaming back.",
+        "Dive dash: slowing, opening back into the swim pose."
+      ] },
+    { id: "KL18", group: "abilities", file: "kleo_thornline", title: "Thorn-Line: throw, swing and pull", rows: 3,
+      about: "She casts Morvath's line, swings on it in a full arc, and yanks things toward her. The line itself is drawn by the game.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["thorn_throw", "1–4", 20, false, "Line fires on frame 3"], ["thorn_swing", "5–9", 12, true, "Rotated by the game along the arc"], ["thorn_pull", "10–12", 18, false, ""]],
+      task: "Kleo using the Thorn-Line: 12 frames. The line comes from a pale bark band around her left wrist. Draw no line or rope: her left hand always holds or points along an invisible line going UP and to the right.",
+      frames: [
+        "Throw, wind-up: the left arm drawn back, the body twisting.",
+        "Throw: the arm whipping forward and up.",
+        "Throw: arm fully extended up and to the right, fingers open.",
+        "Throw, catch: the hand closes on the invisible line, her body tensing.",
+        "Swing: hanging from the left arm, body swinging forward under the line, legs trailing behind, the cloak streaming back.",
+        "Swing: at the bottom of the arc, body straight, the ponytail whipping.",
+        "Swing: swinging up forward, legs leading, knees bent.",
+        "Swing: at the top of the forward arc, a weightless moment.",
+        "Swing: swinging back down, ready to loop into frame 5.",
+        "Pull: feet planted, she yanks the invisible line back hard with both hands.",
+        "Pull: leaning far back, heels dug in, gritted teeth.",
+        "Pull: the line released, she stumbles back half a step into her guard."
+      ] },
+    { id: "KL19", group: "abilities", file: "kleo_meld_siphon", title: "Memory-Meld and Anima Siphon", rows: 2,
+      about: "Two quiet, powerful moments: reaching into the past, and drawing Anima out through a tether.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["meld", "1–4", 10, false, "The game adds the shimmer"], ["siphon", "5–8", 10, true, "Loop frames 6–8 while draining"]],
+      task: "Kleo using Memory-Meld and Anima Siphon: 8 frames. No effects drawn.",
+      frames: [
+        "MELD: she stops and brings her left hand to her temple, eyes closing.",
+        "MELD: her head bows, the cloak and ponytail drifting upward as if weightless.",
+        "MELD: eyes open, gazing slightly upward, calm and distant.",
+        "MELD: her hand lowers, the cloak and ponytail settling.",
+        "SIPHON: she thrusts her left hand forward, fingers clawed, her body leaning back.",
+        "SIPHON: braced, pulling, the hand clenched as if gripping something unseen.",
+        "SIPHON: straining, the cloak and ponytail drawn forward toward her hand.",
+        "SIPHON: the pull eases slightly, ready to loop into frame 6."
+      ] },
+
+    // ------------------------------------------------------------ life
+    { id: "KL20", group: "life", file: "kleo_hurt", title: "Hurt and knockback", rows: 2,
+      about: "Getting hit has to sting: a sharp flinch for light hits, and a hard knockback that throws her off her feet for heavy ones.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["hurt", "1–3", 18, false, "The game flashes her white"], ["knockback", "4–8", 16, false, "Thrown back about 2 tiles"]],
+      task: "Kleo taking damage: 8 frames. She is hit from the RIGHT (in front of her).",
+      frames: [
+        "Light hit: her head snaps back, eyes squeezed shut, the body jolting backward.",
+        "Light hit: recoiling, shoulders hunched, the ponytail flying forward.",
+        "Light hit: recovering into the guard stance.",
+        "Heavy hit: her whole body flung back off her feet, arms thrown forward, the cloak billowing.",
+        "Heavy hit: airborne and arching backward, the sword hand flung out.",
+        "Heavy hit: landing on her back foot, skidding, nearly falling.",
+        "Heavy hit: catching herself with one hand on the ground behind her.",
+        "Heavy hit: pushing back up into a low guard."
+      ] },
+    { id: "KL21", group: "life", file: "kleo_death", title: "Death", rows: 4,
+      about: "Dramatic and sad, never comic: she is struck, staggers, falls to her knees, and collapses. The game fades her to Anima motes after.",
+      attach: ["A", "Your approved KL0", "B"],
+      anims: [["death", "1–16", 10, false, "Hold the last frame; respawn plays it backwards"]],
+      task: "Kleo's death: 16 frames. Slow, weighty and affecting. No blood. She is struck from the RIGHT.",
+      frames: [
+        "The final blow: her body jolts back, head thrown back, eyes wide.",
+        "She staggers back one step, the sword arm dropping.",
+        "Staggering, her free hand going to her chest.",
+        "Her knees begin to buckle.",
+        "She sways, trying to stay standing, the ponytail swinging.",
+        "The sword slips from her fingers and falls toward the ground.",
+        "The sword lies on the ground in front of her (it stays there in every following frame).",
+        "She drops to her knees, the cloak pooling around her.",
+        "Kneeling, swaying, her head bowing.",
+        "Kneeling, one hand reaching forward toward the sword.",
+        "She tips forward, catching herself on one hand.",
+        "The supporting arm gives way.",
+        "She collapses onto her side, the cloak falling over her.",
+        "Lying still, the ponytail settling across the ground.",
+        "Lying still, the cloak's hem settling (one art pixel of change).",
+        "Final frame: lying still, at peace."
+      ] },
+    { id: "KL22", group: "life", file: "kleo_heal_rest", title: "Drink a potion and rest at a shrine", rows: 3,
+      about: "Healing is a moment of relief, and resting at a Prism shrine is a moment of calm.",
+      attach: ["A", "D", "Your approved KL0", "B"],
+      anims: [["heal", "1–6", 12, false, "Heal on frame 4; she is vulnerable"], ["rest", "7–10", 8, false, "Hold frame 10"], ["rest_rise", "11–12", 10, false, ""]],
+      task: "Kleo healing and resting: 12 frames.",
+      frames: [
+        "HEAL: she pulls a small round red potion flask from her belt pouch.",
+        "HEAL: she uncorks it with her thumb.",
+        "HEAL: she tips her head back and drinks.",
+        "HEAL: drinking deeply, eyes closed.",
+        "HEAL: she lowers the flask and exhales, shoulders relaxing.",
+        "HEAL: she tucks the flask away and returns to guard.",
+        "REST: she lowers the sword and kneels on one knee.",
+        "REST: kneeling, she rests the sword point-down in front of her, both hands on the pommel.",
+        "REST: her head bows over the sword.",
+        "REST hold: kneeling, eyes closed, at peace, the cloak pooled behind her.",
+        "RISE: she lifts her head and rises.",
+        "RISE: standing, the sword back in hand, guard stance."
+      ] },
+    { id: "KL23", group: "life", file: "kleo_rescue_interact", title: "Rescue and interact", rows: 2,
+      about: "Freeing someone from a cocoon, and the everyday interaction for levers, doors and talking.",
+      attach: ["E", "Your approved KL0", "B"],
+      anims: [["rescue", "1–5", 12, false, "Cocoon opens on frame 4"], ["interact", "6–8", 12, false, ""]],
+      task: "Kleo rescuing and interacting: 8 frames. No cocoon, lever or other person drawn.",
+      frames: [
+        "RESCUE: she steps up close, reaching out with her free hand.",
+        "RESCUE: she grips the invisible cocoon and lifts the sword.",
+        "RESCUE: a careful, precise cut downward.",
+        "RESCUE: she pulls the cocoon open with both hands, leaning back.",
+        "RESCUE: she reaches in, kneeling, gentle and relieved.",
+        "INTERACT: she reaches forward at chest height.",
+        "INTERACT: her hand closes and pulls (a lever or door handle).",
+        "INTERACT: back to the guard stance."
+      ] },
+
+    // ------------------------------------------------------------ effects
+    { id: "FX1", group: "effects", file: "fx_sword_arcs", title: "Sword arcs", rows: 2, effect: true,
+      about: "The slash trails for the combo and the directional strikes, timed to their contact frames. The game adds glow and fades them.",
+      attach: ["K", "B"],
+      anims: [["fx_arc_1 … fx_arc_down", "one cell each", 30, false, "3–4 frames each, made by fading"]],
+      task: "Eight sword slash arcs as pixel-art effects, one per cell, each centred on the cell's centre (where Kleo's body would be) and drawn as if she faces RIGHT. Each arc is a crisp crescent of pale silver-white #EAF2F6 with a cool silver edge #C9D2DA and a faint teal inner edge #3FE0C8, thick at the leading end and tapering to nothing at the tail.",
+      frames: [
+        "Hit 1: a wide flat arc sweeping from upper right, across the front, to lower left.",
+        "Hit 2: a wide arc rising from lower left, across the front, to upper right.",
+        "Hit 3: a tall vertical arc coming over the top and straight down in front.",
+        "Finisher, spin: a full circle around the centre, thicker on the leading side.",
+        "Finisher, slam: a long diagonal arc from high behind down to the ground in front, the heaviest and widest.",
+        "Up strike: an arc sweeping straight up above the centre.",
+        "Air slash: a flat arc in front of the centre.",
+        "Down strike: an arc sweeping straight down below the centre."
+      ] },
+    { id: "FX2", group: "effects", file: "fx_anima_spark", title: "Anima Spark: orb and impact", rows: 2, effect: true,
+      about: "The small teal orb from mockup L: a bright core with a crackling tail, and a burst when it hits.",
+      attach: ["L", "B"],
+      anims: [["fx_spark", "1–4", 14, true, "In flight"], ["fx_spark_hit", "5–8", 20, false, ""]],
+      task: "The Anima Spark as pixel-art effects: 8 frames. The orb is small: a 48 × 48 px core (6 art pixels) in a 384 px cell. Colours: Anima teal #3FE0C8, a pale core #D8FFF6, and deep teal #1F8F84 at the edges.",
+      frames: [
+        "Flight: the round orb with a bright core, a short tail of teal sparks trailing to the left.",
+        "Flight: the tail sparks shift, two tiny motes break away.",
+        "Flight: the core pulses one art pixel larger.",
+        "Flight: back to frame 1, ready to loop.",
+        "Impact: the orb flattens into a bright flash.",
+        "Impact: a ring of teal bursts outward, sparks flying.",
+        "Impact: the ring widens and breaks into motes.",
+        "Impact: the last motes fade."
+      ] },
+    { id: "FX3", group: "effects", file: "fx_anima_lance", title: "Anima Lance: the beam", rows: 2, effect: true,
+      about: "The beam from mockup I: a muzzle burst at her hands, a body the game stretches to any length, and an impact.",
+      attach: ["I", "B"],
+      anims: [["fx_lance_start", "1–2", 16, false, ""], ["fx_lance_body", "3–5", 16, true, "Repeats left to right"], ["fx_lance_end", "6–8", 16, true, "At the target"]],
+      task: "The Anima Lance beam as pixel-art effects: 8 frames. Colours: Anima teal #3FE0C8 with a white-hot core #F2FFFC and deep teal #1F8F84 edges. The beam is 48 px thick (6 art pixels).",
+      frames: [
+        "Start: a burst at the left of the cell, a small ring of teal light where her hands would be, the beam starting to the right.",
+        "Start: the ring flares, a shard-like rune circle (a ring of thin crystal shards) appears around the muzzle, as in mockup I.",
+        "Body: a straight horizontal beam crossing the whole cell from the left edge to the right edge, at mid-height, with crackling edges. Its left and right ends must join a copy of itself.",
+        "Body: the crackle on the edges shifts.",
+        "Body: the core pulses thicker by one art pixel.",
+        "End: the beam ending at the right in a splash of teal shards against an invisible surface.",
+        "End: the splash flares.",
+        "End: the splash shifts, ready to loop into frame 6."
+      ] },
+    { id: "FX4", group: "effects", file: "fx_kleo_motion", title: "Parry flash and dust", rows: 2, effect: true,
+      about: "The small effects that sell weight: the parry flash, run and skid dust, landing puffs and the bash's burst.",
+      attach: ["A", "B"],
+      anims: [["fx_parry", "1–2", 24, false, ""], ["fx_dust_*", "3–8", 18, false, "One cell each, faded by the game"]],
+      task: "Eight small pixel-art effects, one per cell. Dust is soft grey-violet #8C7A92 and #5E4C68; the parry flash is bronze #E0A050 and white.",
+      frames: [
+        "Parry flash: a sharp four-pointed bronze-and-white star burst at the centre.",
+        "Parry flash: the star breaking into a ring of bronze sparks.",
+        "Run puff: a small puff of dust kicked back from a footstep, at the bottom of the cell.",
+        "Skid dust: a long low streak of dust spraying forward along the bottom of the cell.",
+        "Light landing: two small puffs spreading left and right at the bottom.",
+        "Hard landing: a wide ring of dust and small stones bursting out along the bottom.",
+        "Jump take-off: a small upward puff at the bottom centre.",
+        "Bash burst: a cone of dust and bark splinters blasting forward to the right."
+      ] }
+  ];
+
+  var FIXES = [
+    ["She changes between frames", "She must be the same character in every frame. Match the attached model sheet exactly: the same face, hair, ponytail on the same side, jerkin, cloak, boots and sword, at the same size. Keep the poses and the layout."],
+    ["She drifts around the cells", "Keep the poses, but line every frame up on the anchor: in grounded frames her boot soles rest on y = 344 with her body centred on x = 192, in every cell."],
+    ["The motion is stiff or generic", "The poses are too stiff and symmetrical. Push them further: stronger anticipation, a sharper key pose, more follow-through. Let the ponytail and cloak lag behind her body and overshoot. Keep the same frames and layout."],
+    ["It came back smooth or painterly, not pixel art", "This is a painting, not pixel art. Redo it as true pixel art: every pixel a hard square of one flat colour on an even 8 px grid, no anti-aliasing, no blur, no smooth gradients. Keep the same poses and layout."],
+    ["Effects are painted on her", "Remove all slash trails, glows, sparks, motion lines and magic from Kleo's frames, except the short smear on the blade in contact frames. The game adds the effects separately."],
+    ["A frame is missing or doubled", "There must be exactly one frame per cell, in the order listed, filling every cell of the grid. Keep everything else the same."],
+    ["It came back on white or a checkerboard", "Remove the background completely. If you cannot make it transparent, use one flat pure blue #0000FF background instead."]
+  ];
+
+  // ---------------------------------------------------------------------------
+  // Rendering
+  // ---------------------------------------------------------------------------
+  function el(tag, attrs, children) {
+    var node = document.createElement(tag);
+    if (attrs) for (var k in attrs) {
+      if (k === "text") node.textContent = attrs[k];
+      else node.setAttribute(k, attrs[k]);
+    }
+    (children || []).forEach(function (c) { if (c) node.appendChild(c); });
+    return node;
+  }
+
+  CARDS.forEach(function (c) { c.canvas = canvas(c.rows); });
+
+  function shared(card) {
+    if (card.effect) return [rules(card), sheetRules(card)].join("\n\n");
+    return [rules(card), KLEO, sheetRules(card), MOTION, LOCK].join("\n\n");
+  }
+  function attachLine(card) {
+    var names = { A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", I: "I: the Alchemist works mockup (Kleo's late look and the beam)", J: "J: the canal village mockup", K: "K: the raider camp mockup (Kleo mid-slash)", L: "L: the silk cavern mockup (Kleo casting)" };
+    var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
+    return "\n\nATTACHED: " + list.join("; ") + ".";
+  }
+  function body(card) {
+    var lines = ["TASK: " + card.task, "", "FRAMES:"];
+    card.frames.forEach(function (f, i) { lines.push((i + 1) + ". " + f); });
+    return lines.join("\n") + attachLine(card);
+  }
+  function fullPrompt(card) { return state.rules ? shared(card) + "\n\n" + body(card) : body(card); }
+
+  function copyText(text, button) {
+    function ok() {
+      var label = button.textContent;
+      button.textContent = "Copied";
+      button.classList.add("copied");
+      setTimeout(function () { button.textContent = label; button.classList.remove("copied"); }, 1400);
+    }
+    function fallback() {
+      var area = el("textarea", { readonly: "readonly", "aria-hidden": "true" });
+      area.value = text;
+      area.style.position = "fixed";
+      area.style.opacity = "0";
+      document.body.appendChild(area);
+      area.select();
+      try { if (document.execCommand("copy")) ok(); } catch (e) { /* select by hand */ }
+      document.body.removeChild(area);
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback);
+    else fallback();
+  }
+
+  function progress() {
+    var n = CARDS.filter(function (c) { return state.done[c.id]; }).length;
+    document.getElementById("progress").textContent = n + " of " + CARDS.length + " done";
+  }
+
+  function thumb(letter) {
+    var item = PACK.filter(function (p) { return p[0] === letter; })[0];
+    if (!item) return el("span", { class: "thumb", style: "grid-template-columns:1fr;padding-left:10px", text: letter });
+    return el("a", { class: "thumb", href: "#pack" }, [
+      el("img", { src: "lostkeep-attach/" + item[1], alt: "", loading: "lazy" }),
+      el("span", {}, [el("b", { text: item[0] + " " }), document.createTextNode(item[2])])
+    ]);
+  }
+
+  function renderCard(card) {
+    var check = el("input", { type: "checkbox", id: "done-" + card.id });
+    check.checked = !!state.done[card.id];
+    var head = el("div", { class: "card-head" }, [
+      el("span", { class: "tag", text: card.id + (card.pilot ? " · pilot" : "") + (card.reference ? " · reference" : "") }),
+      el("h3", { text: card.title }),
+      el("label", { class: "done", for: "done-" + card.id }, [check, document.createTextNode("Done")])
+    ]);
+    var node = el("article", { class: "card" + (check.checked ? " is-done" : ""), id: card.id }, [head, el("p", { class: "about", text: card.about })]);
+    check.addEventListener("change", function () {
+      if (check.checked) state.done[card.id] = true; else delete state.done[card.id];
+      node.classList.toggle("is-done", check.checked);
+      save();
+      progress();
+    });
+    var inGame = card.reference ? "Reference only" : card.frames.length + " frames, 48 × 48 px cells";
+    node.appendChild(el("dl", { class: "spec" }, [
+      el("dt", { text: "Save as" }), el("dd", {}, [el("code", { text: card.file + ".png" })]),
+      el("dt", { text: "Canvas" }), el("dd", { text: card.canvas }),
+      el("dt", { text: "In game" }), el("dd", { text: inGame })
+    ]));
+    node.appendChild(el("div", { class: "thumbs" }, card.attach.map(thumb)));
+    var pre = el("pre", { text: body(card) });
+    var button = el("button", { class: "copy", type: "button", text: "Copy", "aria-label": "Copy the prompt for " + card.id });
+    button.addEventListener("click", function () { copyText(fullPrompt(card), button); });
+    node.appendChild(el("div", { class: "prompt" }, [el("div", { class: "prompt-bar" }, [el("strong", { text: "Prompt" }), el("span", { text: "Kleo's description and the rules are added when you copy" }), button]), pre]));
+    return node;
+  }
+
+  CARDS.forEach(function (card) { document.getElementById("cards-" + card.group).appendChild(renderCard(card)); });
+  document.getElementById("count").textContent = CARDS.length + " images";
+
+  CARDS.forEach(function (card) {
+    (card.anims || []).forEach(function (a) {
+      document.getElementById("anim-table").appendChild(el("tr", {}, [
+        el("td", {}, [el("code", { text: a[0] })]),
+        el("td", {}, [el("a", { href: "#" + card.id, text: card.id })]),
+        el("td", { class: "num", text: a[1] }),
+        el("td", { class: "num", text: String(a[2]) }),
+        el("td", { text: a[3] ? "Loop" : "Once" }),
+        el("td", { text: a[4] })
+      ]));
+    });
+  });
+
+  PACK.forEach(function (p) {
+    document.getElementById("pack-list").appendChild(el("div", { class: "ref" }, [
+      el("img", { src: "lostkeep-attach/" + p[1], alt: p[2], loading: "lazy" }),
+      el("div", {}, [el("strong", { text: p[0] + ". " + p[2] }), el("span", { text: p[3] }), el("span", {}, [el("code", { text: p[1] })])])
+    ]));
+  });
+
+  FIXES.forEach(function (f) {
+    var button = el("button", { class: "copy", type: "button", text: "Copy" });
+    button.addEventListener("click", function () { copyText(f[1], button); });
+    document.getElementById("fix-list").appendChild(el("div", { class: "prompt" }, [
+      el("div", { class: "prompt-bar" }, [el("strong", { text: f[0] }), button]),
+      el("pre", { text: f[1] })
+    ]));
+  });
+
+  var rulesBox = document.getElementById("include-rules");
+  rulesBox.checked = state.rules;
+  rulesBox.addEventListener("change", function () { state.rules = rulesBox.checked; save(); });
+  progress();
+})();
+
+</script>
