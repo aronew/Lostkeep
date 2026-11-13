@@ -1,5 +1,7 @@
 # Lost Keep — Design Pillars & Production Rules
 
+> Before anything else, read `design/metroidvania-principles.md` in full.
+
 Read this before designing any room, region or asset. It holds the user's
 non-negotiables.
 

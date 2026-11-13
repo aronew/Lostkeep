@@ -7,10 +7,38 @@ lived in, and every animation must feel amazing, never basic or generic.
 The hero is **Kleo of the Ironbark Guard**. One by one her people have gone
 missing.
 
+## ⚠ Read first, every time: `design/metroidvania-principles.md`
+
+These are the creative lead's own words and the most important file in the
+repo. Read it **in full** before designing, building or generating anything.
+It has three parts, and all three are binding:
+
+1. **The key points.** Exploration and curiosity come first. Platforms are
+   rare, strategic and subtle. Build with large floor masses, floating islands
+   and multiple floors, never dozens of tiny platforms. Black-box collision
+   with tiles painted on it gives natural shadows. Use parallax, a parallax
+   camera and a vignette. The world must look natural, real and lived in, at a
+   top-tier AAA level.
+2. **What to know about Metroidvanias.**
+   - Progression keys are permanent verbs.
+   - The four pillars: an interconnected world (show the lock before the key,
+     fold shortcuts back to saves); keys that are verbs (dual-purpose, with
+     deliberate hard and soft gates); a friction-to-flow traversal curve; and
+     enemies and bosses as mechanical exams.
+   - The three nested loops: micro (15–60 s), meso (20–45 min) and macro
+     (1–3 h), including the sandbox escape after every new ability.
+3. **World layout.** An ant-farm grid where gravity is the compass, and each
+   biome touches three or four neighbours above and below. Some sectors use
+   switchback, pancake-stacked floors.
+
+When a request conflicts with these principles, follow the principles and say
+so.
+
 ## Read before working
 
 | File | What it holds |
 |---|---|
+| `design/metroidvania-principles.md` | **The creative lead's principles: read first, in full** |
 | `design/pillars.md` | The non-negotiables and how a room is built in Godot |
 | `design/ability-atlas.md` | Every ability and spell: numbers, uses, gate looks, where found |
 | `design/lock-and-key.md` | Every lock, key source, item key, knowledge key and shortcut |
