@@ -30,22 +30,30 @@ STANDING_FIRST = {
 # file stem -> (rows, mode). mode: "ground" snaps feet to the anchor,
 # "air" keeps in-cell motion, "fx" centres the effect.
 SHEETS = {
-    "01_idle": (3, "ground"), "02_run": (3, "ground"), "03_start_stop_turn": (3, "ground"),
-    "04_jump_rise": (2, "air"), "05_fall_land": (3, "air"), "06_ledge": (3, "air"),
+    "01_idle": (3, "ground"), "01b_idle_long": (4, "ground"), "02_run": (3, "ground"), "03_start_stop_turn": (3, "ground"),
+    "04_jump_rise": (2, "air"), "05_fall_land": (3, "air"), "06_ledge": (4, "air"),
     "07_combo_backhand": (3, "ground"), "08_combo_forehand": (3, "ground"),
     "09_combo_overhead": (3, "ground"), "10_combo_finisher": (4, "air"),
     "11_directional_strikes": (3, "air"), "12_ironbark_ward": (3, "ground"),
     "13_anima_spark_cast": (3, "ground"), "14_anima_lance_channel": (3, "ground"),
     "15_emberwick": (2, "ground"), "16_wall": (3, "air"), "17_wing_cloak": (3, "air"),
     "18_underwater": (3, "air"), "19_thorn_line": (3, "air"), "20_memory_siphon": (2, "ground"),
-    "21_damage": (2, "air"), "22_death": (4, "ground"), "23_heal_rest": (3, "ground"),
+    "21_damage": (4, "air"), "22_death": (4, "ground"), "23_heal_rest": (3, "ground"),
     "24_rescue_interact": (2, "ground"),
     "25_fx_slashes": (2, "fx"), "26_fx_spark": (2, "fx"), "27_fx_lance": (2, "fx"), "28_fx_small": (2, "fx"),
 }
 
 
+def drop_key_green(im):
+    """Remove the flat key-green (#00FF00) wall and ledge guides."""
+    a = np.asarray(im).copy()
+    r, g, b = a[..., 0].astype(int), a[..., 1].astype(int), a[..., 2].astype(int)
+    a[(g > 180) & (r < 110) & (b < 110)] = 0
+    return Image.fromarray(a, "RGBA")
+
+
 def cells(path, rows):
-    im = Image.open(path).convert("RGBA")
+    im = drop_key_green(Image.open(path).convert("RGBA"))
     cw, ch = im.width / 4, im.height / rows
     for r in range(rows):
         for c in range(4):
