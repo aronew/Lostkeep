@@ -1,5 +1,7 @@
 # Lost Keep — Ability Atlas (draft v0.1)
 
+> Regions now follow the macro map; see `world-and-regions.md`.
+>
 > Progression first: every room in the game is written with these verbs, so
 > this document comes before any region or room. All numbers are
 > **PROVISIONAL** until the movement feel is locked in-engine; when they
@@ -25,14 +27,14 @@ without its ability and **open** for a cautious player with it.
 | # | Ability | Verb | Found ≈ | From | Region (tentative) |
 |---|---|---|---|---|---|
 | 0 | Base kit | run, jump, slash, light | 0:00 | — | Ironbark Hollow |
-| 1 | **Ironbark Ward** | parry / bash | 0:50 | Captain's shield, Lost Keep gatehouse | Ironbark Hollow |
-| 2 | **Emberwick** | burn | 1:40 | Prism-shard shrine | Silkfall Ossuary |
-| 3 | **Barkgrip** | cling / wall-jump | 2:30 | Ironbark smith (rescued) | Drowned Aqueducts |
-| 4 | **Wing-Cloak** | glide | 3:30 | Wings wake when the first vat is broken | High-Spire Scriptorium |
+| 1 | **Ironbark Ward** | parry / bash | 0:50 | Captain's shield, Lost Keep gatehouse | Ironbark Guard |
+| 2 | **Emberwick** | burn | 1:40 | Ashforge forge-shrine | Ashforge Kindred |
+| 3 | **Barkgrip** | cling / wall-jump | 2:30 | Ironbark smith (rescued from a Silkbound cocoon) | Silkbound Kindred |
+| 4 | **Wing-Cloak** | glide | 3:30 | Wings wake when the first vat is broken | Carapax Foundry |
 | 5 | **Deep-Glow Breath** | swim / dive | 4:30 | Sora, freed | Deep-Glow Caverns |
-| 6 | **Memory-Meld** | remember (phase into the past) | 5:30 | Vesper, freed; the Reveal | Vat Undercroft |
+| 6 | **Memory-Meld** | remember (phase into the past) | 5:30 | Vesper, freed; the Reveal | High-Spire Scribes |
 | 7 | **Thorn-Line** | grapple / pull | 6:30 | Morvath | Morvath's Observatory |
-| 8 | **Anima Siphon** | drain / power | 7:30 | Stolen from a Vexari Shepherd | The Spire |
+| 8 | **Anima Siphon** | drain / power | 7:30 | Stolen from a Vexari Shepherd | Sovereign Spire |
 
 There's a new verb roughly every 50–60 min and no stat-only droughts. Each
 region except the last plants visible locks for at least two later
