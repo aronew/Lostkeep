@@ -1,0 +1,3 @@
+# Python caches (the art tools create these when they run)
+__pycache__/
+*.pyc

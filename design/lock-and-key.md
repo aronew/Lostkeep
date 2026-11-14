@@ -85,7 +85,7 @@ rescue or a truth).
 | ID | Region | Where (map) | Hard/Soft | Seen before key? | Return pays |
 |---|---|---|---|---|---|
 | W1 | Ironbark | The first descent, under the great tree: a cracked plate floor | Hard | ✔ min ~5 | A shortcut back to the start lantern |
-| W2 | Ironbark | The graveyard, a plated crypt door (upper route) | Hard | ✔ | A health shard and a warden's journal |
+| W2 | Ironbark **IB-02** | The Old Crypt: a plated door across the west gallery (upper line) | Hard | ✔ | The Refuge road, a health shard and a warden's journal |
 | W3 | Ironbark | The keep wall beside the bridge (lower route) | Hard | ✔ | The route to the armory, where the key is |
 | W4 | Refuge | A plated hatch under the camp | Hard | — | The Refuge cellar: the map-maker rescue |
 | W5 | Dusk-Drifter | Carapax-plated shutters | Hard | — | The critical path into the forge |
@@ -94,7 +94,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | E1 | Ironbark | A silk-wrapped side tunnel near the graveyard, with a cocoon visible behind it | Hard | ✔ min ~5, the first want | The first rescue (a Rootling child) |
-| E2 | Ironbark | A hanging cocoon over a pit (the strand can't be cut) | Soft | ✔ | A cocoon platform to a secret |
+| E2 | Ironbark **IB-02** | The Old Crypt: a cocoon hung over the gap by the west gallery's mouth (the strand can't be cut) | Soft | ✔ | A rescue |
 | E3 | Refuge | Silk over the east gate | Hard | ✔ | The route to the Hearth-Plains |
 | E4 | Dusk-Drifter | Webbed vents in the forge's upper halls | Hard | ✔ | A forge loop back to the save |
 | E5 | Hearth-Plains | The whole region (silk farms) | Hard | — | The critical path |
@@ -103,6 +103,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | B1 | Ironbark | The keep's tall well-shaft, a lip visible above jump height | Hard | ✔ | The keep's battlements: a lore room and a wing upgrade hint |
+| B1b | Ironbark **IB-02** | The Old Crypt: the Root Well's mouth, far above any jump, moonlight coming down it. Also the cave's wall up to the west gallery | Hard | ✔ | The Guard Post from below; a way back up the loop |
 | B2 | Dusk-Drifter | The ash chimneys | Hard | ✔ | A secret forge and a charm |
 | B3 | Hearth-Plains | The silo tower beside the Silk Mother arena | Hard | ✔ | A bypass shortcut |
 | B4 | Refuge | The camp's chimney under the well | Hard | (it's the sandbox) | — |
@@ -119,7 +120,8 @@ rescue or a truth).
 ### 5 · Deep-Glow Breath: teal bar, droplet icon
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
-| D1 | Ironbark | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
+| D1 | Ironbark **IB-01** | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
+| D1b | Ironbark **IB-02** | The Old Crypt: the cistern and its flooded gallery, a glint deep inside | Hard | ✔ | A drowned burial: a relic |
 | D2 | Refuge | The flooded undercroft under the camp | Hard | ✔ | The undercroft shortcut to the Vats |
 | D3 | Fen-Stalker | Deep fen pools | Hard | ✔ | Mire-Kin rescues |
 | D4 | Tide-Weaver | The whole region | Hard | — | Return region |
@@ -145,7 +147,8 @@ rescue or a truth).
 ### 8 · Anima Siphon: prism-gold bar, socket icon
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
-| S1 | Ironbark | A dark Prism socket in the shrine (mockup 5) | Hard | ✔ | A pre-fall memory and a health shard |
+| S1 | Ironbark **IB-01** | A dark Prism socket in the shrine (mockup 5) | Hard | ✔ | A pre-fall memory and a health shard |
+| S1b | Ironbark **IB-02** | The Old Crypt: an empty Prism socket in the hidden vault | Hard | ✔ | The vault's inner door |
 | S2 | Refuge | A dead Oru'Vex lift in the camp | Hard | ✔ | A lift to the Spire: a late fast route |
 | S3 | Foundry | Dead machinery | Hard | ✔ | The Foundry loop closes |
 | S4 | Deep-Glow / Tide-Weaver | Blight crystal clogs | Hard | ✔ | Blightwater drained from returning regions |

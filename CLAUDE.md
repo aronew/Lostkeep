@@ -219,8 +219,8 @@ She steps forward with every hit.
 - The `metroidvania-level-design` skill holds the detailed method; use it.
 
 ### The Godot project (`game/`)
-- **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is the
-  Ironbark test room). Renderer: GL Compatibility. `godot` is on the path in
+- **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is
+  IB-01, the Lantern Clearing; its hall door leads into IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
   cloud sessions (the environment's setup script installs it to `/opt/godot/`).
 - **Controls:** move A/D or arrows; jump Space/Z/K; attack **left click** or X/J;
   interact E/C or up; gamepad too. **Right click** (or V/L, gamepad B) is the
@@ -231,18 +231,36 @@ She steps forward with every hit.
   - `scripts/player/kleo.gd`: the controller and its tuning.
   - `scripts/world/terrain_skin.gd`: paints art onto the black-box tiles.
   - `scripts/world/`: the room, back walls, the lift, the shrine, the moat,
-    practice posts.
-  - `scripts/core/`: the `Game` autoload (input, hit-stop, fades, debug) and
-    the camera.
+    practice posts, room exits (`room_exit.gd`), false walls (`secret_cover.gd`).
+  - `scripts/core/`: the `Game` autoload (input, hit-stop, fades, debug, room
+    changes, flags) and the camera.
   - `scripts/fx/fx.gd`: dust, arcs, sparks.
   - `shaders/`: terrain fill, water, fog, vignette, hit flash.
-- **A room is built from a plan.** `game/tools/build_test_room.gd` holds it, in
-  tiles: rock rectangles, then spaces carved out, then masses put back,
-  materials, the skin's skip regions, props, lights, machines. It saves an
+- **A room is built from a plan,** in tiles: rock rectangles, then spaces
+  carved out, then masses put back, materials, the skin's skip regions, props,
+  lights, machines. `game/tools/room_builder.gd` is the shared base (the
+  tileset, materials, back walls, terrain, and helpers: `_door`, `_lift`,
+  `_water`, `_breakable`, `_light`, `_fog`, `_edge_shades`); each room has its
+  own builder on top of it, holding its plan and its dressing:
+  `build_test_room.gd` (IB-01) and `build_ib02.gd` (IB-02). Each saves an
   ordinary scene:
-  `godot --headless --path game --script res://tools/build_test_room.gd`.
+  `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
-  edit the scene by hand and stop rebuilding.
+  edit the scene by hand and stop rebuilding. A new room is a new builder that
+  extends `room_builder.gd`: copy `build_ib02.gd`.
+- **Rooms join at doors.** `_door(name, rect, side, target_scene, target_door)`
+  makes a marker under `Doors` (where Kleo arrives, facing in) and a `RoomExit`
+  strip at the room's edge. Walking into the strip calls `Game.go_to`, which
+  fades, changes the scene and places her at the named door. Neighbouring rooms
+  share one world grid: a door's rows in one room are its rows in the other,
+  offset by the rooms' positions (each spec gives its room's origin).
+- **What a room remembers** goes in `Game.flags` (a freed lift, a woken shrine,
+  a found secret): give the machine a `flag` name and it restores itself when
+  the room is entered again. F5 clears them. There is no save file yet.
+- **Secrets:** a `SecretCover` is a false wall: black fill and the wall's own
+  band drawn over a hidden space, which fades for good when Kleo steps inside.
+  Always give it a tell (in IB-02: masonry in a raw cave, moss, a draught of
+  motes drifting into the stone).
 - **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
@@ -302,6 +320,16 @@ She steps forward with every hit.
     routes.
   - Then `python3 tools/check_room.py` checks the blockout rules: floors,
     steps, mass thickness, gates, exits, coverage and traps.
+  - **Other rooms:** add `room=ib02` (output goes to `tests/out/ib02/<mode>/`).
+    IB-02's lines are `mode=tour` (main line, hoist, out the door) and
+    `mode=west` (the upper line, the secret, the loop, the cistern);
+    `mode=doors` walks IB-01 → IB-02 → IB-01. `stitch_map.py ib02` and
+    `check_room.py ib02` take the room's name. A new room needs an entry in
+    `ROOMS` in `tests/playtest.gd` and `tools/check_room.py` (its spawn, lift,
+    water, gates and exits), its scripted lines, and its routes in
+    `stitch_map.py`.
+  - After any change to shared code (the builder, Kleo, the camera, `Game`),
+    run IB-01's modes again as well: both rooms must keep passing.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
   16 px; Kleo's measured envelope is in `design/pillars.md`. Black box first;
   the parallax camera (`Parallax2D` sky 0.05, far 0.15, mid 0.35, ruins 0.72,
@@ -349,8 +377,22 @@ She steps forward with every hit.
 - Mirroring in the skin: a negative width draws the art flipped within
   [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
-- **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
-  images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.
+- **IB-01 is approved. IB-02, the Old Crypt, is built and awaits review**
+  (`design/rooms/ironbark_02_old_crypt.md`, images in `docs/rooms/ironbark_02/`).
+  It is the first labyrinth room: stacked galleries beside a central well,
+  after the creative lead's labyrinth mockups (`docs/mockups/labyrinths/`).
+  Those mockups guide the large shape of a sector (a well, strata, loops,
+  pockets); where they show ladders or rows of small platforms, the principles
+  win: drops, islands, and a machine for the long climb.
+- **Rooms not built yet,** which IB-02's doors already face: the Undercroft
+  (under the clearing, through IB-02's lower East door: the next room on the
+  main line), the Refuge road (west, behind the plated door: needs the Ward),
+  the Guard Post (above, up the well: needs Barkgrip). Their doors end in
+  darkness today.
+- **Art the Old Crypt wants** (cards to add to Book 1; stand-ins are listed in
+  its spec): a backdrop for the well, great hanging roots, a bier and coffin
+  niches, a bier hoist, a cracked false-wall piece.
+- No enemies exist yet; IB-02's long gallery and cave are shaped for the first.
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
   three moons are large (consider regenerating P1 with smaller moons).
 - **Textures that tile** are cut with a minimum-error seam

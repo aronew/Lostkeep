@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [game/tests/out/map/cells.json]
+Usage: python3 tools/check_room.py [ib01|ib02]
 """
 import json
 import sys
@@ -15,16 +15,42 @@ LEDGE_UP = 5      # a ledge up to 5.25 tiles can be caught
 GAP = 5           # running jump clears 6.27 tiles; cautious 5
 BODY = 2          # tiles of headroom she needs
 
-# The Ironbark test room's annotations (tiles).
-SPAWN = (14, 23)
-LIFT = [((24, 23), (24, 36)), ((25, 23), (25, 36)), ((26, 23), (26, 36)), ((27, 23), (27, 36))]
-WATER = (95, 31, 25, 6)          # x, y, w, h: falling in returns her to safe ground
-GATED = {                         # places that must stay shut with the base kit
-    "far bank (Wing-Cloak, G1)": (113, 20, 25, 8),
-    "sealed pocket (Emberwick, E1)": (88, 32, 3, 5),
+# Each room's annotations (tiles). A standing spot is the cell Kleo's feet are
+# in: the row above the floor.
+#   spawn  where she starts
+#   lift   pairs of spots a lift links, both ways
+#   water  x, y, w, h: falling in returns her to safe ground
+#   gated  places that must stay shut with the base kit
+#   seals  cells that are solid until something opens them (silk, a plated
+#          door, a jammed lift's deck)
+#   exits  spots that must be reached
+ROOMS = {
+    "ib01": {
+        "cells": "game/tests/out/map/cells.json",
+        "spawn": (14, 23),
+        "lift": [((24, 23), (24, 36)), ((25, 23), (25, 36)), ((26, 23), (26, 36)), ((27, 23), (27, 36))],
+        "water": (95, 31, 25, 6),
+        "gated": {
+            "far bank (Wing-Cloak, G1)": (113, 20, 25, 8),
+            "sealed pocket (Emberwick, E1)": (88, 32, 3, 5),
+        },
+        "seals": [(86, 32, 2, 5)],
+        "exits": {"west upper (to the Guard Post)": (0, 23), "west lower (to the Old Crypt)": (0, 36)},
+    },
+    "ib02": {
+        "cells": "game/tests/out/ib02/map/cells.json",
+        "spawn": (109, 9),
+        "lift": [((x, 9), (x, 27)) for x in range(96, 100)],
+        "water": (41, 33, 49, 4),
+        "gated": {"west gallery past the plated door (Ironbark Ward, W2)": (0, 11, 16, 5)},
+        # The plated door, and the hoist's deck jammed at its head.
+        "seals": [(16, 11, 2, 5), (96, 10, 4, 1)],
+        "exits": {"east upper (to the Lantern Clearing)": (111, 9), "east lower (to the Undercroft)": (111, 27)},
+    },
 }
-SEALS = [(86, 32, 2, 5)]          # the silk seal is solid until burned
-EXITS = {"west upper (to the Guard Post)": (0, 23), "west lower (to the Old Crypt)": (0, 36)}
+ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]
+SPAWN, LIFT, WATER = ROOM["spawn"], ROOM["lift"], ROOM["water"]
+GATED, SEALS, EXITS = ROOM["gated"], ROOM["seals"], ROOM["exits"]
 
 
 def load(path):
@@ -89,7 +115,8 @@ def main(path):
     report.append(f"staircases: {stairs} (rule: none) {'OK' if stairs == 0 else 'FAIL'}")
 
     # --- Thin rock: every walkable top's mass at least 2 thick ------------------
-    thin = sorted({(x, y + 1) for (x, y) in spots if (x, y + 2) not in solid and ry <= y + 2 < ry + rh})
+    sealed = {(x, y) for x0, y0, w, h in SEALS for x in range(x0, x0 + w) for y in range(y0, y0 + h)}
+    thin = sorted({(x, y + 1) for (x, y) in spots if (x, y + 2) not in solid and ry <= y + 2 < ry + rh} - sealed)
     report.append(f"masses thinner than 2 tiles under a floor: {len(thin)} {'OK' if not thin else 'FAIL ' + str(thin[:6])}")
 
     # --- Walk it: reachable standing spots with the base kit --------------------
@@ -123,7 +150,8 @@ def main(path):
             # jumps: up to JUMP_UP, ledges up to LEDGE_UP, across gaps up to GAP
             for dx in range(1, GAP + 3):
                 tx = x + d * dx
-                for dy in range(-LEDGE_UP, 6):
+                # Up to a ledge catch above; down as far as a long drop with drift.
+                for dy in range(-LEDGE_UP, 14):
                     q = (tx, y + dy)
                     if q not in spots:
                         continue
@@ -138,7 +166,9 @@ def main(path):
                     # The body's path must be open: the start and landing columns up to
                     # the arc's top, and every column between across the arc's height.
                     # The arc's top: the higher standing row, plus a little air on low jumps.
-                    apex = min(y, y + dy) - max(0, 2 - rise)
+                    # (A drop needs no more than a hop: air above only to clear a wide gap.)
+                    air = max(0, 2 - rise) if rise >= 0 else (2 if gap > 2 else 0)
+                    apex = min(y, y + dy) - air
                     if not (clear_column(x, y, apex) and clear_column(tx, y + dy, apex)):
                         continue
                     low = min(y, y + dy)
@@ -192,4 +222,4 @@ def main(path):
 
 
 if __name__ == "__main__":
-    main(sys.argv[1] if len(sys.argv) > 1 else "game/tests/out/map/cells.json")
+    main(ROOM["cells"])

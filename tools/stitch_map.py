@@ -1,14 +1,23 @@
 """Stitch the playtest map tiles into whole-room images, and draw walked routes.
 
-Usage: python3 tools/stitch_map.py   (after `playtest mode=map`, `mode=tour`, `mode=upper`)
-Writes game/tests/out/map/room_art.png, room_box.png and room_routes.png.
+Usage: python3 tools/stitch_map.py [room]   (after `playtest mode=map` and the room's tours)
+`room` is ib01 (default) or ib02. Writes room_art.png, room_box.png and
+room_routes.png into the room's map folder (game/tests/out[/<room>]/map).
 """
 import csv
 import os
+import sys
 
 from PIL import Image, ImageDraw
 
-OUT = "game/tests/out/map"
+ROOM = sys.argv[1] if len(sys.argv) > 1 else "ib01"
+BASE = "game/tests/out" + ("" if ROOM == "ib01" else "/" + ROOM)
+OUT = BASE + "/map"
+# The tours whose walked routes are drawn, per room.
+ROUTES = {
+    "ib01": [("tour", (242, 176, 74)), ("upper", (63, 224, 200))],
+    "ib02": [("tour", (242, 176, 74)), ("west", (63, 224, 200))],
+}
 
 
 def stitch(view, w, h, names):
@@ -32,8 +41,8 @@ def main():
     # Routes: Kleo's walked positions from the tours, drawn over the box view.
     routes = box.copy()
     d = ImageDraw.Draw(routes)
-    for name, color in [("tour", (242, 176, 74)), ("upper", (63, 224, 200))]:
-        path = f"game/tests/out/{name}/kleo.csv"
+    for name, color in ROUTES[ROOM]:
+        path = f"{BASE}/{name}/kleo.csv"
         if not os.path.exists(path):
             continue
         pts = [(int(r[5]), int(r[6]) - 12) for r in csv.reader(open(path))]
