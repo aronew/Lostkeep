@@ -308,7 +308,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     <section id="surface" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Ironbark surface (the forest at dusk)</h2>
-      <p>The surface rooms (the Guard Post, the forest walk, the approach to the Keep gate), after mockups R, S and T. Make them in order, SF1 first; each attaches the ones before it. Mockups U, V and W are a greener, darker grove for a different area later.</p>
+      <p>The surface rooms, after mockups R, S and T. SF1 to SF8 are the base kit (ground, walls, islands, stone, backdrops); SF9 to SF13 are the scenes' own set pieces: the great tree and its branch walks, the hill chapel and its stair terraces, the pool with its bridge and falls, the floating ruins, and the aqueduct backdrop. Mockups U, V and W are a greener, darker grove for a different area later.</p>
       <div class="cards" id="cards-surface"></div>
     </section>
     <section id="oldcrypt" class="group-section">
@@ -837,6 +837,69 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Foreground: three clumps of near-black broad leaves and fern fronds (#0B0812 to #17121F, faint violet edge light), and two near-black hanging branch-and-vine pieces cut flat at the top.",
         "- A great tree branch reaching out with a hanging lantern on a chain (lit), cut flat where it leaves the trunk.",
         "- A wooden lantern post (lit), three headstones of different shapes, a fence section that joins left to right, lily pads and reeds, a small waterfall spout from a stone lip (paint the falling water only as a few pale streaks)."
+      ] },
+    { id: "SF9", group: "surface", file: "surface_great_tree", title: "The great dusk tree and its branch walks (from R, S, T)",
+      about: "The defining thing in all three mockups: a huge twisting purple-bark tree whose long branches reach across the scene, carrying hanging lanterns and small mossy islands along them, and whose roots grip the ground and the stone below.",
+      canvas: "3072×2048 px (art 384 × 256 px at x8)", game: "Trunk, 2 long branches, root spread, cut apart", attach: ["R", "S", "T", "B"],
+      text: [
+        "TASK: the parts of a giant ancient tree, separately, on a transparent canvas.",
+        "",
+        "STYLE: copy the look of the attached mockups exactly: the same pixel density, dusk palette, plum-brown earth with round boulders and roots, thick bright moss lips, grey dressed stone, warm amber lanterns. Do not copy a whole scene: paint each piece on its own, separated by transparent space, each standing on a flat bottom line unless it hangs or floats. Lanterns are flame and lit glass only, never a halo. Masses follow the shadow rule: lit along open edges, stepping into void #0B0812 toward the centre along their boulders.",
+        "",
+        "1. The trunk, 768 px wide at the base, twisting upward and cut flat at the top edge where the crown leaves the canvas; deep plum bark #4A2A3A to #7A4A5A with grooves and moss.",
+        "2. A huge root spread, 1536 px wide, the roots gripping earth and the corner of a stone wall, standing on a straight ground line.",
+        "3. Two long horizontal branches, each about 2048 px long, cut flat where they leave the trunk, with walkable flat mossy tops in places, vines and moss curtains hanging under them, small leaf clusters. One carries a lantern hanging on a chain; one carries two small mossy earth clumps sitting on it, as in R and S.",
+        "4. A separate canopy mass of leaves, 2048 px wide, deep teal and green, to hang from the top of the screen."
+      ] },
+    { id: "SF10", group: "surface", file: "surface_chapel_terraces", title: "The hill chapel and its stair terraces (from R, S, T)",
+      about: "The chapel at the top right of R and S and the top left of T: a small lantern-lit stone chapel with a barred door behind an iron fence, reached by stone stairs climbing up stacked grassy terraces, headstones and mushrooms on each step.",
+      canvas: "3072×2048 px (art 384 × 256 px at x8)", game: "Chapel, 3 terrace tiers, stair flights, cut apart", attach: ["R", "S", "T", "B"],
+      text: [
+        "TASK: the hilltop chapel and its terraces as separate pieces on a transparent canvas.",
+        "",
+        "STYLE: copy the look of the attached mockups exactly: the same pixel density, dusk palette, plum-brown earth with round boulders and roots, thick bright moss lips, grey dressed stone, warm amber lanterns. Do not copy a whole scene: paint each piece on its own, separated by transparent space, each standing on a flat bottom line unless it hangs or floats. Lanterns are flame and lit glass only, never a halo. Masses follow the shadow rule: lit along open edges, stepping into void #0B0812 toward the centre along their boulders.",
+        "",
+        "1. The chapel: grey stone, pointed slate roof, a carved quatrefoil window, an arched barred iron door, two lit wall lanterns either side, about 768 px wide.",
+        "2. A wrought-iron fence with spear tips, a section that joins left to right, plus a gate post.",
+        "3. Three terrace tiers of earth, 1024, 768 and 512 px wide, each with a straight grassy walking line and a dressed-stone retaining face below it going into shadow.",
+        "4. Two flights of mossy stone stairs, 4 and 6 steps, each step 128 px deep and a full tread, to climb between tiers.",
+        "5. Four headstones (cross, rounded, broken, small) and clusters of red-spotted mushrooms."
+      ] },
+    { id: "SF11", group: "surface", file: "surface_pool_bridge", title: "The still pool, arched bridge and stepping stones (from R, S, T)",
+      about: "The bottom centre of R and S: a still pool at the lowest point, a low broken stone bridge with three arches across it, square stone stumps and stepping blocks standing in the water, lily pads and reeds, waterfalls pouring into it from the terraces and from arched stone outlets.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Bridge, 8 stumps, outlets, falls, cut apart", attach: ["R", "S", "B"],
+      text: [
+        "TASK: the pieces of a forest pool, separately, on a transparent canvas. Paint no open water surface: the game draws it.",
+        "",
+        "STYLE: copy the look of the attached mockups exactly: the same pixel density, dusk palette, plum-brown earth with round boulders and roots, thick bright moss lips, grey dressed stone, warm amber lanterns. Do not copy a whole scene: paint each piece on its own, separated by transparent space, each standing on a flat bottom line unless it hangs or floats. Lanterns are flame and lit glass only, never a halo. Masses follow the shadow rule: lit along open edges, stepping into void #0B0812 toward the centre along their boulders.",
+        "",
+        "1. A low stone bridge 1792 px wide with three round arches, its deck a straight walking line, one end broken and stepping down, its feet going into the water line.",
+        "2. Eight square stone stumps and stepping blocks of different heights (256 to 512 px tall), mossy tops, each standing in the water line.",
+        "3. A stone wall with two arched outlets 768 px wide, water pouring out of each as a narrow pale-blue waterfall (S, bottom right).",
+        "4. Three waterfalls of different heights (384, 640, 896 px), narrow, pale blue-white streaks with a splash at the foot, to place under terrace lips.",
+        "5. Lily pads (6), reed clumps (3), a submerged pillar top."
+      ] },
+    { id: "SF12", group: "surface", file: "surface_ruin_islands", title: "Floating ruin islands and broken gothic arches (from R, S, T)",
+      about: "The middle of all three: earth islands hanging in the air, root balls dripping vines, some carrying a broken gothic arch, a column stump, a headstone or a lantern; and free-standing ruined gothic arches with tracery on the terraces.",
+      canvas: "3072×2048 px (art 384 × 256 px at x8)", game: "4 islands, 3 arches, cut apart", attach: ["R", "S", "T", "B"],
+      text: [
+        "TASK: floating islands and ruined arches, separately, on a transparent canvas.",
+        "",
+        "STYLE: copy the look of the attached mockups exactly: the same pixel density, dusk palette, plum-brown earth with round boulders and roots, thick bright moss lips, grey dressed stone, warm amber lanterns. Do not copy a whole scene: paint each piece on its own, separated by transparent space, each standing on a flat bottom line unless it hangs or floats. Lanterns are flame and lit glass only, never a halo. Masses follow the shadow rule: lit along open edges, stepping into void #0B0812 toward the centre along their boulders.",
+        "",
+        "1. Four floating earth islands: 1536 px with a broken stone arch and a column stump on top (S centre); 1024 px with a headstone and mushrooms (R); 768 px hung from a branch by roots (T right); 512 px plain. Each top a straight walking line, each underside a hanging root ball dripping vines, 1.5 to 2 times as deep as the top.",
+        "2. A tall ruined gothic arch window with tracery and a lantern, 768 px wide (R top right).",
+        "3. A broken arch, half collapsed, 512 px (R centre).",
+        "4. A double arcade of two round arches on columns, ivy-covered, 1024 px (S centre)."
+      ] },
+    { id: "SF13", group: "surface", file: "surface_backdrops", title: "Dusk sky and the misty aqueduct forest (from R, S, T)", scale: 4,
+      about: "What is behind everything in R, S and T: violet dusk sky with rose clouds, layers of misty teal forest, and far ruined arches and a long aqueduct fading in the mist.",
+      canvas: "3072×1728 px (art 768 × 432 at x4, 16:9)", game: "Far layer (opaque) and mid layer (transparent sky), repeating", attach: ["R", "S", "T"],
+      text: [
+        "TASK: two parallax layers on one canvas, stacked: the far layer in the top half, the mid layer in the bottom half, each joining left to right.",
+        "",
+        "1. Far (y 0 to 864, opaque): violet dusk sky with small soft rose clouds near the top; below, rows of misty blue-teal tree crowns and a long ruined aqueduct with tall arches far away, very low contrast.",
+        "2. Mid (y 864 to 1728, transparent above the treetops): whole rounded teal tree crowns, darker trunks, two ruined arch silhouettes among them, mist across the bottom. Higher contrast than the far layer, lower than the playfield. No warm colours except two tiny lanterns."
       ] },
     { id: "OC1", group: "oldcrypt", file: "oldcrypt_floor_ceiling", title: "Old Crypt floor and ceiling bands",
       about: "Every walkable floor and every ceiling in the galleries. Like the stone bands in O and Q.",

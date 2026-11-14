@@ -206,3 +206,22 @@ assigns each one.
 - [ ] One sheet for each region (entering with, leaving with, its own
       vocabulary, its fight/traversal mix).
 - [ ] Vertical slice: a blockout of Ironbark Guard.
+
+## Ironbark surface: level-design references (mockups R to W)
+
+The creative lead's surface mockups (`docs/art-production/lostkeep-attach/`
+R, S, T; U, V, W for a greener deepwood later) are level-design ideas as well
+as art targets. What they share, for the surface rooms:
+
+- **A great tree on one side** whose branches are walkways across the room's
+  upper half, lanterns hanging from them, small islands resting on them.
+- **A chapel on a hill** opposite, climbed by stair terraces of grass and stone:
+  the room's high point and a goal you see from the start.
+- **A pool at the lowest point** with a broken bridge and stepping stumps:
+  water as the floor of the room (and a Deep-Glow Breath lock below).
+- **Floating ruin islands** in the middle air, carrying arches and graves.
+- **Three heights read at once:** the branch line, the terrace line, the
+  water line, which is the principles' "multiple levels with floors".
+
+Where they show rows of tiny stepping blocks in the air, the principles win:
+islands and branch walks, not small platforms.
