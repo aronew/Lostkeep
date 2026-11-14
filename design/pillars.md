@@ -60,9 +60,10 @@ non-negotiables.
    space.
 3. **Parallax camera:** `Camera2D` plus `Parallax2D` layers, at roughly
    sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · **playfield 1.0** ·
-   foreground 1.3. The foreground is near-void silhouettes that frame the
-   screen's top and bottom edges (held there vertically) and a few trunks that
-   sweep past; they never sit over the floor Kleo walks for long.
+   foreground 1.2. The foreground is a few dark clumps of the region's own
+   plants standing on the walking lines, close to the camera: they scroll
+   faster sideways but stay in the world vertically, so they never slide when
+   the camera rises or falls.
 4. **Atmosphere:** a screen vignette (a `CanvasLayer` shader), depth fog per
    layer, light shafts, particles, and `PointLight2D` for lanterns
    (`CanvasModulate` darkens the scene). Glows are lights or additive

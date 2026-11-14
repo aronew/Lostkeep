@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://chfbvssng31xf"
-path="res://.godot/imported/fg_hang.png-82f170ea64e8f1b37c3292404eb808d0.ctex"
+uid="uid://cf74vvmakv1va"
+path="res://.godot/imported/stone_corner_top.png-234b86b58ebd77542a2630fe955955f2.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/ironbark/parallax/fg_hang.png"
-dest_files=["res://.godot/imported/fg_hang.png-82f170ea64e8f1b37c3292404eb808d0.ctex"]
+source_file="res://assets/environment/ironbark/terrain/stone_corner_top.png"
+dest_files=["res://.godot/imported/stone_corner_top.png-234b86b58ebd77542a2630fe955955f2.ctex"]
 
 [params]
 

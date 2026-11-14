@@ -12,7 +12,7 @@
 | **Idea** | Under the Great Ironbark, a mossy clearing runs east to the broken bridge, with the guard's crypt beneath it |
 | **Purpose** | Establishes a landmark (the Great Ironbark, the save shrine); introduces running, jumping, the ledge catch and the combo (a training yard); shows five locks before their keys; folds a shortcut back to the save; gives breath |
 | **Size** | 138 × 40 tiles (2208 × 640 px): 3.5 screens wide, 1.8 tall |
-| **Spaces and masses** | Terrace (west, top 24) over the west hall (stone, 8 tall); clearing (top 28, 4 thick) over the crypt (stone, 5 tall); the drop (4 wide) into the crypt; the lift shaft; a floating island (top 21) and the root shelf (top 17) above the clearing; the moat; the bridge's two spans with an 11-tile gap; the far bank |
+| **Spaces and masses** | Terrace (west, top 24) over the west hall (stone: a high vault 8 tall west of the lift shaft, 5 tall beside it, so the shaft's wall runs down to the crypt's ceiling); clearing (top 28, 4 thick) over the crypt (stone, 5 tall); the drop (4 wide) into the crypt; the lift shaft; a floating island (top 21, 15 wide) and the root shelf (an island, top 17, 22 wide) above the clearing; the moat; the bridge's two spans with an 11-tile gap; the far bank |
 | **Exits** | West upper at the terrace (height 24), west lower door from the hall (32–37), east across the gap (Wing-Cloak) |
 | **Lines** | Main: terrace → clearing → the drop → the crypt west → the hall → the west door (a switchback). Upper (optional): terrace → island → ledge catch → root shelf pocket → drop to the clearing. Lower: the crypt |
 | **Shortcut** | The guard's lift: jammed at the top, worked from below with the winch; it links the hall to the shrine |
@@ -37,8 +37,9 @@ Walked in the engine with real physics (`tests/playtest.gd`):
   the practice posts → the drop (a hard landing) → west through the crypt →
   the winch → the lift up → rest at the shrine. Completed.
 - **Upper line** (`mode=upper`): terrace → island (a running jump) → the root
-  shelf (a ledge catch and the handstand climb) → the long drop (a hard landing)
-  → a heavy blow (the knockback slide). Completed.
+  shelf (a ledge catch and the handstand climb) → off its east end at a run,
+  down the collapse into the crypt (a hard landing) → a heavy blow (the
+  knockback slide). Completed.
 
 Camera on the main line (`tools/camera_report.py`): drift 1%, sway 0 px,
 wobble 0 frames.
@@ -57,4 +58,8 @@ gap is 11 tiles against a 6.27-tile running jump, so it holds by a wide margin).
 | The rock faces of the drop and the piers look odd | IB3's wall band (ferns and mushrooms growing from the rock) is replaced by the floor's own soil turned on its side, 20 px deep. Real art is requested as IB5 and K4 |
 | Background tree tops are cut off | P3 was generated cropped through the canopy. A haze band on the mid layer lets the trees rise into mist; P3 v2 (taller, whole crowns) is requested |
 | The edges are straight lines on the black | Every band now ends in the void along its own stones (`crust` in `tools/make_terrain.py`): a few rows always kept, then only the stones joined to them, each with a shaded underside. Wall faces stand up to 4 px proud of the collision in worn runs, and the straight outline beside them is gone. Only walking lines are straight. IB5 and K4 now ask for the same. Still boxy: the root shelf, a skinned slab; it should become placed island art like the floating island |
-| A foreground silhouette layer for depth | Three `Parallax2D` layers at scroll 1.3 (held on screen vertically): fern and grass clumps along the bottom, moss and vines from the top, and two tree trunks. Flat near-void shapes with a 1 px moonlit rim (`shaders/silhouette.gdshader`), made by `tools/make_silhouettes.py` |
+| A foreground layer for depth | First as flat silhouettes held on screen (they slid when the camera moved and the generated trunks looked wrong), now a `Parallax2D` at scroll (1.2, 1.0): eleven dark, unlit clumps of the flora sheet's ferns and grasses standing on the walking lines, roots sunk in the slab |
+| New art: IB5, K4, P3 v2 | Wall faces are IB5's and K4's painted bands; outer top and ceiling corners are painted pieces placed by the skin and clipped to their mass. The mid layer is P3 v2 with whole crowns (the haze is gone) |
+| Still something weird with the floor tiles under the graveyard step | Two causes. The hall's ceiling (row 28) met the crypt's (row 31) under the step, leaving a 3-tile face hanging under the floor and a 2-tile scrap of arcade beside it; the hall's high vault now ends at the lift shaft's wall, so one wall runs from the grass to the arcade. And every left-facing face and corner was drawn displaced into its mass: a negative width draws the art flipped within [x, x + width], not back across x (a bug since the first skin). Both fixed |
+| The crypt arcade stopped mid-arch at walls | K4's arch end is its end piece: a full-height pier where the arcade meets a wall or the collapse, placed only where the floor lies within reach of it (so never hanging in the hall's taller vault) |
+| The root shelf looked like a floor piece | It is IB4's big island now (with its sapling), its collision widened from 15 to 22 tiles to match the island's flat top. Walking off its east end lands on the clearing; running off carries Kleo down the collapse into the crypt |

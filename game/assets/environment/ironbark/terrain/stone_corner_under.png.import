@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c18xxkv8ykstg"
-path="res://.godot/imported/fg_trunks.png-30ee1205623e164d64d6a3f671cd77ef.ctex"
+uid="uid://cbmmobeiwtgiy"
+path="res://.godot/imported/stone_corner_under.png-cc9d580e4ac2c65e9a6e6985766ea238.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/ironbark/parallax/fg_trunks.png"
-dest_files=["res://.godot/imported/fg_trunks.png-30ee1205623e164d64d6a3f671cd77ef.ctex"]
+source_file="res://assets/environment/ironbark/terrain/stone_corner_under.png"
+dest_files=["res://.godot/imported/stone_corner_under.png-cc9d580e4ac2c65e9a6e6985766ea238.ctex"]
 
 [params]
 

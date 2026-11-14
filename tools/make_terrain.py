@@ -9,6 +9,7 @@ Output: game/assets/environment/ironbark/terrain/ and .../parallax/.
 
 Usage: python3 tools/make_terrain.py
 """
+import json
 import os
 from collections import deque
 
@@ -263,6 +264,169 @@ def face_band(rows, seed):
     return np.transpose(a, (1, 0, 2))[:, ::-1].copy()
 
 
+# --- The edge kits (IB5 earth, K4 masonry) ----------------------------------------------
+# Painted pieces: a face band and corners. Their painted void becomes transparent
+# (the game paints the void), and each corner is measured for its anchor: the
+# point where its walking line (or ceiling line) meets its face.
+
+def clear_void(a):
+    out = a.copy()
+    rgb = a[..., :3].astype(int)
+    dark = (rgb.max(2) < 30) & (lum(rgb) < 18)
+    out[dark, 3] = 0
+    return out
+
+
+def pieces(a, gap=3):
+    """Bounding boxes of the separate pieces on a sheet, top to bottom, left to right."""
+    op = a[..., 3] > 0
+    d = op.copy()
+    for _ in range(gap):
+        d = d | np.roll(d, 1, 0) | np.roll(d, -1, 0) | np.roll(d, 1, 1) | np.roll(d, -1, 1)
+    seen = np.zeros_like(d)
+    h, w = d.shape
+    out = []
+    for y0, x0 in zip(*np.nonzero(d)):
+        if seen[y0, x0]:
+            continue
+        q = deque([(y0, x0)])
+        seen[y0, x0] = True
+        ys, xs = [y0], [x0]
+        while q:
+            y, x = q.popleft()
+            for dy, dx in ((1, 0), (-1, 0), (0, 1), (0, -1)):
+                yy, xx = y + dy, x + dx
+                if 0 <= yy < h and 0 <= xx < w and d[yy, xx] and not seen[yy, xx]:
+                    seen[yy, xx] = True
+                    q.append((yy, xx))
+                    ys.append(yy)
+                    xs.append(xx)
+        sub = op[min(ys):max(ys) + 1, min(xs):max(xs) + 1]
+        if sub.sum() > 300:
+            yy, xx = np.nonzero(sub)
+            out.append((min(xs) + xx.min(), min(ys) + yy.min(), xx.max() + 1 + min(xs), yy.max() + 1 + min(ys)))
+    out.sort(key=lambda b: (b[1] // 40, b[0]))
+    return out
+
+
+def crop(a, box):
+    x0, y0, x1, y1 = box
+    return a[y0:y1, x0:x1].copy()
+
+
+def right_edge(a, rows, pct=50):
+    """A percentile of the rightmost solid column over `rows`: where a face runs."""
+    xs = [np.nonzero(a[y, :, 3] > 0)[0].max() for y in rows if (a[y, :, 3] > 0).any()]
+    return int(np.percentile(xs, pct))
+
+
+def kit_face(a, box, trim, crust_depth=None):
+    """A wall band from a kit's face band (face pointing right): trimmed of its end
+    caps, its inner side crusted if it ends straight, seamless top to bottom.
+    Returns the band and its face column (stones beyond it stand proud)."""
+    band = crop(a, box)[trim[0]: -trim[1] or None]
+    # The face line sits where most of the edge runs, so only the proudest stones
+    # (up to about 6 px) stand past the collision.
+    face = right_edge(band, range(band.shape[0]), pct=70) - 1
+    if crust_depth:
+        up = np.transpose(band[:, ::-1], (1, 0, 2))  # face-up: rows = distance from the right
+        start = band.shape[1] - 1 - face
+        up = crust(up, start, seed=7, dmin=crust_depth - 10, dmax=crust_depth, pct=40)
+        band = np.transpose(up, (1, 0, 2))[:, ::-1].copy()
+        face = band.shape[1] - 1 - start
+    band = wrap_y(band, 32)
+    return band, face
+
+
+def walking_line(a, frac=0.85):
+    """First row, from the top, solid across most of the piece's inner 60%."""
+    w = a.shape[1]
+    x0, x1 = int(w * 0.1), int(w * 0.6)
+    for y in range(a.shape[0]):
+        if (a[y, x0:x1, 3] > 0).mean() >= frac:
+            return y
+    return 0
+
+
+def ceiling_line(a, frac=0.6):
+    """Last row, from the bottom, solid across most of the piece's inner 60%."""
+    w = a.shape[1]
+    x0, x1 = int(w * 0.1), int(w * 0.6)
+    for y in range(a.shape[0] - 1, -1, -1):
+        if (a[y, x0:x1, 3] > 0).mean() >= frac:
+            return y + 1
+    return a.shape[0]
+
+
+def kit_corner(a, box, kind):
+    """Cut a corner and measure its anchor (face column, line row)."""
+    c = crop(a, box)
+    h = c.shape[0]
+    if kind == "top":
+        line = walking_line(c)
+        face = right_edge(c, range(min(h - 1, line + 12), max(line + 13, h - 6))) - 2
+    else:
+        line = ceiling_line(c)
+        face = right_edge(c, range(4, max(5, line - 10))) - 2
+    return c, (face, line)
+
+
+def kits():
+    """Cut the kits and write their measurements to kit_anchors.json, which the
+    room builder reads: face columns, and each corner's (face, line) anchor."""
+    anchors = {}
+    ib5 = clear_void(load("ironbark_earth_faces_corners.png"))
+    b = pieces(ib5)
+    print("  IB5 pieces", b)
+    face_box = max(b, key=lambda r: r[3] - r[1])  # the tall face band
+    band, face = kit_face(ib5, face_box, (20, 6))
+    save(band, TERRAIN, "earth_wall.png")
+    print("  earth wall face column", face)
+    anchors["earth_wall_face"] = face
+    rest = [r for r in b if r != face_box]
+    corners = sorted([r for r in rest if r[1] < 180], key=lambda r: (r[1] // 40, r[0]))
+    # Book order: a outer top, b inner floor, c outer ceiling, d inner ceiling.
+    for name, box, kind in (("earth_corner_top", corners[0], "top"), ("earth_corner_under", corners[2], "under")):
+        c, anc = kit_corner(ib5, box, kind)
+        save(c, TERRAIN, name + ".png")
+        anchors[name] = anc
+        print(f"  {name} anchor (face, line) {anc} size {c.shape[1]}x{c.shape[0]}")
+
+    k4 = clear_void(load("keep_stone_faces_ends.png"))
+    b = pieces(k4)
+    print("  K4 pieces", b)
+    face_box = max(b, key=lambda r: r[3] - r[1])
+    band, face = kit_face(k4, face_box, (24, 16), crust_depth=30)
+    save(band, TERRAIN, "stone_wall.png")
+    print("  stone wall face column", face)
+    anchors["stone_wall_face"] = face
+    low = sorted([r for r in b if r != face_box and r[1] > 120], key=lambda r: r[0])
+    c, anc = kit_corner(k4, low[0], "top")
+    save(c, TERRAIN, "stone_corner_top.png")
+    anchors["stone_corner_top"] = anc
+    print(f"  stone_corner_top anchor (face, line) {anc} size {c.shape[1]}x{c.shape[0]}")
+    # The arcade's end against a wall: K4's arch end whose pier stands on the right
+    # (the arcade runs off to the left). Its ceiling line is the crown of the arch
+    # opening, as in K2's arcade; its face is the pier's outer side.
+    ends = sorted([r for r in b if r != face_box and r[1] < 120], key=lambda r: r[0])
+    c = crop(k4, ends[0])
+    op = c[..., 3] > 0
+    h, w = op.shape
+    # Its ceiling line is where the course under the arcade leaves the piece on its
+    # left (the lowest solid row of its first columns); its face is the pier's
+    # outer side. The pier reaches down to the floor of a five-tile crypt.
+    crown = max(np.nonzero(op[:, x])[0].max() for x in range(0, 6) if op[:, x].any()) + 1
+    face = right_edge(c, range(h * 3 // 4, h), pct=60) - 1
+    save(c, TERRAIN, "stone_corner_under.png")
+    anchors["stone_corner_under"] = (face, crown)
+    anchors["stone_corner_under_reach"] = h - crown
+    print(f"  stone_corner_under anchor (face, line) {(face, crown)} size {w}x{h}")
+    clean = {k: ([int(v) for v in a] if isinstance(a, tuple) else int(a)) for k, a in anchors.items()}
+    with open(os.path.join(TERRAIN, "kit_anchors.json"), "w") as f:
+        json.dump(clean, f, indent=1)
+    return anchors
+
+
 def main():
     # --- earth -------------------------------------------------------------
     edges = load("ironbark_earth_edges.png")
@@ -289,10 +453,10 @@ def main():
     # into it replaced by the soil beneath them, so no leaf lies sideways.
     # Built face-up (the air side on top, OVER rows of it), then turned so the face
     # points right with its proud stones beyond the face column.
+    # (Replaced by IB5's painted face band in kits(); kept as the fallback.)
     soil_rows = degreen(wrap_x(top, 32)[line + 10 - OVER: line + 10 + CRUST_MAX + 2])
     wall = face_band(soil_rows, seed=3)
     save(wall, TERRAIN, "earth_wall.png")  # already seamless: it is the wrapped top band
-    print("  earth wall face column", wall.shape[1] - 1 - OVER)
 
     fill = load("ironbark_earth_fill.png")
     save(wrap_y(wrap_x(fill, 16), 16), TERRAIN, "earth_fill.png")
@@ -315,47 +479,19 @@ def main():
     k1 = load("keep_stone_fill.png")
     sfill = wrap_y(wrap_x(k1, 16), 16)
     save(sfill, TERRAIN, "stone_fill.png")
-    # stone wall: the fill's own stones, face-up then turned, like the earth wall
+    # stone wall fallback: the fill's own stones (replaced by K4's in kits())
     sw = face_band(sfill[: OVER + CRUST_MAX + 2].copy(), seed=6)
     save(sw, TERRAIN, "stone_wall.png")
-    print("  stone wall face column", sw.shape[1] - 1 - OVER)
+
+    # --- the painted edge kits ------------------------------------------------
+    kits()
 
     # --- parallax -----------------------------------------------------------
     for name, out in [("ironbark_bg_sky.png", "sky.png"), ("ironbark_bg_far.png", "far.png"),
                       ("ironbark_bg_wall.png", "wall.png"), ("ironbark_fg.png", "fg.png")]:
         save(wrap_x(load(name), 48), PARALLAX, out)
+    # P3 v2 has whole crowns on a transparent sky: it only needs its wrap.
     mid = wrap_x(load("ironbark_bg_mid.png"), 48)
-    # A natural crown line: the canopy ends in rounded tree crowns against the
-    # sky instead of a straight cut. Crowns of varied width and height, laid
-    # end to end across the layer's width, so the layer still tiles.
-    w = mid.shape[1]
-    rng = np.random.default_rng(7)
-    widths = []
-    while sum(widths) < w:
-        widths.append(int(rng.integers(38, 92)))
-    widths[-1] -= sum(widths) - w
-    if widths[-1] < 30:
-        last = widths.pop()  # (pop first: `widths[-2] += widths.pop()` hits the wrong item)
-        widths[-1] += last
-    edge = np.zeros(w)
-    x0 = 0
-    for cw in widths:
-        h = rng.uniform(14, 30)
-        xs = np.arange(cw)
-        t = (xs + 0.5) / cw * 2 - 1  # -1..1 across the crown
-        edge[x0:x0 + cw] = 48 - h * np.sqrt(np.clip(1 - t * t, 0, 1)) ** 0.8
-        x0 += cw
-    # Small leafy ripples on each crown, so they read as foliage, not domes.
-    edge += 1.6 * np.sin(np.arange(w) * 2 * np.pi / 9.0) + 1.0 * np.sin(np.arange(w) * 2 * np.pi / 5.0)
-    edge = np.round(edge).astype(int)
-    for x in range(w):
-        mid[: edge[x], x, 3] = 0
-    # A dark outline on the new crown line only (not on the canopy's own holes).
-    for x in range(w):
-        ys = np.nonzero(mid[:, x, 3] > 0)[0]
-        if len(ys):
-            y = ys[0]
-            mid[y, x, :3] = (mid[y, x, :3] * 0.5).astype(np.uint8)
     for name, img in [("far", load("ironbark_bg_far.png")), ("mid", mid)]:
         bottom = img[-6:, :, :3].reshape(-1, 3).mean(0)
         print(f"  {name} base colour #{int(bottom[0]):02x}{int(bottom[1]):02x}{int(bottom[2]):02x}")

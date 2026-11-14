@@ -1,0 +1,21 @@
+{
+ "earth_wall_face": 39,
+ "earth_corner_top": [
+  57,
+  3
+ ],
+ "earth_corner_under": [
+  67,
+  53
+ ],
+ "stone_wall_face": 29,
+ "stone_corner_top": [
+  69,
+  3
+ ],
+ "stone_corner_under": [
+  78,
+  37
+ ],
+ "stone_corner_under_reach": 74
+}

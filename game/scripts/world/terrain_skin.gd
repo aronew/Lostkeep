@@ -219,6 +219,10 @@ func _draw_edges(p: Dictionary) -> void:
 	for c in list:
 		if not _skip.has(c):
 			_draw_under(canvas, cells, solid, c)
+	# Painted corners over the bands where a top or a ceiling meets a face.
+	for c in list:
+		if not _skip.has(c):
+			_draw_corners(canvas, cells, solid, c)
 	# Last: the pale lip on walking lines, and the dark line outside wall faces.
 	for c in list:
 		if not _skip.has(c):
@@ -249,6 +253,75 @@ func _wall_room(cells: Dictionary, solid: Callable, c: Vector2i, step: Vector2i)
 	return n * TILE
 
 
+## How far (px) a corner may reach from the corner along its face, going `step`:
+## while the face stays open. A face that ends because the mass ends (a thin
+## column or slab) gives half, so the corners at both ends meet in the middle.
+func _face_room(cells: Dictionary, solid: Callable, c: Vector2i, side: Vector2i, step: Vector2i) -> float:
+	var n := 0
+	var p := c
+	while n < MAX_DEPTH and cells.has(p) and not solid.call(p + side):
+		n += 1
+		p += step
+	if n < MAX_DEPTH and not cells.has(p) and not solid.call(p):
+		return n * TILE * 0.5
+	return n * TILE
+
+
+func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
+	var m := _mat(cells, c)
+	if not m:
+		return
+	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
+		if solid.call(c + side):
+			continue
+		if m.corner_top and not solid.call(c + Vector2i.UP):
+			_corner(canvas, cells, solid, c, side, m.corner_top, m.corner_top_anchor, true)
+		if m.corner_under and not solid.call(c + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
+			_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false)
+
+
+## True if a standing piece reaching `reach` px below this ceiling cell lands on
+## the floor (within 16 px), or if the piece hangs freely (reach 0).
+func _reaches_floor(solid: Callable, c: Vector2i, reach: float) -> bool:
+	if reach <= 0.0:
+		return true
+	var n := 0
+	while n < 12 and not solid.call(c + Vector2i.DOWN * (n + 1)):
+		n += 1
+	return absf(n * TILE - reach) <= 16.0
+
+
+func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, side: Vector2i,
+		tex: Texture2D, anchor: Vector2, top: bool) -> void:
+	var p := Vector2(c * TILE)
+	# The corner point: the cell's outer edge, at its top (walking line) or bottom (ceiling).
+	var cx: float = p.x + (TILE if side == Vector2i.RIGHT else 0.0)
+	var cy: float = p.y + (0.0 if top else TILE)
+	var w := float(tex.get_width())
+	var h := float(tex.get_height())
+	# Inward along the surface (the top or the ceiling) and along the face.
+	var inward: float = min(anchor.x, _wall_room(cells, solid, c, -side))
+	var along := _face_room(cells, solid, c, side, Vector2i.DOWN if top else Vector2i.UP)
+	var sx := anchor.x - inward
+	var sw := w - sx
+	var src: Rect2
+	var dy: float
+	if top:
+		var down: float = min(h - anchor.y, along)
+		src = Rect2(sx, 0, sw, anchor.y + down)
+		dy = cy - anchor.y
+	else:
+		var up: float = min(anchor.y, along)
+		src = Rect2(sx, anchor.y - up, sw, up + h - anchor.y)
+		dy = cy - up
+	var dest := Rect2(cx - inward, dy, sw, src.size.y)
+	if side == Vector2i.LEFT:
+		# Mirrored: a negative width flips the piece within [x, x + |width|], so the
+		# rect starts where the flipped piece's outer end lands and its face meets cx.
+		dest = Rect2(cx + inward - sw, dy, -sw, src.size.y)
+	canvas.draw_texture_rect_region(tex, dest, src)
+
+
 func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
 	var m := _mat(cells, c)
 	if not m or not m.wall_band:
@@ -264,9 +337,11 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 			Rect2(p.x + TILE - depth, p.y, depth + over, TILE), Rect2(bw - depth, sy, depth + over, TILE))
 	if not solid.call(c + Vector2i.LEFT):
 		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.RIGHT))
-		# Negative width mirrors the band so its face lands on the cell's left edge.
+		# A negative width draws the region flipped within [x, x + |width|] (Godot keeps
+		# the rect's x), so the rect starts at the proud stones' outer end and the face
+		# lands on the cell's left edge.
 		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + depth, p.y, -(depth + over), TILE), Rect2(bw - depth, sy, depth + over, TILE))
+			Rect2(p.x - over, p.y, -(depth + over), TILE), Rect2(bw - depth, sy, depth + over, TILE))
 
 
 func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:

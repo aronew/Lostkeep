@@ -29,7 +29,8 @@ const ROCK := [
 ]
 ## Spaces carved out of the rock.
 const SPACES := [
-	[8, 29, 22, 8],   # the west hall under the terrace
+	[8, 29, 20, 3],   # the west hall's high vault: it ends at the lift shaft's wall
+	[8, 32, 22, 5],   # the west hall's floor storey, running on into the crypt
 	[0, 32, 8, 5],    # the west door (the main way on, to the Old Crypt)
 	[30, 32, 56, 5],  # the crypt under the clearing
 	[86, 32, 5, 5],   # the sealed pocket (silk: Emberwick lock E1)
@@ -39,7 +40,7 @@ const SPACES := [
 ## Masses put back: [x, y, w, h, material]
 const MASSES := [
 	[33, 21, 15, 2, 0],   # the floating island (upper line)
-	[52, 17, 15, 2, 0],   # the root shelf (upper line, its pocket)
+	[52, 17, 22, 2, 0],   # the root shelf (upper line, its pocket): IB4's big island
 	[96, 28, 6, 2, 0],    # the bridge's west span
 	[113, 28, 7, 2, 0],   # the bridge's east span (the gap: Wing-Cloak lock G1)
 ]
@@ -48,22 +49,38 @@ const MASSES := [
 ## arches under it are masonry: one material per face, never two stacked.
 const STONE := [[6, 28, 24, 12], [30, 31, 61, 9]]
 ## Cells painted by placed art instead of the skin.
-const SKIP := [[33, 21, 15, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
+const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
 ## Back walls behind enclosed spaces.
-const BACK := [[8, 29, 22, 8], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 5]]
+const BACK := [[8, 29, 20, 3], [8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 5]]
 ## Back walls of raw earth: the collapse that drops into the crypt.
 const BACK_EARTH := [[78, 28, 4, 4]]
 
 const SPAWN := Vector2(232, 384)
+## The colour under the mid forest layer, where its mist meets the floors
+## (printed by tools/make_terrain.py as "mid base colour").
+const MID_BASE := Color("#24535b")
 
 var _root: Node2D
 
 
 func _initialize() -> void:
 	# Fade 0: the inside of every mass is the void; only the edge bands are painted.
-	# Line rows and face columns as tools/make_terrain.py prints them.
-	var earth := _material("earth", 22, 22, 21, 0.0, Color(0, 0, 0, 0))
-	var stone := _material("stone", 13, 14, 21, 0.0, Color("#b3a2b9"))
+	# Line rows as tools/make_terrain.py prints them; the painted kits' face columns
+	# and corner anchors come from the file it writes.
+	var kit: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(TERRAIN + "kit_anchors.json"))
+	var earth := _material("earth", 22, 22, int(kit["earth_wall_face"]), 0.0, Color(0, 0, 0, 0))
+	earth.corner_top = load(TERRAIN + "earth_corner_top.png")
+	earth.corner_top_anchor = _vec(kit["earth_corner_top"])
+	earth.corner_under = load(TERRAIN + "earth_corner_under.png")
+	earth.corner_under_anchor = _vec(kit["earth_corner_under"])
+	ResourceSaver.save(earth, earth.resource_path)
+	var stone := _material("stone", 13, 14, int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
+	stone.corner_top = load(TERRAIN + "stone_corner_top.png")
+	stone.corner_top_anchor = _vec(kit["stone_corner_top"])
+	stone.corner_under = load(TERRAIN + "stone_corner_under.png")
+	stone.corner_under_anchor = _vec(kit["stone_corner_under"])
+	stone.corner_under_reach = float(kit["stone_corner_under_reach"])
+	ResourceSaver.save(stone, stone.resource_path)
 	var tileset := _tileset()
 	_build_kleo()
 	_build_room(tileset, earth, stone)
@@ -88,6 +105,10 @@ func _material(kind: String, top_line: int, under_line: int, wall_face: int, fad
 	m.outline_color = Color(0, 0, 0, 0)  # faces outline themselves: their proud stones are shaded
 	ResourceSaver.save(m, "res://scenes/world/terrain_%s.tres" % kind)
 	return load("res://scenes/world/terrain_%s.tres" % kind)
+
+
+func _vec(a: Array) -> Vector2:
+	return Vector2(a[0], a[1])
 
 
 func _tileset() -> TileSet:
@@ -341,40 +362,15 @@ func _build_parallax() -> void:
 	fog_far.scroll_scale = Vector2(0.25, 0.12)
 	fog_far.z_index = -10
 	_fog(fog_far, Rect2(-200, 210, 2400, 150), Color("#6f9a9a"), 0.32, Vector2(0.004, 0.0))
-	var mid := _parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 118.0, Color("#234753"))
-	# The mid layer's art (P3) was generated cropped through the canopy, so its trees
-	# have no crowns. Haze laid along its crown line lets them rise into mist instead
-	# of ending at an edge. (The real fix is P3 regenerated taller: see REVIEW.md.)
-	_haze(mid, Rect2(0, 118.0 - 22.0, 720, 130), Color("#4a4068"), 0.9, 0.42)
+	# P3 v2: whole crowns on a transparent sky. Placed so the crowns' tops sit about
+	# 90 px down the screen at the shrine; the trunks run down behind the floors.
+	_parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 52.0, MID_BASE)
 	var fog_mid := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
 	fog_mid.scroll_scale = Vector2(0.5, 0.35)
 	fog_mid.z_index = -10
 	_fog(fog_mid, Rect2(-200, 260, 2600, 160), Color("#5f8a8c"), 0.26, Vector2(0.007, 0.0))
 	var ruins := _parallax("Ruins", Vector2(0.72, 0.6), PARALLAX + "wall.png", 470.0 - 256.0)
 	ruins.get_node("Art").modulate = Color(0.6, 0.64, 0.74)  # hazier than the playfield
-
-
-func _haze(parent: Node, rect: Rect2, tint: Color, density: float, peak: float) -> void:
-	var r := _node(ColorRect.new(), "Haze", parent) as ColorRect
-	r.position = rect.position
-	r.size = rect.size
-	r.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var m := ShaderMaterial.new()
-	m.shader = load("res://shaders/haze.gdshader")
-	var nt := NoiseTexture2D.new()
-	nt.width = 256
-	nt.height = 64
-	nt.seamless = true
-	var n := FastNoiseLite.new()
-	n.frequency = 0.02
-	n.fractal_octaves = 3
-	nt.noise = n
-	m.set_shader_parameter("noise", nt)
-	m.set_shader_parameter("tint", tint)
-	m.set_shader_parameter("density", density)
-	m.set_shader_parameter("peak", peak)
-	m.set_shader_parameter("scale", Vector2(2.0, 0.6))  # whole repeats across the layer
-	r.material = m
 
 
 func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> void:
@@ -430,6 +426,10 @@ func _build_landmarks(behind: Node, placed: Node) -> void:
 
 	# The floating island (upper line), its flat top on the collision.
 	_sprite(placed, ENV + "ironbark_islands.png", Rect2(130, 2, 246, 85), Vector2(33 * TILE - 3, 21 * TILE - 31)).name = "Island"
+	# The root shelf: IB4's big island with its sapling. Its walking line is row 33
+	# of the region (the sapling rises above it), and its flat top (x 10 to 374) is
+	# centred on the 22-tile mass.
+	_sprite(placed, ENV + "ironbark_islands.png", Rect2(9, 86, 366, 101), Vector2(52 * TILE + 176 - 183, 17 * TILE - 33)).name = "RootShelf"
 
 	# The broken bridge: its west span with the torn banner, the east span beyond the gap.
 	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(1, 2, 144, 126), Vector2(102 * TILE - 144, 28 * TILE - 63)).name = "BridgeWest"
@@ -545,8 +545,7 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 	for t in tufts:
 		_ground(behind, flora, t[0], t[1] * TILE, t[2] * TILE, 1.0, "Plants")
 	# Hanging art stops at least 2.5 tiles above the floor below it.
-	for v in [[Rect2(171, 126, 15, 51), 36.0, 352], [Rect2(171, 126, 15, 51), 44.5, 350], [Rect2(198, 126, 16, 71), 55.0, 302],
-		[Rect2(227, 126, 14, 88), 58.5, 302], [Rect2(171, 126, 15, 51), 65.0, 302]]:
+	for v in [[Rect2(171, 126, 15, 51), 36.0, 352], [Rect2(171, 126, 15, 51), 44.5, 350]]:
 		_sprite(behind, flora, v[0], Vector2(v[1] * TILE, v[2])).name = "Vine"
 
 	# Roots hanging into the collapse over the crypt.
@@ -692,55 +691,46 @@ func _build_atmosphere(front: Node) -> void:
 	amber.z_index = 14
 
 
-# --- Foreground silhouettes -------------------------------------------------------------
+# --- Foreground --------------------------------------------------------------------------
 
-## The foreground plane scrolls faster than the playfield. Its pieces hold their
-## height on screen (scroll y 0), so they always frame the screen's edges and
-## never drift over the floor Kleo walks. On screen, x = local x - FG * camera left.
-const FG := 1.3
+## The foreground plane: dark clumps of the region's own plants, close to the
+## camera. They scroll a little faster than the playfield sideways (FG) but sit
+## in the world vertically, standing on the walking lines with their roots sunk
+## in the black slab, so only their tops rise in front of the floor. Lanterns
+## never light them: they stand between the light and the camera.
+const FG := 1.2
+const FLORA := ENV + "props_flora.png"
+const FG_FERN := Rect2(6, 6, 73, 42)
+const FG_FERN_SMALL := Rect2(11, 55, 48, 30)
+const FG_GRASS_TALL := Rect2(124, 204, 37, 41)
+const FG_GRASS := Rect2(177, 214, 30, 31)
+const FG_GRASS_LOW := Rect2(153, 32, 49, 16)
 
 
 func _build_foreground() -> void:
-	var mat := ShaderMaterial.new()
-	mat.shader = load("res://shaders/silhouette.gdshader")
-	# Ferns and grass along the bottom edge, and moss and vines from the top edge.
-	var fringe := _fg_layer("ForegroundFringe", 720)
-	_fg_sprite(fringe, "fg_fringe.png", Rect2(0, 0, 720, 72), Vector2(0, 360 - 72 + 3), mat)
-	var hang := _fg_layer("ForegroundHang", 720)
-	_fg_sprite(hang, "fg_hang.png", Rect2(0, 0, 720, 110), Vector2(-170, -3), mat)
-	# Two trunks: one framing the shrine at the start, one passing between the
-	# graveyard and the training yard. Each is placed by where its axis should be
-	# on screen when the camera's left edge is at a given x.
-	var trunks := _fg_layer("ForegroundTrunks", 0)
-	# Trunk A (its limb reaches right, its axis at x 96 of its 220): at the screen's
-	# left edge while the camera rests at the room's west end.
-	_fg_sprite(trunks, "fg_trunks.png", Rect2(0, 0, 220, 400), Vector2(_fg_x(8.0, 0.0) - 96.0, 360 - 400 + 6), mat)
-	# Trunk B (its limb reaches left, axis at x 124): mid-screen when the camera is
-	# centred on x 850, the open ground past the fresh grave.
-	_fg_sprite(trunks, "fg_trunks.png", Rect2(220, 0, 220, 400), Vector2(_fg_x(320.0, 850.0 - 320.0) - 124.0, 360 - 400 + 6), mat)
-
-
-## Local x for a foreground piece that should sit at `screen_x` when the camera's
-## left edge is at `cam_left`.
-func _fg_x(screen_x: float, cam_left: float) -> float:
-	return screen_x + FG * cam_left
-
-
-func _fg_layer(name: String, repeat: int) -> Parallax2D:
-	var p := _node(Parallax2D.new(), name, _root) as Parallax2D
-	p.scroll_scale = Vector2(FG, 0.0)
+	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
+	p.scroll_scale = Vector2(FG, 1.0)
 	p.z_index = 30  # in front of everything in the room, under the screen vignette
-	if repeat > 0:
-		p.repeat_size = Vector2(repeat, 0)
-		p.repeat_times = 3
-	return p
-
-
-func _fg_sprite(parent: Node, file: String, region: Rect2, pos: Vector2, mat: Material) -> Sprite2D:
-	var s := _sprite(parent, PARALLAX + file, region, pos)
-	s.name = "Silhouette"
-	s.material = mat
-	return s
+	var mat := CanvasItemMaterial.new()
+	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	# [world x of the clump's centre, walking line it stands on, piece, sink, flip]
+	var clumps := [
+		[50.0, 24, FG_FERN, 20, false], [335.0, 24, FG_GRASS_TALL, 18, true],
+		[560.0, 28, FG_FERN_SMALL, 12, false], [600.0, 28, FG_GRASS, 14, false],
+		[905.0, 28, FG_FERN, 22, true], [1160.0, 28, FG_GRASS_TALL, 18, false], [1186.0, 28, FG_GRASS_LOW, 4, true],
+		[1420.0, 28, FG_FERN_SMALL, 12, true],
+		[150.0, 37, FG_GRASS, 14, true], [760.0, 37, FG_FERN_SMALL, 14, false], [1040.0, 37, FG_GRASS_TALL, 20, false],
+	]
+	for c in clumps:
+		var r: Rect2 = c[2]
+		var x: float = c[0]
+		# Where it must sit so it is at world x when the camera is centred on it.
+		var lx := x + (FG - 1.0) * (x - 320.0) - r.size.x * 0.5
+		var s := _sprite(p, FLORA, r, Vector2(lx, c[1] * TILE - r.size.y + c[3]))
+		s.name = "Clump"
+		s.flip_h = c[4]
+		s.material = mat
+		s.modulate = Color(0.17, 0.15, 0.22)
 
 
 func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rect2) -> CPUParticles2D:

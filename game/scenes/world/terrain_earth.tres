@@ -1,6 +1,8 @@
 [gd_resource type="Resource" script_class="TerrainMaterial" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_corner_top.png" id="1_g7cwh"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_fill.png" id="1_r6psl"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_corner_under.png" id="2_ivoxu"]
 [ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_xbjsc"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_top.png" id="3_g7cwh"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/earth_under.png" id="4_ivoxu"]
@@ -13,5 +15,9 @@ top_band = ExtResource("3_g7cwh")
 under_band = ExtResource("4_ivoxu")
 under_line = 22
 wall_band = ExtResource("5_sxiad")
-wall_face = 21
+wall_face = 39
+corner_top = ExtResource("1_g7cwh")
+corner_top_anchor = Vector2(57, 3)
+corner_under = ExtResource("2_ivoxu")
+corner_under_anchor = Vector2(67, 53)
 outline_color = Color(0, 0, 0, 0)

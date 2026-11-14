@@ -35,6 +35,22 @@ extends Resource
 ## It is mirrored for walls that face left.
 @export var wall_band: Texture2D
 @export var wall_face := 55
+@export_group("Corners")
+## Painted outer corners: where a walking top turns down into a face, and where a
+## ceiling turns up into one. Each faces right (mirrored for left), and its anchor
+## is the pixel where its walking or ceiling line meets its face. The skin clips
+## each piece to the mass it sits on, so two corners on a narrow column meet in
+## the middle.
+@export var corner_top: Texture2D
+@export var corner_top_anchor := Vector2.ZERO
+@export var corner_under: Texture2D
+@export var corner_under_anchor := Vector2.ZERO
+## For a ceiling corner that stands on the floor (an arcade's end pier): how far
+## it reaches below the ceiling line. It is placed only where the floor lies
+## within 16 px of that, so it never hangs in mid-air. 0: it hangs freely.
+@export var corner_under_reach := 0.0
+
+@export_group("Walls")
 ## A one-pixel line just outside every wall face, separating the playfield from
 ## the background behind it. Transparent for none.
 @export var outline_color := Color(0.03, 0.02, 0.05, 0.9)

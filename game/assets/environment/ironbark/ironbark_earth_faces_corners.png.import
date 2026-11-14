@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b6urd061lk8u5"
-path="res://.godot/imported/fg_fringe.png-0bafa047872d296e4a3e30047b56f02f.ctex"
+uid="uid://dk7msfg4f0p5c"
+path="res://.godot/imported/ironbark_earth_faces_corners.png-0768e2ad7c5c6cdd26ec75e85a8c8963.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/ironbark/parallax/fg_fringe.png"
-dest_files=["res://.godot/imported/fg_fringe.png-0bafa047872d296e4a3e30047b56f02f.ctex"]
+source_file="res://assets/environment/ironbark/ironbark_earth_faces_corners.png"
+dest_files=["res://.godot/imported/ironbark_earth_faces_corners.png-0768e2ad7c5c6cdd26ec75e85a8c8963.ctex"]
 
 [params]
 

@@ -248,13 +248,16 @@ She steps forward with every hit.
   holds the masses put back into the spaces (islands, shelves, capstones), so
   each is painted as an object of its own and the floor under it keeps its edge.
   `TerrainSkin` paints shallow bands along every exposed edge (tops, then
-  walls, then undersides); each ends in the void along its own stones, and wall
-  faces overhang the collision by 4 px. The inside of every mass is black.
-  Only walking lines are straight. Stone walking edges get a pale lip so ledges read. In the
+  walls, then undersides, then painted corners); each ends in the void along
+  its own stones, and wall faces stand a few pixels proud of the collision. The
+  inside of every mass is black. Only walking lines are straight. The wall
+  bands and corners are cut from the IB5 and K4 kits by `tools/make_terrain.py`,
+  which writes their anchors to `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
-- **The foreground:** `ForegroundFringe`, `ForegroundHang` and
-  `ForegroundTrunks` are `Parallax2D` at scroll (1.3, 0): silhouettes from
-  `tools/make_silhouettes.py`, drawn flat by `shaders/silhouette.gdshader`.
+- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): a
+  few dark, unlit clumps of the region's own plants standing on walking lines,
+  roots sunk in the slab. They sit in the world vertically, so they never slide
+  when the camera rises or falls.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
@@ -278,7 +281,7 @@ She steps forward with every hit.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
   16 px; Kleo's measured envelope is in `design/pillars.md`. Black box first;
   the parallax camera (`Parallax2D` sky 0.05, far 0.15, mid 0.35, ruins 0.72,
-  playfield 1.0, foreground silhouettes 1.3); `CanvasModulate`, `PointLight2D`
+  playfield 1.0, foreground 1.2); `CanvasModulate`, `PointLight2D`
   lanterns, fog and the vignette. Glows are never baked into tiles.
 - **Each room gets a spec** in `design/rooms/`, with its validation.
 
@@ -301,12 +304,13 @@ She steps forward with every hit.
 
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
-  P2, P3 and P5 taller, with transparent skies (P3 v2 is in Book 1: whole
-  crowns; until then a haze band hides its cut canopy).
-- Generate **IB5** (earth cut faces, corners, pillar caps; replaces IB3, whose
-  wall band reads as clutter) and **K4** (masonry faces, arch ends, corners).
-  The skin fakes these with narrow soil and stone faces until they arrive; it
-  will then need corner placement in `terrain_skin.gd`.
+  P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
+- Not yet used from the kits: IB5's inner corners and its two small islands,
+  K4's second arch end and its last corner. K4's arch ends are about twice the
+  K2 arcade's scale; at the arcade's ends that reads as a grand end arch, but
+  the arcade itself could be regenerated at that scale to match.
+- Mirroring in the skin: a negative width draws the art flipped within
+  [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
 - **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
   images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.
