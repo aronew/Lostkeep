@@ -193,6 +193,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <span class="group">Prompts</span>
       <a href="#terrain">Terrain on the black box</a>
       <a href="#keep">The Lost Keep masonry</a>
+      <a href="#oldcrypt">The Old Crypt (IB-02)</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
       <a href="#props">Lived-in dressing</a>
@@ -303,6 +304,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p>The fortress of the Ironbark Guard: dressed plum stone and great ironbark timber. The same black-box method, a second material.</p>
       <div class="cards" id="cards-keep"></div>
     </section>
+    <section id="oldcrypt" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>The Old Crypt (IB-02)</h2>
+      <p>The guard's burial galleries beside a root-choked well, after mockups O, P and Q. One set, made in order (OC1 first): every card attaches the ones before it. Terrain follows the shadow rule: lit at the open edge, black at the heart.</p>
+      <div class="cards" id="cards-oldcrypt"></div>
+    </section>
     <section id="parallax" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Parallax layers</h2>
@@ -405,6 +412,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
+    ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "Stand-ins", "need", "OC1 to OC8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
@@ -718,6 +726,103 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "3. Two arcade ends, each 512 px wide and 1024 px tall, its ceiling line (the arch crowns' line) at y = 384, exactly 640 px above the pier's foot on the bottom edge, matching CR2's band 2 exactly in arch size, pier, impost and plinth:",
         "   a. Against a wall: the arcade arrives from the left and its last arch springs from a half-pier built against a wall on the right (the wall's face at x = 512). The masonry above goes into shadow.",
         "   b. At an opening: the arcade arrives from the left and ends on a full pier whose right side faces open air (x = 512); the course above it breaks off stone by stone at the opening's edge."
+      ] },
+    { id: "OC1", group: "oldcrypt", file: "oldcrypt_floor_ceiling", title: "Old Crypt floor and ceiling bands",
+      about: "Every walkable floor and every ceiling in the galleries. Like the stone bands in O and Q.",
+      canvas: WIDE, game: "2 bands, 384 wide, repeating left to right", attach: ["O", "P", "Q", "B"],
+      text: [
+        "TASK: two long horizontal bands of crypt masonry on one transparent canvas, each joining a copy of itself left to right.",
+        "",
+        "STYLE: match attached mockups O, P and Q: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, moss and ivy in the joints, bones and skulls as the crypt's dressing, purple mushrooms and small amber flames as the only warm notes. Do not copy their layout or their characters. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the stones' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "BAND 1, a floor, from y = 0 to 448: a perfectly straight walking line at y = 64; above it only tufts of moss and a few scattered small bones; below it worn flagstones, then the stones break off downward into void by the shadow rule.",
+        "BAND 2, a ceiling, from y = 576 to 1024: its ceiling line is a straight guide at y = 960, not drawn: the underside is uneven, with stones, roots and moss hanging below it by up to 48 px, a few icicle-like drips of stone; above, the stones break off upward into void."
+      ] },
+    { id: "OC2", group: "oldcrypt", file: "oldcrypt_walls_corners", title: "Old Crypt walls, corners and pillar",
+      about: "The sides of every mass, where floors and ceilings meet walls, and a free-standing pillar.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band, 4 corners, 1 pillar, cut apart", attach: ["O", "P", "Q", "Your approved OC1"],
+      text: [
+        "TASK: the ends of the crypt's masonry on one transparent canvas, pieces separated by transparent space, matching the attached approved OC1 exactly.",
+        "",
+        "STYLE: match attached mockups O, P and Q: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, moss and ivy in the joints, bones and skulls as the crypt's dressing, purple mushrooms and small amber flames as the only warm notes. Do not copy their layout or their characters. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the stones' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "1. A wall band on the left, top edge to bottom edge, joining a copy of itself top to bottom; its face points RIGHT along an undrawn guide at x = 320, quoins long and short, some proud, some missing; inward, the shadow rule.",
+        "2. Four corners, each in its own 512 × 512 cell, the two edges meeting at the cell's centre: an outer floor corner (floor turning down into a wall facing right), an outer ceiling corner, an inner floor corner (wall rising on the left), an inner ceiling corner. Worn and chipped, never a crisp right angle.",
+        "3. A free-standing square pillar, 256 px wide, top edge to bottom edge, repeating top to bottom: a carved column of stacked blocks with moss, for supports under galleries."
+      ] },
+    { id: "OC3", group: "oldcrypt", file: "oldcrypt_islands", title: "Old Crypt floating ruins",
+      about: "The well's islands: broken slabs of gallery floating in the dark, like the ruins in O and Q. Islands, not platforms.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 islands: 15, 6 and 5 tiles wide", attach: ["O", "Q", "Your approved OC1"],
+      text: [
+        "TASK: three floating ruins on one transparent canvas, separated by transparent space, matching the approved OC1.",
+        "",
+        "STYLE: match attached mockups O, P and Q: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, moss and ivy in the joints, bones and skulls as the crypt's dressing, purple mushrooms and small amber flames as the only warm notes. Do not copy their layout or their characters. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the stones' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "- Island 1: 1920 px wide (15 tiles), the grave island: a single grave with a worn headstone and a broken column on top, a few skulls, moss.",
+        "- Island 2: 768 px wide (6 tiles). Island 3: 640 px wide (5 tiles). Each with a little dressing (a candle, a skull, a mushroom).",
+        "- Each top is a perfectly straight walking line. Each underside tapers downward like broken-off masonry, with hanging roots, ivy, dangling bones and a few loose stones, 1.5 to 2 times as deep as the top is thick."
+      ] },
+    { id: "OC4", group: "oldcrypt", file: "oldcrypt_ledges", title: "Old Crypt ledges and balcony",
+      about: "The few small standing places the room allows: a gallery's broken balcony and two narrow ledges. Rare and strategic.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "1 balcony end, 2 ledges, cut apart", attach: ["O", "P", "Your approved OC1"],
+      text: [
+        "TASK: on a transparent canvas, separated by transparent space, matching OC1:",
+        "",
+        "STYLE: match attached mockups O, P and Q: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, moss and ivy in the joints, bones and skulls as the crypt's dressing, purple mushrooms and small amber flames as the only warm notes. Do not copy their layout or their characters. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the stones' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "1. A balcony end, 640 px wide: a gallery floor ending in a broken parapet with a fallen baluster, its underside corbelled and crumbling.",
+        "2. Two narrow ledges, 384 and 256 px wide: a jutting slab of masonry on a carved stone bracket, each with a straight walking line, made to look like part of the building, not a game platform."
+      ] },
+    { id: "OC5", group: "oldcrypt", file: "oldcrypt_bg_far", title: "Old Crypt far backdrop (the well)", scale: 4,
+      about: "Scroll 0.15 to 0.35: the depths of the well behind the galleries, like the misty arcades behind O, P and Q.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["O", "P", "Q", "B"],
+      background: "Opaque: the backdrop fills the whole canvas.",
+      text: [
+        "TASK: a distant parallax backdrop of the crypt's well, opaque edge to edge.",
+        "",
+        "- Tier upon tier of ruined arcades and burial galleries receding into blue-violet mist #2A2E4A to #3C4466, very low contrast, flat values, no ledges that could read as walkable.",
+        "- A great hooded statue carved into the far wall, barely visible in the haze; a thin waterfall far off; faint pale light from above.",
+        "- Darker toward the bottom. No warm colours except two or three tiny far-off flames #F2B04A.",
+        "- The left and right edges must join."
+      ] },
+    { id: "OC6", group: "oldcrypt", file: "oldcrypt_bg_mid", title: "Old Crypt mid layer (arcades and ossuary)", scale: 4,
+      about: "Scroll 0.5 to 0.7: the nearer ruins behind the playfield: arcades, bone heaps, ribs of a great beast.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["O", "P", "Q", "Your approved OC5"],
+      text: [
+        "TASK: a mid-distance parallax layer for the crypt, transparent above its silhouettes.",
+        "",
+        "- Broken arcades and columns, heaps of skulls and bones, the curved ribs of some huge old skeleton rising from a bone heap, a few hanging tattered banners (dull Ironbark red, a pale shield-and-leaf).",
+        "- Darker and lower in contrast than the playfield, one value step brighter than OC5. No straight horizontal ledges.",
+        "- The left and right edges must join."
+      ] },
+    { id: "OC7", group: "oldcrypt", file: "oldcrypt_fg", title: "Old Crypt foreground silhouettes", scale: 4,
+      about: "Scroll 1.2, in front of Kleo: the dark rock rim that frames O, P and Q, along the top and bottom of the screen.",
+      canvas: BG, game: "Top strip and bottom strip, each repeating", attach: ["O", "P", "Q"],
+      text: [
+        "TASK: two foreground strips of near-black cave silhouettes, on a transparent canvas.",
+        "",
+        "- Bottom strip, y = 1000 to 1440: lumpy cave rock, roots and a few fern fronds rising from the bottom edge, near-black #0B0812 and #17121F with only a faint violet edge light. Clumps with wide gaps so the playfield shows through over half the width.",
+        "- Top strip, y = 0 to 380: rock and roots hanging in from the top edge, the same colours.",
+        "- Transparent between them. The left and right edges of both strips must join."
+      ] },
+    { id: "OC8", group: "oldcrypt", file: "oldcrypt_props", title: "Old Crypt props: the dead and the guard",
+      about: "What makes the galleries a crypt and tells the story: bones, niches, the bier, the hoist, the false wall.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "Pieces cut apart", attach: ["O", "P", "Q", "Your approved OC1"],
+      text: [
+        "TASK: crypt props on a transparent canvas, pieces separated by transparent space, each standing on a flat bottom line where it stands.",
+        "",
+        "STYLE: match O, P and Q; amber flames only as flame and lit glass, never a halo.",
+        "",
+        "- Three burial niches set in a wall, 384 px wide: one stacked with skulls, one sealed with a carved plaque, one broken open and empty.",
+        "- Two bone heaps (small and large) and a scatter of loose skulls and bones.",
+        "- A stone bier on legs with a shrouded body, and an empty bier.",
+        "- A bier hoist: a timber frame with pulley, chain and a hanging platform, matching the guard's lift.",
+        "- A cracked false-wall section, 512 × 640 px, of the OC2 masonry with a subtle draught-line crack and moss where air moves.",
+        "- Two iron braziers and two tall candle stands (lit), a hooded stone statue 768 px tall, purple mushroom clusters (three sizes), hanging roots (three lengths)."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,

@@ -389,9 +389,9 @@ She steps forward with every hit.
   main line), the Refuge road (west, behind the plated door: needs the Ward),
   the Guard Post (above, up the well: needs Barkgrip). Their doors end in
   darkness today.
-- **Art the Old Crypt wants** (cards to add to Book 1; stand-ins are listed in
-  its spec): a backdrop for the well, great hanging roots, a bier and coffin
-  niches, a bier hoist, a cracked false-wall piece.
+- **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
+  walls and corners, islands, ledges, far and mid backdrops, foreground, props),
+  styled on mockups O, P and Q in `lostkeep-attach/`.
 - No enemies exist yet; IB-02's long gallery and cave are shaped for the first.
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
   three moons are large (consider regenerating P1 with smaller moons).
