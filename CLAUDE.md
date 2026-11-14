@@ -330,7 +330,10 @@ She steps forward with every hit.
   and arcade; walls, corners and the arcade's two ends) is optional now: its
   first export (post-processed by another tool, snapped to the hex codes) was
   trialled and the creative lead preferred the current crypt (K2, K4, K5),
-  which stays. Take art only as the generator made it, never pre-processed. IB6 (earth
+  which stays. Take art only as the generator made it, never pre-processed.
+  The painted revision (CR1 to CR3 originals) is in but switched off
+  (`USE_CRYPT_KIT` in `tools/make_terrain.py`), awaiting the creative lead's
+  pick between the current crypt, the kit as painted, and the kit tinted plum. IB6 (earth
   edges and corners drawn into shadow). L6 (the moat bank and bridge end as one
   set piece on the collision: bank at tiles 93-94, span 95-101, walking line
   row 28, water line row 31).

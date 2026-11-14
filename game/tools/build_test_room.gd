@@ -75,7 +75,7 @@ func _initialize() -> void:
 	earth.corner_under = load(TERRAIN + "earth_corner_under.png")
 	earth.corner_under_anchor = _vec(kit["earth_corner_under"])
 	ResourceSaver.save(earth, earth.resource_path)
-	var stone := _material("stone", 13, int(kit["stone_under_line"]), int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
+	var stone := _material("stone", int(kit.get("stone_top_line", 13)), int(kit["stone_under_line"]), int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
 	stone.corner_top = load(TERRAIN + "stone_corner_top.png")
 	stone.corner_top_anchor = _vec(kit["stone_corner_top"])
 	stone.corner_under = load(TERRAIN + "stone_corner_under.png")
@@ -226,8 +226,10 @@ func _build_room(tileset: TileSet, earth: Resource, stone: Resource) -> void:
 	back.z_index = -2
 	back.set("fill", load(TERRAIN + "stone_fill.png"))
 	back.set("course", load(TERRAIN + "stone_course.png"))
-	back.set("brightness", 0.24)
-	back.set("course_brightness", 0.34)
+	var kit: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(TERRAIN + "kit_anchors.json"))
+	back.set("brightness", float(kit.get("back_brightness", 0.24)))
+	back.set("course_brightness", float(kit.get("back_brightness", 0.34)))
+	back.set("course_height", int(kit.get("back_course_height", 6)))
 	var back_earth := _node(Node2D.new(), "EarthBackWalls", _root)
 	back_earth.set_script(load("res://scripts/world/back_wall.gd"))
 	back_earth.z_index = -2

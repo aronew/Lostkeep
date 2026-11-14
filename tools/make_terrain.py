@@ -439,6 +439,11 @@ def kit_corner(a, box, kind):
 
 
 CRYPT_HANG = 80  # a crypt is five tiles tall: arcade piers stand on its floor
+# The painted crypt kit (CR1 to CR3) in place of K2, K4 and K5 in the crypts.
+# Off until the creative lead picks: as painted, or tinted toward the region's
+# plum (CRYPT_TINT multiplies red, green, blue; None keeps the paint as it is).
+USE_CRYPT_KIT = False
+CRYPT_TINT = (1.02, 0.93, 1.12)
 
 
 def darken_from(a, row, step=0.72):
@@ -464,6 +469,64 @@ def arcade():
     line = a.shape[0] - CRYPT_HANG
     print("  stone under ceiling line row", line, "(the crowns are at row 54)")
     return line
+
+
+def crypt_kit():
+    """The crypt kit (CR1 to CR3, painted together): the stone floor, the ceiling's
+    arcade, the wall band, the outer top corner, the arcade's open end and the back
+    wall. Measured on the processed sheets (game pixels). Returns anchors."""
+    def tinted(a):
+        if not CRYPT_TINT:
+            return a
+        out = a.astype(float)
+        out[..., :3] *= np.array(CRYPT_TINT)
+        return np.clip(out, 0, 255).astype(np.uint8)
+    cr1 = tinted(load("crypt_back_wall.png"))
+    cr2 = tinted(load("crypt_floor_arcade.png"))
+    cr3 = clear_void(tinted(load("crypt_walls_corners_ends.png")))
+    anchors = {}
+    # The floor: walking line at row 8, its underside painted into shadow.
+    save(wrap_x(cr2[0:34], 24), TERRAIN, "stone_top.png")
+    anchors["stone_top_line"] = 8
+    # The arcade: rows 63..190, pier feet at row 190. Its piers stand on the crypt
+    # floor (CRYPT_HANG below the ceiling line), so the crowns (row 89) rise 21 px
+    # into the dark slab, as the vault's shadow.
+    band = wrap_x(cr2[63:190], 24)
+    save(band, TERRAIN, "stone_under.png")
+    anchors["stone_under_line"] = band.shape[0] - CRYPT_HANG
+    # The wall band (face pointing right), its painted shadow kept as it is.
+    wall = cr3[3:252, 4:64]
+    op = wall[..., 3] > 0
+    edge = [np.nonzero(op[y])[0].max() for y in range(wall.shape[0]) if op[y].any()]
+    face = int(np.percentile(edge, 50)) - 1
+    save(wrap_y(wall, 24), TERRAIN, "stone_wall.png")
+    anchors["stone_wall_face"] = face
+    # The outer top corner (the floor turning down into a face on its right).
+    c, anc = kit_corner(cr3, (71, 12, 149, 71), "top")
+    save(c, TERRAIN, "stone_corner_top.png")
+    anchors["stone_corner_top"] = anc
+    # The arcade's open end (a full pier, its right side to open air), standing on
+    # the floor like the band.
+    c = crop(cr3, (156, 139, 223, 249))
+    h = c.shape[0]
+    foot = max(np.nonzero(c[:, x, 3] > 0)[0].max() for x in range(c.shape[1]) if (c[:, x, 3] > 0).any()) + 1
+    efface = right_edge(c, range(foot - 40, foot - 12), pct=60) - 1
+    save(c, TERRAIN, "stone_corner_under.png")
+    anchors["stone_corner_under"] = (efface, foot - CRYPT_HANG)
+    anchors["stone_corner_under_reach"] = CRYPT_HANG
+    # The back wall: the niche storey (rows 38..118, its plinth on the floor line)
+    # as the course, the coursed wall above it as the fill. The two lantern
+    # brackets are patched out with the wall beside them (the game hangs its own).
+    wall = cr1.copy()
+    for x0, x1 in ((88, 116), (281, 308)):
+        wall[0:50, x0:x1] = cr1[0:50, x0 - 40:x1 - 40]
+    save(wall[38:118], TERRAIN, "stone_course.png")
+    save(wrap_y(wall[0:48], 8), TERRAIN, "stone_fill.png")
+    anchors["back_course_height"] = 0
+    anchors["back_brightness"] = 0.6
+    print("  crypt kit: floor line 8, arcade line", anchors["stone_under_line"], "wall face", face,
+          "corner", anc, "open end", anchors["stone_corner_under"])
+    return anchors
 
 
 def kits():
@@ -522,7 +585,10 @@ def kits():
     anchors["stone_corner_under_reach"] = CRYPT_HANG
     print(f"  stone_corner_under anchor (face, line) {(face, crown)} size {w}x{h}")
     anchors["stone_under_line"] = arcade()
-    clean = {k: ([int(v) for v in a] if isinstance(a, tuple) else int(a)) for k, a in anchors.items()}
+    if USE_CRYPT_KIT and os.path.exists(os.path.join(SRC, "crypt_floor_arcade.png")):
+        anchors.update(crypt_kit())  # the crypt kit replaces K2, K4 and K5 in the crypts
+    clean = {k: ([int(v) for v in a] if isinstance(a, tuple) else (float(a) if isinstance(a, float) else int(a)))
+             for k, a in anchors.items()}
     with open(os.path.join(TERRAIN, "kit_anchors.json"), "w") as f:
         json.dump(clean, f, indent=1)
     return anchors
