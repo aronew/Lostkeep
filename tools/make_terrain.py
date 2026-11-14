@@ -320,20 +320,77 @@ def right_edge(a, rows, pct=50):
     return int(np.percentile(xs, pct))
 
 
+WALL_LIT = 12   # px of a wall's face at full light, inward from the wall line
+WALL_SHADE = 12  # px over which it then steps down into the void, like a shadow
+
+
+def shadow_face(band, face):
+    """A wall band that goes into shadow: solid from the wall line inward (no gaps
+    for the black box to show through), WALL_LIT px lit, then WALL_SHADE px
+    stepping down to the void colour, its last columns the void itself. Only the
+    stones standing proud past the wall line keep their own outline. The face
+    points right; returns the band and its new face column."""
+    depth = WALL_LIT + WALL_SHADE
+    band = band[:, max(0, face + 1 - depth):].copy()
+    face = depth - 1 if band.shape[1] > depth else band.shape[1] - 1
+    h, w, _ = band.shape
+    # Fill the gaps inside the wall line with the nearest stone in the row, shaded,
+    # as mortar joints and recesses read.
+    for y in range(h):
+        op = band[y, : face + 1, 3] > 0
+        xs = np.nonzero(op)[0]
+        if not len(xs):
+            band[y, : face + 1, :3] = VOID[:3]
+            band[y, : face + 1, 3] = 255
+            continue
+        for x in np.nonzero(~op)[0]:
+            n = xs[np.argmin(np.abs(xs - x))]
+            band[y, x, :3] = (band[y, n, :3].astype(float) * 0.6 + VOID[:3] * 0.4).astype(np.uint8)
+            band[y, x, 3] = 255
+    # The shadow: stepped bands from lit to the void, over WALL_SHADE columns.
+    out = band.astype(float)
+    for i in range(WALL_SHADE):
+        k = np.floor(i / WALL_SHADE * 4) / 4  # 0 at the inner end (void) .. 0.75 near the lit part
+        out[:, i, :3] = out[:, i, :3] * k + VOID[:3] * (1 - k)
+    return out.astype(np.uint8), face
+
+
+def shadow_corner(c, anchor, top):
+    """A corner piece going into shadow like the bands: a pixel inside the mass
+    (inward of the face and below the walking line, or above the ceiling line) is
+    lit within WALL_LIT px of the nearer open edge, then steps down to the void
+    over WALL_SHADE px; past that it is cut, so the void fill shows. Pixels outside
+    the mass (moss over the edge, an arch hanging below a ceiling) are kept."""
+    ax, ay = anchor
+    h, w, _ = c.shape
+    out = c.astype(float)
+    for y in range(h):
+        into_line = (y - ay) if top else (ay - y)  # distance into the mass from the line
+        for x in range(w):
+            into_face = ax - x
+            if into_line < 0 or into_face < 0 or out[y, x, 3] == 0:
+                continue
+            d = min(into_line, into_face)
+            if d < WALL_LIT:
+                continue
+            t = (d - WALL_LIT) / WALL_SHADE
+            if t >= 1:
+                out[y, x, 3] = 0
+                continue
+            k = 1 - (np.floor(t * 4) + 1) / 4 * 0.85
+            out[y, x, :3] = out[y, x, :3] * k + VOID[:3] * (1 - k)
+    return out.astype(np.uint8)
+
+
 def kit_face(a, box, trim, crust_depth=None):
-    """A wall band from a kit's face band (face pointing right): trimmed of its end
-    caps, its inner side crusted if it ends straight, seamless top to bottom.
-    Returns the band and its face column (stones beyond it stand proud)."""
+    """A wall band from a kit's face band (face pointing right), trimmed of its end
+    caps, going into shadow (shadow_face), seamless top to bottom. Returns the band
+    and its face column (stones beyond it stand proud)."""
     band = crop(a, box)[trim[0]: -trim[1] or None]
     # The face line sits where most of the edge runs, so only the proudest stones
     # (up to about 6 px) stand past the collision.
     face = right_edge(band, range(band.shape[0]), pct=70) - 1
-    if crust_depth:
-        up = np.transpose(band[:, ::-1], (1, 0, 2))  # face-up: rows = distance from the right
-        start = band.shape[1] - 1 - face
-        up = crust(up, start, seed=7, dmin=crust_depth - 10, dmax=crust_depth, pct=40)
-        band = np.transpose(up, (1, 0, 2))[:, ::-1].copy()
-        face = band.shape[1] - 1 - start
+    band, face = shadow_face(band, face)
     band = wrap_y(band, 32)
     return band, face
 
@@ -368,7 +425,7 @@ def kit_corner(a, box, kind):
     else:
         line = ceiling_line(c)
         face = right_edge(c, range(4, max(5, line - 10))) - 2
-    return c, (face, line)
+    return shadow_corner(c, (face, line), kind == "top"), (face, line)
 
 
 CRYPT_HANG = 80  # a crypt is five tiles tall: arcade piers stand on its floor
@@ -424,16 +481,8 @@ def kits():
     b = pieces(k4)
     print("  K4 pieces", b)
     face_box = max(b, key=lambda r: r[3] - r[1])
-    band, face = kit_face(k4, face_box, (24, 16), crust_depth=30)
+    band, face = kit_face(k4, face_box, (24, 16))
     save(band, TERRAIN, "stone_wall.png")
-    # The inside of a stone pier: K5's own pier masonry (a pier shaft between its
-    # impost and plinth, measured on the processed sheet: x 116..143, rows 96..118),
-    # made seamless both ways. Slabs and ground are void inside, so this only
-    # shows in upright piers.
-    k5 = load("keep_crypt_arcade.png")
-    core = k5[96:119, 116:144].copy()
-    core[..., 3] = 255
-    save(wrap_y(wrap_x(core, 6), 6), TERRAIN, "stone_pier_fill.png")
     print("  stone wall face column", face)
     anchors["stone_wall_face"] = face
     low = sorted([r for r in b if r != face_box and r[1] > 120], key=lambda r: r[0])
@@ -457,6 +506,7 @@ def kits():
     # shaft below the impost (row 79, measured) sits one value step back.
     crown = h - CRYPT_HANG
     c = darken_from(c, 79)
+    c = shadow_corner(c, (face, crown), False)
     save(c, TERRAIN, "stone_corner_under.png")
     anchors["stone_corner_under"] = (face, crown)
     anchors["stone_corner_under_reach"] = CRYPT_HANG

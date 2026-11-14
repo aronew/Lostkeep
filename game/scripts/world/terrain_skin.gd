@@ -17,7 +17,6 @@ extends Node2D
 
 const TILE := 16
 const MAX_DEPTH := 5  # tiles looked through when measuring how thick a mass is
-const PIER := 3  # a mass with open space this close on both sides is an upright pier
 const FOOT := 22.0   # px a wall's face runs on below a floor it stands on (the soil's depth)
 const SIDES := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 
@@ -146,22 +145,6 @@ func _read(layer: TileMapLayer) -> Dictionary:
 	return out
 
 
-## True if a solid cell is part of an upright pier: open space within PIER
-## cells on its left and on its right. Floor slabs and ground stay void inside;
-## a pier's void would read as a hole.
-func _is_pier(solid: Callable, c: Vector2i) -> bool:
-	if not solid.call(c):
-		return false
-	var left := false
-	var right := false
-	for i in range(1, PIER + 1):
-		if not left and not solid.call(c + Vector2i(-i, 0)):
-			left = true
-		if not right and not solid.call(c + Vector2i(i, 0)):
-			right = true
-	return left and right
-
-
 ## True if a cell is solid in either layer (or outside the room).
 func is_solid(c: Vector2i) -> bool:
 	return _rock.has(c) or _mass.has(c) or not room_rect.has_point(c)
@@ -202,12 +185,7 @@ func _build_cell_texture(p: Dictionary) -> void:
 			continue
 		var dd: float = min(dist.get(c, 31), 31)
 		var painted := 0.0 if _skip.has(c) else 1.0
-		# B: an upright pier (open space on both sides within PIER cells) is lit
-		# inside, so it reads as solid; 0.5 marks its top row, which fades in.
-		var pier := 0.0
-		if _is_pier(solid, c):
-			pier = 0.5 if (solid.call(c + Vector2i.UP) and not _is_pier(solid, c + Vector2i.UP)) else 1.0
-		img.set_pixel(local.x, local.y, Color(dd / 32.0, float(cells[c]) / 8.0, pier, painted))
+		img.set_pixel(local.x, local.y, Color(dd / 32.0, float(cells[c]) / 8.0, 0.0, painted))
 	var mat: ShaderMaterial = p["mat"]
 	mat.set_shader_parameter("cells", ImageTexture.create_from_image(img))
 	mat.set_shader_parameter("origin_cell", Vector2(room_rect.position))

@@ -262,7 +262,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <div class="cols">
         <div class="kv"><h3>Black box first</h3><ul class="checks">
           <li>Every room is blocked out as solid black masses (<code>#0B0812</code>) with flat floors and ceilings. That is the collision.</li>
-          <li>Terrain art is painted onto the edges of those masses. The inside of each mass is the same black, so the box itself becomes the shadow and the depth.</li>
+          <li>Terrain art is painted onto the edges of those masses. The inside of each mass is the same black, so the box itself becomes the shadow and the depth: every edge piece is lit along its open edge and steps down into that black like a shadow.</li>
           <li>So every walking line is straight and exact, but nothing else is: faces, corners and undersides are organic, and each band ends in the void along its own stones and roots, never along a straight line or an even fade. Art may overhang the collision by a few pixels.</li>
         </ul></div>
         <div class="kv"><h3>Floors, not platforms</h3><ul class="checks">
@@ -400,10 +400,14 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Black-box collision masses", "Not built", "code", "Drawn in Godot"],
     ["Forest earth: fill, walkable tops, undersides, walls, corners", "Nothing", "need", "IB1 to IB3"],
     ["Earth cut faces, corners and pillar caps (v2: IB3 read as clutter)", "In: faces, outer corners", "ok", "IB5"],
+    ["Earth edges and corners going into shadow (v3)", "Corners shaded in code", "need", "IB6"],
     ["Floating islands (three sizes)", "Nothing", "need", "IB4"],
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
+    ["Masonry edges and corners going into shadow", "Corners shaded in code", "need", "K6"],
+    ["Crypt arcade in mockup A's style (K5 drawn too bright and outlined)", "K5 in, wrong style", "need", "K5v2"],
+    ["The moat bank and bridge end as one set piece", "Seven pieces that don't meet", "need", "L6"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
     ["Sky with the three moons", "Nothing", "need", "P1"],
     ["Far horizon with the Sovereign Spire", "Nothing", "need", "P2"],
@@ -564,6 +568,25 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- ONLY the walking lines are perfectly straight: Kleo stands on them. Faces, ceiling edges, corners and the boundary with the void are organic, made of the stones and roots themselves. No straight edge may meet the void.",
         "- Below every walking line the soil is shallow (64 to 128 px) before it breaks up into the void, so each corner joins a face band and a floor band on either side."
       ] },
+    { id: "IB6", group: "terrain", file: "ironbark_earth_shadow_edges", title: "Earth edges into shadow: face and corners (v3)",
+      about: "IB5's corners are drawn lit all the way through, so they end in hard edges against the black inside each mass. In the game every mass is black inside and every band steps into that black like a shadow: these pieces must do the same, so a wall, a corner and the floor around it read as one edge disappearing into darkness.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 30 × 256, 4 corners 48 × 48, 1 pillar top 48 × 48, cut apart", attach: ["A", "B", "Your approved IB2", "Your approved IB5"],
+      text: [
+        "TASK: the edges of Ironbark's forest earth, on one transparent canvas, matching the attached approved IB2 and IB5 exactly in colour, boulder size and roots.",
+        "",
+        "THE RULE FOR EVERY PIECE: each piece is the visible edge of a solid mass whose inside is pure void #0B0812, like a cutaway seen in darkness. Measured inward from the open edge (the wall line, the walking line or the ceiling line): 96 px of solid material at full light, with no gaps, holes or transparency; then 96 px stepping down in four even bands into plain void #0B0812; then only void. Nothing lit, no stone, root or plant, more than 192 px inside the mass. Every piece blends into the black like a shadow, so it joins the black of the mass behind it with no visible edge.",
+        "",
+        "- Only walking lines are perfectly straight. A wall line or ceiling line is a straight guide that is NOT drawn: a few stones or roots stand proud of it by up to 48 px, worn and uneven, but the material is never cut away inside it.",
+        "- Outside the mass (past the open edge) is fully transparent.",
+        "",
+        "1. A wall face band on the left, from the top edge to the bottom edge, joining a copy of itself top to bottom. The face points RIGHT, its wall line at x = 320: packed earth #3E2E4A and #241A2E with embedded boulders and cut roots #3A2420 at the face, then the shadow inward (to the left), void from x = 128 leftward. No ferns or mushrooms growing out of it.",
+        "2. Four corners, each in its own 512 × 512 cell, separated by transparent space. In each, the two edges meet at the cell's centre (256, 256) and the shadow follows both edges, so the lit material is an L along them with the void inside the L:",
+        "   a. Outer top corner: a walkable top (IB2's grass and moss, its walking line at y = 256) turns down into a wall facing right at x = 256. The corner is worn round; moss rolls over it and hangs down the wall.",
+        "   b. Outer ceiling corner: a ceiling (IB2's underside, its line at y = 256) turns up into a wall facing right at x = 256, with roots hanging from the rounded corner.",
+        "   c. Inner floor corner: a walkable floor (line at y = 256, running right) meets a wall rising on its left (face at x = 256, facing right).",
+        "   d. Inner ceiling corner: a ceiling (line at y = 256, running right) meets a wall that drops below it on its left (face at x = 256, facing right).",
+        "3. A pillar top, in a 512 × 512 cell: the top of a column of earth 384 px wide (x 64 to 448) with a walkable top at y = 192 and walls on both sides. Grass rolls over both rounded edges; each face goes into shadow toward the middle, so the column's core is plain void from about y = 400 down."
+      ] },
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
       about: "The inside of the fortress walls, floors and pillars. Dark, quiet, dressed stone.",
@@ -628,6 +651,39 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- The canvas's left and right edges cut through the middle of a pier, so the band repeats every 3072 px with no seam.",
         "- Inside the openings, fully transparent: the game shows the crypt's back wall through them.",
         "- Ivy and moss trail from the course and the imposts; one pier has a root forcing its way between the stones. No two voussoirs or blocks are copies."
+      ] },
+    { id: "K5v2", group: "keep", file: "keep_crypt_arcade", title: "Crypt arcade, redrawn in mockup A's style (K5 v2)",
+      about: "K5's layout works in the game (three arches per strip, piers on the floor), but it is drawn like K4: heavy black outlines on every stone and bright lilac highlights, so it is the brightest, busiest thing on screen and looks pasted on. The same arcade, redrawn to sit back in shadow the way mockup A's stone does.",
+      canvas: WIDE, game: "384 × 128, repeating left to right: three arches, piers 80 px tall", attach: ["A", "B", "D", "Your approved K5 (for layout only)"],
+      text: [
+        "TASK: the Lost Keep's crypt arcade as one long horizontal band on a transparent canvas, with exactly the same layout as the attached K5 (use it for layout only, not for style). The left and right edges must join a copy of the band.",
+        "",
+        "STYLE (this is why the first version is being redrawn): match mockup A's stone exactly, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines (sel-out) on the outer silhouette only, never a black outline around every stone. Lower contrast and darker overall than the walkable floors: this is underground, in shade, and it must sit back behind Kleo. The voussoirs are no brighter than the stones around them.",
+        "",
+        "- Three round arches on square piers. The crowns of the three openings all touch one straight, level line at y = 432. Each opening is about 688 px wide; the piers are about 272 px wide with a moulded impost where the arch springs.",
+        "- Above the arches, from y = 128 to 432: a masonry course whose top breaks off stone by stone into plain void #0B0812, with the stones stepping darker toward the top like they go into shadow.",
+        "- The piers stand on the floor: their feet sit on a straight line at the bottom edge, y = 1024, on a worn plinth.",
+        "- The canvas's left and right edges cut through the middle of a pier, so the band repeats every 3072 px.",
+        "- Inside the openings, fully transparent. Sparse ivy only; one root forcing between the stones of one pier."
+      ] },
+    { id: "K6", group: "keep", file: "keep_stone_shadow_edges", title: "Masonry edges into shadow: face and corners (v2)",
+      about: "The masonry partner of IB6, for the crypts, the quay under the bridge and every stone mass. Same rule: lit along the open edge, then into the black inside the mass like a shadow.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 30 × 256, 4 corners 48 × 48, 1 pillar top 48 × 48, cut apart", attach: ["A", "B", "D", "H", "Your approved K4", "Your approved K5"],
+      text: [
+        "TASK: the edges of the Lost Keep's masonry, on one transparent canvas, matching the attached approved K4 and K5 exactly in stone size, colour and wear.",
+        "",
+        "THE RULE FOR EVERY PIECE: each piece is the visible edge of a solid mass whose inside is pure void #0B0812, like a cutaway seen in darkness. Measured inward from the open edge (the wall line, the walking line or the ceiling line): 96 px of solid material at full light, with no gaps, holes or transparency; then 96 px stepping down in four even bands into plain void #0B0812; then only void. Nothing lit, no stone, root or plant, more than 192 px inside the mass. Every piece blends into the black like a shadow, so it joins the black of the mass behind it with no visible edge.",
+        "",
+        "- Only walking lines are perfectly straight. A wall line or ceiling line is a straight guide that is NOT drawn: a few stones or roots stand proud of it by up to 48 px, worn and uneven, but the material is never cut away inside it.",
+        "- Outside the mass (past the open edge) is fully transparent.",
+        "",
+        "1. A wall face band on the left, from the top edge to the bottom edge, joining a copy of itself top to bottom. The face points RIGHT, its wall line at x = 320: dressed quoins #5E4C68 and #8C7A92, alternating long and short, chipped, moss in the joints; behind them coursed stone going into shadow, void from x = 128 leftward.",
+        "2. Four corners, each in its own 512 × 512 cell, separated by transparent space, the two edges meeting at the cell's centre (256, 256), the shadow following both edges:",
+        "   a. Outer top corner: K4's flagstone walking surface (line at y = 256) turns down into a quoin face facing right (x = 256). A worn, chipped corner stone, never a crisp right angle.",
+        "   b. Outer ceiling corner: a ceiling of K5's course (line at y = 256) turns up into a quoin face facing right.",
+        "   c. Inner floor corner: a flagstone floor (y = 256, running right) meets a quoin face rising on its left.",
+        "   d. Inner ceiling corner: a ceiling (y = 256, running right) meets a quoin face dropping below it on its left.",
+        "3. A pillar top, in a 512 × 512 cell: a masonry column 384 px wide (x 64 to 448) with a flagstone top at y = 192 and quoin faces on both sides, each going into shadow toward the middle, its core plain void from about y = 400 down: the quay under a bridge, seen in cross-section."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
@@ -751,6 +807,21 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Two tall red banners with the gold cross-and-leaf, hanging behind the throne from the top edge.",
         "- Ivy and moss creep over the lower steps; a sword and a round shield lie abandoned against one plinth.",
         "- It must feel grand but long neglected: dust, cracks, a torn corner of the carpet."
+      ] },
+    { id: "L6", group: "landmarks", file: "landmark_bridge_bank", title: "The moat bank and the bridge's west end (one set piece)",
+      about: "The corner where the clearing meets the moat and the bridge is assembled from seven pieces that were never drawn to meet (the crypt's slab, the arcade, its end pier, the quay, the bridge sheet, the post, the water's edge) and it shows. Like the shrine and the bridge, it should be one painting, drawn to the collision.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A set piece: 144 × 208 px, placed on the collision", attach: ["A", "B", "Your approved IB2", "Your approved L4 (the bridge)"],
+      text: [
+        "TASK: one set piece on a transparent canvas: the bank of the moat and the west end of the old stone bridge, exactly like the bridge resting on earth banks in mockup A. Lay it out on this grid (1 tile = 128 px):",
+        "",
+        "- The walking line: a perfectly straight, level line at y = 512, from x = 0 to x = 1152. Grass and moss on the bank (IB2's top), the bridge's worn deck stones on the span.",
+        "- The bank: solid ground from x = 0 to x = 256, from the walking line down to the bottom of the piece (y = 1664). Earth with boulders and thick ironbark roots, as in mockup A, with a few old foundation stones where the bridge rests on it. Its face points right at x = 256 and runs straight down into the water. Its left side (toward x = 0) is the inside of the ground: it goes into shadow, stepping down to plain void #0B0812 over about 192 px, so it joins the black of the mass beside it with no edge.",
+        "- The water line is at y = 896: below it, the bank and the bridge's piers continue darker and bluer, as seen through deep water (the game draws the water's surface over them). Do not paint the water itself.",
+        "- The bridge's west span: from the bank (x = 256) to x = 1152, two stone arches on piers that go down to y = 1664. At x = 1152 the span ends broken, jagged, with loose stones and roots hanging off it: the middle of the bridge has fallen.",
+        "- On the bank, standing on the walking line around x = 128: a tall wooden lantern post with a lit amber lantern (flame only, no halo) and a long torn Ironbark banner (a dull red cloth with a shield-and-leaf) streaming out over the broken end in a strong wind.",
+        "- Everything above the walking line other than the post, banner, grass and plants is transparent.",
+        "",
+        "Style: mockup A's bridge and banks: muted stone, soft shading, thin outlines on the silhouette only, darker than the playfield's floors below the walking line."
       ] },
     // ------------------------------------------------------------- props
     { id: "PR1", group: "props", file: "props_lanterns", title: "Lanterns",

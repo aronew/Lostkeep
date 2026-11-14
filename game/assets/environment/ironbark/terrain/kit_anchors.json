@@ -1,5 +1,5 @@
 {
- "earth_wall_face": 39,
+ "earth_wall_face": 23,
  "earth_corner_top": [
   57,
   3
@@ -8,7 +8,7 @@
   67,
   53
  ],
- "stone_wall_face": 29,
+ "stone_wall_face": 23,
  "stone_corner_top": [
   69,
   3

@@ -12,7 +12,6 @@ uniform vec2 size_cells = vec2(1.0);
 uniform float fade0 = 3.0;
 uniform float fade1 = 3.0;
 uniform float steps = 5.0;
-uniform float pier_light = 1.0;
 uniform vec4 void_color : source_color = vec4(0.043, 0.031, 0.071, 1.0);
 
 varying vec2 world_px;
@@ -36,13 +35,6 @@ void fragment() {
 	float fade = stone ? fade1 : fade0;
 	// A fade of 0 paints the whole inside as the void: only the bands show.
 	float k = fade > 0.0 ? clamp(1.0 - (d - 0.6) / fade, 0.0, 1.0) : 0.0;
-	// An upright pier is lit inside (B = 1), its top row fading in from the void
-	// above in stepped bands (B = 0.5).
-	if (c.b > 0.75) {
-		k = max(k, pier_light);
-	} else if (c.b > 0.25) {
-		k = max(k, pier_light * clamp(fract(cellf.y) * 1.25, 0.0, 1.0));
-	}
 	k = floor(k * steps + 0.5) / steps;
 	COLOR = vec4(mix(void_color.rgb, base, k), 1.0);
 }

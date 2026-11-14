@@ -76,7 +76,6 @@ func _initialize() -> void:
 	earth.corner_under_anchor = _vec(kit["earth_corner_under"])
 	ResourceSaver.save(earth, earth.resource_path)
 	var stone := _material("stone", 13, int(kit["stone_under_line"]), int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
-	stone.fill = load(TERRAIN + "stone_pier_fill.png")  # seen only inside piers
 	stone.corner_top = load(TERRAIN + "stone_corner_top.png")
 	stone.corner_top_anchor = _vec(kit["stone_corner_top"])
 	stone.corner_under = load(TERRAIN + "stone_corner_under.png")

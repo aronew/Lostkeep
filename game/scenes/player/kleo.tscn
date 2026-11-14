@@ -25,40 +25,40 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[node name="Kleo" type="CharacterBody2D" unique_id=1431972175]
+[node name="Kleo" type="CharacterBody2D" unique_id=515404025]
 z_index = 10
 collision_layer = 2
 collision_mask = 65
 floor_snap_length = 4.0
 script = ExtResource("1_nwcfh")
 
-[node name="Shape" type="CollisionShape2D" parent="." unique_id=1236482753]
+[node name="Shape" type="CollisionShape2D" parent="." unique_id=1868236922]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_3u8ft")
 
-[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1193612905]
+[node name="Sprite" type="AnimatedSprite2D" parent="." unique_id=1924529379]
 sprite_frames = ExtResource("2_hwqip")
 animation = &"idle"
 offset = Vector2(0, -24)
 
-[node name="Hitbox" type="Area2D" parent="." unique_id=1656346266]
+[node name="Hitbox" type="Area2D" parent="." unique_id=1278490755]
 collision_layer = 8
 collision_mask = 4
 monitorable = false
 
-[node name="Shape" type="CollisionShape2D" parent="Hitbox" unique_id=1779406324]
+[node name="Shape" type="CollisionShape2D" parent="Hitbox" unique_id=1718945967]
 shape = SubResource("RectangleShape2D_v4jd1")
 
-[node name="Interact" type="Area2D" parent="." unique_id=1462245583]
+[node name="Interact" type="Area2D" parent="." unique_id=1941341364]
 collision_layer = 0
 collision_mask = 32
 monitorable = false
 
-[node name="Shape" type="CollisionShape2D" parent="Interact" unique_id=1208760422]
+[node name="Shape" type="CollisionShape2D" parent="Interact" unique_id=464262157]
 position = Vector2(0, -13)
 shape = SubResource("RectangleShape2D_q1bo2")
 
-[node name="Lantern" type="PointLight2D" parent="." unique_id=996966238]
+[node name="Lantern" type="PointLight2D" parent="." unique_id=1800156449]
 position = Vector2(-5, -10)
 color = Color(1, 0.78, 0.48, 1)
 energy = 0.55

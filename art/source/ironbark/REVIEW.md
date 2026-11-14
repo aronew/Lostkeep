@@ -18,4 +18,5 @@ D1–D4 = PR1–PR4 (props), G1–G4 = GT1–GT4 (gates).
 | Check | IB2: a visible seam where the band repeats every 384 px |
 | Replace | IB3: its wall band grows ferns, mushrooms and moss ledges out of the rock, which reads as clutter on short faces, and its face is not straight. No longer used: the earth wall is made from IB2's soil. Regenerate as IB5 (Book 1) |
 | In (third set) | K5 (`K5.png`): the crypt arcade at K4's scale, three arches per strip; it replaces K2's arcade band |
+| Redraw | K5 and K4: their style (a black outline on every stone, bright lilac highlights, high contrast) doesn't match mockup A, so the crypt jumps forward. Book 1: K5 v2, K6. And L6, the moat bank and bridge end as one set piece |
 | In (second set) | IB5 (`IB5.png`): face band, four corners and two small islands; used: the face band and the outer top and ceiling corners. K4 (`K4.png`, variant `K4-alt.png`): face band (its straight inner edge is crusted in processing), outer top corner; the arch ends are about twice the K2 arcade's scale, so they wait. P3 v2 (`P3.png`, variant `P3-alt.png`; the first version is `P3-v1.png`): whole crowns, now the mid layer |

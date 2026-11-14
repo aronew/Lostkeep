@@ -53,9 +53,9 @@ non-negotiables.
    faces, undersides) are autotiled onto the masses as shallow bands that end
    in the void along their own stones and roots, never along a straight line;
    only walking lines are straight, and faces stand a few pixels proud of the
-   collision. **The inside of every mass is the void colour** (except an upright
-   pier, open on both sides within 3 tiles, which is lit with its masonry so it
-   doesn't read as a hole), so the
+   collision. **The inside of every mass is the void colour**, piers included:
+   every edge piece is solid along its open edge, then steps into that black
+   like a shadow, so the
    black box itself becomes the natural shadow and depth: a slab between a
    floor and the ceiling below it is grass and soil, then black, then the
    ceiling's edge. One material per face; never several bands stacked in one

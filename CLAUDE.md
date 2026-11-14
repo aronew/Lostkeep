@@ -258,9 +258,11 @@ She steps forward with every hit.
   canopy along the room's top edge and its fern tops along the bottom, unlit.
   It sits in the world vertically, so it never slides when the camera rises or
   falls, and it never stands on a walking line among the props.
-- **Piers:** a mass with open space within 3 tiles on both sides is an upright
-  pier; the fill shader lights its inside (stone: K5's pier masonry, earth:
-  IB1) so it reads solid. Slabs and ground stay void inside.
+- **Shadow rule (the creative lead's):** every mass is black inside, piers
+  included. Every edge piece is solid along its open edge (no gaps for the
+  black box to show through), lit for 12 px, then steps into the black over
+  12 px like a shadow: wall bands (`shadow_face`) and corners (`shadow_corner`)
+  in `tools/make_terrain.py`, like the floor and ceiling bands.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
@@ -321,6 +323,11 @@ She steps forward with every hit.
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
+- **Art requested (Book 1):** IB6 and K6 (earth and masonry edges and corners
+  drawn into shadow), K5 v2 (the crypt arcade in mockup A's muted style: K5
+  outlines every stone in black and is the brightest thing on screen), and L6
+  (the moat bank and bridge end as one set piece on the collision: bank at
+  tiles 93-94, span 95-101, walking line row 28, water line row 31).
 - Not yet used from the kits: IB5's inner corners and its two small islands,
   K4's second arch end and its last corner. **K5** (the crypt arcade at K4's
   scale) is in as `stone_under`: every stone ceiling hangs a colonnade whose
