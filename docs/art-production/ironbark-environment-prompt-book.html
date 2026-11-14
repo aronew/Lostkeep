@@ -399,10 +399,11 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   var AUDIT = [
     ["Black-box collision masses", "Not built", "code", "Drawn in Godot"],
     ["Forest earth: fill, walkable tops, undersides, walls, corners", "Nothing", "need", "IB1 to IB3"],
-    ["Earth cut faces, corners and pillar caps (v2: IB3 read as clutter)", "Faked in code", "need", "IB5"],
+    ["Earth cut faces, corners and pillar caps (v2: IB3 read as clutter)", "In: faces, outer corners", "ok", "IB5"],
     ["Floating islands (three sizes)", "Nothing", "need", "IB4"],
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
-    ["Keep masonry faces, arch ends, corners", "Arcades end mid-arch", "need", "K4"],
+    ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
+    ["Crypt arcade at K4's scale (full-height piers)", "K2's arcade is half K4's scale", "need", "K5"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
     ["Sky with the three moons", "Nothing", "need", "P1"],
     ["Far horizon with the Sovereign Spire", "Nothing", "need", "P2"],
@@ -613,6 +614,20 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "3. Two corners, each in a cell 384 × 384: an outer top corner where K2's flagstone floor (band 1) turns down into the face, and an outer ceiling corner where the arcade's underside meets the face. Both corners are worn: a chipped or missing corner stone, never a crisp right angle.",
         "",
         "- Old, patched and overgrown, like the rest of the Keep. Only the flagstone walking line is perfectly straight; faces, corners and the boundary with the void are broken and uneven, made of the stones themselves."
+      ] },
+    { id: "K5", group: "keep", file: "keep_crypt_arcade", title: "Crypt arcade at the arch-end scale (K2 band 2, v2)",
+      about: "K4's arch end ends the crypt's arcade with tall round arches on a pier that stands on the floor, but K2's arcade between them has low, flat arches on short hanging piers: two scales side by side. This band redraws the arcade at K4's scale, so the whole crypt is one colonnade from end to end.",
+      canvas: WIDE, game: "384 × 128, repeating left to right: three arches, piers 80 px tall", attach: ["A", "B", "D", "H", "Your approved K4", "Your approved K2"],
+      text: [
+        "TASK: one long horizontal band of the Lost Keep's crypt arcade on a transparent canvas: three round arches on square piers, matching the attached approved K4 arch ends exactly in stone size, colour, wear and arch shape. The left and right edges must join a copy of the band.",
+        "",
+        "- From y = 128 to 384: a heavy masonry course of dressed plum stone #3E2E4A and #5E4C68 above the arches. Its top edge is NOT straight: it breaks off into the darkness stone by stone at uneven heights, with plain void #0B0812 or transparency behind.",
+        "- The crowns of the three arch openings all touch one straight, level line at y = 384. Below it, each opening is a full round arch with a ring of large voussoirs #8C7A92, like K4's, about 736 px wide and rising about 320 px from its springing.",
+        "- The arches spring from square piers about 288 px wide, with a moulded impost block where each arch meets its pier, as on K4's pier.",
+        "- The piers stand on the floor: their feet sit on a perfectly straight line at the bottom edge, y = 1024, with a worn plinth course. Nothing hangs in mid-air.",
+        "- The canvas's left and right edges cut through the middle of a pier, so the band repeats every 3072 px with no seam.",
+        "- Inside the openings, fully transparent: the game shows the crypt's back wall through them.",
+        "- Ivy and moss trail from the course and the imposts; one pier has a root forcing its way between the stones. No two voussoirs or blocks are copies."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,

@@ -8,6 +8,9 @@ extends Node
 ##   tour     the main line, scripted, every second frame saved (for a video)
 ##   upper    the upper line: island, ledge climb, hard landing, knockback
 ##   props    breaks pots and barrels, stands on the lift's crossbeam, drops through it
+##   edge     runs to the room's west edge on both floors and back (the camera at the room's edge)
+##   hitstop  random overlapping hit-stops for 3 s of real time: the game must
+##            always come back to full speed (run it without --fixed-fps too)
 ##   click    checks that a left click attacks and a right click is the spell action
 ##   map      the whole room in screen-sized tiles, with art and as the black box
 ##            (stitch with tools/stitch_map.py)
@@ -50,6 +53,10 @@ func _ready() -> void:
 			await _click()
 		"props":
 			await _props()
+		"hitstop":
+			await _hitstop_test()
+		"edge":
+			await _edge()
 		"measure":
 			await _measure()
 	get_tree().quit()
@@ -127,16 +134,19 @@ var _log: FileAccess
 var _cam_log: FileAccess
 
 
+## One frame of a tour. `physics_frame` fires just before the frame's physics
+## runs, so wait for `process_frame` too: the log then holds this frame's result.
 func _step() -> void:
 	await get_tree().physics_frame
+	await get_tree().process_frame
+	# Every frame: Kleo and the view, for tools/camera_report.py.
+	var view := cam.get_screen_center_position()
+	_cam_log.store_line("%.2f,%.2f,%.2f,%.2f" % [kleo.global_position.x, kleo.global_position.y, view.x, view.y])
 	if _n % 2 == 0:
 		await _capture("f%04d" % (_n / 2))
 		var sp := kleo.get_global_transform_with_canvas().origin
 		_log.store_line("%d,%d,%d,%s,%d,%d,%d" % [_n / 2, int(sp.x), int(sp.y), kleo.sprite.animation,
 			kleo.sprite.frame, int(kleo.global_position.x), int(kleo.global_position.y)])
-	# Every frame: Kleo and the view, for tools/camera_report.py.
-	var view := cam.get_screen_center_position()
-	_cam_log.store_line("%.2f,%.2f,%.2f,%.2f" % [kleo.global_position.x, kleo.global_position.y, view.x, view.y])
 	_n += 1
 
 
@@ -164,6 +174,8 @@ func _tap(action: String) -> void:
 func _start_tour() -> void:
 	_log = FileAccess.open(out_dir + "/kleo.csv", FileAccess.WRITE)
 	_cam_log = FileAccess.open(out_dir + "/camera.csv", FileAccess.WRITE)
+	var rr: Rect2i = room.room_rect
+	_cam_log.store_line("#room,%d,%d" % [rr.size.x * TILE, rr.size.y * TILE])
 	_n = 0
 
 
@@ -243,6 +255,11 @@ func _props() -> void:
 	await _wait(40)
 	var after := get_tree().get_nodes_in_group("breakable").size()
 	lines.append("breakables: %d before, %d after the combo in the hall" % [before, after])
+	var settle := Time.get_ticks_usec()
+	while Engine.time_scale < 1.0 and Time.get_ticks_usec() - settle < 1000000:
+		await get_tree().process_frame
+	lines.append("game speed after breaking: %.2f (back to full speed in %.3f s of real time)" %
+		[Engine.time_scale, (Time.get_ticks_usec() - settle) / 1000000.0])
 	# Jump onto the crossbeam (3 tiles up) from the terrace beside it.
 	_place(21.0, 24, 1)
 	await _frames(6)
@@ -261,6 +278,54 @@ func _props() -> void:
 	var text := "\n".join(lines)
 	print(text)
 	FileAccess.open(out_dir + "/props.txt", FileAccess.WRITE).store_string(text + "\n")
+
+
+# --- The room's edge ---------------------------------------------------------------------------
+
+func _edge() -> void:
+	# The terrace: from the shrine, run to the room's west edge and back.
+	_place(20.0, 24, -1)
+	await _frames(20)
+	_start_tour()
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 12.0, 240)
+	await _wait(30)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 26.0 * TILE, 240)
+	await _wait(20)
+	# The hall: west to the lower door and back.
+	_place(16.0, 37, -1)
+	await _frames(10)
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 12.0, 240)
+	await _wait(30)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 17.0 * TILE, 240)
+	await _wait(20)
+	_release_all()
+
+
+# --- Hit-stop -------------------------------------------------------------------------------------
+
+func _hitstop_test() -> void:
+	var lines := []
+	var worst := 0.0
+	var last_call := 0
+	var calls := 0
+	var t0 := Time.get_ticks_usec()
+	while Time.get_ticks_usec() - t0 < 3000000:
+		if randf() < 0.35:
+			Game.hitstop(randf_range(0.01, 0.3))
+			last_call = Time.get_ticks_usec()
+			calls += 1
+		await get_tree().process_frame
+		if Engine.time_scale < 1.0 and last_call > 0:
+			worst = maxf(worst, (Time.get_ticks_usec() - last_call) / 1000000.0)
+	var end_wait := Time.get_ticks_usec()
+	while Engine.time_scale < 1.0 and Time.get_ticks_usec() - end_wait < 1000000:
+		await get_tree().process_frame
+	lines.append("%d overlapping hit-stops in 3 s" % calls)
+	lines.append("longest slow-down after the latest hit: %.3f s (cap %.2f s plus a frame)" % [worst, Game.HITSTOP_MAX])
+	lines.append("game speed at the end: %.2f" % Engine.time_scale)
+	var text := "\n".join(lines)
+	print(text)
+	FileAccess.open(out_dir + "/hitstop.txt", FileAccess.WRITE).store_string(text + "\n")
 
 
 # --- Mouse ---------------------------------------------------------------------------------------

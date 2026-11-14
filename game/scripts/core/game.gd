@@ -43,7 +43,10 @@ var box_view := false
 var slow_motion := false
 var debug_overlay := false
 
-var _hitstop_until := 0.0
+## Hit-stop never slows the game this much or this long, however many hits land.
+const HITSTOP_SCALE := 0.05
+const HITSTOP_MAX := 0.12
+var _hitstop_end_us := 0  # real time (µs) the current hit-stop ends; 0 when none
 var _fade_layer: CanvasLayer
 var _fade_rect: ColorRect
 var _debug_label: Label
@@ -103,9 +106,11 @@ func _unhandled_input(event: InputEvent) -> void:
 			_debug_label.visible = debug_overlay
 		KEY_F3:
 			slow_motion = not slow_motion
-			Engine.time_scale = 0.25 if slow_motion else 1.0
+			if _hitstop_end_us == 0:
+				Engine.time_scale = _base_time_scale()
 		KEY_F5:
-			Engine.time_scale = 1.0
+			_hitstop_end_us = 0
+			Engine.time_scale = _base_time_scale()
 			get_tree().reload_current_scene()
 		KEY_H:
 			for k in get_tree().get_nodes_in_group("player"):
@@ -115,13 +120,24 @@ func _unhandled_input(event: InputEvent) -> void:
 # --- Hit-stop ------------------------------------------------------------------
 
 ## Freeze the action for a moment so a hit lands with weight.
+## It ends on the real clock, checked every frame in _process, so it always ends:
+## overlapping hits only extend it, and never past HITSTOP_MAX.
 func hitstop(seconds: float) -> void:
-	var now := Time.get_ticks_msec() / 1000.0
-	_hitstop_until = max(_hitstop_until, now + seconds)
-	Engine.time_scale = 0.02
-	await get_tree().create_timer(seconds, true, false, true).timeout
-	if Time.get_ticks_msec() / 1000.0 >= _hitstop_until - 0.001:
-		Engine.time_scale = 0.25 if slow_motion else 1.0
+	seconds = clampf(seconds, 0.0, HITSTOP_MAX)
+	if seconds <= 0.0:
+		return
+	var end := Time.get_ticks_usec() + int(seconds * 1000000.0)
+	_hitstop_end_us = max(_hitstop_end_us, end)
+	Engine.time_scale = HITSTOP_SCALE
+
+
+func _base_time_scale() -> float:
+	return 0.25 if slow_motion else 1.0
+
+
+## True while a hit-stop is holding the game.
+func in_hitstop() -> bool:
+	return _hitstop_end_us > 0
 
 
 func shake(amount: float) -> void:
@@ -157,6 +173,12 @@ func fade_to(alpha: float, seconds: float) -> void:
 
 
 func _process(_delta: float) -> void:
+	# End the hit-stop on time. Also a safety net: outside a hit-stop the game
+	# always runs at its normal speed.
+	if _hitstop_end_us > 0 and Time.get_ticks_usec() >= _hitstop_end_us:
+		_hitstop_end_us = 0
+	if _hitstop_end_us == 0 and not is_equal_approx(Engine.time_scale, _base_time_scale()):
+		Engine.time_scale = _base_time_scale()
 	if not debug_overlay:
 		return
 	var lines := ["FPS %d" % Engine.get_frames_per_second()]

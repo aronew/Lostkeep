@@ -451,8 +451,10 @@ func _check_hits(data: Dictionary, frame: int) -> void:
 		var hit := {"dir": facing, "power": data["power"], "attack": _attack,
 			"pos": area.global_position.lerp(global_position + Vector2(facing * 14, -16), 0.5)}
 		if target.take_hit(hit):
-			Game.hitstop(data["stop"])
-			Game.shake(data["shake"] * 0.6)
+			# Props ask for a lighter impact than things that fight back.
+			var weight: float = target.get("hit_weight") if "hit_weight" in target else 1.0
+			Game.hitstop(data["stop"] * weight)
+			Game.shake(data["shake"] * 0.6 * weight)
 			Fx.spark(self, hit["pos"])
 			if _attack == "attack_down":
 				velocity.y = -280.0  # pogo

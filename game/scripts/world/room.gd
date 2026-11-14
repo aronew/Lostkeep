@@ -24,6 +24,8 @@ func _ready() -> void:
 	camera.limit_top = room_rect.position.y * TILE
 	camera.limit_right = room_rect.end.x * TILE
 	camera.limit_bottom = room_rect.end.y * TILE
+	# The camera eases into these edges itself; the limits above are only a backstop.
+	camera.bounds = Rect2(Vector2(room_rect.position * TILE), Vector2(room_rect.size * TILE))
 	camera.snap_to_target()
 
 

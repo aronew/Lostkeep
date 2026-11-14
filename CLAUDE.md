@@ -262,17 +262,30 @@ She steps forward with every hit.
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
   hit has an Area2D on layer 3 whose parent has `take_hit(hit) -> bool`.
-- **The camera** (`camera_rig.gd`) never moves on its own: a small dead-zone
-  window, a steady look-ahead only while running, a fixed height that ignores
-  jumps, physics-tick updates in whole pixels. `python3 tools/camera_report.py`
-  measures drift, sway and wobble from a tour's `camera.csv`; keep drift near
-  zero and wobble at zero.
+- **The camera** (`camera_rig.gd`) never moves on its own and never moves faster
+  than Kleo: a small window she moves in (the camera eases into following her),
+  **no look-ahead** (a camera that runs ahead slides the whole world past her,
+  which the creative lead found nauseating), a fixed height that ignores jumps,
+  an eased approach to the room's edges instead of a hard stop, physics-tick
+  updates in whole pixels. The room's west and east edges fade into darkness
+  (passages leading on). `python3 tools/camera_report.py <camera.csv>` measures
+  it: keep `slide` at 0, `wobble` at 0, `edge brake` above 50 px.
+- **Hit-stop** (`Game.hitstop`) ends on the real clock, checked every frame, and
+  is capped at 0.12 s. Never end a time-scale change from a timer: timers count
+  smoothed frame time, so they can finish early and leave the game stuck slow.
+  Props pass a lighter `hit_weight`.
 - **Test it** (use a virtual display in the cloud):
   - `xvfb-run -a godot --path game --fixed-fps 60 --audio-driver Dummy res://tests/playtest.tscn -- mode=X`
   - `mode=measure`: Kleo's jump, gap and ledge numbers.
   - `mode=shots`: screenshots, with art and as the black box.
   - `mode=tour` and `mode=upper`: the main and upper lines played by script.
-  - `mode=props`: breaking props, the crossbeam and dropping through it.
+  - `mode=props`: breaking props (the game must be back to full speed after),
+    the crossbeam and dropping through it.
+  - `mode=hitstop`: overlapping hit-stops for 3 s; the game must always recover.
+  - `mode=edge`: runs to the room's west edge on both floors and back.
+  - Run `props` and `hitstop` **without** `--fixed-fps` (use `--max-fps 60`):
+    timing bugs only show with real frame times. `tests/framelog.tscn` logs
+    every frame's real time and game speed for profiling.
   - `mode=map`: the whole room plus its collision cells.
   - Then `python3 tools/stitch_map.py` makes the map images and the walked
     routes.
@@ -307,8 +320,9 @@ She steps forward with every hit.
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
 - Not yet used from the kits: IB5's inner corners and its two small islands,
   K4's second arch end and its last corner. K4's arch ends are about twice the
-  K2 arcade's scale; at the arcade's ends that reads as a grand end arch, but
-  the arcade itself could be regenerated at that scale to match.
+  K2 arcade's scale, so **K5** (Book 1) asks for the crypt arcade at K4's scale,
+  piers standing 80 px below the arches' crowns; when it comes in it replaces
+  `stone_under` (its ceiling line is the crowns).
 - Mirroring in the skin: a negative width draws the art flipped within
   [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
