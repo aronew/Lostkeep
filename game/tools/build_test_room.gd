@@ -48,9 +48,11 @@ const MASSES := [
 ## arches under it are masonry: one material per face, never two stacked.
 ## The moat bank (x 91 to 94) is masonry from its walking line down: the bridge's
 ## quay, its approach paved where the clearing's grass ends.
-const STONE := [[0, 28, 30, 12], [30, 31, 61, 9], [91, 28, 4, 12]]
+const STONE := [[0, 28, 30, 12], [30, 31, 61, 9]]
 ## Cells painted by placed art instead of the skin.
-const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [95, 28, 7, 2], [113, 28, 7, 2]]
+## (x 94 under the walking line: the moat bank's face, painted by L6. West of it
+## the bank goes into the room's own black.)
+const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [95, 28, 7, 2], [94, 28, 1, 9], [113, 28, 7, 2]]
 ## Back walls behind enclosed spaces.
 const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 8]]
 ## Back walls of raw earth: the collapse that drops into the crypt.
@@ -438,15 +440,13 @@ func _build_landmarks(behind: Node, placed: Node) -> void:
 	_sprite(placed, ENV + "ironbark_islands.png", Rect2(9, 86, 366, 101), Vector2(52 * TILE + 176 - 183, 17 * TILE - 33)).name = "RootShelf"
 
 	# The broken bridge: its west span with the torn banner, the east span beyond the gap.
-	# The sheet's west end is an earth abutment that stops in a hard line at the
-	# water; the bank is the skin's masonry quay instead, so only the arches and,
-	# above the deck, the lantern post and banner are placed.
-	# One tile west of the gap's edge, so the bank under its post is four tiles wide
-	# (its two faces meet) and the span reaches the gap at x 102.
-	var bw := Vector2(101 * TILE - 144, 28 * TILE - 63)
-	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(49, 2, 96, 126), bw + Vector2(48, 0)).name = "BridgeWest"
-	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(1, 2, 48, 61), bw).name = "BridgePost"
-	_light(placed, bw + Vector2(44, 28), Color(1.0, 0.78, 0.45), 0.8, 0.8, "BridgeLantern")
+	# The west end is L6: the moat bank and the span as one painting, its walking
+	# line on row 28 and its first water arch opening where the moat begins (x 95).
+	# The piece and its anchors are cut by tools/make_terrain.py.
+	var kit: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(TERRAIN + "kit_anchors.json"))
+	var bank := Vector2(95 * TILE - int(kit["bridge_opening"]), 28 * TILE - int(kit["bridge_line"]))
+	_sprite(placed, ENV + "landmark_bridge_bank_game.png", Rect2(0, 0, 172, 206), bank).name = "BridgeWest"
+	_light(placed, bank + _vec(kit["bridge_lantern"]), Color(1.0, 0.78, 0.45), 0.8, 0.8, "BridgeLantern")
 	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(241, 52, 142, 76), Vector2(113 * TILE, 28 * TILE - 12)).name = "BridgeEast"
 
 	# The Lost Keep's gate on the far bank: the goal, seen across the gap.

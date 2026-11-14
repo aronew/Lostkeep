@@ -529,6 +529,82 @@ def crypt_kit():
     return anchors
 
 
+def earth_kit():
+    """IB6, the earth edges painted into shadow: the wall band and the outer top and
+    ceiling corners, measured on the processed sheet (game pixels). They replace
+    IB5's. Returns anchors."""
+    a = load("ironbark_earth_shadow_edges.png")
+    anchors = {}
+    wall = a[0:253, 0:57]
+    op = wall[..., 3] > 0
+    edge = [np.nonzero(op[y])[0].max() for y in range(wall.shape[0]) if op[y].any()]
+    face = int(np.percentile(edge, 50)) - 1
+    save(wrap_y(wall, 24), TERRAIN, "earth_wall.png")
+    anchors["earth_wall_face"] = face
+    c, anc = kit_corner(a, (72, 34, 141, 77), "top")
+    save(c, TERRAIN, "earth_corner_top.png")
+    anchors["earth_corner_top"] = anc
+    c, anc2 = kit_corner(a, (154, 0, 201, 59), "under")
+    save(c, TERRAIN, "earth_corner_under.png")
+    anchors["earth_corner_under"] = anc2
+    print("  earth kit (IB6): wall face", face, "top corner", anc, "ceiling corner", anc2)
+    return anchors
+
+
+def bridge_bank():
+    """L6, the moat bank and the bridge's west end as one set piece: cut from its
+    sheet, its leftmost painted black dropped (the room's own black shows there),
+    and its piers and bank run on down to the moat bed. Returns its anchors: the
+    walking line row, the x where the first water arch opens, the lantern."""
+    a = load("landmark_bridge_bank.png")
+    op = a[..., 3] > 0
+    ys, xs = np.nonzero(op)
+    piece = a[ys.min():ys.max() + 1, :xs.max() + 1].copy()
+    top = ys.min()
+    op = piece[..., 3] > 0
+    h, w = op.shape
+    # The walking line: the first row of the deck, solid across x 60 to 140 for
+    # 12 rows running (the banner above is solid for a row or two at most).
+    line = next(y for y in range(h - 12) if all(op[y + k, 60:140].mean() > 0.9 for k in range(12)))
+    # Where the first arch opens over the water, 40 px under the walking line.
+    opening = next(x for x in range(50, w) if not op[line + 40, x])
+    # Drop the bank's leftmost columns that are painted black (the void).
+    rgb = piece[..., :3].astype(int)
+    dark = (rgb.max(2) < 30) & op
+    left = 0
+    while left < w and (dark[line + 8:, left] | ~op[line + 8:, left]).all():
+        left += 1
+    piece = piece[:, left:]
+    opening -= left
+    # The bank's inner side (its left) goes into the black along its boulders, not
+    # a straight line: below the soil, the bank's columns are crusted leftward from
+    # the abutment (as the floor bands are downward), BANK_LIT px always kept.
+    abut = opening - 6  # the abutment's masonry starts about here
+    soil = line + 8
+    bank = piece[soil:, :abut]
+    up = np.transpose(bank[:, ::-1], (1, 0, 2))  # rows = distance leftward from the abutment
+    up = crust(np.concatenate([np.zeros((1,) + up.shape[1:], np.uint8), up]), 1, seed=9,
+               dmin=BANK_LIT, dmax=abut, pct=40)[1:]
+    if up.shape[0] < abut:  # crust trims rows past dmax: pad them back as transparent
+        up = np.concatenate([up, np.zeros((abut - up.shape[0],) + up.shape[1:], np.uint8)])
+    piece[soil:, :abut] = np.transpose(up, (1, 0, 2))[:, ::-1]
+    # Run the bottom 32 rows of every column that reaches the bottom on down by
+    # MOAT_EXTRA px, so the piers and bank stand on the moat bed.
+    foot = piece[-32:]
+    ext = np.tile(foot, (MOAT_EXTRA // 32 + 1, 1, 1))[:MOAT_EXTRA]
+    reach = piece[-1, :, 3] > 0
+    ext[:, ~reach, 3] = 0
+    piece = np.concatenate([piece, ext], axis=0)
+    save(piece, SRC, "landmark_bridge_bank_game.png")
+    print("  bridge bank (L6): walking line", line, "first opening x", opening, "size", piece.shape[1], piece.shape[0])
+    return {"bridge_line": int(line), "bridge_opening": int(opening),
+            "bridge_lantern": [int(44 - left), int(60 - top)]}
+
+
+MOAT_EXTRA = 32  # px from L6's pier feet down to the moat bed
+BANK_LIT = 16    # px of L6's bank always kept from the abutment before it goes into the black
+
+
 def kits():
     """Cut the kits and write their measurements to kit_anchors.json, which the
     room builder reads: face columns, and each corner's (face, line) anchor."""
@@ -585,9 +661,13 @@ def kits():
     anchors["stone_corner_under_reach"] = CRYPT_HANG
     print(f"  stone_corner_under anchor (face, line) {(face, crown)} size {w}x{h}")
     anchors["stone_under_line"] = arcade()
+    if os.path.exists(os.path.join(SRC, "ironbark_earth_shadow_edges.png")):
+        anchors.update(earth_kit())  # IB6 replaces IB5's wall band and corners
+    if os.path.exists(os.path.join(SRC, "landmark_bridge_bank.png")):
+        anchors.update(bridge_bank())
     if USE_CRYPT_KIT and os.path.exists(os.path.join(SRC, "crypt_floor_arcade.png")):
         anchors.update(crypt_kit())  # the crypt kit replaces K2, K4 and K5 in the crypts
-    clean = {k: ([int(v) for v in a] if isinstance(a, tuple) else (float(a) if isinstance(a, float) else int(a)))
+    clean = {k: ([int(v) for v in a] if isinstance(a, (tuple, list)) else (float(a) if isinstance(a, float) else int(a)))
              for k, a in anchors.items()}
     with open(os.path.join(TERRAIN, "kit_anchors.json"), "w") as f:
         json.dump(clean, f, indent=1)

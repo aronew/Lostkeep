@@ -251,7 +251,7 @@ She steps forward with every hit.
   walls, then undersides, then painted corners); each ends in the void along
   its own stones, and wall faces stand a few pixels proud of the collision. The
   inside of every mass is black. Only walking lines are straight. Earth's wall
-  band and corners are cut from IB5; all crypt stone (floor, ceiling arcade,
+  band and corners are cut from IB6 (painted into shadow); all crypt stone (floor, ceiling arcade,
   walls, corners, the arcade's open end, the back wall) from the crypt kit CR1
   to CR3, tinted toward the region's plum (`crypt_kit()`, `CRYPT_TINT`). Both by
   `tools/make_terrain.py`, which writes their anchors to
@@ -336,12 +336,14 @@ She steps forward with every hit.
   stand on the floor and the crowns rise 21 px into the slab's shadow. Take art
   only as the generator made it, never pre-processed: a first export, rebuilt
   by another tool and snapped to the hex codes, was rejected.
-- **Art requested (Book 1):** IB6 (earth
-  edges and corners drawn into shadow). L6 (the moat bank and bridge end as one
-  set piece on the collision: bank at tiles 93-94, span 95-101, walking line
-  row 28, water line row 31).
-- Not yet used: IB5's inner corners and its two small islands; CR3's inner
-  corners, its second outer corner and the arcade's end against a wall. Every
+- **IB6 and L6 are in.** IB6 gives earth its wall band and outer corners. L6 (the
+  moat bank and the bridge's west end, one painting) is placed by its own
+  anchors (`bridge_bank()` in `tools/make_terrain.py`): its walking line on row
+  28, its first water arch at the moat (x 95), its piers run on down to the bed,
+  and its bank goes into the black along its boulders. The bank (x 91-94) is
+  earth again. The east span is still the old L4 sheet.
+- Not yet used: IB6's inner corners and pillar top (the skin places outer
+  corners only); IB5's two small islands; CR3's inner corners, its second outer corner and the arcade's end against a wall. Every
   stone ceiling hangs the crypt arcade, whose piers stand on a floor 80 px (five
   tiles) below, so crypt spaces are five tiles tall.
 - Mirroring in the skin: a negative width draws the art flipped within
