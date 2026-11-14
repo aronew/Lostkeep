@@ -435,7 +435,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["I", "I-alchemist-works.jpg", "Alchemist works", "For a later book (Carapax Foundry and Anima Vats). Not used here."],
     ["J", "J-canal-village.jpg", "Canal village", "For a later book (Hearth-Plains or Tide-Weaver). Not used here."],
     ["K", "K-raider-camp.jpg", "Raider camp", "For a later book. Its floor-over-cells section is a good storey reference."],
-    ["L", "L-silk-cavern.jpg", "Silk cavern", "For the Silk Mother's book. Not used here."],
+    ["L", "L-silk-cavern.jpg", "Silk cavern", "The reference for how a mass goes into shadow: a lit stone top, a crumbling underside with a pale worn rim, then near-black. Attach it to the edge cards (IB6, CR1 to CR3, L6) for that only. Its layout and creatures belong to the Silk Mother's book."],
     ["M", "M-thornveil-reaper.jpg", "Thornveil Reaper", "For a later book (the Fen-Stalker boss). Not used here."],
     ["N", "N-chained-prism.jpg", "The chained Prism", "For the finale's book. Not used here."],
     ["G", "G-macro-map.jpg", "Macro map", "Where Ironbark sits in Vaelora. For reference only; never attach it to a card."]
@@ -569,9 +569,11 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "IB6", group: "terrain", file: "ironbark_earth_shadow_edges", title: "Earth edges into shadow: face and corners (v3)",
       about: "IB5's corners are drawn lit all the way through, so they end in hard edges against the black inside each mass. In the game every mass is black inside and every band steps into that black like a shadow: these pieces must do the same, so a wall, a corner and the floor around it read as one edge disappearing into darkness.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 30 × 256, 4 corners 48 × 48, 1 pillar top 48 × 48, cut apart", attach: ["A", "B", "Your approved IB2", "Your approved IB5"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 30 × 256, 4 corners 48 × 48, 1 pillar top 48 × 48, cut apart", attach: ["A", "B", "L", "Your approved IB2", "Your approved IB5"],
       text: [
         "TASK: the edges of Ironbark's forest earth, on one transparent canvas, matching the attached approved IB2 and IB5 exactly in colour, boulder size and roots.",
+        "",
+        "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
         "THE RULE FOR EVERY PIECE: each piece is the visible edge of a solid mass whose inside is pure void #0B0812, like a cutaway seen in darkness. Measured inward from the open edge (the wall line, the walking line or the ceiling line): 96 px of solid material at full light, with no gaps, holes or transparency; then 96 px stepping down in four even bands into plain void #0B0812; then only void. Nothing lit, no stone, root or plant, more than 192 px inside the mass. Every piece blends into the black like a shadow, so it joins the black of the mass behind it with no visible edge.",
         "",
@@ -653,13 +655,15 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR1", group: "keep", file: "crypt_back_wall", title: "Crypt kit 1: the back wall",
       about: "What you see behind Kleo in every crypt space, through the arcade's arches. The current back wall is K1's fill dimmed with K2's carved course laid on it: a flat, repeated texture in a different style, and it looks off.",
-      canvas: WIDE, game: "384 × 128, repeating left to right; its floor line at the bottom", attach: ["A", "B", "D", "H"],
+      canvas: WIDE, game: "384 × 128, repeating left to right; its floor line at the bottom", attach: ["A", "B", "L", "D", "H"],
       text: [
         "TASK: the back wall of the Ironbark Guard's crypt, as one long band on a canvas that is opaque edge to edge, joining a copy of itself left to right.",
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
         "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "",
+        "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
         "SHADOW RULE: every piece is the visible edge of a solid mass whose inside is pure void #0B0812. Measured inward from an open edge (a walking line, a ceiling line, a wall line): 96 px of solid stone at full light with no gaps or holes, then 96 px stepping down in four even bands into plain void #0B0812, then only void. Only walking lines are perfectly straight; a few stones may stand proud of a wall or ceiling line by up to 48 px, worn and uneven.",
         "",
@@ -671,13 +675,15 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR2", group: "keep", file: "crypt_floor_arcade", title: "Crypt kit 2: the floor and the ceiling's arcade",
       about: "The two long bands every crypt is built from: the flagstone floor Kleo walks on, and the arcade that hangs from every crypt ceiling, its piers standing on that floor five tiles below. Same layout as K5, redrawn in the kit's style.",
-      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "2 bands, 384 wide, repeating left to right", attach: ["A", "B", "D", "Your approved CR1", "Your approved K5 (for layout only)"],
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "2 bands, 384 wide, repeating left to right", attach: ["A", "B", "L", "D", "Your approved CR1", "Your approved K5 (for layout only)"],
       text: [
         "TASK: two horizontal bands of the crypt on one transparent canvas, separated by transparent space, matching the attached approved CR1. Each joins a copy of itself left to right.",
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
         "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "",
+        "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
         "SHADOW RULE: every piece is the visible edge of a solid mass whose inside is pure void #0B0812. Measured inward from an open edge (a walking line, a ceiling line, a wall line): 96 px of solid stone at full light with no gaps or holes, then 96 px stepping down in four even bands into plain void #0B0812, then only void. Only walking lines are perfectly straight; a few stones may stand proud of a wall or ceiling line by up to 48 px, worn and uneven.",
         "",
@@ -692,13 +698,15 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR3", group: "keep", file: "crypt_walls_corners_ends", title: "Crypt kit 3: walls, corners and the arcade's ends",
       about: "Where crypt spaces end: their walls, the corners where floors and ceilings meet walls, and the arcade's two kinds of end (against a wall, and at an opening such as the collapse). Drawn with the bands so every join lines up.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band 30 × 256, 4 corners 48 × 48, 2 arcade ends 64 × 128, cut apart", attach: ["A", "B", "Your approved CR1", "Your approved CR2"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band 30 × 256, 4 corners 48 × 48, 2 arcade ends 64 × 128, cut apart", attach: ["A", "B", "L", "Your approved CR1", "Your approved CR2"],
       text: [
         "TASK: the ends of the crypt, on one transparent canvas, pieces separated by transparent space, matching the attached approved CR1 and CR2 exactly.",
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
         "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "",
+        "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
         "SHADOW RULE: every piece is the visible edge of a solid mass whose inside is pure void #0B0812. Measured inward from an open edge (a walking line, a ceiling line, a wall line): 96 px of solid stone at full light with no gaps or holes, then 96 px stepping down in four even bands into plain void #0B0812, then only void. Only walking lines are perfectly straight; a few stones may stand proud of a wall or ceiling line by up to 48 px, worn and uneven.",
         "",
@@ -833,7 +841,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "L6", group: "landmarks", file: "landmark_bridge_bank", title: "The moat bank and the bridge's west end (one set piece)",
       about: "The corner where the clearing meets the moat and the bridge is assembled from seven pieces that were never drawn to meet (the crypt's slab, the arcade, its end pier, the quay, the bridge sheet, the post, the water's edge) and it shows. Like the shrine and the bridge, it should be one painting, drawn to the collision.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A set piece: 144 × 208 px, placed on the collision", attach: ["A", "B", "Your approved IB2", "Your approved L4 (the bridge)"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "A set piece: 144 × 208 px, placed on the collision", attach: ["A", "B", "L", "Your approved IB2", "Your approved L4 (the bridge)"],
       text: [
         "TASK: one set piece on a transparent canvas: the bank of the moat and the west end of the old stone bridge, exactly like the bridge resting on earth banks in mockup A. Lay it out on this grid (1 tile = 128 px):",
         "",
@@ -843,6 +851,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- The bridge's west span: from the bank (x = 256) to x = 1152, two stone arches on piers that go down to y = 1664. At x = 1152 the span ends broken, jagged, with loose stones and roots hanging off it: the middle of the bridge has fallen.",
         "- On the bank, standing on the walking line around x = 128: a tall wooden lantern post with a lit amber lantern (flame only, no halo) and a long torn Ironbark banner (a dull red cloth with a shield-and-leaf) streaming out over the broken end in a strong wind.",
         "- Everything above the walking line other than the post, banner, grass and plants is transparent.",
+        "",
+        "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
         "Style: mockup A's bridge and banks: muted stone, soft shading, thin outlines on the silhouette only, darker than the playfield's floors below the walking line."
       ] },
@@ -969,7 +979,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
   function attachLine(card) {
-    var names = { A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
+    var names = { L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
     var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
     return "\n\nATTACHED: " + list.join("; ") + ".";
   }
