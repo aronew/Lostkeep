@@ -250,7 +250,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         <li><div><strong>Attach the images each card lists.</strong> They are in <code>docs/art-production/lostkeep-attach/</code>. Image A, the Ironbark mockup, goes with every card.</div></li>
         <li><div><strong>Press Copy and paste the prompt into your image model.</strong> The copy includes the shared rules unless you untick the box at the top.</div></li>
         <li><div><strong>Check the result</strong> against <a href="#checks">the checklist</a>. If it falls short, use a fix from <a href="#fixes">If the image falls short</a>.</div></li>
-        <li><div><strong>Save it under the card's file name and hand it to me.</strong> I reduce it to true pixel scale, snap it to the palette, cut it, and set it up in Godot.</div></li>
+        <li><div><strong>Save it under the card's file name and hand it to me, exactly as the generator made it.</strong> Don't run it through another cleanup or export tool first: one rebuilt the first crypt kit's shapes and snapped its colours, and it lost what made it look painted. I reduce it to true pixel scale, snap it to the palette, cut it, and set it up in Godot.</div></li>
         <li><div><strong>Tick it done.</strong> Ticks are saved in this browser only.</div></li>
       </ol>
     </section>
@@ -405,7 +405,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
-    ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "Mismatched: K1, K2, K4, K5", "need", "CR1 to CR3"],
+    ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "Current art kept; first export rejected", "need", "CR1 to CR3 (optional)"],
     ["The moat bank and bridge end as one set piece", "Seven pieces that don't meet", "need", "L6"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
     ["Sky with the three moons", "Nothing", "need", "P1"],
@@ -661,7 +661,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
-        "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "STYLE: mockup A's stone, not K4's. Muted grey-plum matching the attached approved art as it is painted; #3E2E4A, #5E4C68 and #8C7A92 are guides to the hue, not a palette to snap to (snapped to those codes, the stone turns blue-violet beside the rest of the region). Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
         "",
         "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
@@ -681,7 +681,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
-        "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "STYLE: mockup A's stone, not K4's. Muted grey-plum matching the attached approved art as it is painted; #3E2E4A, #5E4C68 and #8C7A92 are guides to the hue, not a palette to snap to (snapped to those codes, the stone turns blue-violet beside the rest of the region). Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
         "",
         "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
@@ -704,7 +704,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "THE CRYPT KIT: these three sheets are one set, made together, and they replace every piece of crypt art in the game (K1, K2, K4, K5): the back wall, the floor, the ceiling's arcade, its ends, the walls and the corners. Every piece must look like the same artist made it on the same day.",
         "",
-        "STYLE: mockup A's stone, not K4's. Muted grey-plum #3E2E4A and #5E4C68, with #8C7A92 only on a few worn top edges. Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
+        "STYLE: mockup A's stone, not K4's. Muted grey-plum matching the attached approved art as it is painted; #3E2E4A, #5E4C68 and #8C7A92 are guides to the hue, not a palette to snap to (snapped to those codes, the stone turns blue-violet beside the rest of the region). Soft shading in four tones per stone. Thin, selective dark outlines on the outer silhouette only, never a black outline around every block. One block size throughout: most dressed blocks 96 to 160 px wide at this scale. Lower contrast and darker than the forest floors above: this is underground, in shade, and it sits back behind Kleo.",
         "",
         "REFERENCE L (attached): use it only for how a mass goes into shadow, not for its layout, creatures or cave colours. The walkable stone surface is a thick, lit band; under it the material breaks into a stepped, crumbling underside, traced by a thin pale worn highlight where its edge catches the light (a lighter tone of the material itself, never amber); a few short drips and roots hang off it; below that the mass is near-black, its stones only just visible, sinking into plain void #0B0812.",
         "",
