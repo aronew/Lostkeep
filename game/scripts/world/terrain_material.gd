@@ -49,6 +49,10 @@ extends Resource
 ## it reaches below the ceiling line. It is placed only where the floor lies
 ## within 16 px of that, so it never hangs in mid-air. 0: it hangs freely.
 @export var corner_under_reach := 0.0
+## Also place the ceiling corner where a ceiling meets a wall that runs down to
+## the floor (an arcade ending on a pier set against the wall), not only where a
+## ceiling turns up into a face.
+@export var corner_under_inner := false
 
 @export_group("Walls")
 ## A one-pixel line just outside every wall face, separating the playfield from

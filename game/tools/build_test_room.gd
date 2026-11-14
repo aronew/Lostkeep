@@ -32,7 +32,7 @@ const SPACES := [
 	[8, 32, 22, 5],   # the west hall, five tiles tall like the crypt it runs on into
 	[0, 32, 8, 5],    # the west door (the main way on, to the Old Crypt)
 	[30, 32, 56, 5],  # the crypt under the clearing
-	[86, 32, 5, 5],   # the sealed pocket (silk: Emberwick lock E1)
+	[86, 32, 7, 5],   # the sealed pocket (silk: Emberwick lock E1), up to the bridge's pier
 	[78, 28, 4, 4],   # the drop into the crypt
 	[24, 24, 4, 8],   # the lift shaft, down to the hall
 ]
@@ -46,11 +46,11 @@ const MASSES := [
 ## Solid cells inside these become stone (the crypts' masonry). They start at
 ## the crypts' ceilings, so a slab is earth from the grass down and only the
 ## arches under it are masonry: one material per face, never two stacked.
-const STONE := [[6, 28, 24, 12], [30, 31, 61, 9]]
+const STONE := [[6, 28, 24, 12], [30, 31, 63, 9]]
 ## Cells painted by placed art instead of the skin.
 const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
 ## Back walls behind enclosed spaces.
-const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 8]]
+const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 7, 5], [24, 24, 4, 8]]
 ## Back walls of raw earth: the collapse that drops into the crypt.
 const BACK_EARTH := [[78, 28, 4, 4]]
 
@@ -79,6 +79,7 @@ func _initialize() -> void:
 	stone.corner_under = load(TERRAIN + "stone_corner_under.png")
 	stone.corner_under_anchor = _vec(kit["stone_corner_under"])
 	stone.corner_under_reach = float(kit["stone_corner_under_reach"])
+	stone.corner_under_inner = true  # the arcade also ends on a pier against a wall
 	ResourceSaver.save(stone, stone.resource_path)
 	var tileset := _tileset()
 	_build_kleo()
@@ -526,7 +527,8 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 		_light(behind, Vector2(x * TILE, y) + Vector2(31, 42), Color(1.0, 0.72, 0.4), 0.95, 0.9, "WallLanternLight")
 
 	# The sealed pocket: silk across its mouth, a shape in a cocoon behind it.
-	_sprite(behind, ENV + "gate_silk_and_cocoon.png", Rect2(167, 26, 35, 82), Vector2(89.2 * TILE, 32 * TILE - 2)).name = "Cocoon"
+	# The cocoon hangs in the alcove past the silk, in front of the arcade's end pier.
+	_sprite(placed, ENV + "gate_silk_and_cocoon.png", Rect2(167, 26, 35, 82), Vector2(90.5 * TILE, 32 * TILE - 2)).name = "Cocoon"
 	var silk := _node(StaticBody2D.new(), "SilkSealE1", _root) as StaticBody2D
 	silk.position = Vector2(86 * TILE, 32 * TILE)
 	silk.z_index = 8

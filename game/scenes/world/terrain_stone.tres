@@ -23,4 +23,5 @@ corner_top_anchor = Vector2(69, 3)
 corner_under = ExtResource("2_hscuy")
 corner_under_anchor = Vector2(78, 31)
 corner_under_reach = 80.0
+corner_under_inner = true
 outline_color = Color(0, 0, 0, 0)

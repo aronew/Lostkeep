@@ -17,6 +17,7 @@ extends Node2D
 
 const TILE := 16
 const MAX_DEPTH := 5  # tiles looked through when measuring how thick a mass is
+const FOOT := 22.0   # px a wall's face runs on below a floor it stands on (the soil's depth)
 const SIDES := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 
 ## The rock.
@@ -273,6 +274,11 @@ func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector
 		return
 	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
 		if solid.call(c + side):
+			# A ceiling meeting a wall that runs down to the floor: the arcade ends
+			# on a pier set against that wall.
+			if m.corner_under and m.corner_under_inner and not solid.call(c + Vector2i.DOWN) \
+					and solid.call(c + side + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
+				_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false, true)
 			continue
 		if m.corner_top and not solid.call(c + Vector2i.UP):
 			_corner(canvas, cells, solid, c, side, m.corner_top, m.corner_top_anchor, true)
@@ -292,7 +298,7 @@ func _reaches_floor(solid: Callable, c: Vector2i, reach: float) -> bool:
 
 
 func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, side: Vector2i,
-		tex: Texture2D, anchor: Vector2, top: bool) -> void:
+		tex: Texture2D, anchor: Vector2, top: bool, inner := false) -> void:
 	var p := Vector2(c * TILE)
 	# The corner point: the cell's outer edge, at its top (walking line) or bottom (ceiling).
 	var cx: float = p.x + (TILE if side == Vector2i.RIGHT else 0.0)
@@ -302,6 +308,8 @@ func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, si
 	# Inward along the surface (the top or the ceiling) and along the face.
 	var inward: float = min(anchor.x, _wall_room(cells, solid, c, -side))
 	var along := _face_room(cells, solid, c, side, Vector2i.DOWN if top else Vector2i.UP)
+	if inner:
+		along = anchor.y  # no face above to clip to: the masonry above sits in the slab
 	var sx := anchor.x - inward
 	var sw := w - sx
 	var src: Rect2
@@ -331,17 +339,24 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 	# Columns past the face: stones standing proud of the collision, into the air.
 	var over := m.wall_band.get_width() - bw
 	var sy := float(posmod(c.y * TILE, m.wall_band.get_height()))
+	# A wall standing on a floor sinks into it: its face runs on below the walking
+	# line as deep as the floor's soil, so the floor's band doesn't end in a cut.
+	var foot := 0.0
+	if solid.call(c + Vector2i.DOWN):
+		foot = FOOT
 	if not solid.call(c + Vector2i.RIGHT):
 		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.LEFT))
+		var f := foot if solid.call(c + Vector2i.RIGHT + Vector2i.DOWN) else 0.0
 		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + TILE - depth, p.y, depth + over, TILE), Rect2(bw - depth, sy, depth + over, TILE))
+			Rect2(p.x + TILE - depth, p.y, depth + over, TILE + f), Rect2(bw - depth, sy, depth + over, TILE + f))
 	if not solid.call(c + Vector2i.LEFT):
 		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.RIGHT))
 		# A negative width draws the region flipped within [x, x + |width|] (Godot keeps
 		# the rect's x), so the rect starts at the proud stones' outer end and the face
 		# lands on the cell's left edge.
+		var f := foot if solid.call(c + Vector2i.LEFT + Vector2i.DOWN) else 0.0
 		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x - over, p.y, -(depth + over), TILE), Rect2(bw - depth, sy, depth + over, TILE))
+			Rect2(p.x - over, p.y, -(depth + over), TILE + f), Rect2(bw - depth, sy, depth + over, TILE + f))
 
 
 func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:

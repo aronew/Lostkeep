@@ -21,7 +21,7 @@ LIFT = [((24, 23), (24, 36)), ((25, 23), (25, 36)), ((26, 23), (26, 36)), ((27, 
 WATER = (96, 31, 24, 6)          # x, y, w, h: falling in returns her to safe ground
 GATED = {                         # places that must stay shut with the base kit
     "far bank (Wing-Cloak, G1)": (113, 20, 25, 8),
-    "sealed pocket (Emberwick, E1)": (88, 32, 3, 5),
+    "sealed pocket (Emberwick, E1)": (88, 32, 5, 5),
 }
 SEALS = [(86, 32, 2, 5)]          # the silk seal is solid until burned
 EXITS = {"west upper (to the Guard Post)": (0, 23), "west lower (to the Old Crypt)": (0, 36)}
