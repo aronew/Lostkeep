@@ -14,10 +14,13 @@ var _t := 0.0
 var _flip_t := 0.0
 var _resting := false
 var _half_h := 4.0
+var _query := PhysicsPointQueryParameters2D.new()
 
 
 func _ready() -> void:
 	_half_h = region_rect.size.y * 0.5
+	_query.collision_mask = WORLD
+	_query.collide_with_bodies = true
 
 
 func _physics_process(delta: float) -> void:
@@ -52,8 +55,5 @@ func _physics_process(delta: float) -> void:
 
 
 func _solid_at(p: Vector2) -> bool:
-	var q := PhysicsPointQueryParameters2D.new()
-	q.position = p
-	q.collision_mask = WORLD
-	q.collide_with_bodies = true
-	return not get_world_2d().direct_space_state.intersect_point(q, 1).is_empty()
+	_query.position = p
+	return not get_world_2d().direct_space_state.intersect_point(_query, 1).is_empty()
