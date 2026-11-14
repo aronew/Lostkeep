@@ -442,7 +442,7 @@ CRYPT_HANG = 80  # a crypt is five tiles tall: arcade piers stand on its floor
 # The painted crypt kit (CR1 to CR3) in place of K2, K4 and K5 in the crypts.
 # Off until the creative lead picks: as painted, or tinted toward the region's
 # plum (CRYPT_TINT multiplies red, green, blue; None keeps the paint as it is).
-USE_CRYPT_KIT = False
+USE_CRYPT_KIT = True
 CRYPT_TINT = (1.02, 0.93, 1.12)
 
 

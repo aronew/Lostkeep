@@ -250,9 +250,12 @@ She steps forward with every hit.
   `TerrainSkin` paints shallow bands along every exposed edge (tops, then
   walls, then undersides, then painted corners); each ends in the void along
   its own stones, and wall faces stand a few pixels proud of the collision. The
-  inside of every mass is black. Only walking lines are straight. The wall
-  bands and corners are cut from the IB5 and K4 kits by `tools/make_terrain.py`,
-  which writes their anchors to `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
+  inside of every mass is black. Only walking lines are straight. Earth's wall
+  band and corners are cut from IB5; all crypt stone (floor, ceiling arcade,
+  walls, corners, the arcade's open end, the back wall) from the crypt kit CR1
+  to CR3, tinted toward the region's plum (`crypt_kit()`, `CRYPT_TINT`). Both by
+  `tools/make_terrain.py`, which writes their anchors to
+  `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
 - **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): P5's
   canopy along the room's top edge and its fern tops along the bottom, unlit.
@@ -326,22 +329,21 @@ She steps forward with every hit.
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
-- **Art requested (Book 1):** the **crypt kit** CR1 to CR3 (back wall; floor
-  and arcade; walls, corners and the arcade's two ends) is optional now: its
-  first export (post-processed by another tool, snapped to the hex codes) was
-  trialled and the creative lead preferred the current crypt (K2, K4, K5),
-  which stays. Take art only as the generator made it, never pre-processed.
-  The painted revision (CR1 to CR3 originals) is in but switched off
-  (`USE_CRYPT_KIT` in `tools/make_terrain.py`), awaiting the creative lead's
-  pick between the current crypt, the kit as painted, and the kit tinted plum. IB6 (earth
+- **The crypt kit is in** (CR1 to CR3, the generator's painted originals,
+  tinted toward the region's plum: the creative lead's pick over the old crypt
+  and the kit as painted). It replaces K1, K2, K4 and K5 in the crypts. Its
+  arcade is 101 px from crown to pier foot, so in a five-tile crypt the piers
+  stand on the floor and the crowns rise 21 px into the slab's shadow. Take art
+  only as the generator made it, never pre-processed: a first export, rebuilt
+  by another tool and snapped to the hex codes, was rejected.
+- **Art requested (Book 1):** IB6 (earth
   edges and corners drawn into shadow). L6 (the moat bank and bridge end as one
   set piece on the collision: bank at tiles 93-94, span 95-101, walking line
   row 28, water line row 31).
-- Not yet used from the kits: IB5's inner corners and its two small islands,
-  K4's second arch end and its last corner. **K5** (the crypt arcade at K4's
-  scale) is in as `stone_under`: every stone ceiling hangs a colonnade whose
-  piers stand on a floor 80 px (five tiles) below, so crypt spaces are five
-  tiles tall.
+- Not yet used: IB5's inner corners and its two small islands; CR3's inner
+  corners, its second outer corner and the arcade's end against a wall. Every
+  stone ceiling hangs the crypt arcade, whose piers stand on a floor 80 px (five
+  tiles) below, so crypt spaces are five tiles tall.
 - Mirroring in the skin: a negative width draws the art flipped within
   [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
