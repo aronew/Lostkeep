@@ -355,6 +355,41 @@ She steps forward with every hit.
 6. **Judge art in the game,** not on its own.
 
 ### Open items
+- **NEXT: build the Ironbark surface sector (3 to 4 rooms) before going any
+  deeper underground.** Why: IB-01 was a test room, and gravity is the compass:
+  the player should know the surface before being pulled down. Today the game
+  starts at the shrine and is in the crypt within a minute, skipping the
+  story's start (Kleo at the Guard Post noticing her people are missing), the
+  forest itself, the first sight of the Lost Keep gate across the broken
+  bridge, and the surface's locks (the bridge gap, the moat, the thorn knots),
+  which must each be seen a few times before their keys.
+  - **Rooms (proposed, not yet approved by the creative lead):** the **Guard
+    Post** (the opening room, above IB-01 through its west upper exit at the
+    terrace, rows 24 up), a **forest walk**, and the **approach to the Keep
+    gate**, looping back to IB-01. The game opens at the Guard Post; IB-01
+    becomes the second room. The creative lead hasn't yet chosen surface-first
+    vs. finishing IB-02's art; recommend surface-first.
+  - **Method:** progression first, blockout first, art last; one room approved
+    before the next. Each room is a builder extending `game/tools/room_builder.gd`
+    (copy `build_ib02.gd`), a spec in `design/rooms/`, entries in `ROOMS` in
+    `tests/playtest.gd` and `tools/check_room.py`, and doors on the shared grid.
+  - **Level-design ideas:** mockups R, S, T (see the end of
+    `design/world-and-regions.md`): a great tree whose branches are walkways
+    across the upper air, a hill chapel climbed by stair terraces, a pool at
+    the lowest point with a broken bridge and stumps, floating ruin islands,
+    and three readable heights (branch, terrace, water). Rows of tiny floating
+    blocks in the mockups are overruled by the principles. Stairs: no
+    staircases in collision; each step is a full 128 px (art) / 16 px tread or
+    a short run of floors.
+  - **Art ready for it:** SF9 to SF13 are processed in
+    `game/assets/environment/ironbark/surface_*.png` (great tree and branches,
+    chapel and terraces, pool/bridge/falls/stumps, ruin islands and arches,
+    stacked far + mid backdrops) but not placed anywhere. Their README warns
+    stair treads, fence repeat, walking lines and shadow edges need tidying when
+    cut. Base-kit cards SF1 to SF8 (ground bands, walls/corners, islands, stone,
+    backdrops, foreground) are in Book 1 but not generated yet; until then the
+    surface uses IB2's top band and IB6's walls and corners.
+  - Mockups U, V, W (greener deepwood) are for a different area later.
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
 - **The crypt kit is in** (CR1 to CR3, the generator's painted originals,
