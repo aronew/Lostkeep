@@ -2,13 +2,15 @@
 
 Generated bands rarely tile cleanly, so each texture is made seamless with a
 minimum-error cut at its wrap (or cut at a whole number of repeats for regular
-patterns), keeping every pixel crisp. Every band steps down to the void at its
-inner end, because the inside of each mass is painted black.
+patterns), keeping every pixel crisp. The inside of each mass is painted black,
+so every band ends in the void along its own stones (a "crust"), never along a
+straight line, and wall faces stand a few pixels proud of the collision.
 Output: game/assets/environment/ironbark/terrain/ and .../parallax/.
 
 Usage: python3 tools/make_terrain.py
 """
 import os
+from collections import deque
 
 import numpy as np
 from PIL import Image
@@ -105,34 +107,160 @@ def first_full_row(a, start, frac=0.95):
 
 
 # Every band ends in the void: the inside of a mass is black (the black box is
-# the shadow), so each band steps down to the void colour at its inner end and
-# nothing else is painted between a floor's soil and the ceiling below it.
-SOIL_LIT = 12   # rows of lit soil kept under a walking line
-SOIL_FADE = 10  # rows over which the soil then steps down to the void
-WALL_LIT = 12   # columns of lit rock behind a wall face
-WALL_FADE = 8   # columns over which it then steps down to the void
+# the shadow). A band never ends in a straight line or an even fade against the
+# black: it ends the way a crust does, along the outlines of its own stones.
+# Only walking lines are straight; wall faces stand a few pixels proud of the
+# collision in uneven runs.
+CRUST_MIN = 9   # px of a band always kept behind its edge
+CRUST_MAX = 22  # deepest its stones reach into the void
+OVER = 4        # px a wall face may stand out past the collision line
 
 
-def degreen(a):
-    """Replace foliage (green-dominant pixels) with the first non-green pixel below."""
+def lum(rgb):
+    rgb = rgb.astype(float)
+    return rgb[..., 0] * 0.3 + rgb[..., 1] * 0.59 + rgb[..., 2] * 0.11
+
+
+def wobble(w, seed, base, spread):
+    """A smooth, wrapping per-column offset in whole pixels (whole periods across w)."""
+    rng = np.random.default_rng(seed)
+    xs = np.arange(w)
+    v = np.zeros(w)
+    for k, amp in ((max(1, w // 60), 1.0), (max(1, w // 23), 0.7), (max(1, w // 9), 0.4)):
+        v += amp * np.sin(2 * np.pi * k * xs / w + rng.uniform(0, 6.3))
+    v = v / 2.1  # roughly -1..1
+    return np.round(base + spread * v).astype(int)
+
+
+def flood(keep, cand):
+    """Grow `keep` through 4-connected `cand` pixels. Runs over three copies side by
+    side and keeps the middle one, so a band that wraps stays seamless."""
+    h, w = keep.shape
+    K = np.concatenate([keep] * 3, axis=1)
+    C = np.concatenate([cand] * 3, axis=1)
+    q = deque(zip(*np.nonzero(K)))
+    while q:
+        y, x = q.popleft()
+        for dy, dx in ((1, 0), (0, 1), (0, -1), (-1, 0)):
+            yy, xx = y + dy, x + dx
+            if 0 <= yy < h and 0 <= xx < 3 * w and C[yy, xx] and not K[yy, xx]:
+                K[yy, xx] = True
+                q.append((yy, xx))
+    return K[:, w:2 * w]
+
+
+def shade_edge(out, keep, rows):
+    """Darken kept pixels that border the void, within `rows`: a stone's underside
+    (open below) most, its sides less, so each stone reads as a solid shape."""
+    h, w = keep.shape
+    below = np.zeros_like(keep)
+    below[:-1] = ~keep[1:]
+    below[-1] = True
+    side = ~np.roll(keep, 1, axis=1) | ~np.roll(keep, -1, axis=1)
+    zone = np.zeros_like(keep)
+    zone[rows] = True
+    under = keep & below & zone
+    sides = keep & side & zone & ~under
+    rgb = out[..., :3].astype(float)
+    rgb[under] = rgb[under] * 0.45 + VOID[:3] * 0.55
+    rgb[sides] = rgb[sides] * 0.7 + VOID[:3] * 0.3
+    # the pixel above an underside gets a softer step
+    above = np.zeros_like(keep)
+    above[:-1] = under[1:]
+    above &= keep & zone & ~under & ~sides
+    rgb[above] = rgb[above] * 0.75 + VOID[:3] * 0.25
+    out[..., :3] = np.clip(rgb, 0, 255).astype(np.uint8)
+
+
+def crust(a, start, seed, dmin=CRUST_MIN, dmax=CRUST_MAX, pct=30):
+    """End a band in the void along its stones. The band's edge (a walking line, a
+    face or a ceiling) is row `start`, and depth grows downward. Everything above
+    `start` is kept; a few rows below it always are (their count wanders column to
+    column); deeper, only stone pixels (lighter than the soil around them) joined
+    to what is kept reach on, to `dmax` at most. The rest becomes transparent, so
+    the void shows. Each stone gets a shaded underside."""
+    a = a[: start + dmax].copy()
+    h, w, _ = a.shape
+    L = lum(a[..., :3])
+    solid = a[..., 3] > 0
+    zone = L[start:][solid[start:]]
+    thr = np.percentile(zone, pct) if zone.size else 0
+    keep = np.zeros((h, w), bool)
+    keep[:start] = solid[:start]
+    depth = np.clip(wobble(w, seed, dmin + 1, 3), 2, dmax)
+    for x in range(w):
+        keep[start:start + depth[x], x] = solid[start:start + depth[x], x]
+    cand = solid & (L >= thr)
+    cand[:start] = False
+    keep = flood(keep, cand)
+    # Fill pinholes: a dropped pixel mostly surrounded by kept ones is kept.
+    for _ in range(2):
+        n = (np.roll(keep, 1, 0).astype(int) + np.roll(keep, -1, 0) + np.roll(keep, 1, 1) + np.roll(keep, -1, 1))
+        hole = ~keep & (n >= 3) & solid
+        hole[:start] = False
+        keep |= hole
+    # Drop one-pixel whiskers: deep pixels with fewer than two kept neighbours.
+    for _ in range(2):
+        n = (np.roll(keep, 1, 0).astype(int) + np.roll(keep, -1, 0) + np.roll(keep, 1, 1) + np.roll(keep, -1, 1))
+        deep = np.zeros_like(keep)
+        for x in range(w):
+            deep[start + depth[x]:, x] = True
+        keep &= ~(deep & (n < 2))
     out = a.copy()
-    rgb = a[..., :3].astype(int)
-    green = rgb[..., 1] >= rgb[..., 0] - 2  # soil is purple-brown: red well above green
-    h = a.shape[0]
-    for x in range(a.shape[1]):
-        for y in range(h):
-            if green[y, x]:
-                k = y
-                while k < h - 1 and green[k, x]:
-                    k += 1
-                out[y, x] = a[k, x]
+    out[~keep, 3] = 0
+    shade_edge(out, keep, slice(start, h))
     return out
 
 
-def soil(top, line):
-    """Keep the walking band's grass and a short lit soil, then fade to the void."""
-    a = top[: line + SOIL_LIT + SOIL_FADE]
-    return darken_rows(a, SOIL_FADE, toward_bottom=True)
+def proud(a, start, seed):
+    """A face standing proud of the collision: rows above `start` (the air side,
+    OVER rows) keep a pixel only where a stone stands out there, in uneven runs.
+    The outermost pixel of each run is darkened, a selective outline."""
+    h, w, _ = a.shape
+    L = lum(a[..., :3])
+    thr = np.percentile(L[start:start + 6][a[start:start + 6, :, 3] > 0], 45)
+    reach = np.clip(wobble(w, seed + 1, OVER * 0.5, OVER * 0.9), 0, OVER)
+    # Stones at the face stand further out, in runs of at least a few pixels.
+    stone = (L[start:start + 3] >= thr).mean(0) > 0.5
+    run = np.convolve(np.concatenate([stone[-3:], stone, stone[:3]]).astype(float), np.ones(7) / 7, "same")[3:-3] > 0.5
+    reach = np.where(run, reach, np.minimum(reach, 1))
+    # Never step more than one pixel between neighbours: a worn edge, not teeth.
+    for _ in range(OVER):
+        reach = np.minimum(reach, np.minimum(np.roll(reach, 1), np.roll(reach, -1)) + 1)
+    out = a.copy()
+    for x in range(w):
+        out[: start - reach[x], x, 3] = 0
+        if reach[x] > 0:
+            y = start - reach[x]
+            out[y, x, :3] = (out[y, x, :3] * 0.55 + VOID[:3] * 0.45).astype(np.uint8)
+    return out
+
+
+def degreen(a):
+    """Replace foliage (green-dominant pixels) with soil from elsewhere in the same
+    row, so a vine leaves no smear (the band wraps, so the row does too)."""
+    out = a.copy()
+    rgb = a[..., :3].astype(int)
+    green = rgb[..., 1] >= rgb[..., 0] - 2  # soil is purple-brown: red well above green
+    h, w = green.shape
+    offsets = [d * s for d in (37, 59, 83, 101, 127, 149) for s in (1, -1)]
+    for y in range(h):
+        for x in np.nonzero(green[y])[0]:
+            for d in offsets:
+                xx = (x + d) % w
+                if not green[y, xx]:
+                    out[y, x] = a[y, xx]
+                    break
+    return out
+
+
+def face_band(rows, seed):
+    """A wall band from face-up rows (OVER rows of air side, then the face, then
+    depth): proud stones on the air side, a crust into the void behind, then
+    turned so the face points right. Column `width - 1 - OVER` is the face."""
+    a = crust(rows, OVER, seed)
+    a = proud(a, OVER, seed)
+    return np.transpose(a, (1, 0, 2))[:, ::-1].copy()
 
 
 def main():
@@ -140,28 +268,31 @@ def main():
     edges = load("ironbark_earth_edges.png")
     top = edges[0:62]
     line = first_full_row(top, 0, 0.97)
-    save(wrap_x(soil(top, line), 32), TERRAIN, "earth_top.png")
+    save(crust(wrap_x(top, 32), line, seed=1), TERRAIN, "earth_top.png")
     print("  earth top walking line row", line)
 
     under = edges[74:127, 58:382]
     # ceiling line: the last row that is still (nearly) full width
     full = [(under[y, :, 3] > 0).mean() for y in range(under.shape[0])]
     ceil_line = max(y for y, f in enumerate(full) if f > 0.97) + 1
-    under = darken_rows(under, 14)
-    save(wrap_x(under, 32), TERRAIN, "earth_under.png")
-    print("  earth under ceiling line row", ceil_line)
+    # Flipped, the ceiling becomes a walking line: crust it the same way, flip back.
+    flipped = wrap_x(under, 32)[::-1]
+    hang = flipped.shape[0] - ceil_line
+    under = crust(flipped, hang, seed=2)[::-1].copy()
+    save(under, TERRAIN, "earth_under.png")
+    print("  earth under ceiling line row", under.shape[0] - hang)
 
     # The wall: the floor's own soil turned on its side, so a cut face (the drop,
     # a shaft, a pier) is the same earth as the ground above it. (IB3's wall band
     # grows ferns and mushrooms out of the rock, which reads as leafy clutter on
     # short faces.) The soil starts under the grass, with the vines that hang
     # into it replaced by the soil beneath them, so no leaf lies sideways.
-    soil_rows = degreen(wrap_x(top, 32)[line + 7: line + 7 + 30])[: WALL_LIT + WALL_FADE]
-    wall = np.transpose(soil_rows, (1, 0, 2))[:, ::-1].copy()  # face (right) = nearest the grass
-    wall[:, -1, :3] = np.minimum(wall[:, -1, :3].astype(float) * 1.25 + 6, 255).astype(np.uint8)
-    wall = np.transpose(darken_rows(np.transpose(wall, (1, 0, 2)), WALL_FADE), (1, 0, 2))
+    # Built face-up (the air side on top, OVER rows of it), then turned so the face
+    # points right with its proud stones beyond the face column.
+    soil_rows = degreen(wrap_x(top, 32)[line + 10 - OVER: line + 10 + CRUST_MAX + 2])
+    wall = face_band(soil_rows, seed=3)
     save(wall, TERRAIN, "earth_wall.png")  # already seamless: it is the wrapped top band
-    print("  earth wall face column", wall.shape[1] - 1)
+    print("  earth wall face column", wall.shape[1] - 1 - OVER)
 
     fill = load("ironbark_earth_fill.png")
     save(wrap_y(wrap_x(fill, 16), 16), TERRAIN, "earth_fill.png")
@@ -170,23 +301,24 @@ def main():
     k2 = load("keep_stone_edges.png")
     stop = k2[12:59]
     sline = first_full_row(stop, 0, 0.97)
-    save(wrap_x(soil(stop, sline), 32), TERRAIN, "stone_top.png")
+    save(crust(wrap_x(stop, 32), sline, seed=4), TERRAIN, "stone_top.png")
     print("  stone top walking line row", sline)
-    sunder = k2[75:122]
-    sunder = darken_rows(sunder, 10)
-    save(wrap_period(sunder, 107, 3), TERRAIN, "stone_under.png")  # the arches repeat every 107 px
+    sunder = wrap_period(k2[75:122], 107, 3)  # the arches repeat every 107 px
+    sline_u = 20  # the ceiling line: the arches hang below it
+    hang = sunder.shape[0] - sline_u
+    # The course above the arches breaks off stone by stone into the void.
+    sunder = crust(sunder[::-1], hang, seed=5, dmin=4, dmax=14, pct=50)[::-1].copy()
+    save(sunder, TERRAIN, "stone_under.png")
+    print("  stone under ceiling line row", sunder.shape[0] - hang)
     course = k2[134:184]
     save(wrap_period(course, 148, 2), TERRAIN, "stone_course.png")  # the carved panels every 148 px
     k1 = load("keep_stone_fill.png")
     sfill = wrap_y(wrap_x(k1, 16), 16)
     save(sfill, TERRAIN, "stone_fill.png")
-    # stone wall: a strip of the fill with a worn face on the right
-    sw = sfill[:, :WALL_LIT + WALL_FADE].astype(float)
-    sw[:, -1, :3] = [37, 27, 44]
-    sw[:, -2, :3] = np.minimum(sw[:, -2, :3] * 1.45 + 12, 255)
-    sw[:, -3, :3] = np.minimum(sw[:, -3, :3] * 1.2 + 6, 255)
-    sw = np.transpose(darken_rows(np.transpose(sw.astype(np.uint8), (1, 0, 2)), WALL_FADE), (1, 0, 2))
+    # stone wall: the fill's own stones, face-up then turned, like the earth wall
+    sw = face_band(sfill[: OVER + CRUST_MAX + 2].copy(), seed=6)
     save(sw, TERRAIN, "stone_wall.png")
+    print("  stone wall face column", sw.shape[1] - 1 - OVER)
 
     # --- parallax -----------------------------------------------------------
     for name, out in [("ironbark_bg_sky.png", "sky.png"), ("ironbark_bg_far.png", "far.png"),

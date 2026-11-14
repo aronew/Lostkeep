@@ -262,8 +262,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <div class="cols">
         <div class="kv"><h3>Black box first</h3><ul class="checks">
           <li>Every room is blocked out as solid black masses (<code>#0B0812</code>) with flat floors and ceilings. That is the collision.</li>
-          <li>Terrain art is painted onto the edges of those masses. The inside of each mass fades to the same black, so the box itself becomes the shadow and the depth.</li>
-          <li>So every edge band has a straight, exact walking line, and every band ends in plain void colour.</li>
+          <li>Terrain art is painted onto the edges of those masses. The inside of each mass is the same black, so the box itself becomes the shadow and the depth.</li>
+          <li>So every walking line is straight and exact, but nothing else is: faces, corners and undersides are organic, and each band ends in the void along its own stones and roots, never along a straight line or an even fade. Art may overhang the collision by a few pixels.</li>
         </ul></div>
         <div class="kv"><h3>Floors, not platforms</h3><ul class="checks">
           <li>Height comes from big masses and storeys of floor, plus a few floating islands that read as landforms.</li>
@@ -341,7 +341,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         </ul></div>
         <div class="kv"><h3>Terrain and masonry</h3><ul class="checks">
           <li>The walking line is dead straight: lay a ruler on it.</li>
-          <li>The band's far side ends in plain void colour, with no detail.</li>
+          <li>The band's far side ends in plain void colour along the stones' own outlines: no straight line or even fade meets the void.</li>
+          <li>Faces and corners are organic and worn; only walking lines are straight.</li>
           <li>No two stones or roots look copied.</li>
           <li>Fill textures stay dark and quiet when tiled 3 × 3.</li>
           <li>Island tops are flat; only their undersides are organic.</li>
@@ -542,23 +543,25 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "IB5", group: "terrain", file: "ironbark_earth_faces_corners", title: "Earth cut faces and corners (v2, replaces IB3)",
       about: "IB3's wall band grew ferns, mushrooms and moss ledges out of the rock, which reads as leafy clutter on the short faces of the drop, the lift shaft and the piers. The game now paints only a shallow band of soil along every edge and leaves the inside of each mass black, so these pieces must do the same: a clean, narrow face, then the void.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 32 × 256, 4 corners 48 × 48 and 2 pillar caps, cut apart", attach: ["A", "B", "Your approved IB2"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 36 × 256 (4 px overhang past the collision), 4 corners 48 × 48 and 2 pillar caps, cut apart", attach: ["A", "B", "Your approved IB2"],
       text: [
         "TASK: the cut faces and corners of Ironbark's forest earth, on one transparent canvas, matching the attached approved IB2 exactly in colour and detail. These are the vertical sides of solid ground seen in cross-section, like the wall of a trench dug through the forest floor.",
         "",
-        "1. A face band on the left (x = 64 to 320), running from the top edge to the bottom edge of the canvas and joining a copy of itself top to bottom. The exposed face points RIGHT and is a perfectly straight vertical line at x = 320. From the face inward: 96 px of packed earth #3E2E4A and #241A2E with embedded stones and a few roots #3A2420 cut through where the face was dug, then 96 px stepping down to plain void #0B0812, then void to x = 64.",
+        "1. A face band on the left (x = 64 to 352), running from the top edge to the bottom edge of the canvas and joining a copy of itself top to bottom. The exposed face points RIGHT, along a vertical guide line at x = 320 that is NOT drawn: the face is organic, never straight. Stones, packed earth and root ends bulge out past the guide by up to 32 px and step back behind it by up to 16 px, in uneven runs.",
+        "- From the face inward: packed earth #3E2E4A and #241A2E with embedded stones and a few roots #3A2420 cut through where the ground broke away.",
+        "- The earth does NOT end in a straight line or an even fade. It ends the way a crust does: the innermost stones and roots reach into the darkness at different depths, between 64 and 192 px from the guide, each with its own shaded edge, and everything behind them is plain void #0B0812. The boundary with the void follows the stones' own outlines.",
         "- NO ferns, NO mushrooms, NO moss ledges or plants growing out of the face. At most a thin moss strand hanging over the face every 600 px or so.",
         "",
         "2. Four corner pieces, each in a cell 384 × 384, separated by transparent space, from x = 448 rightward:",
-        "   a. An outer top corner: a walkable top (as IB2's band 1, its walking line 176 px below the cell's top) turns down into a face pointing right. The grass and moss roll over the edge and hang a little down the face.",
+        "   a. An outer top corner: a walkable top (as IB2's band 1, its walking line 176 px below the cell's top) turns down into a face pointing right. The corner is worn round, never a sharp right angle: the grass and moss roll over it and hang down the face, and the earth breaks away in a few stones. The walking line stays straight up to 32 px from the corner.",
         "   b. An inner floor corner: a walkable floor meets a face rising on its left (the floor runs right from the bottom of the face).",
-        "   c. An outer ceiling corner: a ceiling underside (as IB2's band 2) turns up into a face pointing right, with roots hanging from the corner.",
+        "   c. An outer ceiling corner: a ceiling underside (as IB2's band 2) turns up into a face pointing right, rounded and broken like corner a, with roots hanging from it.",
         "   d. An inner ceiling corner: a ceiling meets a face that drops below it on its left.",
         "",
-        "3. Two pillar caps: the top of a narrow column of earth seen in cross-section, with a walkable top and faces on BOTH sides. One 256 px wide (2 tiles), one 384 px wide (3 tiles), each 384 px tall, grass on top rolling over both edges, the inside darkening to void below.",
+        "3. Two pillar caps: the top of a narrow column of earth seen in cross-section, with a walkable top and faces on BOTH sides. One 256 px wide (2 tiles), one 384 px wide (3 tiles), each 384 px tall, grass on top rolling over both rounded edges, the earth below breaking up into stones that end in the void at uneven depths.",
         "",
-        "- Every walking line, ceiling line and face is perfectly straight, and they meet at exact right angles. Only plants and roots overlap them.",
-        "- Below every walking line the soil is shallow (about 96 px) and then steps down to void, so each corner joins a face band and a floor band seamlessly on either side."
+        "- ONLY the walking lines are perfectly straight: Kleo stands on them. Faces, ceiling edges, corners and the boundary with the void are organic, made of the stones and roots themselves. No straight edge may meet the void.",
+        "- Below every walking line the soil is shallow (64 to 128 px) before it breaks up into the void, so each corner joins a face band and a floor band on either side."
       ] },
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
@@ -599,17 +602,17 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "K4", group: "keep", file: "keep_stone_faces_ends", title: "Keep masonry faces, arch ends and corners",
       about: "The crypts' arcades (K2 band 2) currently stop mid-arch wherever they meet a wall: at the drop, the silk pocket and the hall. These pieces end them properly, and give the masonry a dressed vertical face and corners.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 32 × 128, 2 arch ends 64 × 48, 2 corners 48 × 48, cut apart", attach: ["A", "B", "D", "H", "Your approved K2"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 face band 36 × 128 (4 px overhang past the collision), 2 arch ends 64 × 48, 2 corners 48 × 48, cut apart", attach: ["A", "B", "D", "H", "Your approved K2"],
       text: [
         "TASK: the ends and edges of the Lost Keep's crypt masonry, on one transparent canvas, matching the attached approved K2 exactly in colour, stone size and wear.",
         "",
-        "1. A face band on the left (x = 64 to 320), top edge to bottom edge, joining a copy of itself top to bottom. The face points RIGHT: a perfectly straight vertical edge at x = 320 of dressed quoin stones #5E4C68 and #8C7A92, alternating long and short, chipped, with moss in the joints. Inward: 96 px of coursed stone, then 96 px stepping down to void #0B0812.",
+        "1. A face band on the left (x = 64 to 352), top edge to bottom edge, joining a copy of itself top to bottom. The face points RIGHT, along an undrawn vertical guide at x = 320: dressed quoin stones #5E4C68 and #8C7A92, alternating long and short, but old: some stand proud of the guide by up to 24 px, some are chipped back or missing, with moss in the joints. Inward, the courses end against void #0B0812 stone by stone at uneven depths (64 to 192 px from the guide): a stepped, broken boundary along the stones' own edges, never a straight line or an even fade.",
         "",
-        "2. Two arch ends, each in a cell 512 × 384, separated by transparent space: K2's arcade (band 2) arriving at a wall and ending on a half-pier (a respond) built against that wall, so the last arch springs from it. One where the wall is on the right of the arcade, one where it is on the left. The ceiling line at the top of the arches and the pier's foot are straight and level.",
+        "2. Two arch ends, each in a cell 512 × 384, separated by transparent space: K2's arcade (band 2) arriving at a wall and ending on a half-pier (a respond) built against that wall, so the last arch springs from it. One where the wall is on the right of the arcade, one where it is on the left. Above the arches the masonry ends against the void stone by stone, as in the face band.",
         "",
-        "3. Two corners, each in a cell 384 × 384: an outer top corner where K2's flagstone floor (band 1) turns down into the face, and an outer ceiling corner where the arcade's underside meets the face.",
+        "3. Two corners, each in a cell 384 × 384: an outer top corner where K2's flagstone floor (band 1) turns down into the face, and an outer ceiling corner where the arcade's underside meets the face. Both corners are worn: a chipped or missing corner stone, never a crisp right angle.",
         "",
-        "- Old, patched and overgrown, like the rest of the Keep. Every line straight, every corner an exact right angle; only ivy and moss overlap them."
+        "- Old, patched and overgrown, like the rest of the Keep. Only the flagstone walking line is perfectly straight; faces, corners and the boundary with the void are broken and uneven, made of the stones themselves."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,

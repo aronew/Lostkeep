@@ -248,8 +248,9 @@ She steps forward with every hit.
   holds the masses put back into the spaces (islands, shelves, capstones), so
   each is painted as an object of its own and the floor under it keeps its edge.
   `TerrainSkin` paints shallow bands along every exposed edge (tops, then
-  walls, then undersides), each stepping down to the void; the inside of every
-  mass is black. Stone walking edges get a pale lip so ledges read. In the
+  walls, then undersides); each ends in the void along its own stones, and wall
+  faces overhang the collision by 4 px. The inside of every mass is black.
+  Only walking lines are straight. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
 - **The foreground:** `ForegroundFringe`, `ForegroundHang` and
   `ForegroundTrunks` are `Parallax2D` at scroll (1.3, 0): silhouettes from

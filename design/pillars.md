@@ -50,8 +50,10 @@ non-negotiables.
    (`TileMapLayer` "Solid", colour `#0B0812`). It's the skeleton: flat floors
    and ceilings, height from separate masses, few platforms.
 2. **Tiles are painted on the black box.** Terrain edges (moss lips, wall
-   faces, undersides) are autotiled onto the masses as shallow bands that step
-   down to the void. **The inside of every mass is the void colour**, so the
+   faces, undersides) are autotiled onto the masses as shallow bands that end
+   in the void along their own stones and roots, never along a straight line;
+   only walking lines are straight, and faces stand a few pixels proud of the
+   collision. **The inside of every mass is the void colour**, so the
    black box itself becomes the natural shadow and depth: a slab between a
    floor and the ceiling below it is grass and soil, then black, then the
    ceiling's edge. One material per face; never several bands stacked in one

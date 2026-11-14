@@ -255,16 +255,18 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 		return
 	var p := Vector2(c * TILE)
 	var bw := m.wall_face + 1
+	# Columns past the face: stones standing proud of the collision, into the air.
+	var over := m.wall_band.get_width() - bw
 	var sy := float(posmod(c.y * TILE, m.wall_band.get_height()))
 	if not solid.call(c + Vector2i.RIGHT):
 		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.LEFT))
 		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + TILE - depth, p.y, depth, TILE), Rect2(bw - depth, sy, depth, TILE))
+			Rect2(p.x + TILE - depth, p.y, depth + over, TILE), Rect2(bw - depth, sy, depth + over, TILE))
 	if not solid.call(c + Vector2i.LEFT):
 		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.RIGHT))
 		# Negative width mirrors the band so its face lands on the cell's left edge.
 		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + depth, p.y, -depth, TILE), Rect2(bw - depth, sy, depth, TILE))
+			Rect2(p.x + depth, p.y, -(depth + over), TILE), Rect2(bw - depth, sy, depth + over, TILE))
 
 
 func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:

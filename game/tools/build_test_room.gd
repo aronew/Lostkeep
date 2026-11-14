@@ -61,8 +61,9 @@ var _root: Node2D
 
 func _initialize() -> void:
 	# Fade 0: the inside of every mass is the void; only the edge bands are painted.
-	var earth := _material("earth", 22, 38, 19, 0.0, Color(0, 0, 0, 0))
-	var stone := _material("stone", 13, 20, 19, 0.0, Color("#b3a2b9"))
+	# Line rows and face columns as tools/make_terrain.py prints them.
+	var earth := _material("earth", 22, 22, 21, 0.0, Color(0, 0, 0, 0))
+	var stone := _material("stone", 13, 14, 21, 0.0, Color("#b3a2b9"))
 	var tileset := _tileset()
 	_build_kleo()
 	_build_room(tileset, earth, stone)
@@ -84,6 +85,7 @@ func _material(kind: String, top_line: int, under_line: int, wall_face: int, fad
 	m.fade_tiles = fade
 	m.lip_color = lip
 	m.top_lit = 64  # the whole band: it ends in the void
+	m.outline_color = Color(0, 0, 0, 0)  # faces outline themselves: their proud stones are shaded
 	ResourceSaver.save(m, "res://scenes/world/terrain_%s.tres" % kind)
 	return load("res://scenes/world/terrain_%s.tres" % kind)
 
