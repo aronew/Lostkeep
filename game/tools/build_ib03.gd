@@ -38,21 +38,23 @@ const SPACES := []
 const MASSES := [
 	[23, 18, 11, 1, 0],   # the ruin island
 	[38, 17, 7, 1, 0],    # the grave island, over the pool
+	[49, 18, 15, 1, 0],   # the long island, on to the hill
 	[100, 9, 4, 1, 0],    # the far island (Wing-Cloak)
 ]
 const STONE := []
-const SKIP := [[23, 18, 11, 1], [38, 17, 7, 1], [100, 9, 4, 1]]
+const SKIP := [[23, 18, 11, 1], [38, 17, 7, 1], [49, 18, 15, 1], [100, 9, 4, 1]]
 const BACK := []
 const BACK_EARTH := []
 
 ## The start of the game: under the great tree, by its lantern.
-const SPAWN := Vector2(14 * 16, 24 * 16)
+const SPAWN := Vector2(18 * 16, 24 * 16)
 
 const GT := ENV + "surface_great_tree.png"
 const CH := ENV + "surface_chapel_terraces.png"
 const PL := ENV + "surface_pool_bridge.png"
 const IS := ENV + "surface_ruin_islands.png"
-const BD := ENV + "surface_backdrops.png"
+const GRAVE := ENV + "props_graveyard.png"
+const FLORA := ENV + "props_flora.png"
 const LAN := ENV + "props_lanterns.png"
 const LAMP := Color(1.0, 0.72, 0.4)
 
@@ -63,6 +65,13 @@ const DECK := 400.0
 const T2 := 336.0
 const T3 := 288.0
 const TOP := 240.0
+
+## The surface set pieces (SF9 to SF12) were painted bluer and yellower than the
+## Ironbark kit. They are tinted toward its plum and teal, the palette the
+## creative lead prefers (IB-01's: purple sky, plum stone).
+const SF_TINT := Color(0.98, 0.85, 1.1)
+## The colour under the mid forest layer (as IB-01).
+const MID_BASE := Color("#24535b")
 
 var _unlit: CanvasItemMaterial
 
@@ -92,6 +101,7 @@ func _initialize() -> void:
 	_build_islands(t["behind"], t["placed"])
 	_build_atmosphere()
 	_build_foreground()
+	_tint_surface_kit(_root)
 	_edge_shades()
 	_door("East", Rect2i(104, 24, 8, 5), 1, IB01, "WestUpper")
 	# West: the forest road. Its room isn't built: a place to arrive, no way through.
@@ -102,30 +112,29 @@ func _initialize() -> void:
 
 # --- Backdrops ---------------------------------------------------------------------------------
 
-func _layer(layer_name: String, scale: Vector2, region: Rect2, y: float, base: Color) -> Parallax2D:
-	var p := _node(Parallax2D.new(), layer_name, _root) as Parallax2D
-	p.scroll_scale = scale
-	p.repeat_size = Vector2(region.size.x, 0)
-	p.repeat_times = 4
-	p.z_index = -10
-	var s := _sprite(p, BD, region, Vector2(0, y))
-	s.name = "Art"
-	var fill := _node(ColorRect.new(), "Base", p) as ColorRect
-	fill.color = base
-	fill.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	fill.position = Vector2(0, y + region.size.y - 1)
-	fill.size = Vector2(region.size.x, 420)
-	return p
-
-
-## SF13: the dusk sky with the far forest and its ruins, then the nearer trees.
+## The Ironbark backdrops, as in IB-01: the purple dusk sky and its moons, the
+## far forest, and the nearer trees. (No ruined wall layer here: the room's own ruins
+## must read against the forest.)
 func _build_backdrops() -> void:
-	_layer("Sky", Vector2(0.06, 0.1), Rect2(0, 0, 768, 216), -4.0, Color("#3a6488"))
-	_layer("Mid", Vector2(0.35, 0.3), Rect2(0, 280, 768, 152), 196.0, Color("#386489"))
-	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
-	fog.scroll_scale = Vector2(0.5, 0.4)
-	fog.z_index = -10
-	_fog(fog, Rect2(-200, 300, 2400, 170), Color("#5f8aa0"), 0.24, Vector2(0.006, 0.0))
+	var sky := _parallax("Sky", Vector2(0.05, 0.0), PARALLAX + "sky.png", -96.0, Color("#3b6d70"))
+	sky.get_node("Art").modulate = Color(0.78, 0.76, 0.86)
+	_parallax("Far", Vector2(0.15, 0.08), PARALLAX + "far.png", 92.0, Color("#3d7070"))
+	var fog_far := _node(Parallax2D.new(), "FogFar", _root) as Parallax2D
+	fog_far.scroll_scale = Vector2(0.25, 0.12)
+	fog_far.z_index = -10
+	_fog(fog_far, Rect2(-200, 210, 2400, 150), Color("#6f9a9a"), 0.32, Vector2(0.004, 0.0))
+	_parallax("Mid", Vector2(0.35, 0.22), PARALLAX + "mid.png", 52.0, MID_BASE)
+	var fog_mid := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
+	fog_mid.scroll_scale = Vector2(0.5, 0.35)
+	fog_mid.z_index = -10
+	_fog(fog_mid, Rect2(-200, 260, 2600, 160), Color("#5f8a8c"), 0.26, Vector2(0.007, 0.0))
+
+
+func _tint_surface_kit(node: Node) -> void:
+	for c in node.get_children():
+		if c is Sprite2D and c.texture and c.texture.resource_path.contains("/surface_"):
+			c.modulate = c.modulate * SF_TINT
+		_tint_surface_kit(c)
 
 
 # --- Collision that isn't tiles -------------------------------------------------------------------
@@ -165,84 +174,36 @@ func _build_collision() -> void:
 	_stairs("StairsHill2", Vector2(1048, G), Vector2(1104, T2))
 	_stairs("StairsHill3", Vector2(1192, T2), Vector2(1248, T3))
 	_stairs("StairsHill4", Vector2(1336, T3), Vector2(1392, TOP))
-	# The great tree's root ledge: two tiles up, the way to the branches.
+	# Two mossy blocks by the tree: two tiles up, the way to its branch.
 	var ledge := _body("RootLedge", 1)
 	var ls := CollisionShape2D.new()
 	var lr := RectangleShape2D.new()
-	lr.size = Vector2(80, 32)
+	lr.size = Vector2(60, 32)
 	ls.shape = lr
-	ls.position = Vector2(120, G - 16)
+	ls.position = Vector2(222, G - 16)
 	_node(ls, "Shape", ledge)
 	# The broken bridge's two decks, over the pool.
 	_slab("BridgeWest", 544, 640, DECK, false)
 	_slab("BridgeEast", 704, 800, DECK, false)
-	# The great branches: she can jump up through them and drop back down.
+	# The tree's great branch: she can jump up through it and drop back down.
 	_slab("BranchWest", 96, 320, 19 * TILE, true)
-	_slab("BranchEast", 784, 1040, 18 * TILE, true)
 
 
 # --- The great tree ---------------------------------------------------------------------------------
 
-func _trunk(parent: Node, x: float, base_y: float, copies: int, flip: bool, tint: Color) -> void:
-	# The trunk, and its upper length repeated on up out of sight: it leans as it
-	# rises, so each length is set over along the lean.
-	var lean := -6.0 if flip else 6.0
-	for i in range(copies, 0, -1):
-		var up := _sprite(parent, GT, Rect2(0, 0, 96, 62), Vector2(x + lean * i, base_y - 118 - 60 * i))
-		up.name = "TrunkUpper"
-		up.flip_h = flip
-		up.modulate = tint
-	var t := _sprite(parent, GT, Rect2(0, 0, 96, 120), Vector2(x, base_y - 118))
-	t.name = "Trunk"
-	t.flip_h = flip
-	t.modulate = tint
-
-
-## A crown of leaves from `bottom_y` up past the room's top, over [x0, x1]. Rows
-## are laid from the lowest up, each wider than the one under it and 28 px
-## higher, so its leaves cover the flat top edge of the row below; the top
-## row's flat edge is above the room.
-func _crown(front: Node, x0: float, x1: float, bottom_y: float) -> void:
-	var y := bottom_y
-	var i := 0
-	while true:
-		var x := x0 - 24.0 * i - (90.0 if i % 2 == 1 else 0.0)
-		var n := 0
-		while x < x1 + 24.0 * i:
-			var leaf := _sprite(front, GT, Rect2(112, 184, 256, 62), Vector2(x, y))
-			leaf.name = "Crown"
-			leaf.flip_h = (n + i) % 2 == 1
-			leaf.material = _unlit
-			var shade := 0.74 - 0.05 * i
-			leaf.modulate = Color(shade - 0.1, shade - 0.08, shade)
-			x += 200.0
-			n += 1
-		if y < 0.0:
-			break
-		y -= 28.0
-		i += 1
-
-
-func _build_tree(behind: Node, placed: Node, front: Node) -> void:
-	# The great tree at the start: its trunk, and the root mound with its mossy
-	# ledge (the collision's root ledge) and ruined wall.
-	_trunk(behind, 20, 356, 4, false, Color.WHITE)
-	_sprite(placed, GT, Rect2(0, 128, 192, 47), Vector2(20, G - 46)).name = "RootMound"
-	# The west branch, with its lantern.
-	_sprite(placed, GT, Rect2(112, 0, 256, 56), Vector2(90, 19 * TILE - 24)).name = "BranchWest"
-	_light(behind, Vector2(90 + 164, 19 * TILE - 24 + 40), LAMP, 0.95, 0.9, "BranchLanternLight")
-	# The second tree, on the hill, and the east branch reaching back over the pool.
-	_trunk(behind, 1012, G + 2, 5, true, Color(0.86, 0.86, 0.92))
-	var be := _sprite(placed, GT, Rect2(112, 64, 256, 56), Vector2(784, 18 * TILE - 26))
-	be.name = "BranchEast"
-	be.flip_h = true
-	# Leaves: the crowns, hanging into the top of the view.
-	_crown(front, -40.0, 400.0, 96.0)
-	_crown(front, 660.0, 1330.0, 52.0)
-	for c in [[40.0, 130.0, true], [990.0, 84.0, false]]:
-		var leaf := _sprite(behind, GT, Rect2(112, 184, 256, 62), Vector2(c[0], c[1]))
-		leaf.name = "CrownBehind"
-		leaf.flip_h = c[2]
+func _build_tree(behind: Node, placed: Node, _front: Node) -> void:
+	# The great Ironbark over the start, as in the clearing east of here: thorn
+	# knots sleeping in its crown (Thorn-Line), a lantern on its bough.
+	var tree := _sprite(behind, ENV + "landmark_great_ironbark.png", Rect2(1, 1, 255, 252), Vector2(-72, G - 248))
+	tree.name = "GreatIronbark"
+	_light(behind, Vector2(-72, G - 248) + Vector2(193, 130), LAMP, 1.0, 1.1, "TreeLantern")
+	# Its great branch, reaching east toward the islands.
+	_sprite(placed, GT, Rect2(112, 0, 256, 56), Vector2(64, 19 * TILE - 24)).name = "BranchWest"
+	# Two mossy blocks of the old wall beside it.
+	_sprite(placed, PL, Rect2(40, 80, 32, 36), Vector2(190, G - 34)).name = "WallBlock"
+	_sprite(placed, PL, Rect2(80, 80, 32, 36), Vector2(222, G - 34)).name = "WallBlock"
+	_ground(behind, GRAVE, Rect2(165, 2, 35, 45), 300.0, G, 0.95, "Grave")
+	_ground(behind, FLORA, Rect2(126, 93, 42, 27), 340.0, G, 1.0, "Mushrooms")
 
 
 # --- The pool and the broken bridge -------------------------------------------------------------------
@@ -286,16 +247,14 @@ func _build_hill(behind: Node, placed: Node) -> void:
 	_ground(behind, CH, Rect2(224, 8, 24, 40), 1404.0, TOP, 1.0, "GatePillar")
 	# The terraces: graves, a fence, ruins.
 	_ground(behind, IS, Rect2(144, 184, 64, 62), 968.0, G, 0.95, "RuinArch")
-	_ground(behind, CH, Rect2(8, 218, 24, 30), 1010.0, G, 1.0, "Grave")
 	_ground(behind, CH, Rect2(128, 8, 80, 27), 1110.0, T2 + 1, 1.0, "Fence")
 	_ground(behind, CH, Rect2(40, 220, 24, 28), 1150.0, T2, 1.0, "Grave")
 	_ground(behind, IS, Rect2(248, 186, 128, 61), 1252.0, T3 + 1, 0.9, "Arcade")
 	_ground(behind, CH, Rect2(72, 222, 18, 26), 1300.0, T3, 1.0, "Grave")
 	_ground(behind, CH, Rect2(288, 220, 22, 18), 880.0, BANK, 1.0, "Mushrooms")
-	# The start: the tracery ruin with its lantern, a grave under the tree.
-	_ground(behind, IS, Rect2(8, 160, 90, 87), 268.0, G + 1, 0.95, "TraceryRuin")
-	_light(behind, Vector2(268 + 82, G - 87 + 41), LAMP, 0.9, 0.8, "RuinLanternLight")
-	_ground(behind, CH, Rect2(312, 226, 12, 12), 236.0, G, 1.0, "Mushrooms")
+	# The tracery ruin with its lantern, at the hill's foot.
+	_ground(behind, IS, Rect2(8, 160, 90, 87), 1020.0, G + 1, 0.95, "TraceryRuin")
+	_light(behind, Vector2(1020 + 82, G - 87 + 41), LAMP, 0.9, 0.8, "RuinLanternLight")
 
 
 # --- The islands -------------------------------------------------------------------------------------------
@@ -305,6 +264,8 @@ func _build_islands(behind: Node, placed: Node) -> void:
 	_sprite(placed, IS, Rect2(18, 0, 192, 76), Vector2(360, 18 * TILE - 38)).name = "RuinIsland"
 	_sprite(placed, IS, Rect2(16, 84, 130, 56), Vector2(602, 17 * TILE - 21)).name = "GraveIsland"
 	_sprite(placed, IS, Rect2(280, 104, 64, 40), Vector2(1598, 9 * TILE - 11)).name = "FarIsland"
+	# The long island (the Ironbark kit's own), the last step onto the hill.
+	_sprite(placed, ENV + "ironbark_islands.png", Rect2(130, 2, 246, 85), Vector2(49 * TILE - 3, 18 * TILE - 31)).name = "LongIsland"
 	# Something glints on the far island (Wing-Cloak).
 	var glint := _sprite(behind, "res://assets/characters/kleo/fx_small.png", Rect2(0, 0, 64, 64), Vector2(1616, 9 * TILE - 40))
 	glint.name = "FarGlint"
@@ -321,11 +282,20 @@ func _build_islands(behind: Node, placed: Node) -> void:
 
 func _build_atmosphere() -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
-	mod.color = Color(0.68, 0.67, 0.82)
+	mod.color = Color(0.64, 0.63, 0.78)
 	var add := CanvasItemMaterial.new()
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-	_fog(_root, Rect2(480, BANK - 30, 400, 60), Color("#6f9ab0"), 0.26, Vector2(0.006, 0.0))
+	_fog(_root, Rect2(480, BANK - 30, 400, 60), Color("#5f8a8c"), 0.28, Vector2(0.006, 0.0))
+	# Moonlight falling through the canopy.
+	for sh in [[420.0, 70.0], [1010.0, 90.0], [1500.0, 60.0]]:
+		var shaft := _node(Polygon2D.new(), "LightShaft", _root) as Polygon2D
+		shaft.z_index = 3
+		var x: float = sh[0]
+		var w: float = sh[1]
+		shaft.polygon = PackedVector2Array([Vector2(x, 0), Vector2(x + w, 0), Vector2(x + w + 150, 430), Vector2(x + 150, 430)])
+		shaft.vertex_colors = PackedColorArray([Color(1, 0.93, 0.7, 0.13), Color(1, 0.93, 0.7, 0.13), Color(1, 0.93, 0.7, 0.0), Color(1, 0.93, 0.7, 0.0)])
+		shaft.material = add
 	var flies := _particles("Fireflies", load("res://assets/fx/mote.png"), 30, 7.0, Rect2(0, 200, 1792, 240))
 	flies.color = Color(1.0, 0.82, 0.45)
 	flies.gravity = Vector2(0, -2)
@@ -345,16 +315,14 @@ func _build_atmosphere() -> void:
 	leaves.z_index = 14
 
 
-## The foreground plane: SF9's leaves along the room's top edge, close to the camera.
+## The foreground plane: the Ironbark canopy (P5) along the room's top edge.
 func _build_foreground() -> void:
 	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
 	p.scroll_scale = Vector2(1.2, 1.0)
-	p.repeat_size = Vector2(512, 0)
-	p.repeat_times = 5
+	p.repeat_size = Vector2(720, 0)
+	p.repeat_times = 4
 	p.z_index = 30
-	for i in 2:
-		var top := _sprite(p, GT, Rect2(112, 184, 256, 62), Vector2(i * 256, -22))
-		top.name = "Canopy"
-		top.flip_h = i == 1
-		top.material = _unlit
-		top.modulate = Color(0.42, 0.44, 0.54)
+	var top := _sprite(p, PARALLAX + "fg.png", Rect2(0, 0, 720, 132), Vector2(0, -8))
+	top.name = "Canopy"
+	top.material = _unlit
+	top.modulate = Color(0.55, 0.55, 0.62)

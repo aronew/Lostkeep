@@ -379,6 +379,15 @@ She steps forward with every hit.
     four flights of stairs to the chapel, and drops down the far side to
     IB-01's `WestUpper` door. It is composed from SF9 to SF13 at their own
     scale. It is the project's main scene. Its spec lists the rough edges.
+    **The creative lead's taste, from its review:** they prefer IB-01's
+    palette (purple sky, moons, plum stone, teal forest) to the SF kit's bluer,
+    yellower one, and they disliked SF9's twisted trunk. So IB-03 uses IB-01's
+    backdrops, darkness and canopy, the Great Ironbark painting as its tree (a
+    stand-in), and tints the SF pieces toward plum (`SF_TINT`). SF13's
+    backdrops and SF9's trunk and leaf piece are not used. New surface art
+    should be prompted in IB-01's palette. They also said the room "looks
+    nothing like the mockup": the layout question (one dense screen vs. the
+    pieces spread over 2.8 screens) is still open with them.
     Don't start the next surface room until it is reviewed.
   - **How the surface is built** (new with IB-03, reuse it): stairs are painted
     steps over a slope (`_stairs`, a StaticBody polygon, about 40 degrees);

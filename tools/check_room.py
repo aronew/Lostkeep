@@ -49,7 +49,7 @@ ROOMS = {
     },
     "ib03": {
         "cells": "game/tests/out/ib03/map/cells.json",
-        "spawn": (14, 23),
+        "spawn": (18, 23),
         # Stairs (slopes under painted steps): foot and head, both ways.
         "lift": [((27, 26), (23, 23)), ((30, 26), (34, 24)), ((53, 26), (49, 24)), ((56, 26), (60, 23)),
                  ((65, 23), (69, 20)), ((74, 20), (78, 17)), ((83, 17), (87, 14))],
@@ -57,7 +57,7 @@ ROOMS = {
         "gated": {"far island over the road (Wing-Cloak)": (100, 0, 4, 9)},
         # Collision that isn't rock: the root ledge, the bridge's two decks, the two great
         # branches (one-way), and the islands' single tile under their art.
-        "seals": [(5, 22, 5, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1), (49, 18, 16, 1),
+        "seals": [(12, 22, 4, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1), (49, 18, 15, 1),
                   (23, 18, 11, 1), (38, 17, 7, 1), (100, 9, 4, 1)],
         "exits": {"east (to the Lantern Clearing)": (111, 28), "west (the forest road)": (0, 23)},
     },

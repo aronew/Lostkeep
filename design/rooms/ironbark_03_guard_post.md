@@ -14,18 +14,33 @@ notes: *"make it look just like my mockups"* and *"it can go high and then drop
 down"*. So the room now starts low under the great tree, as in the mockups,
 climbs to the chapel on the hill, and drops down the far side to the road.
 
+Their review of that build: it *"looks nothing like the mockup"*, the new kit's
+colours are worse than the first area's (*"purple skies and that palette looks
+a lot better"*), and the twisted tree *"looks like shit"*. Changed since:
+
+- **Palette:** IB-01's backdrops (the purple sky and moons, far forest, nearer
+  trees), its darkness and moonlight shafts, and its canopy foreground. SF13's
+  blue backdrops are no longer used. The SF9 to SF12 pieces that remain are
+  tinted toward the Ironbark kit's plum (`SF_TINT`).
+- **Tree:** SF9's twisted trunk and its repeated leaf rows are gone. The start
+  stands under the Great Ironbark painting from IB-01 (a stand-in: the same
+  landmark twice; a new tree wants its own card). The second tree and its
+  branch are replaced by the Ironbark kit's long island.
+- **Layout:** unchanged, and still open. The mockups are one dense screen; this
+  room spreads the same pieces over 2.8 screens.
+
 ## What the mockups gave it, and where the principles shaped it
 
 | From the mockups | How it is built here |
 | --- | --- |
-| A great tree on one side, a lantern, the hero starting under it | The start: the great tree (SF9), its root mound and ruined wall, a tracery ruin with a lantern |
-| Branches as walkways across the upper air | Two great branches (SF9), one from each tree. They are one-way: she jumps up through them and drops back down |
-| Floating ruin islands in the middle air | The ruin island and the grave island (SF12) between the branches: the upper line |
+| A great tree on one side, a lantern, the hero starting under it | The start: the Great Ironbark with its lantern, two mossy wall blocks beside it |
+| Branches as walkways across the upper air | One great branch (SF9) from the tree. It is one-way: she jumps up through it and drops back down |
+| Floating ruin islands in the middle air | The ruin island, the grave island (SF12) and the long island (the Ironbark kit's): the upper line |
 | A pool at the lowest point with a broken bridge | The pool, and SF11's bridge as two broken ends with a four-tile gap: the room's one required jump |
 | A chapel on a hill, climbed by stair terraces | The guard's chapel (SF10) on the hilltop, four terraces up, each joined by a flight of SF10's stairs |
 | Stairs | Painted steps over a slope she runs up: no one-tile stair collision, no jump needed |
 | Stumps and small blocks in the water as stepping stones | Two fallen blocks, dimmed and behind her: scenery, not a way across. No rows of small platforms anywhere |
-| The sky, far ruins and nearer trees | SF13's two backdrops as parallax layers |
+| The sky, far ruins and nearer trees | IB-01's backdrops (the creative lead's preferred palette), not SF13's |
 
 ## Spec
 
@@ -40,7 +55,7 @@ climbs to the chapel on the hill, and drops down the far side to the road.
 | **Placed collision** | Seven flights of stairs (slopes); the bridge's two decks (row 25); the two branches (rows 19 and 18, one-way); the root ledge |
 | **Islands** | The ruin island (11 wide, row 18); the grave island (7 wide, row 17); the far island (4 wide, row 9) |
 | **Exits** | East door (rows 24 to 28); West door (rows 19 to 23, leads nowhere yet) |
-| **Lines** | **Main:** the tree → stairs down to the bank → the bridge and its gap → four flights up the hill → the chapel → down the far side's shelves → the East door. About 30 seconds. **Upper (optional):** the root ledge → up through the west branch → the ruin island → the grave island → the east branch → down onto the hill's second terrace: an express lane over the pool |
+| **Lines** | **Main:** the tree → stairs down to the bank → the bridge and its gap → four flights up the hill → the chapel → down the far side's shelves → the East door. About 30 seconds. **Upper (optional):** the wall blocks → up through the great branch → the ruin island → the grave island → the long island → down to the hill's second terrace: an express lane over the pool |
 | **Way back** | From the road, the far side's shelves are ledge catches of 5, 5 and 4 tiles: the room is not one-way |
 | **Locks seen here** | **Deep-Glow Breath:** a glint deep in the pool under the bridge's gap. **Wing-Cloak:** the far island over the road, a glint on it, out of reach from the hilltop |
 | **Encounters** | None. The opening room is safe |
@@ -52,8 +67,8 @@ climbs to the chapel on the hill, and drops down the far side to the road.
 `python3 tools/check_room.py ib03` on the exported collision, with the placed
 collision annotated:
 
-- Floors: **longest run 16 tiles (rule ≥ 20): fails.** The start is 24 tiles but
-  the root ledge stands on it; the mockups' terraces are short by nature. 75%
+- Floors: **longest run 15 tiles (rule ≥ 20): fails.** The start is 24 tiles but
+  the wall blocks stand on it; the mockups' terraces are short by nature. 75%
   of floor is in runs of 8+ (rule ≥ 60%).
 - Small steps: 0. Staircases: 0. Masses thinner than 2 tiles: 0.
 - The gate holds with the base kit: the far island.
@@ -65,8 +80,8 @@ Walked in the engine with real physics (`tests/playtest.gd room=ib03`):
 - **Main line** (`mode=tour`): stairs to the bank → onto the bridge → jumped
   the gap → four flights to the chapel → down the far side → out the East door
   into IB-01. Completed.
-- **Upper line** (`mode=upper`): root ledge → up through the west branch → ruin
-  island → grave island → east branch → the second terrace. Then the way back
+- **Upper line** (`mode=upper`): wall blocks → up through the great branch → ruin
+  island → grave island → long island → the second terrace. Then the way back
   from the road up all three shelves, and a walk off the bridge into the pool
   (returned to safe ground). Completed.
 - **Doors** (`mode=doors`): IB-01's terrace into the Guard Post and back.
@@ -77,12 +92,13 @@ eases to a stop over 96 px at the room's edge.
 
 ## Known rough edges
 
-- The tree crowns are one leaf piece repeated in stacked rows; a short straight
-  edge can still show where rows meet. The trunks are one piece repeated upward.
-- The branches' painted tops undulate a few pixels around the flat walking line.
+- The start's tree is IB-01's Great Ironbark again, a stand-in.
+- The branch's painted top undulates a few pixels around the flat walking line.
+- The surface pieces are tinted, not repainted, toward the Ironbark palette.
 - The pool is only as wide as the bridge, and its sides are plain earth.
 - The far side's shelves and the hill's east face are bare.
 - The terrain's grass and earth edges are IB-01's kit (SF1 to SF8 are not
   generated yet); SF10's painted terrace blocks, SF11's waterfalls and most of
   its stumps are not used.
-- No thorn knots, watch fire or other story props yet.
+- No watch fire or other story props yet (the tree's own thorn knots show the
+  Thorn-Line lock).
