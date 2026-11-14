@@ -113,6 +113,7 @@ def first_full_row(a, start, frac=0.95):
 # Only walking lines are straight; wall faces stand a few pixels proud of the
 # collision in uneven runs.
 CRUST_MIN = 9   # px of a band always kept behind its edge
+CRUST_LIT = 8   # px of it at full light; deeper, it steps down into shadow
 CRUST_MAX = 22  # deepest its stones reach into the void
 OVER = 4        # px a wall face may stand out past the collision line
 
@@ -210,6 +211,15 @@ def crust(a, start, seed, dmin=CRUST_MIN, dmax=CRUST_MAX, pct=30):
     out = a.copy()
     out[~keep, 3] = 0
     shade_edge(out, keep, slice(start, h))
+    # Into shadow, like the walls: lit for CRUST_LIT rows under the edge, then
+    # stepping toward the void, so the deepest stones are only just visible.
+    rgb = out[..., :3].astype(float)
+    span = max(1, h - start - CRUST_LIT)
+    for y in range(start + CRUST_LIT, h):
+        t = (y - start - CRUST_LIT + 1) / span
+        k = 1 - (np.floor(t * 4 - 1e-6) + 1) / 4 * 0.9
+        rgb[y] = rgb[y] * k + VOID[:3] * (1 - k)
+    out[..., :3] = np.clip(rgb, 0, 255).astype(np.uint8)
     return out
 
 

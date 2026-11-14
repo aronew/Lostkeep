@@ -49,17 +49,15 @@ non-negotiables.
 1. **Black-box collision first.** Solid geometry is drawn as black masses
    (`TileMapLayer` "Solid", colour `#0B0812`). It's the skeleton: flat floors
    and ceilings, height from separate masses, few platforms.
-2. **Tiles are painted on the black box.** Terrain edges (moss lips, wall
-   faces, undersides) are autotiled onto the masses as shallow bands that end
-   in the void along their own stones and roots, never along a straight line;
-   only walking lines are straight, and faces stand a few pixels proud of the
-   collision. **The inside of every mass is the void colour**, piers included:
-   every edge piece is solid along its open edge, then steps into that black
-   like a shadow, so the
-   black box itself becomes the natural shadow and depth: a slab between a
-   floor and the ceiling below it is grass and soil, then black, then the
-   ceiling's edge. One material per face; never several bands stacked in one
-   space.
+2. **Tiles are painted on the black box, and the masses go into shadow.** The
+   creative lead's reference is Hollow Knight and Core Keeper: a mass of
+   ground is the nearest thing to the camera, so it shadows to black toward its
+   centre and **only its edges get art**. Every edge (walking tops, wall faces,
+   undersides, corners) is solid along its open edge, lit for a few pixels, then
+   steps down into the void colour `#0B0812`; the inside of every mass, piers
+   included, is that void. Only walking lines are perfectly straight; faces and
+   undersides are organic and stand a few pixels proud of the collision. One
+   material per face, never several bands stacked in one space.
 3. **Parallax camera:** `Camera2D` plus `Parallax2D` layers, at roughly
    sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · **playfield 1.0** ·
    foreground 1.2. The foreground is foreground art (P5) along the room's top

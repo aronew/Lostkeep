@@ -258,11 +258,14 @@ She steps forward with every hit.
   canopy along the room's top edge and its fern tops along the bottom, unlit.
   It sits in the world vertically, so it never slides when the camera rises or
   falls, and it never stands on a walking line among the props.
-- **Shadow rule (the creative lead's):** every mass is black inside, piers
+- **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
+  mass is the nearest thing to the camera, so it shadows to black toward its
+  centre and only its edges get art. Every mass is black inside, piers
   included. Every edge piece is solid along its open edge (no gaps for the
-  black box to show through), lit for 12 px, then steps into the black over
-  12 px like a shadow: wall bands (`shadow_face`) and corners (`shadow_corner`)
-  in `tools/make_terrain.py`, like the floor and ceiling bands.
+  black box to show through), lit for a few pixels, then steps into the black:
+  wall bands (`shadow_face`, 12 + 12 px), corners (`shadow_corner`), and floor
+  and ceiling bands (`crust`, lit 8 px then stepping down) in
+  `tools/make_terrain.py`.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
