@@ -165,6 +165,19 @@ func _slab(slab_name: String, x0: float, x1: float, y: float, one_way: bool) -> 
 	_node(cs, "Shape", b)
 
 
+## SF10's flight of steps, whole: six treads rising to its own mossy block.
+## The block stands on the upper floor's corner at `edge_x` (covering the
+## terrain's corner there), the steps run out from it, and the piece's foot
+## stands on the lower floor at `foot_y`. `down_east` mirrors it.
+const STAIR := Rect2(8, 158, 98, 52)  # its foot on row 51, the block's face at x 57
+
+func _stair_art(parent: Node, edge_x: float, foot_y: float, down_east: bool) -> void:
+	var x := edge_x + 4.0 - (STAIR.size.x - 57.0) if down_east else edge_x - 4.0 - 57.0
+	var st := _sprite(parent, CH, STAIR, Vector2(x, foot_y + 1.0 - 51.0))
+	st.name = "Stairs"
+	st.flip_h = down_east
+
+
 func _build_collision() -> void:
 	# The stairs (painted steps over slopes).
 	_stairs("StairsTreeBank", Vector2(440, BANK), Vector2(384, G))
@@ -210,9 +223,7 @@ func _build_tree(behind: Node, placed: Node, _front: Node) -> void:
 
 func _build_pool(behind: Node, placed: Node) -> void:
 	# Stairs from the tree's ground down to the bank.
-	var st := _sprite(placed, CH, Rect2(36, 160, 68, 48), Vector2(384 - 38, G - 3))
-	st.name = "StairsTreeBank"
-	st.flip_h = true
+	_stair_art(placed, 384.0, BANK, true)
 	# SF11's bridge, as two broken ends: each its stair, its deck and two arches.
 	_sprite(placed, PL, Rect2(0, 0, 163, 64), Vector2(482, DECK - 27)).name = "BridgeWest"
 	var east := _sprite(placed, PL, Rect2(0, 0, 163, 64), Vector2(704 - 6, DECK - 27))
@@ -238,8 +249,8 @@ func _build_pool(behind: Node, placed: Node) -> void:
 
 func _build_hill(behind: Node, placed: Node) -> void:
 	# The four flights of stairs.
-	for s in [[960.0, G], [1104.0, T2], [1248.0, T3], [1392.0, TOP]]:
-		_sprite(placed, CH, Rect2(36, 160, 68, 48), Vector2(s[0] - 30, s[1] - 3)).name = "StairsHill"
+	for s in [[960.0, BANK], [1104.0, G], [1248.0, T2], [1392.0, T3]]:
+		_stair_art(placed, s[0], s[1], false)
 	# The guard's chapel on the hilltop, its windows lit, nobody home.
 	_sprite(behind, CH, Rect2(12, 0, 96, 92), Vector2(1436, TOP - 90)).name = "Chapel"
 	_light(behind, Vector2(1436 + 34, TOP - 90 + 62), LAMP, 0.9, 0.8, "ChapelWindowLight")
