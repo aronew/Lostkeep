@@ -1,48 +1,60 @@
 # Room IB-03: The Guard Post (the game's opening room)
 
-> **Status: blockout, awaiting the creative lead's approval.** Collision, doors,
-> the brook and the well's lid only: no props, lights, backdrops or set pieces
-> yet (SF9 to SF13 wait for approval). Scene:
+> **Status: built with art, awaiting the creative lead's review.** Composed like
+> their surface mockups R, S and T from their set pieces SF9 to SF13. Scene:
 > `game/scenes/rooms/ironbark_03_guard_post.tscn`, built by
 > `game/tools/build_ib03.gd`. Review images: `docs/rooms/ironbark_03/`
-> (`room_blockout.png` is the labelled black-box map).
+> (`room_art.png` the whole room, `room_blockout.png` the labelled black box
+> with both walked routes). It is the project's main scene: the game opens here.
 
-## What mockups R, S and T gave it, and where the principles won
+## History
+
+The first blockout started Kleo on the hilltop and led down. The creative lead's
+notes: *"make it look just like my mockups"* and *"it can go high and then drop
+down"*. So the room now starts low under the great tree, as in the mockups,
+climbs to the chapel on the hill, and drops down the far side to the road.
+
+## What the mockups gave it, and where the principles shaped it
 
 | From the mockups | How it is built here |
 | --- | --- |
-| A building on a hill, climbed by terraces: the high point | The guardhouse's hill is the west half of the room. Kleo **starts on top** and the terraces lead down and east: gravity is the compass from the first step |
-| Stair terraces of grass and stone | Three long terraces (14 to 24 tiles), four tiles apiece: floors, not stairs. Down is a walk off an edge; back up is a ledge catch |
-| A great tree whose branches are walkways | One great branch, 34 tiles long, across the upper air: a floor in the sky, not a row of perches |
-| Floating ruin islands in the middle air | Two: one beside the hilltop (the way onto the branch), one past the branch's end, out of reach (a Wing-Cloak lock) |
-| Three heights read at once | The branch line (row 21), the terrace line (rows 25, 29, 33), the ground line (row 37) |
-| A pool at the lowest point, a broken bridge, stepping stumps | Only a brook across the yard with its footbridge down: one four-tile jump. **The pool, the bridge and the falls are kept for the Keep approach** (the moat is there); this room sits on top of the Old Crypt with three tiles of ground to spare. No stumps: they are small platforms |
-| Rows of small floating blocks | None. Everything walkable is a floor of 10 tiles or more |
+| A great tree on one side, a lantern, the hero starting under it | The start: the great tree (SF9), its root mound and ruined wall, a tracery ruin with a lantern |
+| Branches as walkways across the upper air | Two great branches (SF9), one from each tree. They are one-way: she jumps up through them and drops back down |
+| Floating ruin islands in the middle air | The ruin island and the grave island (SF12) between the branches: the upper line |
+| A pool at the lowest point with a broken bridge | The pool, and SF11's bridge as two broken ends with a four-tile gap: the room's one required jump |
+| A chapel on a hill, climbed by stair terraces | The guard's chapel (SF10) on the hilltop, four terraces up, each joined by a flight of SF10's stairs |
+| Stairs | Painted steps over a slope she runs up: no one-tile stair collision, no jump needed |
+| Stumps and small blocks in the water as stepping stones | Two fallen blocks, dimmed and behind her: scenery, not a way across. No rows of small platforms anywhere |
+| The sky, far ruins and nearer trees | SF13's two backdrops as parallax layers |
 
 ## Spec
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-03. East: IB-01's terrace (the way on). West: the forest road (proposed; not built). Below: the Old Crypt, IB-02, down the well (lidded) |
-| **World grid** | West of IB-01 and 13 tiles higher: its origin is at IB-01's (-112, -13). Its East door (rows 32 to 36) is IB-01's west upper exit (rows 19 to 23). Its well (x 47 to 54) is the mouth of IB-02's Root Well |
-| **Idea** | The guard's post on its hill, empty; three terraces step down to the yard and the road east, under a great branch that crosses the whole sky |
-| **Purpose** | The story's start: Kleo at her post, and nobody else. Teaches run, walking off an edge, one jump (the brook), and, for the curious, the ledge catch and a running jump. Shows three locks in the first minute. Sets the compass: down and east |
-| **Size** | 112 × 40 tiles (1792 × 640 px): 2.8 screens wide, 1.8 tall |
-| **Ground** | The hill's back (a cliff, x 0 to 5) with the road cut through it; the hilltop (row 25, 24 long); the upper terrace (row 29, 14 long); the well terrace (row 33, 16 long, the well in it); the yard and the road (row 37, 52 long) with the brook (4 wide) |
-| **Masses** | The ruin island (14 wide, top row 22); the great branch (34 wide, top row 21); the far island (10 wide, top row 18) |
-| **Exits** | East door (rows 32 to 36); West door (rows 20 to 24, leads nowhere yet); the well (sealed) |
-| **Lines** | **Main:** the guardhouse → down the terraces → over the well's lid → the yard → the brook → the East door. About 25 seconds. **Upper (optional):** the hilltop's brink → the ruin island (3 across, 3 up) → the great branch (4 across, 1 up) → its far end, the lookout → a 16-tile drop to the yard |
-| **Shortcut** | None of its own. Later: the Ward breaks the well's lid, a straight drop into the Old Crypt; Barkgrip climbs back up it |
-| **Locks seen here** | **Ironbark Ward:** the well's bark-plate lid, walked over on the main line. **Wing-Cloak:** the far island, 12 tiles past the branch's end. **Thorn-Line:** thorn knots high in the great tree, over the branch (placed with the art) |
+| **Identity** | Ironbark Guard, IB-03. East: IB-01's terrace (the way on). West: the forest road (proposed; not built) |
+| **World grid** | West of IB-01 and 5 tiles higher: its origin is at IB-01's (-112, -5). Its East door (rows 24 to 28) is IB-01's west upper exit (rows 19 to 23). It lies over the Old Crypt (IB-02) |
+| **Idea** | Kleo comes home to her post at dusk: under the great tree, over the broken bridge, up the hill to the chapel. Nobody is there. The road east drops away below |
+| **Purpose** | The story's start. Teaches run, stairs, one jump (the bridge's gap), and, for the curious, jumping up through a branch and island hopping. Shows two locks in the first minute. Ends with a look down the road she must take |
+| **Size** | 112 × 32 tiles (1792 × 512 px): 2.8 screens wide, 1.4 tall |
+| **Ground** | The start (row 24, 24 long) with the root ledge on it; the pool's banks (row 27); the pool (16 wide); the hill's terraces (rows 24, 21, 18, each 9 long); the hilltop (row 15, 10 long); the far side's two shelves (rows 19 and 24); the road (row 29) |
+| **Placed collision** | Seven flights of stairs (slopes); the bridge's two decks (row 25); the two branches (rows 19 and 18, one-way); the root ledge |
+| **Islands** | The ruin island (11 wide, row 18); the grave island (7 wide, row 17); the far island (4 wide, row 9) |
+| **Exits** | East door (rows 24 to 28); West door (rows 19 to 23, leads nowhere yet) |
+| **Lines** | **Main:** the tree → stairs down to the bank → the bridge and its gap → four flights up the hill → the chapel → down the far side's shelves → the East door. About 30 seconds. **Upper (optional):** the root ledge → up through the west branch → the ruin island → the grave island → the east branch → down onto the hill's second terrace: an express lane over the pool |
+| **Way back** | From the road, the far side's shelves are ledge catches of 5, 5 and 4 tiles: the room is not one-way |
+| **Locks seen here** | **Deep-Glow Breath:** a glint deep in the pool under the bridge's gap. **Wing-Cloak:** the far island over the road, a glint on it, out of reach from the hilltop |
 | **Encounters** | None. The opening room is safe |
-| **Story (placed with the art)** | The guardhouse dark, its door open. The watch fire cold. The lookout at the branch's end: the first sight of the Lost Keep, far to the east |
-| **Later reads** | Ward: the well. Wing-Cloak: the far island, and from the branch a glide deep into IB-01. Thorn-Line: the tree's crown. Barkgrip: up the well from the crypt |
+| **Story** | The chapel's windows are lit and nobody is home. Graves on the terraces. More to place: the watch fire, a meal left, the thorn knots in the tree (Thorn-Line) |
+| **Later reads** | Breath: the pool (and under it the Old Crypt's Root Well). Wing-Cloak: the far island, and a glide from the chapel deep into IB-01 |
 
 ## Validation (measured, not judged by eye)
 
-`python3 tools/check_room.py ib03` on the exported collision:
+`python3 tools/check_room.py ib03` on the exported collision, with the placed
+collision annotated:
 
-- Floors: longest run 34 tiles (rule ≥ 20); 100% in runs of 8+ (rule ≥ 60%).
+- Floors: **longest run 16 tiles (rule ≥ 20): fails.** The start is 24 tiles but
+  the root ledge stands on it; the mockups' terraces are short by nature. 75%
+  of floor is in runs of 8+ (rule ≥ 60%).
 - Small steps: 0. Staircases: 0. Masses thinner than 2 tiles: 0.
 - The gate holds with the base kit: the far island.
 - Both doors are reached; 100% of the ungated floor is reached with the base
@@ -50,31 +62,27 @@
 
 Walked in the engine with real physics (`tests/playtest.gd room=ib03`):
 
-- **Main line** (`mode=tour`): hilltop → upper terrace → well terrace (the lid
-  holds) → yard → jumped the brook → out the East door into IB-01, standing on
-  its terrace. Completed.
-- **Upper line** (`mode=upper`): back up a terrace by a ledge catch → the ruin
-  island → the great branch → a leap for the far island from the branch's end
-  falls short and lands in the yard → into the brook, returned to safe ground.
+- **Main line** (`mode=tour`): stairs to the bank → onto the bridge → jumped
+  the gap → four flights to the chapel → down the far side → out the East door
+  into IB-01. Completed.
+- **Upper line** (`mode=upper`): root ledge → up through the west branch → ruin
+  island → grave island → east branch → the second terrace. Then the way back
+  from the road up all three shelves, and a walk off the bridge into the pool
+  (returned to safe ground). Completed.
+- **Doors** (`mode=doors`): IB-01's terrace into the Guard Post and back.
   Completed.
-- **Doors** (`mode=doors`): IB-01's terrace into the Guard Post and back; Kleo
-  arrives standing just inside each door, facing in. Completed.
 
 Camera (`tools/camera_report.py`): slide 0 and wobble 0 on both lines; the view
 eases to a stop over 96 px at the room's edge.
 
-IB-01 (all modes) and IB-02 (tour, west, doors, checker) pass unchanged.
+## Known rough edges
 
-## Open questions for the creative lead
-
-1. **Start high or start low?** The mockups put the chapel on the hill as a goal
-   to climb to. Here Kleo starts at the top and comes down, because she is
-   leaving her post and gravity is the compass. The alternative (start in the
-   yard, climb to the post, come back) is a longer opening.
-2. **The west door.** Is the forest walk west of the post? It is only a road cut
-   in the cliff today.
-3. **The upper half of the room is empty sky.** The great tree's trunk, canopy
-   and the guardhouse fill it in the art pass, but if it should hold more to
-   find (a second branch, a tree-hollow room), say so before the art.
-4. **Where the game opens.** The project's main scene is still IB-01. It moves
-   here once this room has art.
+- The tree crowns are one leaf piece repeated in stacked rows; a short straight
+  edge can still show where rows meet. The trunks are one piece repeated upward.
+- The branches' painted tops undulate a few pixels around the flat walking line.
+- The pool is only as wide as the bridge, and its sides are plain earth.
+- The far side's shelves and the hill's east face are bare.
+- The terrain's grass and earth edges are IB-01's kit (SF1 to SF8 are not
+  generated yet); SF10's painted terrace blocks, SF11's waterfalls and most of
+  its stumps are not used.
+- No thorn knots, watch fire or other story props yet.

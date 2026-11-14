@@ -49,13 +49,17 @@ ROOMS = {
     },
     "ib03": {
         "cells": "game/tests/out/ib03/map/cells.json",
-        "spawn": (14, 24),
-        "lift": [],
-        "water": (76, 37, 4, 2),
-        "gated": {"far island past the branch (Wing-Cloak)": (97, 10, 10, 8)},
-        # The well's lid (Ironbark Ward).
-        "seals": [(47, 33, 8, 1)],
-        "exits": {"east (to the Lantern Clearing)": (111, 36), "west (the forest road)": (0, 24)},
+        "spawn": (14, 23),
+        # Stairs (slopes under painted steps): foot and head, both ways.
+        "lift": [((27, 26), (23, 23)), ((30, 26), (34, 24)), ((53, 26), (49, 24)), ((56, 26), (60, 23)),
+                 ((65, 23), (69, 20)), ((74, 20), (78, 17)), ((83, 17), (87, 14))],
+        "water": (34, 27, 16, 4),
+        "gated": {"far island over the road (Wing-Cloak)": (100, 0, 4, 9)},
+        # Collision that isn't rock: the root ledge, the bridge's two decks, the two great
+        # branches (one-way), and the islands' single tile under their art.
+        "seals": [(5, 22, 5, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1), (49, 18, 16, 1),
+                  (23, 18, 11, 1), (38, 17, 7, 1), (100, 9, 4, 1)],
+        "exits": {"east (to the Lantern Clearing)": (111, 28), "west (the forest road)": (0, 23)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]
@@ -109,6 +113,7 @@ def main(path):
     report.append(f"floors: {100 * long8 / total:.0f}% in runs of 8+ (rule: >= 60%) {'OK' if long8 / total >= 0.6 else 'FAIL'}")
 
     # --- Steps: neighbouring floor heights 1-2 apart -------------------------
+    placed = {(x, y) for x0, y0, w, h in SEALS for x in range(x0, x0 + w) for y in range(y0, y0 + h)}
     steps = 0
     stairs = 0
     tops = {}
@@ -118,6 +123,8 @@ def main(path):
         for y in tops.get(x, []):
             for dy in (1, 2, -1, -2):
                 if (x + 1, y + dy) in spots and (x + 1, y) not in spots:
+                    if (x, y + 1) in placed or (x + 1, y + dy + 1) in placed:
+                        continue  # a deck, branch or island beside the ground: not a step in the floor
                     steps += 1
                     if (x + 2, y + 2 * dy) in spots and (x + 2, y + dy) not in spots:
                         stairs += 1

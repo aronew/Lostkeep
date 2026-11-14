@@ -18,22 +18,23 @@ AMBER, TEAL, INK = (242, 176, 74), (63, 224, 200), (235, 238, 245)
 # Per room: seals and water as tile rects, routes, and labels at tile positions.
 ROOMS = {
     "ib03": {
-        "seals": [(47, 33, 8, 1)],
-        "water": [(76, 37, 4, 2)],
+        "seals": [(5, 22, 5, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1), (49, 18, 16, 1)],
+        "water": [(34, 27, 16, 4)],
+        "ramps": [((440, 432), (384, 384)), ((488, 432), (544, 400)), ((856, 432), (800, 400)), ((904, 432), (960, 384)),
+                  ((1048, 384), (1104, 336)), ((1192, 336), (1248, 288)), ((1336, 288), (1392, 240))],
         "routes": [("tour", AMBER), ("upper", TEAL)],
         "labels": [
-            (8, 17.6, "WEST DOOR\nforest road (not built)"),
-            (10, 26.2, "HILLTOP  row 25\nstart: the guardhouse"),
-            (31, 30.2, "UPPER TERRACE  row 29"),
-            (45, 35.4, "WELL TERRACE  row 33"),
-            (47.3, 31.4, "well lid: Ward lock\n(below: the Old Crypt)"),
-            (61, 38.2, "YARD  row 37"),
-            (74.2, 34.6, "brook: 4-tile jump"),
-            (97, 38.2, "EAST DOOR > IB-01 terrace"),
-            (33, 19.2, "RUIN ISLAND  row 22"),
-            (58, 18.2, "GREAT BRANCH  row 21: a walk across the upper air"),
-            (95, 14.4, "FAR ISLAND  row 18\nWing-Cloak lock (12-tile gap)"),
-            (62, 9, "thorn knots high in the tree: Thorn-Line lock (art phase)"),
+            (1, 25.2, "START  row 24\nunder the great tree"),
+            (8, 16.4, "WEST BRANCH (one-way)"),
+            (23, 15.2, "RUIN ISLAND"),
+            (37, 14.2, "GRAVE ISLAND"),
+            (50, 15.2, "EAST BRANCH (one-way)"),
+            (34, 22.4, "BROKEN BRIDGE: 4-tile gap"),
+            (36, 29.2, "POOL: Breath lock"),
+            (60, 25.2, "HILL: four flights of stairs"),
+            (84, 11.4, "CHAPEL  row 15\nthe guard's post"),
+            (97, 5.2, "FAR ISLAND\nWing-Cloak lock"),
+            (101, 30.2, "EAST DOOR > IB-01"),
         ],
         "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "upper line (walked in engine)")],
     },
@@ -62,6 +63,8 @@ def main(room):
         rect(r, (40, 110, 130))
     for r in cfg["seals"]:
         rect(r, (150, 108, 66))
+    for foot, head in cfg.get("ramps", []):
+        dr.polygon([(foot[0] * S, foot[1] * S), (head[0] * S, head[1] * S), (head[0] * S, foot[1] * S)], fill=(11, 8, 18))
     for name, col in cfg["routes"]:
         path = f"{base}/{name}/kleo.csv"
         if not os.path.exists(path):

@@ -460,73 +460,90 @@ func _doors() -> void:
 # --- Room IB-03, the Guard Post -------------------------------------------------------------------
 
 const SHOTS_IB03 := [
-	["01_hilltop_start", 14.0, 25, 1],
-	["02_hill_brink", 28.0, 25, 1],
-	["03_upper_terrace", 38.0, 29, 1],
-	["04_well_terrace", 51.0, 33, 1],
-	["05_yard_brook", 72.0, 37, 1],
-	["06_east_road", 100.0, 37, 1],
-	["07_ruin_island", 40.0, 22, 1],
-	["08_branch_walk", 62.0, 21, 1],
-	["09_branch_end_far_island", 83.0, 21, 1],
-	["10_west_road_cut", 8.0, 25, -1],
+	["01_start_under_the_tree", 14.0, 24, 1],
+	["02_tree_bank_stairs", 25.0, 25, 1],
+	["03_broken_bridge", 38.5, 25, 1],
+	["04_hill_foot", 57.0, 27, 1],
+	["05_hill_terraces", 72.0, 21, 1],
+	["06_chapel_hilltop", 89.0, 15, 1],
+	["07_far_side_drop", 99.0, 19, 1],
+	["08_road_east", 106.0, 29, 1],
+	["09_ruin_island", 28.0, 18, 1],
+	["10_grave_island", 41.0, 17, 1],
 ]
 
 
-## The main line: from the guardhouse down the three terraces, over the well's
-## lid, across the brook, and out the East door into IB-01.
+## The main line: from under the great tree down its stairs to the bank, up onto
+## the broken bridge, over its gap, up the hill's four flights to the chapel,
+## down the far side's shelves, and out the East door into IB-01.
 func _tour_ib03() -> void:
 	var lines := []
 	_start_tour()
 	await _wait(30)
-	await _hold_until(["move_right"], func(): return _floor_at(29), 400)
-	lines.append("hilltop down to the upper terrace: %s" % _floor_at(29))
-	await _hold_until(["move_right"], func(): return _floor_at(33), 400)
-	lines.append("down to the well terrace: %s" % _floor_at(33))
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 51 * TILE, 200)
-	await _wait(20)
-	lines.append("the well's lid holds: %s (y %.0f)" % [_floor_at(33), kleo.global_position.y])
-	await _hold_until(["move_right"], func(): return _floor_at(37), 400)
-	lines.append("down to the yard: %s" % _floor_at(37))
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 75.2 * TILE, 300)
-	await _hold_until(["move_right", "jump"], func(): return _floor_at(37) and kleo.global_position.x > 80 * TILE, 200)
-	lines.append("jumped the brook: %s (x %.0f)" % [_floor_at(37) and kleo.global_position.x > 80 * TILE, kleo.global_position.x])
-	await _hold_until(["move_right"], func(): return room.name != "IronbarkGuardPost", 600)
+	await _hold_until(["move_right"], func(): return _floor_at(27) and kleo.global_position.x > 440, 400)
+	lines.append("down the tree's stairs to the bank: %s (x %.0f)" % [_floor_at(27), kleo.global_position.x])
+	await _hold_until(["move_right"], func(): return _floor_at(25) and kleo.global_position.x > 560, 400)
+	lines.append("up the bridge's stairs onto its deck: %s" % _floor_at(25))
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 632, 200)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(25) and kleo.global_position.x > 704, 200)
+	lines.append("jumped the bridge's gap: %s (x %.0f)" % [_floor_at(25) and kleo.global_position.x > 704, kleo.global_position.x])
+	await _hold_until(["move_right"], func(): return _floor_at(15) and kleo.global_position.x > 1400, 900)
+	lines.append("up the hill's four flights to the chapel: %s (x %.0f, y %.0f)" % [_floor_at(15), kleo.global_position.x, kleo.global_position.y])
+	await _wait(40)
+	await _hold_until(["move_right"], func(): return _floor_at(29), 600)
+	lines.append("down the far side to the road: %s" % _floor_at(29))
+	await _hold_until(["move_right"], func(): return room.name != "IronbarkGuardPost", 400)
 	await _wait(50)
 	lines.append("out the East door into: %s, standing at x %.0f, y %.0f" % [room.name, kleo.global_position.x, kleo.global_position.y])
 	_release_all()
 	_report(lines, "tour")
 
 
-## The upper line: back up a terrace (a ledge catch), the hilltop's brink to the
-## ruin island, the island to the great branch, along it to its end (the far
-## island stays out of reach), and the long drop to the yard. Then the brook.
+## The upper line: the root ledge, up through the west branch, the ruin island,
+## the grave island, the east branch, and down onto the hill's second terrace.
+## Then the way back: from the road up the far side's shelves to the chapel, and
+## a fall into the pool.
 func _upper_ib03() -> void:
 	var lines := []
-	_place(38.0, 29, -1)
-	await _frames(10)
 	_start_tour()
-	await _hold_until(["move_left"], func(): return kleo.global_position.x < 31.5 * TILE, 200)
-	await _hold_until(["move_left", "jump"], func(): return _floor_at(25), 300)
-	lines.append("upper terrace back up to the hilltop (4 tiles, a ledge catch): %s" % _floor_at(25))
-	await _hold_until(["move_left"], func(): return kleo.global_position.x < 25 * TILE, 200)
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 29.0 * TILE, 200)
-	await _hold_until(["move_right", "jump"], func(): return _floor_at(22), 300)
-	lines.append("hilltop to the ruin island (3 across, 3 up): %s (x %.0f)" % [_floor_at(22), kleo.global_position.x])
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 46.2 * TILE, 300)
-	await _hold_until(["move_right", "jump"], func(): return _floor_at(21), 300)
-	lines.append("island to the great branch (4 across, 1 up): %s (x %.0f)" % [_floor_at(21), kleo.global_position.x])
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 83.5 * TILE, 500)
-	await _wait(40)
-	await _hold_until(["move_right", "jump"], func(): return kleo.is_on_floor() and kleo.global_position.y > 22 * TILE, 400)
-	lines.append("leapt for the far island from the branch's end: landed at x %.0f, y %.0f (the island is x 1552 to 1712, y 288; the yard is y 592)" %
-		[kleo.global_position.x, kleo.global_position.y])
-	await _wait(40)
-	await _hold_until(["move_left"], func(): return kleo.global_position.y > 37 * TILE + 8 or kleo.global_position.x < 70 * TILE, 400)
+	await _wait(10)
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 172, 200)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(22), 200)
+	lines.append("onto the root ledge: %s (x %.0f)" % [_floor_at(22), kleo.global_position.x])
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 130, 100)
+	await _hold_until(["jump"], func(): return _floor_at(19), 200)
+	lines.append("up through the west branch: %s" % _floor_at(19))
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 314, 300)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(18), 200)
+	lines.append("branch to the ruin island: %s (x %.0f)" % [_floor_at(18), kleo.global_position.x])
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 538, 300)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(17), 200)
+	lines.append("ruin island to the grave island: %s (x %.0f)" % [_floor_at(17), kleo.global_position.x])
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 714, 300)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(18) and kleo.global_position.x > 780, 200)
+	lines.append("grave island to the east branch: %s (x %.0f)" % [_floor_at(18) and kleo.global_position.x > 780, kleo.global_position.x])
+	await _hold_until(["move_right"], func(): return _floor_at(21), 400)
+	lines.append("off the branch's end onto the hill's second terrace: %s (x %.0f)" % [_floor_at(21), kleo.global_position.x])
+	await _wait(30)
+	# The way back up the far side: three ledge catches.
+	_place(105.0, 29, -1)
+	await _wait(10)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(24), 300)
+	var a := _floor_at(24)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(19), 300)
+	var b := _floor_at(19)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(15), 300)
+	lines.append("back up the far side from the road (shelves of 5, 5 and 4 tiles): %s, %s, %s" % [a, b, _floor_at(15)])
+	# And the pool: she can't swim yet.
+	_place(39.0, 25, 1)
+	await _wait(10)
+	await _hold_until(["move_right"], func(): return kleo.global_position.y > BANK_Y + 10, 200)
 	await _wait(90)
-	lines.append("walked into the brook, returned to safe ground: %s (x %.0f, y %.0f)" % [kleo.is_on_floor(), kleo.global_position.x, kleo.global_position.y])
+	lines.append("walked off the bridge into the pool, returned to safe ground: %s (x %.0f, y %.0f)" % [kleo.is_on_floor(), kleo.global_position.x, kleo.global_position.y])
 	_release_all()
 	_report(lines, "upper")
+
+const BANK_Y := 432.0
 
 
 ## IB-01's terrace west into the Guard Post and straight back.
