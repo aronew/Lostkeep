@@ -48,7 +48,7 @@ const MASSES := [
 ## arches under it are masonry: one material per face, never two stacked.
 ## The moat bank (x 91 to 94) is masonry from its walking line down: the bridge's
 ## quay, its approach paved where the clearing's grass ends.
-const STONE := [[6, 28, 24, 12], [30, 31, 61, 9], [91, 28, 4, 12]]
+const STONE := [[0, 28, 30, 12], [30, 31, 61, 9], [91, 28, 4, 12]]
 ## Cells painted by placed art instead of the skin.
 const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [95, 28, 7, 2], [113, 28, 7, 2]]
 ## Back walls behind enclosed spaces.

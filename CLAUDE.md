@@ -323,11 +323,13 @@ She steps forward with every hit.
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
-- **Art requested (Book 1):** IB6 and K6 (earth and masonry edges and corners
-  drawn into shadow), K5 v2 (the crypt arcade in mockup A's muted style: K5
-  outlines every stone in black and is the brightest thing on screen), and L6
-  (the moat bank and bridge end as one set piece on the collision: bank at
-  tiles 93-94, span 95-101, walking line row 28, water line row 31).
+- **Art requested (Book 1):** the **crypt kit** CR1 to CR3 (back wall; floor
+  and arcade; walls, corners and the arcade's two ends), one set in mockup A's
+  muted style that replaces K1, K2, K4 and K5 in the crypts (the creative lead:
+  the crypt's pieces are mismatched; keep the silk and cocoon). IB6 (earth
+  edges and corners drawn into shadow). L6 (the moat bank and bridge end as one
+  set piece on the collision: bank at tiles 93-94, span 95-101, walking line
+  row 28, water line row 31).
 - Not yet used from the kits: IB5's inner corners and its two small islands,
   K4's second arch end and its last corner. **K5** (the crypt arcade at K4's
   scale) is in as `stone_under`: every stone ceiling hangs a colonnade whose
