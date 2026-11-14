@@ -420,6 +420,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
+    ["The great floating islands of O, P, Q", "None", "need", "OC9"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "Stand-ins", "need", "OC1 to OC8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
@@ -997,6 +998,24 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- A bier hoist: a timber frame with pulley, chain and a hanging platform, matching the guard's lift.",
         "- A cracked false-wall section, 512 × 640 px, of the OC2 masonry with a subtle draught-line crack and moss where air moves.",
         "- Two iron braziers and two tall candle stands (lit), a hooded stone statue 768 px tall, purple mushroom clusters (three sizes), hanging roots (three lengths)."
+      ] },
+    { id: "OC9", group: "oldcrypt", file: "oldcrypt_great_islands", title: "The great floating islands (from O, P, Q)",
+      about: "The large floating islands that carry these mockups: a temple island with a hooded statue, ruin islands with arches and pillars, ossuary islands of bones. Each is a set piece the player stands on, not a platform.",
+      canvas: "3072×3072 px (art 384 × 384 px at x8)", game: "6 islands, 10 to 24 tiles wide, cut apart", attach: ["O", "P", "Q", "B"],
+      text: [
+        "TASK: six large floating stone islands on one transparent canvas, separated by transparent space.",
+        "",
+        "STYLE: copy the look of attached mockups O, P and Q exactly: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, ivy and yellow-green moss trailing off every edge, purple mushrooms and crystals, bones and skulls, small amber flames as the only warm light (flame only, never a halo). Paint each island on its own, separated by transparent space. Do not copy whole scenes.",
+        "EVERY ISLAND: a perfectly straight walking line across its top (the dressing stands on it); a thick masonry slab under the walk; below that an inverted cone of broken stone that tapers to a point, 1.5 to 2 times as deep as the island is wide is tall, dripping vines, roots and stone stalactites; the underside darkens toward its heart, lit only along its outer edges.",
+        "",
+        "1. THE SHRINE ISLAND (Q, centre), 3072 px wide (24 tiles): a broad carved slab with a medallion and carved bands on its front, a short central stair up to a hooded stone statue holding a glowing orb, framed by two broken crescent-moon arches and slender ruined spires; two smaller hooded statues in niches; two lit braziers on plinths; heaps of fallen pale-purple stone blocks; ivy, purple flowers, hanging moss; a deep tapering underside with stalactites.",
+        "2. THE ARCH ISLAND (Q, right), 2048 px (16 tiles): a ruined round arch on columns, two broken column stumps, a pile of purple stone blocks, a carved band along its front, ivy and flowers.",
+        "3. THE OSSUARY ISLAND (O, centre), 1792 px (14 tiles): skulls heaped along its top, two bone pillars, lit candles, purple mushrooms; long bones and ribs hanging from its underside among the vines.",
+        "4. THE HIGH OSSUARY ISLAND (O, top), 1536 px (12 tiles): a skull pile and a small bone obelisk, a carved cornice, bones dangling below.",
+        "5. THE COLONNADE ISLAND (P, left), 1792 px (14 tiles): a broken double arcade of two arches standing on it, purple crystals and flowers, long ivy curtains below.",
+        "6. THE SHRINE RUIN ISLAND (P, centre), 1536 px (12 tiles): a broken column, a lit candle stand, clay pots, a small rubble heap, ivy, a carved slab front.",
+        "",
+        "They must look like broken pieces of a great underground temple held in the air, not game platforms."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
