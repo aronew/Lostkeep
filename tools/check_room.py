@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [ib01|ib02]
+Usage: python3 tools/check_room.py [ib01|ib02|ib03]
 """
 import json
 import sys
@@ -46,6 +46,16 @@ ROOMS = {
         # The plated door, and the hoist's deck jammed at its head.
         "seals": [(16, 11, 2, 5), (96, 10, 4, 1)],
         "exits": {"east upper (to the Lantern Clearing)": (111, 9), "east lower (to the Undercroft)": (111, 27)},
+    },
+    "ib03": {
+        "cells": "game/tests/out/ib03/map/cells.json",
+        "spawn": (14, 24),
+        "lift": [],
+        "water": (76, 37, 4, 2),
+        "gated": {"far island past the branch (Wing-Cloak)": (97, 10, 10, 8)},
+        # The well's lid (Ironbark Ward).
+        "seals": [(47, 33, 8, 1)],
+        "exits": {"east (to the Lantern Clearing)": (111, 36), "west (the forest road)": (0, 24)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

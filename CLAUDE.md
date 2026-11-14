@@ -242,7 +242,8 @@ She steps forward with every hit.
   tileset, materials, back walls, terrain, and helpers: `_door`, `_lift`,
   `_water`, `_breakable`, `_light`, `_fog`, `_edge_shades`); each room has its
   own builder on top of it, holding its plan and its dressing:
-  `build_test_room.gd` (IB-01) and `build_ib02.gd` (IB-02). Each saves an
+  `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02) and `build_ib03.gd`
+  (IB-03, a blockout). Each saves an
   ordinary scene:
   `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
@@ -328,6 +329,11 @@ She steps forward with every hit.
     `ROOMS` in `tests/playtest.gd` and `tools/check_room.py` (its spawn, lift,
     water, gates and exits), its scripted lines, and its routes in
     `stitch_map.py`.
+  - IB-03 (`room=ib03`): `mode=tour` (down the hill, the brook, out the East
+    door), `mode=upper` (island, branch, the long drop) and `mode=doors`.
+    `python3 tools/blockout_map.py ib03` draws a labelled black-box map with
+    the walked routes, for blockout reviews (the in-game box view is too dark
+    to read in a picture).
   - After any change to shared code (the builder, Kleo, the camera, `Game`),
     run IB-01's modes again as well: both rooms must keep passing.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
@@ -363,6 +369,13 @@ She steps forward with every hit.
   forest itself, the first sight of the Lost Keep gate across the broken
   bridge, and the surface's locks (the bridge gap, the moat, the thorn knots),
   which must each be seen a few times before their keys.
+  - **The Guard Post is blocked out as IB-03 and awaits approval**
+    (`design/rooms/ironbark_03_guard_post.md`, labelled black-box map in
+    `docs/rooms/ironbark_03/room_blockout.png`): collision, doors, the brook
+    and the well's lid only. Do not place art in it (SF9 to SF13) or start the
+    next surface room until the creative lead approves it; the spec ends with
+    four open questions for them. It is joined to IB-01 by IB-01's `WestUpper`
+    door. The project's main scene is still IB-01 until IB-03 has art.
   - **Rooms (proposed, not yet approved by the creative lead):** the **Guard
     Post** (the opening room, above IB-01 through its west upper exit at the
     terrace, rows 24 up), a **forest walk**, and the **approach to the Keep
@@ -422,8 +435,8 @@ She steps forward with every hit.
 - **Rooms not built yet,** which IB-02's doors already face: the Undercroft
   (under the clearing, through IB-02's lower East door: the next room on the
   main line), the Refuge road (west, behind the plated door: needs the Ward),
-  the Guard Post (above, up the well: needs Barkgrip). Their doors end in
-  darkness today.
+  the Guard Post (above, up the well: needs Barkgrip; it is IB-03, blocked
+  out, its well lidded). The first two end in darkness today.
 - **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.

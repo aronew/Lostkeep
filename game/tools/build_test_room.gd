@@ -83,6 +83,8 @@ func _initialize() -> void:
 	_edge_shades()
 	# The hall's west door: the main way on, down into the Old Crypt (IB-02).
 	_door("WestLower", Rect2i(0, 32, 8, 5), -1, "res://scenes/rooms/ironbark_02_old_crypt.tscn", "East")
+	# The terrace's west end: up the road to the Guard Post (IB-03), where the game opens.
+	_door("WestUpper", Rect2i(0, 19, 8, 5), -1, "res://scenes/rooms/ironbark_03_guard_post.tscn", "East")
 	_finish()
 	quit()
 

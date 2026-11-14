@@ -85,6 +85,7 @@ rescue or a truth).
 | ID | Region | Where (map) | Hard/Soft | Seen before key? | Return pays |
 |---|---|---|---|---|---|
 | W1 | Ironbark | The first descent, under the great tree: a cracked plate floor | Hard | ✔ min ~5 | A shortcut back to the start lantern |
+| W1b | Ironbark **IB-03** | The Guard Post: the well's bark-plate lid, walked over in the game's first minute | Hard | ✔ | A straight drop into the Old Crypt (IB-02) |
 | W2 | Ironbark **IB-02** | The Old Crypt: a plated door across the west gallery (upper line) | Hard | ✔ | The Refuge road, a health shard and a warden's journal |
 | W3 | Ironbark | The keep wall beside the bridge (lower route) | Hard | ✔ | The route to the armory, where the key is |
 | W4 | Refuge | A plated hatch under the camp | Hard | — | The Refuge cellar: the map-maker rescue |
@@ -113,6 +114,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | G1 | Ironbark | The broken arch bridge with its centre fallen, a torn banner over the gap | Hard | ✔ | The far bank: an express lane over the graveyard |
+| G1b | Ironbark **IB-03** | The Guard Post: a far island 12 tiles past the great branch's end | Hard | ✔ | A relic; and a glide from the branch deep into IB-01 |
 | G2 | Hearth-Plains | The wind-mill gorge | Hard | ✔ | Rootling village outskirts: a rescue |
 | G3 | Dusk-Drifter | Heat updrafts from braziers lit with Emberwick, with nothing to ride them yet | Hard | ✔ (a planted combo) | A sky route over the forge |
 | G4 | Fen-Stalker | The swamp's canopy chasm | Hard | — | The critical path west |
@@ -139,6 +141,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | T1 | Ironbark | Closed-eyed bark knots on the great tree's crown (Morvath watching from minute 1) | Hard | ✔ | The tree's crown: a vista of the Spire and a Voice beat |
+| T1b | Ironbark **IB-03** | The Guard Post: thorn knots high in the great tree, over the branch walk (placed with the art) | Hard | ✔ | The crown |
 | T2 | Hearth-Plains | Knots over the silk-farm ravine | Hard | ✔ | A secret |
 | T3 | Fen-Stalker | Knot chains across the bog | Hard | ✔ | The Observatory back door, a loop |
 | T4 | Tide-Weaver | Knots over the tide gate | Hard | ✔ | A Tide-Weaver rescue |
