@@ -193,6 +193,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <span class="group">Prompts</span>
       <a href="#terrain">Terrain on the black box</a>
       <a href="#keep">The Lost Keep masonry</a>
+      <a href="#surface">Ironbark surface</a>
       <a href="#oldcrypt">The Old Crypt (IB-02)</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
@@ -304,6 +305,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p>The fortress of the Ironbark Guard: dressed plum stone and great ironbark timber. The same black-box method, a second material.</p>
       <div class="cards" id="cards-keep"></div>
     </section>
+    <section id="surface" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Ironbark surface (the forest at dusk)</h2>
+      <p>The surface rooms (the Guard Post, the forest walk, the approach to the Keep gate), after mockups R, S and T. Make them in order, SF1 first; each attaches the ones before it. Mockups U, V and W are a greener, darker grove for a different area later.</p>
+      <div class="cards" id="cards-surface"></div>
+    </section>
     <section id="oldcrypt" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>The Old Crypt (IB-02)</h2>
@@ -412,6 +419,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
+    ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "Stand-ins", "need", "OC1 to OC8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
@@ -449,6 +457,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["O", "O-crypt-ossuary.jpg", "Crypt ossuary", "IB-02, the Old Crypt: bone-filled galleries round a central well, skull niches, braziers, floating ruins. Attach to crypt and IB-02 cards."],
     ["P", "P-crypt-cistern.jpg", "Crypt cistern", "IB-02: the flooded lower gallery, waterfall into the cistern, pillar stumps in the water."],
     ["Q", "Q-crypt-shrine.jpg", "Crypt shrine", "IB-02: a hooded statue shrine on a floating ruin, ruined arcades, rubble and purple flora."],
+    ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
+    ["S", "S-surface-aqueduct-garden.jpg", "Surface: aqueduct garden", "Terraced earth, waterfalls, a far aqueduct, ruined arches, fenced chapel. Style target for the SF cards."],
+    ["T", "T-surface-chapel-gully.jpg", "Surface: chapel gully", "The chapel over a gully, floating islands, stone terraces, a sunken arch. Style target for the SF cards."],
+    ["U", "U-deepwood-canopy-ruins.jpg", "Deepwood: canopy ruins", "A greener, darker grove: a timber house, ruined towers. For a deeper or different forest area, not the main surface."],
+    ["V", "V-deepwood-grave-garden.jpg", "Deepwood: grave garden", "The green grove's graves and great tree. For a different area."],
+    ["W", "W-deepwood-cistern.jpg", "Deepwood: cistern", "The green grove's ruined cistern. For a different area."],
     ["G", "G-macro-map.jpg", "Macro map", "Where Ironbark sits in Vaelora. For reference only; never attach it to a card."]
   ];
 
@@ -726,6 +740,103 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "3. Two arcade ends, each 512 px wide and 1024 px tall, its ceiling line (the arch crowns' line) at y = 384, exactly 640 px above the pier's foot on the bottom edge, matching CR2's band 2 exactly in arch size, pier, impost and plinth:",
         "   a. Against a wall: the arcade arrives from the left and its last arch springs from a half-pier built against a wall on the right (the wall's face at x = 512). The masonry above goes into shadow.",
         "   b. At an opening: the arcade arrives from the left and ends on a full pier whose right side faces open air (x = 512); the course above it breaks off stone by stone at the opening's edge."
+      ] },
+    { id: "SF1", group: "surface", file: "surface_ground_bands", title: "Surface ground: floor and underside bands",
+      about: "Every grassy floor and every earth overhang on the surface, like the terraces in R, S and T.",
+      canvas: WIDE, game: "2 bands, 384 wide, repeating left to right", attach: ["R", "S", "T", "B"],
+      text: [
+        "TASK: two long horizontal bands of forest earth on one transparent canvas, each joining a copy of itself left to right.",
+        "",
+        "STYLE: match attached mockups R, S and T: dusk violet sky, deep teal-violet forest, plum-brown earth with round boulders and roots, thick bright moss and grass tops, grey dressed stone ruins, warm amber lanterns as the only warm light. Do not copy their layout. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the boulders' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "BAND 1, a walkable top, y = 0 to 448: a perfectly straight walking line at y = 96; above it thick moss, grass tufts, small ferns and a few red-capped mushrooms; below it a moss lip hanging in uneven drapes, then plum-brown earth with round boulders and roots, breaking into void by the shadow rule.",
+        "BAND 2, an underside, y = 576 to 1024: the earth's underside along an undrawn guide at y = 896, roots, vines and moss hanging below it by up to 96 px; above, the boulders break into void."
+      ] },
+    { id: "SF2", group: "surface", file: "surface_walls_corners", title: "Surface earth walls, corners and pillar",
+      about: "The cut sides of terraces and the corners where they meet, matching SF1.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band, 4 corners, 1 pillar top, cut apart", attach: ["R", "S", "T", "Your approved SF1"],
+      text: [
+        "TASK: the edges of the surface earth on one transparent canvas, pieces separated by transparent space, matching SF1 exactly.",
+        "",
+        "STYLE: match attached mockups R, S and T: dusk violet sky, deep teal-violet forest, plum-brown earth with round boulders and roots, thick bright moss and grass tops, grey dressed stone ruins, warm amber lanterns as the only warm light. Do not copy their layout. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the boulders' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "1. A wall band on the left, top to bottom, repeating top to bottom; its face points RIGHT along an undrawn guide at x = 320, boulders and roots standing proud, moss strands hanging over it; inward, the shadow rule.",
+        "2. Four corners, each in its own 512 × 512 cell, edges meeting at the cell's centre: outer top (grass rolling over the edge and down the wall), outer underside (roots hanging from the corner), inner floor, inner underside. Rounded, never a crisp right angle.",
+        "3. A pillar top, 384 px wide: a column of earth with grass rolling over both sides, its faces going into shadow toward a black core."
+      ] },
+    { id: "SF3", group: "surface", file: "surface_islands", title: "Surface floating islands",
+      about: "The earth islands hanging among the trees in R and T: landforms, not platforms.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "3 islands: 15, 8 and 5 tiles wide", attach: ["R", "T", "Your approved SF1"],
+      text: [
+        "TASK: three floating islands of forest earth on one transparent canvas, separated by transparent space, matching SF1.",
+        "",
+        "STYLE: match attached mockups R, S and T: dusk violet sky, deep teal-violet forest, plum-brown earth with round boulders and roots, thick bright moss and grass tops, grey dressed stone ruins, warm amber lanterns as the only warm light. Do not copy their layout. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the boulders' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "- Island 1: 1920 px wide (15 tiles), with a broken stone arch on top. Island 2: 1024 px (8 tiles), a headstone and a lantern post. Island 3: 640 px (5 tiles), only moss and mushrooms.",
+        "- Each top a perfectly straight walking line under grass. Each underside a hanging root ball of earth and boulders, roots and vines dangling, 1.5 to 2 times as deep as the top is thick."
+      ] },
+    { id: "SF4", group: "surface", file: "surface_stone_kit", title: "Surface stone: stairs, terraces and the stone bridge",
+      about: "The built pieces the guard laid into the hillside: stone stairs and terrace walls, and the low arched bridge over still water in R.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Pieces cut apart", attach: ["R", "S", "T", "Your approved SF1"],
+      text: [
+        "TASK: grey dressed-stone pieces on a transparent canvas, separated by transparent space, each with a straight walking line on top.",
+        "",
+        "STYLE: match attached mockups R, S and T: dusk violet sky, deep teal-violet forest, plum-brown earth with round boulders and roots, thick bright moss and grass tops, grey dressed stone ruins, warm amber lanterns as the only warm light. Do not copy their layout. Match the colours of the attached approved art as painted; hex codes are guides, never a palette to snap to.",
+        "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 96 px lit with no gaps, then 96 px stepping down into void #0B0812 along the boulders' own outlines, never a straight line. Only walking lines are perfectly straight.",
+        "",
+        "1. A flight of stone stairs rising 512 px over 768 px, mossy and chipped, its side going into shadow (the game makes it a ramp-free set of floors, so each step is 128 px deep).",
+        "2. A terrace wall section 1024 px wide and 640 px tall: dressed stone holding back earth, an iron fence with spear tips on top, moss and ivy.",
+        "3. A low stone bridge 2048 px wide with three arches, its deck straight, the arches' feet going down into water (paint no water).",
+        "4. Two broken stone pillars and a fallen arch fragment."
+      ] },
+    { id: "SF5", group: "surface", file: "surface_ruins_landmarks", title: "Surface ruins: chapel, arches and gate",
+      about: "The big built set pieces: the lantern-lit chapel on the hill, ruined gothic arches, a sunken arched doorway.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Set pieces placed on the collision", attach: ["R", "S", "T", "Your approved SF4"],
+      text: [
+        "TASK: ruin set pieces on a transparent canvas, separated by transparent space, each standing on a flat ground line.",
+        "",
+        "STYLE: match R, S and T; lanterns and lit windows are flame and glass only, never a halo.",
+        "",
+        "1. A small stone chapel with a pointed roof, a round window, an iron-barred door, two lit wall lanterns, an iron fence before it.",
+        "2. Two free-standing ruined gothic arches with tracery, ivy and moss (one tall, one broken).",
+        "3. An arched stone doorway set into an earth bank, dark inside, a lantern beside it: a door to another room."
+      ] },
+    { id: "SF6", group: "surface", file: "surface_bg_far", title: "Surface far forest and sky", scale: 4,
+      about: "Scroll 0.05 to 0.15: the dusk sky and the far misty forest with a ruined aqueduct, as behind R, S and T.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["R", "S", "T", "B"],
+      background: "Opaque: the layer fills the whole canvas.",
+      text: [
+        "TASK: the farthest parallax layer of the surface, opaque edge to edge.",
+        "",
+        "- A dusk sky in banded violet with soft rose clouds in the upper third; three moons near alignment, small and soft, away from both edges.",
+        "- Below, layers of misty blue-violet forest crowns and a long ruined aqueduct far away, very low contrast.",
+        "- The left and right edges must join."
+      ] },
+    { id: "SF7", group: "surface", file: "surface_bg_mid", title: "Surface mid forest", scale: 4,
+      about: "Scroll 0.35: big trunks, canopy and hanging vines between the far layer and the playfield.",
+      canvas: "3072×1728 px (art 768 × 432 at x4, 16:9)", game: "768 × 432, repeating left to right", attach: ["R", "S", "T", "Your approved SF6"],
+      text: [
+        "TASK: a mid-distance parallax layer of the dusk forest, transparent where the sky shows through.",
+        "",
+        "- Every tree's crown whole inside the image, below y = 320; nothing touches the top edge.",
+        "- Big twisting trunks of different widths, broad teal-violet canopy, long hanging vines, a ruined arch or two half swallowed by trees, soft mist across the lower third.",
+        "- Lower contrast than the playfield, higher than SF6. No warm colours except two tiny far lanterns.",
+        "- The left and right edges must join."
+      ] },
+    { id: "SF8", group: "surface", file: "surface_fg_props", title: "Surface foreground and props",
+      about: "The dark leaves framing the screen in R, S and T, and the dressing that makes the surface lived in.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "Pieces cut apart", attach: ["R", "S", "T"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, each standing on a flat bottom line:",
+        "",
+        "STYLE: match R, S and T; lanterns are flame and glass only, never a halo.",
+        "",
+        "- Foreground: three clumps of near-black broad leaves and fern fronds (#0B0812 to #17121F, faint violet edge light), and two near-black hanging branch-and-vine pieces cut flat at the top.",
+        "- A great tree branch reaching out with a hanging lantern on a chain (lit), cut flat where it leaves the trunk.",
+        "- A wooden lantern post (lit), three headstones of different shapes, a fence section that joins left to right, lily pads and reeds, a small waterfall spout from a stone lip (paint the falling water only as a few pale streaks)."
       ] },
     { id: "OC1", group: "oldcrypt", file: "oldcrypt_floor_ceiling", title: "Old Crypt floor and ceiling bands",
       about: "Every walkable floor and every ceiling in the galleries. Like the stone bands in O and Q.",
@@ -1087,7 +1198,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
   function attachLine(card) {
-    var names = { O: "O: the crypt ossuary mockup", P: "P: the crypt cistern mockup", Q: "Q: the crypt shrine mockup", L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
+    var names = { R: "R: the surface grave-crossing mockup", S: "S: the surface aqueduct-garden mockup", T: "T: the surface chapel-gully mockup", O: "O: the crypt ossuary mockup", P: "P: the crypt cistern mockup", Q: "Q: the crypt shrine mockup", L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
     var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
     return "\n\nATTACHED: " + list.join("; ") + ".";
   }
