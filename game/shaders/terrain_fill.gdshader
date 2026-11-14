@@ -33,7 +33,8 @@ void fragment() {
 		? texture(fill1, world_px / vec2(textureSize(fill1, 0))).rgb
 		: texture(fill0, world_px / vec2(textureSize(fill0, 0))).rgb;
 	float fade = stone ? fade1 : fade0;
-	float k = clamp(1.0 - (d - 0.6) / fade, 0.0, 1.0);
+	// A fade of 0 paints the whole inside as the void: only the bands show.
+	float k = fade > 0.0 ? clamp(1.0 - (d - 0.6) / fade, 0.0, 1.0) : 0.0;
 	k = floor(k * steps + 0.5) / steps;
 	COLOR = vec4(mix(void_color.rgb, base, k), 1.0);
 }

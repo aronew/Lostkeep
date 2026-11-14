@@ -49,13 +49,21 @@ non-negotiables.
 1. **Black-box collision first.** Solid geometry is drawn as black masses
    (`TileMapLayer` "Solid", colour `#0B0812`). It's the skeleton: flat floors
    and ceilings, height from separate masses, few platforms.
-2. **Tiles are painted on the black box.** Terrain edges (moss lips, wall
-   faces, undersides) are autotiled onto the masses. Each mass's interior
-   **fades to the void colour**, so the black box itself becomes the natural
-   shadow and depth.
+2. **Tiles are painted on the black box, and the masses go into shadow.** The
+   creative lead's reference is Hollow Knight and Core Keeper: a mass of
+   ground is the nearest thing to the camera, so it shadows to black toward its
+   centre and **only its edges get art**. Every edge (walking tops, wall faces,
+   undersides, corners) is solid along its open edge, lit for a few pixels, then
+   steps down into the void colour `#0B0812`; the inside of every mass, piers
+   included, is that void. Only walking lines are perfectly straight; faces and
+   undersides are organic and stand a few pixels proud of the collision. One
+   material per face, never several bands stacked in one space.
 3. **Parallax camera:** `Camera2D` plus `Parallax2D` layers, at roughly
    sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · **playfield 1.0** ·
-   foreground 1.25–1.5.
+   foreground 1.2. The foreground is foreground art (P5) along the room's top
+   and bottom edges, close to the camera: it scrolls faster sideways but stays
+   in the world vertically, so it never slides when the camera rises or falls,
+   and it never stands among the props on a walking line.
 4. **Atmosphere:** a screen vignette (a `CanvasLayer` shader), depth fog per
    layer, light shafts, particles, and `PointLight2D` for lanterns
    (`CanvasModulate` darkens the scene). Glows are lights or additive

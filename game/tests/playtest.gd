@@ -359,11 +359,20 @@ func _click() -> void:
 
 # --- Map ---------------------------------------------------------------------------------------
 
-func _map() -> void:
-	for n in ["Sky", "Far", "FogFar", "Mid", "FogMid", "Ruins", "Screen", "Kleo"]:
+## Layers left out of the map: the parallax planes, the foreground silhouettes
+## (they belong to the camera, not the room), the screen effects and Kleo.
+const MAP_HIDDEN := ["Sky", "Far", "FogFar", "Mid", "FogMid", "Ruins", "Foreground", "Screen", "Kleo"]
+
+
+func _map_hide() -> void:
+	for n in MAP_HIDDEN:
 		var node := room.get_node_or_null(n)
 		if node:
 			node.visible = false
+
+
+func _map() -> void:
+	_map_hide()
 	cam.target = null
 	cam.offset = Vector2.ZERO
 	var rect: Rect2i = room.room_rect
@@ -378,6 +387,7 @@ func _map() -> void:
 	var lines := []
 	for view in ["art", "box"]:
 		get_tree().call_group("box_view", "set_box_view", view == "box")
+		_map_hide()  # switching views shows the art layers again
 		for cx in xs:
 			for cy in ys:
 				cam.global_position = Vector2(cx, cy)

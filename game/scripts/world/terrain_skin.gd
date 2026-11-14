@@ -17,6 +17,7 @@ extends Node2D
 
 const TILE := 16
 const MAX_DEPTH := 5  # tiles looked through when measuring how thick a mass is
+const FOOT := 22.0   # px a wall's face runs on below a floor it stands on (the soil's depth)
 const SIDES := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 
 ## The rock.
@@ -208,15 +209,21 @@ func _draw_edges(p: Dictionary) -> void:
 	var solid: Callable = p["solid"]
 	var canvas: Node2D = p["edges"]
 	var list := cells.keys()
-	for c in list:
-		if not _skip.has(c):
-			_draw_walls(canvas, cells, solid, c)
+	# Tops first, then walls over them: at a corner the rock face runs straight
+	# down from the grass, instead of the soil band ending in a ragged stub.
 	for c in list:
 		if not _skip.has(c):
 			_draw_top(canvas, cells, solid, c)
 	for c in list:
 		if not _skip.has(c):
+			_draw_walls(canvas, cells, solid, c)
+	for c in list:
+		if not _skip.has(c):
 			_draw_under(canvas, cells, solid, c)
+	# Painted corners over the bands where a top or a ceiling meets a face.
+	for c in list:
+		if not _skip.has(c):
+			_draw_corners(canvas, cells, solid, c)
 	# Last: the pale lip on walking lines, and the dark line outside wall faces.
 	for c in list:
 		if not _skip.has(c):
@@ -237,22 +244,130 @@ func _run(cells: Dictionary, c: Vector2i, step: Vector2i) -> int:
 	return n
 
 
+## How far (px) a wall band may reach into the mass from its face, going `step`.
+## A column open on both sides gives each face half its width, so the two bands
+## meet in the middle instead of painting over each other.
+func _wall_room(cells: Dictionary, solid: Callable, c: Vector2i, step: Vector2i) -> float:
+	var n := _run(cells, c, step)
+	if n < MAX_DEPTH and not solid.call(c + step * n):
+		return n * TILE * 0.5
+	return n * TILE
+
+
+## How far (px) a corner may reach from the corner along its face, going `step`:
+## while the face stays open. A face that ends because the mass ends (a thin
+## column or slab) gives half, so the corners at both ends meet in the middle.
+func _face_room(cells: Dictionary, solid: Callable, c: Vector2i, side: Vector2i, step: Vector2i) -> float:
+	var n := 0
+	var p := c
+	while n < MAX_DEPTH and cells.has(p) and not solid.call(p + side):
+		n += 1
+		p += step
+	if n < MAX_DEPTH and not cells.has(p) and not solid.call(p):
+		return n * TILE * 0.5
+	return n * TILE
+
+
+func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
+	var m := _mat(cells, c)
+	if not m:
+		return
+	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
+		if solid.call(c + side):
+			# A ceiling meeting a wall that runs down to the floor: the arcade ends
+			# on a pier set against that wall.
+			if m.corner_under and m.corner_under_inner and not solid.call(c + Vector2i.DOWN) \
+					and solid.call(c + side + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
+				_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false, true)
+			continue
+		if m.corner_top and not solid.call(c + Vector2i.UP):
+			_corner(canvas, cells, solid, c, side, m.corner_top, m.corner_top_anchor, true)
+		if m.corner_under and not solid.call(c + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
+			_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false)
+
+
+## True if a standing piece reaching `reach` px below this ceiling cell lands on
+## the floor (within 16 px), or if the piece hangs freely (reach 0).
+func _reaches_floor(solid: Callable, c: Vector2i, reach: float) -> bool:
+	if reach <= 0.0:
+		return true
+	var n := 0
+	while n < 12 and not solid.call(c + Vector2i.DOWN * (n + 1)):
+		n += 1
+	return absf(n * TILE - reach) <= 16.0
+
+
+func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, side: Vector2i,
+		tex: Texture2D, anchor: Vector2, top: bool, inner := false) -> void:
+	var p := Vector2(c * TILE)
+	# The corner point: the cell's outer edge, at its top (walking line) or bottom (ceiling).
+	var cx: float = p.x + (TILE if side == Vector2i.RIGHT else 0.0)
+	var cy: float = p.y + (0.0 if top else TILE)
+	var w := float(tex.get_width())
+	var h := float(tex.get_height())
+	# Inward along the surface (the top or the ceiling) and along the face.
+	var inward: float = min(anchor.x, _wall_room(cells, solid, c, -side))
+	var along := _face_room(cells, solid, c, side, Vector2i.DOWN if top else Vector2i.UP)
+	if inner:
+		along = anchor.y  # no face above to clip to: the masonry above sits in the slab
+	var sx := anchor.x - inward
+	var sw := w - sx
+	var src: Rect2
+	var dy: float
+	if top:
+		var down: float = min(h - anchor.y, along)
+		src = Rect2(sx, 0, sw, anchor.y + down)
+		dy = cy - anchor.y
+	else:
+		var up: float = min(anchor.y, along)
+		src = Rect2(sx, anchor.y - up, sw, up + h - anchor.y)
+		dy = cy - up
+	var dest := Rect2(cx - inward, dy, sw, src.size.y)
+	if side == Vector2i.LEFT:
+		# Mirrored: a negative width flips the piece within [x, x + |width|], so the
+		# rect starts where the flipped piece's outer end lands and its face meets cx.
+		dest = Rect2(cx + inward - sw, dy, -sw, src.size.y)
+	canvas.draw_texture_rect_region(tex, dest, src)
+
+
 func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
 	var m := _mat(cells, c)
 	if not m or not m.wall_band:
 		return
 	var p := Vector2(c * TILE)
 	var bw := m.wall_face + 1
-	var sy := float(posmod(c.y * TILE, m.wall_band.get_height()))
-	if not solid.call(c + Vector2i.RIGHT):
-		var depth: float = min(bw, _run(cells, c, Vector2i.LEFT) * TILE)
-		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + TILE - depth, p.y, depth, TILE), Rect2(bw - depth, sy, depth, TILE))
-	if not solid.call(c + Vector2i.LEFT):
-		var depth: float = min(bw, _run(cells, c, Vector2i.RIGHT) * TILE)
-		# Negative width mirrors the band so its face lands on the cell's left edge.
-		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + depth, p.y, -depth, TILE), Rect2(bw - depth, sy, depth, TILE))
+	# Columns past the face: stones standing proud of the collision, into the air.
+	var over := m.wall_band.get_width() - bw
+	var bh := m.wall_band.get_height()
+	# A wall standing on a floor sinks into it: its face runs on below the walking
+	# line as deep as the floor's soil, so the floor's band doesn't end in a cut.
+	var foot := 0.0
+	if solid.call(c + Vector2i.DOWN):
+		foot = FOOT
+	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
+		if solid.call(c + side):
+			continue
+		var depth: float = min(bw, _wall_room(cells, solid, c, -side))
+		var f := foot if solid.call(c + side + Vector2i.DOWN) else 0.0
+		# A ceiling over the open side meets this wall: the face runs on up past the
+		# ceiling line as high as the ceiling's band, so the band ends against it.
+		var head := 0.0
+		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP):
+			head = float(m.under_line)
+		# Left-facing faces read the band half a repeat further on, so the two faces
+		# of a pier never mirror each other.
+		var phase := 0 if side == Vector2i.RIGHT else bh / 2
+		var sy := float(posmod(c.y * TILE + phase - int(head), bh))
+		var src := Rect2(bw - depth, sy, depth + over, head + TILE + f)
+		if side == Vector2i.RIGHT:
+			canvas.draw_texture_rect_region(m.wall_band,
+				Rect2(p.x + TILE - depth, p.y - head, depth + over, head + TILE + f), src)
+		else:
+			# A negative width draws the region flipped within [x, x + |width|] (Godot
+			# keeps the rect's x), so the rect starts at the proud stones' outer end
+			# and the face lands on the cell's left edge.
+			canvas.draw_texture_rect_region(m.wall_band,
+				Rect2(p.x - over, p.y - head, -(depth + over), head + TILE + f), src)
 
 
 func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:
@@ -285,7 +400,9 @@ func _draw_under(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 	var thick := _run(cells, c, Vector2i.UP) * TILE
 	var above: float = m.under_line
 	if thick < MAX_DEPTH * TILE:
-		above = min(above, thick * 0.5)
+		# A thin slab: the ceiling band takes what the floor's soil band (about
+		# 24 px) leaves, or half the slab, whichever is more.
+		above = min(above, max(thick * 0.5, thick - 24.0))
 	var hang: float = m.under_band.get_height() - m.under_line
 	var sx := float(posmod(c.x * TILE, m.under_band.get_width()))
 	canvas.draw_texture_rect_region(m.under_band,

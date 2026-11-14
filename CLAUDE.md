@@ -247,9 +247,28 @@ She steps forward with every hit.
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
   each is painted as an object of its own and the floor under it keeps its edge.
-  `TerrainSkin` paints the bands along every exposed edge, keeps slabs lit and
-  fades only deep rock to the void. Stone walking edges get a pale lip so ledges
-  read. In the editor, paint or erase tiles and the skin follows.
+  `TerrainSkin` paints shallow bands along every exposed edge (tops, then
+  walls, then undersides, then painted corners); each ends in the void along
+  its own stones, and wall faces stand a few pixels proud of the collision. The
+  inside of every mass is black. Only walking lines are straight. Earth's wall
+  band and corners are cut from IB6 (painted into shadow); all crypt stone (floor, ceiling arcade,
+  walls, corners, the arcade's open end, the back wall) from the crypt kit CR1
+  to CR3, tinted toward the region's plum (`crypt_kit()`, `CRYPT_TINT`). Both by
+  `tools/make_terrain.py`, which writes their anchors to
+  `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
+  editor, paint or erase tiles and the skin follows.
+- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): P5's
+  canopy along the room's top edge and its fern tops along the bottom, unlit.
+  It sits in the world vertically, so it never slides when the camera rises or
+  falls, and it never stands on a walking line among the props.
+- **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
+  mass is the nearest thing to the camera, so it shadows to black toward its
+  centre and only its edges get art. Every mass is black inside, piers
+  included. Every edge piece is solid along its open edge (no gaps for the
+  black box to show through), lit for a few pixels, then steps into the black:
+  wall bands (`shadow_face`, 12 + 12 px), corners (`shadow_corner`), and floor
+  and ceiling bands (`crust`, lit 8 px then stepping down) in
+  `tools/make_terrain.py`.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
@@ -286,8 +305,8 @@ She steps forward with every hit.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
   16 px; Kleo's measured envelope is in `design/pillars.md`. Black box first;
   the parallax camera (`Parallax2D` sky 0.05, far 0.15, mid 0.35, ruins 0.72,
-  playfield 1.0); `CanvasModulate`, `PointLight2D` lanterns, fog and the
-  vignette. Glows are never baked into tiles.
+  playfield 1.0, foreground 1.2); `CanvasModulate`, `PointLight2D`
+  lanterns, fog and the vignette. Glows are never baked into tiles.
 - **Each room gets a spec** in `design/rooms/`, with its validation.
 
 ### Art pipeline
@@ -309,7 +328,26 @@ She steps forward with every hit.
 
 ### Open items
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
-  P2, P3 and P5 taller, with transparent skies.
+  P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
+- **The crypt kit is in** (CR1 to CR3, the generator's painted originals,
+  tinted toward the region's plum: the creative lead's pick over the old crypt
+  and the kit as painted). It replaces K1, K2, K4 and K5 in the crypts. Its
+  arcade is 101 px from crown to pier foot, so in a five-tile crypt the piers
+  stand on the floor and the crowns rise 21 px into the slab's shadow. Take art
+  only as the generator made it, never pre-processed: a first export, rebuilt
+  by another tool and snapped to the hex codes, was rejected.
+- **IB6 and L6 are in.** IB6 gives earth its wall band and outer corners. L6 (the
+  moat bank and the bridge's west end, one painting) is placed by its own
+  anchors (`bridge_bank()` in `tools/make_terrain.py`): its walking line on row
+  28, its first water arch at the moat (x 95), its piers run on down to the bed,
+  and its bank goes into the black along its boulders. The bank (x 91-94) is
+  earth again. The east span is still the old L4 sheet.
+- Not yet used: IB6's inner corners and pillar top (the skin places outer
+  corners only); IB5's two small islands; CR3's inner corners, its second outer corner and the arcade's end against a wall. Every
+  stone ceiling hangs the crypt arcade, whose piers stand on a floor 80 px (five
+  tiles) below, so crypt spaces are five tiles tall.
+- Mirroring in the skin: a negative width draws the art flipped within
+  [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.
 - **The first room awaits approval** (`design/rooms/ironbark_01_lantern_clearing.md`,
   images in `docs/rooms/ironbark_01/`). Don't build more rooms until it is approved.

@@ -18,7 +18,7 @@ BODY = 2          # tiles of headroom she needs
 # The Ironbark test room's annotations (tiles).
 SPAWN = (14, 23)
 LIFT = [((24, 23), (24, 36)), ((25, 23), (25, 36)), ((26, 23), (26, 36)), ((27, 23), (27, 36))]
-WATER = (96, 31, 24, 6)          # x, y, w, h: falling in returns her to safe ground
+WATER = (95, 31, 25, 6)          # x, y, w, h: falling in returns her to safe ground
 GATED = {                         # places that must stay shut with the base kit
     "far bank (Wing-Cloak, G1)": (113, 20, 25, 8),
     "sealed pocket (Emberwick, E1)": (88, 32, 3, 5),
