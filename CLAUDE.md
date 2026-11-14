@@ -319,10 +319,10 @@ She steps forward with every hit.
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
 - Not yet used from the kits: IB5's inner corners and its two small islands,
-  K4's second arch end and its last corner. K4's arch ends are about twice the
-  K2 arcade's scale, so **K5** (Book 1) asks for the crypt arcade at K4's scale,
-  piers standing 80 px below the arches' crowns; when it comes in it replaces
-  `stone_under` (its ceiling line is the crowns).
+  K4's second arch end and its last corner. **K5** (the crypt arcade at K4's
+  scale) is in as `stone_under`: every stone ceiling hangs a colonnade whose
+  piers stand on a floor 80 px (five tiles) below, so crypt spaces are five
+  tiles tall.
 - Mirroring in the skin: a negative width draws the art flipped within
   [x, x + |width|]; a mirrored rect starts at its left end, not at the face.
 - Kleo: approve the KL0 model sheet first, then the KL1 idle and KL2 run.

@@ -374,7 +374,9 @@ func _draw_under(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 	var thick := _run(cells, c, Vector2i.UP) * TILE
 	var above: float = m.under_line
 	if thick < MAX_DEPTH * TILE:
-		above = min(above, thick * 0.5)
+		# A thin slab: the ceiling band takes what the floor's soil band (about
+		# 24 px) leaves, or half the slab, whichever is more.
+		above = min(above, max(thick * 0.5, thick - 24.0))
 	var hang: float = m.under_band.get_height() - m.under_line
 	var sx := float(posmod(c.x * TILE, m.under_band.get_width()))
 	canvas.draw_texture_rect_region(m.under_band,

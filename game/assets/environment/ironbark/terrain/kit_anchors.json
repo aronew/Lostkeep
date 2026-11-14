@@ -15,7 +15,8 @@
  ],
  "stone_corner_under": [
   78,
-  37
+  31
  ],
- "stone_corner_under_reach": 74
+ "stone_corner_under_reach": 80,
+ "stone_under_line": 48
 }

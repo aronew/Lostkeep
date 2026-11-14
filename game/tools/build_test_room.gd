@@ -29,13 +29,12 @@ const ROCK := [
 ]
 ## Spaces carved out of the rock.
 const SPACES := [
-	[8, 29, 20, 3],   # the west hall's high vault: it ends at the lift shaft's wall
-	[8, 32, 22, 5],   # the west hall's floor storey, running on into the crypt
+	[8, 32, 22, 5],   # the west hall, five tiles tall like the crypt it runs on into
 	[0, 32, 8, 5],    # the west door (the main way on, to the Old Crypt)
 	[30, 32, 56, 5],  # the crypt under the clearing
 	[86, 32, 5, 5],   # the sealed pocket (silk: Emberwick lock E1)
 	[78, 28, 4, 4],   # the drop into the crypt
-	[24, 24, 4, 5],   # the lift shaft
+	[24, 24, 4, 8],   # the lift shaft, down to the hall
 ]
 ## Masses put back: [x, y, w, h, material]
 const MASSES := [
@@ -51,7 +50,7 @@ const STONE := [[6, 28, 24, 12], [30, 31, 61, 9]]
 ## Cells painted by placed art instead of the skin.
 const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
 ## Back walls behind enclosed spaces.
-const BACK := [[8, 29, 20, 3], [8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 5]]
+const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 8]]
 ## Back walls of raw earth: the collapse that drops into the crypt.
 const BACK_EARTH := [[78, 28, 4, 4]]
 
@@ -74,7 +73,7 @@ func _initialize() -> void:
 	earth.corner_under = load(TERRAIN + "earth_corner_under.png")
 	earth.corner_under_anchor = _vec(kit["earth_corner_under"])
 	ResourceSaver.save(earth, earth.resource_path)
-	var stone := _material("stone", 13, 14, int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
+	var stone := _material("stone", 13, int(kit["stone_under_line"]), int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
 	stone.corner_top = load(TERRAIN + "stone_corner_top.png")
 	stone.corner_top_anchor = _vec(kit["stone_corner_top"])
 	stone.corner_under = load(TERRAIN + "stone_corner_under.png")
@@ -522,7 +521,7 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 	_breakable(stuff, POT_SMALL, 31.9 * TILE, floor_y, CLAY)
 	_breakable(stuff, BARREL, 76.6 * TILE, floor_y, WOOD)
 	for x in [13.0, 40.0, 57.0, 74.0]:
-		var y := 30.6 * TILE if x < 30.0 else 32.6 * TILE
+		var y := 32.6 * TILE
 		_sprite(behind, lan, Rect2(110, 4, 42, 56), Vector2(x * TILE, y)).name = "WallLantern"
 		_light(behind, Vector2(x * TILE, y) + Vector2(31, 42), Color(1.0, 0.72, 0.4), 0.95, 0.9, "WallLanternLight")
 

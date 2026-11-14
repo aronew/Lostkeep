@@ -28,6 +28,7 @@ SPECS = {
     "K2": ("keep_stone_edges", 384, 64),
     "K3": ("keep_timber_kit", 384, 64),
     "K4": ("keep_stone_faces_ends", 256, 64),
+    "K5": ("keep_crypt_arcade", 384, 64),
     "P1": ("ironbark_bg_sky", 768, 64),
     "P2": ("ironbark_bg_far", 768, 64),
     "P3": ("ironbark_bg_mid", 768, 64),

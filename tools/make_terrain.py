@@ -371,6 +371,34 @@ def kit_corner(a, box, kind):
     return c, (face, line)
 
 
+CRYPT_HANG = 80  # a crypt is five tiles tall: arcade piers stand on its floor
+
+
+def darken_from(a, row, step=0.72):
+    """One value step darker from `row` down (a pier's shaft and plinth), so the
+    piers sit back against the crypt wall while the arches and course stay lit."""
+    out = a.astype(float)
+    for y in range(row, a.shape[0]):
+        k = 0.86 if y < row + 2 else step
+        m = out[y, :, 3] > 0
+        out[y, m, :3] = out[y, m, :3] * k + VOID[:3] * (1 - k)
+    return out.astype(np.uint8)
+
+
+def arcade():
+    """K5, the crypt arcade: cut pier centre to pier centre (three arches every
+    360 px) so it repeats, its ceiling line placed so the piers' plinth stands on
+    the floor of a five-tile crypt. Returns the ceiling line row."""
+    a = wrap_period(load("keep_crypt_arcade.png"), 120, 3)
+    # Measured on the processed sheet: the imposts end at row 94; below them run
+    # the pier shafts and the plinth.
+    a = darken_from(a, 94)
+    save(a, TERRAIN, "stone_under.png")
+    line = a.shape[0] - CRYPT_HANG
+    print("  stone under ceiling line row", line, "(the crowns are at row 54)")
+    return line
+
+
 def kits():
     """Cut the kits and write their measurements to kit_anchors.json, which the
     room builder reads: face columns, and each corner's (face, line) anchor."""
@@ -417,10 +445,15 @@ def kits():
     # outer side. The pier reaches down to the floor of a five-tile crypt.
     crown = max(np.nonzero(op[:, x])[0].max() for x in range(0, 6) if op[:, x].any()) + 1
     face = right_edge(c, range(h * 3 // 4, h), pct=60) - 1
+    # Like K5's piers, this one stands on the floor of a five-tile crypt, and its
+    # shaft below the impost (row 79, measured) sits one value step back.
+    crown = h - CRYPT_HANG
+    c = darken_from(c, 79)
     save(c, TERRAIN, "stone_corner_under.png")
     anchors["stone_corner_under"] = (face, crown)
-    anchors["stone_corner_under_reach"] = h - crown
+    anchors["stone_corner_under_reach"] = CRYPT_HANG
     print(f"  stone_corner_under anchor (face, line) {(face, crown)} size {w}x{h}")
+    anchors["stone_under_line"] = arcade()
     clean = {k: ([int(v) for v in a] if isinstance(a, tuple) else int(a)) for k, a in anchors.items()}
     with open(os.path.join(TERRAIN, "kit_anchors.json"), "w") as f:
         json.dump(clean, f, indent=1)
@@ -467,13 +500,7 @@ def main():
     sline = first_full_row(stop, 0, 0.97)
     save(crust(wrap_x(stop, 32), sline, seed=4), TERRAIN, "stone_top.png")
     print("  stone top walking line row", sline)
-    sunder = wrap_period(k2[75:122], 107, 3)  # the arches repeat every 107 px
-    sline_u = 20  # the ceiling line: the arches hang below it
-    hang = sunder.shape[0] - sline_u
-    # The course above the arches breaks off stone by stone into the void.
-    sunder = crust(sunder[::-1], hang, seed=5, dmin=4, dmax=14, pct=50)[::-1].copy()
-    save(sunder, TERRAIN, "stone_under.png")
-    print("  stone under ceiling line row", sunder.shape[0] - hang)
+    # (The crypt arcade is K5 now: see arcade().)
     course = k2[134:184]
     save(wrap_period(course, 148, 2), TERRAIN, "stone_course.png")  # the carved panels every 148 px
     k1 = load("keep_stone_fill.png")
