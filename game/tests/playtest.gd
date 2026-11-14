@@ -3,6 +3,11 @@ extends Node
 ##
 ##   xvfb-run -a godot --path game --fixed-fps 60 --audio-driver Dummy res://tests/playtest.tscn -- mode=shots
 ##
+## `room=ib02` plays another room (default ib01); its output goes to
+## tests/out/<room>/<mode>/. Room IB-02's own modes: tour (the main line), west
+## (the upper line, the cave and the secret vault), and doors (IB-01's hall door
+## into IB-02 and back).
+##
 ## Modes:
 ##   shots    screenshots of the room's key places, with art and as the black box
 ##   tour     the main line, scripted, every second frame saved (for a video)
@@ -17,8 +22,13 @@ extends Node
 ##   measure  measures the jump, running jump and ledge reach; prints the numbers
 ## Output: tests/out/<mode>/
 
-const ROOM := "res://scenes/rooms/ironbark_test_room.tscn"
+const ROOMS := {
+	"ib01": "res://scenes/rooms/ironbark_test_room.tscn",
+	"ib02": "res://scenes/rooms/ironbark_02_old_crypt.tscn",
+}
 const TILE := 16.0
+
+var room_id := "ib01"
 
 var room: Node
 var kleo: Kleo
@@ -33,13 +43,27 @@ func _ready() -> void:
 	for arg in OS.get_cmdline_user_args():
 		if arg.begins_with("mode="):
 			mode = arg.substr(5)
-	out_dir = "res://tests/out/" + mode
+		if arg.begins_with("room="):
+			room_id = arg.substr(5)
+	out_dir = "res://tests/out/" + ("" if room_id == "ib01" else room_id + "/") + mode
 	DirAccess.make_dir_recursive_absolute(ProjectSettings.globalize_path(out_dir))
-	room = load(ROOM).instantiate()
-	add_child(room)
-	kleo = room.get_node("Kleo")
-	cam = room.get_node("Camera")
+	Game.room_host = _swap_room  # doors swap the room under this harness
+	await _swap_room(ROOMS[room_id])
 	await _frames(2)
+	if room_id == "ib02":
+		match mode:
+			"shots":
+				await _shots()
+			"map":
+				await _map()
+			"tour":
+				await _tour_ib02()
+			"west":
+				await _west_ib02()
+			"doors":
+				await _doors()
+		get_tree().quit()
+		return
 	match mode:
 		"shots":
 			await _shots()
@@ -63,6 +87,19 @@ func _ready() -> void:
 
 
 # --- Helpers ----------------------------------------------------------------------------------
+
+## Load a room in place of the current one (also what a door does, via Game.room_host).
+func _swap_room(scene: String) -> void:
+	if room:
+		# Out of the tree at once, so the new room never sees the old one's tiles
+		# and this harness never holds a freed room.
+		remove_child(room)
+		room.queue_free()
+	room = load(scene).instantiate()
+	add_child(room)
+	kleo = room.get_node("Kleo")
+	cam = room.get_node("Camera")
+
 
 func _frames(n: int) -> void:
 	for i in n:
@@ -101,6 +138,20 @@ func _release_all() -> void:
 
 # --- Shots --------------------------------------------------------------------------------------
 
+const SHOTS_IB02 := [
+	["01_east_door_hoist", 103.0, 10, -1],
+	["02_balcony_well", 63.5, 10, -1],
+	["03_grave_island", 52.0, 17, -1],
+	["04_niche_walk", 74.0, 19, 1],
+	["05_collapse", 83.0, 19, 1],
+	["06_long_gallery_winch", 93.0, 28, 1],
+	["07_lower_well", 63.5, 28, -1],
+	["08_cave_hideout", 30.0, 28, -1],
+	["09_west_gallery_plate", 21.0, 16, -1],
+	["10_vault", 8.0, 24, -1],
+]
+
+
 func _shots() -> void:
 	var places := [
 		["01_spawn_shrine", 14.5, 24, 1],
@@ -114,6 +165,8 @@ func _shots() -> void:
 		["09_root_shelf", 60.0, 17, 1],
 		["10_bridge_gap", 100.5, 28, 1],
 	]
+	if room_id == "ib02":
+		places = SHOTS_IB02
 	for p in places:
 		_place(p[1], p[2], p[3])
 		await _frames(40)
@@ -278,6 +331,117 @@ func _props() -> void:
 	var text := "\n".join(lines)
 	print(text)
 	FileAccess.open(out_dir + "/props.txt", FileAccess.WRITE).store_string(text + "\n")
+
+
+# --- Room IB-02 ---------------------------------------------------------------------------------
+
+func _floor_at(row: int) -> bool:
+	return kleo.is_on_floor() and absf(kleo.global_position.y - row * TILE) < 2.0
+
+
+## The main line: the East door, over the jammed hoist, off the balcony onto the
+## grave island, into the niche walk, down the collapse, the winch, the hoist
+## back up, and out through the East door into IB-01.
+func _tour_ib02() -> void:
+	var lines := []
+	_start_tour()
+	await _wait(20)
+	await _hold_until(["move_left"], func(): return _floor_at(17), 900)
+	lines.append("off the balcony onto the grave island: %s (x %.0f)" % [_floor_at(17), kleo.global_position.x])
+	await _wait(10)
+	await _hold_until(["move_right"], func(): return _floor_at(19), 300)
+	lines.append("island into the niche walk (E2): %s" % _floor_at(19))
+	await _hold_until(["move_right"], func(): return _floor_at(28), 900)
+	lines.append("down the collapse into the long gallery (E3): %s" % _floor_at(28))
+	await _wait(30)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 94.4 * TILE, 300)
+	await _wait(6)
+	await _tap("interact")
+	await _wait(300)
+	var hoist := room.get_node("BierHoist")
+	lines.append("winch frees the hoist: %s; it comes down: %s" % [hoist.unlocked, absf(hoist.get_node("Platform").position.y - 18 * TILE) < 1.0])
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 97.6 * TILE, 200)
+	await _wait(330)
+	lines.append("hoist carries her up to the vestibule (E1): %s" % _floor_at(10))
+	await _hold_until(["move_right"], func(): return room.name != "IronbarkOldCrypt", 400)
+	await _wait(50)
+	lines.append("out the East door into: %s, standing at x %.0f, y %.0f" % [room.name, kleo.global_position.x, kleo.global_position.y])
+	_release_all()
+	_report(lines, "tour")
+
+
+## The upper line and the loop: island, west gallery (the plated door holds),
+## the collapse into the cave, the false wall into the vault, then east over the
+## lower islands into the long gallery.
+func _west_ib02() -> void:
+	var lines := []
+	_place(52.0, 17, -1)
+	await _frames(10)
+	_start_tour()
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 46.6 * TILE, 200)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(16) and kleo.global_position.x < 41 * TILE, 200)
+	lines.append("island across to the west gallery (W1): %s" % _floor_at(16))
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 29 * TILE, 300)
+	await _hold_until(["move_left", "jump"], func(): return kleo.global_position.x < 23.4 * TILE and kleo.is_on_floor(), 200)
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 18.9 * TILE, 200)
+	await _wait(30)
+	lines.append("the plated door holds: %s (x %.0f, wall at %d)" % [kleo.global_position.x > 18 * TILE, kleo.global_position.x, 18 * 16])
+	await _hold_until(["move_right"], func(): return kleo.global_position.y > 20 * TILE, 200)
+	await _hold_until([], func(): return kleo.is_on_floor(), 200)
+	lines.append("down W1's collapse into the cave: landed at y %.0f (the fallen rock is 416, the floor 448)" % kleo.global_position.y)
+	await _wait(30)
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 15.2 * TILE and kleo.is_on_floor(), 300)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(24), 300)
+	var cover := room.get_node("VaultCover")
+	await _wait(40)
+	lines.append("climbed through the false wall into the vault: %s; cover found: %s" % [_floor_at(24), cover.found])
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 8 * TILE, 200)
+	await _wait(20)
+	await _hold_until(["move_right"], func(): return _floor_at(28) and kleo.global_position.x > 22 * TILE, 400)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 22.6 * TILE, 100)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(26), 200)
+	await _hold_until(["move_right"], func(): return _floor_at(28) and kleo.global_position.x > 30 * TILE, 300)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 39.6 * TILE, 300)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(28) and kleo.global_position.x > 45 * TILE, 200)
+	lines.append("cave mouth to the west low island: %s" % (_floor_at(28) and kleo.global_position.x > 45 * TILE))
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 50 * TILE, 200)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(28) and kleo.global_position.x > 54 * TILE, 200)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 58 * TILE, 200)
+	await _hold_until(["move_right", "jump"], func(): return _floor_at(28) and kleo.global_position.x > 62 * TILE, 200)
+	lines.append("over the low islands into the long gallery (E3): %s (x %.0f)" % [_floor_at(28) and kleo.global_position.x > 62 * TILE, kleo.global_position.x])
+	await _wait(20)
+	# And the water: she can't swim yet, so it returns her to safe ground.
+	await _hold_until(["move_left"], func(): return kleo.global_position.y > 31 * TILE, 200)
+	await _wait(90)
+	lines.append("fell in the cistern, returned to safe ground: %s (x %.0f, y %.0f)" % [kleo.is_on_floor(), kleo.global_position.x, kleo.global_position.y])
+	_release_all()
+	_report(lines, "west")
+
+
+## IB-01's hall door into IB-02 and straight back.
+func _doors() -> void:
+	var lines := []
+	await _swap_room(ROOMS["ib01"])
+	await _frames(2)
+	_place(6.0, 37, -1)
+	await _frames(10)
+	_start_tour()
+	await _hold_until(["move_left"], func(): return room.name == "IronbarkOldCrypt", 300)
+	await _wait(40)
+	lines.append("IB-01 hall door leads to: %s; she stands at x %.0f, y %.0f, facing %d, on the floor: %s" %
+		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.facing, kleo.is_on_floor()])
+	await _hold_until(["move_right"], func(): return room.name == "IronbarkTestRoom", 300)
+	await _wait(40)
+	lines.append("and back to: %s; she stands at x %.0f, y %.0f, facing %d, on the floor: %s" %
+		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.facing, kleo.is_on_floor()])
+	_release_all()
+	_report(lines, "doors")
+
+
+func _report(lines: Array, file: String) -> void:
+	var text := "\n".join(lines)
+	print(text)
+	FileAccess.open(out_dir + "/" + file + ".txt", FileAccess.WRITE).store_string(text + "\n")
 
 
 # --- The room's edge ---------------------------------------------------------------------------

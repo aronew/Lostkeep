@@ -39,6 +39,14 @@ const MOUSE := {
 	"spell": [MOUSE_BUTTON_RIGHT],
 }
 
+## The door Kleo arrives through in the next room ("" for the room's own start).
+var arrival_door := ""
+## Things that stay done across rooms: a freed lift, a woken shrine.
+var flags := {}
+## Tests set this to swap rooms themselves; otherwise the scene is changed.
+var room_host := Callable()
+var _changing := false
+
 var box_view := false
 var slow_motion := false
 var debug_overlay := false
@@ -109,6 +117,7 @@ func _unhandled_input(event: InputEvent) -> void:
 			if _hitstop_end_us == 0:
 				Engine.time_scale = _base_time_scale()
 		KEY_F5:
+			flags.clear()
 			_hitstop_end_us = 0
 			Engine.time_scale = _base_time_scale()
 			get_tree().reload_current_scene()
@@ -164,6 +173,25 @@ func _setup_screen_layers() -> void:
 	_debug_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
 	_debug_label.visible = false
 	_fade_layer.add_child(_debug_label)
+
+
+## Leave the room for another: fade out, load it, arrive at `door`, fade in.
+func go_to(scene: String, door: String, kleo: Node = null) -> void:
+	if _changing:
+		return
+	_changing = true
+	if kleo and kleo.has_method("freeze"):
+		kleo.freeze()
+	await fade_to(1.0, 0.18)
+	arrival_door = door
+	if room_host.is_valid():
+		await room_host.call(scene)
+	else:
+		get_tree().change_scene_to_file(scene)
+	await get_tree().process_frame
+	await get_tree().process_frame
+	await fade_to(0.0, 0.22)
+	_changing = false
 
 
 func fade_to(alpha: float, seconds: float) -> void:

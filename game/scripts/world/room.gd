@@ -1,6 +1,10 @@
 class_name Room
 extends Node2D
 ## A room: its bounds in tiles, where Kleo starts, and the camera's limits.
+##
+## Doors are Marker2D children of a "Doors" node, each beside a RoomExit. When
+## Kleo arrives through a door (Game.arrival_door), she appears at its marker,
+## facing into the room.
 
 const TILE := 16
 
@@ -13,12 +17,17 @@ const TILE := 16
 
 ## Art hidden in box view (F1), leaving the collision, Kleo and the machines.
 const ART_NODES := ["Behind", "PlacedArt", "Front", "PrismShrine/Art", "GuardLift/Frame", "EarthBackWalls", "BackWalls",
-	"Foreground"]
+	"Foreground", "BierHoist/Frame"]
 
 
 func _ready() -> void:
 	add_to_group("box_view")
-	kleo.global_position = spawn
+	var door := get_node_or_null("Doors/" + Game.arrival_door) as Marker2D if Game.arrival_door != "" else null
+	Game.arrival_door = ""
+	if door:
+		kleo.place(door.global_position, int(door.get_meta("facing", 1)))
+	else:
+		kleo.place(spawn, 1)
 	camera.target = kleo
 	camera.limit_left = room_rect.position.x * TILE
 	camera.limit_top = room_rect.position.y * TILE

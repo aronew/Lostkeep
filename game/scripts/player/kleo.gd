@@ -598,6 +598,26 @@ func _try_interact() -> bool:
 	return false
 
 
+## Put her down somewhere, standing: at the room's start, or just inside a door.
+func place(pos: Vector2, face: int) -> void:
+	global_position = pos
+	velocity = Vector2.ZERO
+	facing = face if face != 0 else 1
+	last_safe = pos
+	_air_top = pos.y
+	_was_on_floor = true
+	state = State.NORMAL
+	_end_attack()
+	_play("idle", true)
+
+
+## Hold her still (leaving a room, a cutscene) until `place` or a new room.
+func freeze() -> void:
+	_end_attack()
+	state = State.LOCKED
+	velocity = Vector2.ZERO
+
+
 ## Reach out and work something: a winch, a lever, a door.
 func use_object() -> void:
 	_lock = 0.4

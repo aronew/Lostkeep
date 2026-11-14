@@ -10,6 +10,8 @@ extends Node2D
 @export var bottom_y := 208.0
 @export var speed := 72.0
 @export var unlocked := false
+## A name in Game.flags: once freed, the lift stays freed when the room is left.
+@export var flag := ""
 ## Where the ropes hang from (local y), above the top stop.
 @export var rope_top := -40.0
 @export var platform_width := 64.0
@@ -23,6 +25,8 @@ var _ride_timer := 0.0
 
 
 func _ready() -> void:
+	if flag != "" and Game.flags.has(flag):
+		unlocked = true
 	platform.position.y = top_y
 	_target = top_y
 	winch.used.connect(_on_winch)
@@ -31,6 +35,8 @@ func _ready() -> void:
 func _on_winch() -> void:
 	if not unlocked:
 		unlocked = true
+		if flag != "":
+			Game.flags[flag] = true
 		Game.shake(0.15)
 	_target = bottom_y if is_equal_approx(platform.position.y, top_y) else top_y
 

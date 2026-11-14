@@ -8,6 +8,9 @@ extends Interactable
 @export var awake_region := Rect2()
 @export var glow: PointLight2D
 
+## A name in Game.flags, so the shrine stays awake when the room is left.
+@export var flag := ""
+
 var awake := false
 
 
@@ -15,12 +18,20 @@ func _ready() -> void:
 	super()
 	if sprite:
 		sprite.region_rect = dormant_region
+	if flag != "" and Game.flags.has(flag):
+		awake = true
+		if sprite:
+			sprite.region_rect = awake_region
+		if glow:
+			glow.energy *= 2.2
 
 
 func interact(kleo: Node) -> void:
 	kleo.rest_at(self)
 	if not awake:
 		awake = true
+		if flag != "":
+			Game.flags[flag] = true
 		if sprite:
 			sprite.region_rect = awake_region
 		if glow:

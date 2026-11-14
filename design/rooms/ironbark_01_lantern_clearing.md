@@ -8,14 +8,14 @@
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-01. West upper: the Guard Post (the story's start). West lower: the Old Crypt (the main way on). East: the Lost Keep's gate (gated) |
+| **Identity** | Ironbark Guard, IB-01. West upper: the Guard Post (the story's start). West lower: the Old Crypt, IB-02 (the main way on; the door works). East: the Lost Keep's gate (gated) |
 | **Idea** | Under the Great Ironbark, a mossy clearing runs east to the broken bridge, with the guard's crypt beneath it |
 | **Purpose** | Establishes a landmark (the Great Ironbark, the save shrine); introduces running, jumping, the ledge catch and the combo (a training yard); shows five locks before their keys; folds a shortcut back to the save; gives breath |
 | **Size** | 138 × 40 tiles (2208 × 640 px): 3.5 screens wide, 1.8 tall |
 | **Spaces and masses** | Terrace (west, top 24) over the west hall (stone, 5 tall like the crypt it runs on into; the lift shaft drops 8 tiles from the terrace into it); clearing (top 28, 4 thick) over the crypt (stone, 5 tall); the drop (4 wide) into the crypt; the lift shaft; a floating island (top 21, 15 wide) and the root shelf (an island, top 17, 22 wide) above the clearing; the moat; the bridge's two spans with a 12-tile gap; the moat bank, a 4-tile masonry quay; the far bank |
 | **Exits** | West upper at the terrace (height 24), west lower door from the hall (32–37), east across the gap (Wing-Cloak) |
 | **Lines** | Main: terrace → clearing → the drop → the crypt west → the hall → the west door (a switchback). Upper (optional): terrace → island → ledge catch → root shelf pocket → drop to the clearing. Lower: the crypt |
-| **Shortcut** | The guard's lift: jammed at the top, worked from below with the winch; it links the hall to the shrine |
+| **Shortcut** | The guard's lift: jammed at the top, worked from below with the winch; it links the hall to the shrine. Once freed it stays freed, and the shrine stays awake, when the room is left (`Game.flags`) |
 | **Locks seen here** | W1 bark-plate floor (Ward), E1 silk seal and cocoon (Emberwick), G1 the broken bridge (Wing-Cloak), D1 the moat with a glint below (Breath), S1 the shrine's Prism socket (Siphon), T1 the tree's thorn knots (Thorn-Line) |
 | **Encounters** | Two practice posts in the training yard (no enemies yet) |
 | **Placed pieces** | The lift's crossbeam: a one-way perch 3 tiles above the terrace (drop through with down + jump). Thirteen breakable pots, barrels and crates in the hall, the crypt, the clearing and the root shelf |
