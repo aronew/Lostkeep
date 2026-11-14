@@ -438,6 +438,9 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["L", "L-silk-cavern.jpg", "Silk cavern", "The reference for how a mass goes into shadow: a lit stone top, a crumbling underside with a pale worn rim, then near-black. Attach it to the edge cards (IB6, CR1 to CR3, L6) for that only. Its layout and creatures belong to the Silk Mother's book."],
     ["M", "M-thornveil-reaper.jpg", "Thornveil Reaper", "For a later book (the Fen-Stalker boss). Not used here."],
     ["N", "N-chained-prism.jpg", "The chained Prism", "For the finale's book. Not used here."],
+    ["O", "O-crypt-ossuary.jpg", "Crypt ossuary", "IB-02, the Old Crypt: bone-filled galleries round a central well, skull niches, braziers, floating ruins. Attach to crypt and IB-02 cards."],
+    ["P", "P-crypt-cistern.jpg", "Crypt cistern", "IB-02: the flooded lower gallery, waterfall into the cistern, pillar stumps in the water."],
+    ["Q", "Q-crypt-shrine.jpg", "Crypt shrine", "IB-02: a hooded statue shrine on a floating ruin, ruined arcades, rubble and purple flora."],
     ["G", "G-macro-map.jpg", "Macro map", "Where Ironbark sits in Vaelora. For reference only; never attach it to a card."]
   ];
 
@@ -655,7 +658,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR1", group: "keep", file: "crypt_back_wall", title: "Crypt kit 1: the back wall",
       about: "What you see behind Kleo in every crypt space, through the arcade's arches. The current back wall is K1's fill dimmed with K2's carved course laid on it: a flat, repeated texture in a different style, and it looks off.",
-      canvas: WIDE, game: "384 × 128, repeating left to right; its floor line at the bottom", attach: ["A", "B", "L", "D", "H"],
+      canvas: WIDE, game: "384 × 128, repeating left to right; its floor line at the bottom", attach: ["A", "B", "L", "D", "H", "O", "P", "Q"],
       text: [
         "TASK: the back wall of the Ironbark Guard's crypt, as one long band on a canvas that is opaque edge to edge, joining a copy of itself left to right.",
         "",
@@ -675,7 +678,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR2", group: "keep", file: "crypt_floor_arcade", title: "Crypt kit 2: the floor and the ceiling's arcade",
       about: "The two long bands every crypt is built from: the flagstone floor Kleo walks on, and the arcade that hangs from every crypt ceiling, its piers standing on that floor five tiles below. Same layout as K5, redrawn in the kit's style.",
-      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "2 bands, 384 wide, repeating left to right", attach: ["A", "B", "L", "D", "Your approved CR1", "Your approved K5 (for layout only)"],
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "2 bands, 384 wide, repeating left to right", attach: ["A", "B", "L", "D", "Your approved CR1", "Your approved K5 (for layout only)", "O", "P", "Q"],
       text: [
         "TASK: two horizontal bands of the crypt on one transparent canvas, separated by transparent space, matching the attached approved CR1. Each joins a copy of itself left to right.",
         "",
@@ -698,7 +701,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     { id: "CR3", group: "keep", file: "crypt_walls_corners_ends", title: "Crypt kit 3: walls, corners and the arcade's ends",
       about: "Where crypt spaces end: their walls, the corners where floors and ceilings meet walls, and the arcade's two kinds of end (against a wall, and at an opening such as the collapse). Drawn with the bands so every join lines up.",
-      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band 30 × 256, 4 corners 48 × 48, 2 arcade ends 64 × 128, cut apart", attach: ["A", "B", "L", "Your approved CR1", "Your approved CR2"],
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band 30 × 256, 4 corners 48 × 48, 2 arcade ends 64 × 128, cut apart", attach: ["A", "B", "L", "Your approved CR1", "Your approved CR2", "O", "P", "Q"],
       text: [
         "TASK: the ends of the crypt, on one transparent canvas, pieces separated by transparent space, matching the attached approved CR1 and CR2 exactly.",
         "",
@@ -979,7 +982,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
   function attachLine(card) {
-    var names = { L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
+    var names = { O: "O: the crypt ossuary mockup", P: "P: the crypt cistern mockup", Q: "Q: the crypt shrine mockup", L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
     var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
     return "\n\nATTACHED: " + list.join("; ") + ".";
   }
