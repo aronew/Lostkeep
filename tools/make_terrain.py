@@ -426,6 +426,14 @@ def kits():
     face_box = max(b, key=lambda r: r[3] - r[1])
     band, face = kit_face(k4, face_box, (24, 16), crust_depth=30)
     save(band, TERRAIN, "stone_wall.png")
+    # The inside of a stone pier: K5's own pier masonry (a pier shaft between its
+    # impost and plinth, measured on the processed sheet: x 116..143, rows 96..118),
+    # made seamless both ways. Slabs and ground are void inside, so this only
+    # shows in upright piers.
+    k5 = load("keep_crypt_arcade.png")
+    core = k5[96:119, 116:144].copy()
+    core[..., 3] = 255
+    save(wrap_y(wrap_x(core, 6), 6), TERRAIN, "stone_pier_fill.png")
     print("  stone wall face column", face)
     anchors["stone_wall_face"] = face
     low = sorted([r for r in b if r != face_box and r[1] > 120], key=lambda r: r[0])

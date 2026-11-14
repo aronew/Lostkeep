@@ -23,8 +23,8 @@ const ROOM := Rect2i(0, 0, 138, 40)
 ## Rock: [x, y, w, h, material]  (0 earth, 1 stone)
 const ROCK := [
 	[0, 24, 30, 16, 0],   # the tree terrace (west)
-	[30, 28, 66, 12, 0],  # the clearing and the ground beneath it
-	[96, 37, 24, 3, 0],   # the moat's bed
+	[30, 28, 65, 12, 0],  # the clearing and the ground beneath it, to the moat
+	[95, 37, 25, 3, 0],   # the moat's bed
 	[120, 28, 18, 12, 0], # the far bank, under the Lost Keep's gate (beyond the gap)
 ]
 ## Spaces carved out of the rock.
@@ -32,7 +32,7 @@ const SPACES := [
 	[8, 32, 22, 5],   # the west hall, five tiles tall like the crypt it runs on into
 	[0, 32, 8, 5],    # the west door (the main way on, to the Old Crypt)
 	[30, 32, 56, 5],  # the crypt under the clearing
-	[86, 32, 7, 5],   # the sealed pocket (silk: Emberwick lock E1), up to the bridge's pier
+	[86, 32, 5, 5],   # the sealed pocket (silk: Emberwick lock E1): the arcade's last pier meets its wall
 	[78, 28, 4, 4],   # the drop into the crypt
 	[24, 24, 4, 8],   # the lift shaft, down to the hall
 ]
@@ -40,17 +40,19 @@ const SPACES := [
 const MASSES := [
 	[33, 21, 15, 2, 0],   # the floating island (upper line)
 	[52, 17, 22, 2, 0],   # the root shelf (upper line, its pocket): IB4's big island
-	[96, 28, 6, 2, 0],    # the bridge's west span
+	[95, 28, 7, 2, 0],    # the bridge's west span
 	[113, 28, 7, 2, 0],   # the bridge's east span (the gap: Wing-Cloak lock G1)
 ]
 ## Solid cells inside these become stone (the crypts' masonry). They start at
 ## the crypts' ceilings, so a slab is earth from the grass down and only the
 ## arches under it are masonry: one material per face, never two stacked.
-const STONE := [[6, 28, 24, 12], [30, 31, 63, 9]]
+## The moat bank (x 91 to 94) is masonry from its walking line down: the bridge's
+## quay, its approach paved where the clearing's grass ends.
+const STONE := [[6, 28, 24, 12], [30, 31, 61, 9], [91, 28, 4, 12]]
 ## Cells painted by placed art instead of the skin.
-const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [96, 28, 6, 2], [113, 28, 7, 2], [93, 28, 3, 4]]
+const SKIP := [[33, 21, 15, 2], [52, 17, 22, 2], [95, 28, 7, 2], [113, 28, 7, 2]]
 ## Back walls behind enclosed spaces.
-const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 7, 5], [24, 24, 4, 8]]
+const BACK := [[8, 32, 22, 5], [0, 32, 8, 5], [30, 32, 56, 5], [86, 32, 5, 5], [24, 24, 4, 8]]
 ## Back walls of raw earth: the collapse that drops into the crypt.
 const BACK_EARTH := [[78, 28, 4, 4]]
 
@@ -74,12 +76,14 @@ func _initialize() -> void:
 	earth.corner_under_anchor = _vec(kit["earth_corner_under"])
 	ResourceSaver.save(earth, earth.resource_path)
 	var stone := _material("stone", 13, int(kit["stone_under_line"]), int(kit["stone_wall_face"]), 0.0, Color("#b3a2b9"))
+	stone.fill = load(TERRAIN + "stone_pier_fill.png")  # seen only inside piers
 	stone.corner_top = load(TERRAIN + "stone_corner_top.png")
 	stone.corner_top_anchor = _vec(kit["stone_corner_top"])
 	stone.corner_under = load(TERRAIN + "stone_corner_under.png")
 	stone.corner_under_anchor = _vec(kit["stone_corner_under"])
 	stone.corner_under_reach = float(kit["stone_corner_under_reach"])
-	stone.corner_under_inner = true  # the arcade also ends on a pier against a wall
+	# (corner_under_inner stays off: where a crypt ends at a wall, the arcade's own
+	# pier meets it; an end arch laid over that pier doubles the stonework.)
 	ResourceSaver.save(stone, stone.resource_path)
 	var tileset := _tileset()
 	_build_kleo()
@@ -433,8 +437,15 @@ func _build_landmarks(behind: Node, placed: Node) -> void:
 	_sprite(placed, ENV + "ironbark_islands.png", Rect2(9, 86, 366, 101), Vector2(52 * TILE + 176 - 183, 17 * TILE - 33)).name = "RootShelf"
 
 	# The broken bridge: its west span with the torn banner, the east span beyond the gap.
-	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(1, 2, 144, 126), Vector2(102 * TILE - 144, 28 * TILE - 63)).name = "BridgeWest"
-	_light(placed, Vector2(102 * TILE - 144, 28 * TILE - 63) + Vector2(44, 28), Color(1.0, 0.78, 0.45), 0.8, 0.8, "BridgeLantern")
+	# The sheet's west end is an earth abutment that stops in a hard line at the
+	# water; the bank is the skin's masonry quay instead, so only the arches and,
+	# above the deck, the lantern post and banner are placed.
+	# One tile west of the gap's edge, so the bank under its post is four tiles wide
+	# (its two faces meet) and the span reaches the gap at x 102.
+	var bw := Vector2(101 * TILE - 144, 28 * TILE - 63)
+	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(49, 2, 96, 126), bw + Vector2(48, 0)).name = "BridgeWest"
+	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(1, 2, 48, 61), bw).name = "BridgePost"
+	_light(placed, bw + Vector2(44, 28), Color(1.0, 0.78, 0.45), 0.8, 0.8, "BridgeLantern")
 	_sprite(placed, ENV + "landmark_arch_bridge.png", Rect2(241, 52, 142, 76), Vector2(113 * TILE, 28 * TILE - 12)).name = "BridgeEast"
 
 	# The Lost Keep's gate on the far bank: the goal, seen across the gap.
@@ -528,7 +539,7 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 
 	# The sealed pocket: silk across its mouth, a shape in a cocoon behind it.
 	# The cocoon hangs in the alcove past the silk, in front of the arcade's end pier.
-	_sprite(placed, ENV + "gate_silk_and_cocoon.png", Rect2(167, 26, 35, 82), Vector2(90.5 * TILE, 32 * TILE - 2)).name = "Cocoon"
+	# The cocoon: someone wrapped in the web itself, so the lock reads at a glance.
 	var silk := _node(StaticBody2D.new(), "SilkSealE1", _root) as StaticBody2D
 	silk.position = Vector2(86 * TILE, 32 * TILE)
 	silk.z_index = 8
@@ -539,6 +550,7 @@ func _build_props(behind: Node, placed: Node, front: Node) -> void:
 	sc.position = Vector2(TILE, 2.5 * TILE)
 	_node(sc, "Shape", silk)
 	_sprite(silk, ENV + "gate_silk_and_cocoon.png", Rect2(2, 26, 75, 82), Vector2(-4, -2)).name = "Silk"
+	_sprite(silk, ENV + "gate_silk_and_cocoon.png", Rect2(167, 26, 35, 82), Vector2(22, -2)).name = "Cocoon"
 
 	# Plants: tufts on the floors, vines under the island and the shelf.
 	var tufts := [[Rect2(6, 6, 73, 42), 3.0, 24], [Rect2(153, 32, 49, 16), 19.0, 24], [Rect2(91, 24, 49, 24), 47.5, 28],
@@ -617,7 +629,7 @@ func _build_machines() -> void:
 	# The moat: deep water under the bridge (Deep-Glow Breath lock D1).
 	var water := _node(Node2D.new(), "Moat", _root)
 	water.set_script(load("res://scripts/world/moat_water.gd"))
-	water.position = Vector2(96 * TILE, 31 * TILE)
+	water.position = Vector2(95 * TILE, 31 * TILE)
 	water.z_index = 12
 	var area := _node(Area2D.new(), "Area", water) as Area2D
 	area.collision_layer = 0
@@ -630,7 +642,7 @@ func _build_machines() -> void:
 	var wm := ShaderMaterial.new()
 	wm.shader = load("res://shaders/water.gdshader")
 	surf.material = wm
-	var glint := _sprite(water, "res://assets/characters/kleo/fx_small.png", Rect2(0, 0, 64, 64), Vector2(140, 34))
+	var glint := _sprite(water, "res://assets/characters/kleo/fx_small.png", Rect2(0, 0, 64, 64), Vector2(156, 34))
 	glint.name = "Glint"
 	glint.scale = Vector2(0.5, 0.5)
 	var gm := CanvasItemMaterial.new()
@@ -640,10 +652,10 @@ func _build_machines() -> void:
 	glint.modulate = Color(0.6, 1.0, 0.95)
 	glint.z_index = 1
 	glint.set_script(load("res://scripts/fx/pulse.gd"))
-	water.set("size", Vector2(24 * TILE, 6 * TILE))
-	surf.size = Vector2(24 * TILE, 6 * TILE)
-	(ash.shape as RectangleShape2D).size = Vector2(24 * TILE, 6 * TILE - 10)
-	ash.position = Vector2(12 * TILE, 3 * TILE + 5)
+	water.set("size", Vector2(25 * TILE, 6 * TILE))
+	surf.size = Vector2(25 * TILE, 6 * TILE)
+	(ash.shape as RectangleShape2D).size = Vector2(25 * TILE, 6 * TILE - 10)
+	ash.position = Vector2(12.5 * TILE, 3 * TILE + 5)
 
 
 func _build_atmosphere(front: Node) -> void:
@@ -695,44 +707,33 @@ func _build_atmosphere(front: Node) -> void:
 
 # --- Foreground --------------------------------------------------------------------------
 
-## The foreground plane: dark clumps of the region's own plants, close to the
-## camera. They scroll a little faster than the playfield sideways (FG) but sit
-## in the world vertically, standing on the walking lines with their roots sunk
-## in the black slab, so only their tops rise in front of the floor. Lanterns
-## never light them: they stand between the light and the camera.
+## The foreground plane: P5's own foreground art, close to the camera, along the
+## room's top and bottom edges only, so it frames the screen and never stands
+## among the props on a walking line. It scrolls faster than the playfield
+## sideways (FG) and sits in the world vertically, so it never slides when the
+## camera rises or falls. Lanterns never light it.
 const FG := 1.2
-const FLORA := ENV + "props_flora.png"
-const FG_FERN := Rect2(6, 6, 73, 42)
-const FG_FERN_SMALL := Rect2(11, 55, 48, 30)
-const FG_GRASS_TALL := Rect2(124, 204, 37, 41)
-const FG_GRASS := Rect2(177, 214, 30, 31)
-const FG_GRASS_LOW := Rect2(153, 32, 49, 16)
 
 
 func _build_foreground() -> void:
 	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
 	p.scroll_scale = Vector2(FG, 1.0)
+	p.repeat_size = Vector2(720, 0)
+	p.repeat_times = 4
 	p.z_index = 30  # in front of everything in the room, under the screen vignette
 	var mat := CanvasItemMaterial.new()
 	mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-	# [world x of the clump's centre, walking line it stands on, piece, sink, flip]
-	var clumps := [
-		[50.0, 24, FG_FERN, 20, false], [335.0, 24, FG_GRASS_TALL, 18, true],
-		[560.0, 28, FG_FERN_SMALL, 12, false], [600.0, 28, FG_GRASS, 14, false],
-		[905.0, 28, FG_FERN, 22, true], [1160.0, 28, FG_GRASS_TALL, 18, false], [1186.0, 28, FG_GRASS_LOW, 4, true],
-		[1420.0, 28, FG_FERN_SMALL, 12, true],
-		[150.0, 37, FG_GRASS, 14, true], [760.0, 37, FG_FERN_SMALL, 14, false], [1040.0, 37, FG_GRASS_TALL, 20, false],
-	]
-	for c in clumps:
-		var r: Rect2 = c[2]
-		var x: float = c[0]
-		# Where it must sit so it is at world x when the camera is centred on it.
-		var lx := x + (FG - 1.0) * (x - 320.0) - r.size.x * 0.5
-		var s := _sprite(p, FLORA, r, Vector2(lx, c[1] * TILE - r.size.y + c[3]))
-		s.name = "Clump"
-		s.flip_h = c[4]
-		s.material = mat
-		s.modulate = Color(0.17, 0.15, 0.22)
+	# Canopy and hanging vines across the room's top edge.
+	var top := _sprite(p, PARALLAX + "fg.png", Rect2(0, 0, 720, 132), Vector2(0, -8))
+	top.name = "Canopy"
+	top.material = mat
+	top.modulate = Color(0.55, 0.55, 0.62)
+	# Fern tops rising in front of the floor below the crypt: the strip's tallest
+	# fronds (row 188) reach 8 px under the crypt's walking line (row 37).
+	var ferns := _sprite(p, PARALLAX + "fg.png", Rect2(0, 150, 720, 106), Vector2(0, 37 * TILE + 8 - 38))
+	ferns.name = "Ferns"
+	ferns.material = mat
+	ferns.modulate = Color(0.5, 0.5, 0.58)
 
 
 ## The room's west and east edges fade into darkness, in front of Kleo, so the

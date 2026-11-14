@@ -53,17 +53,19 @@ non-negotiables.
    faces, undersides) are autotiled onto the masses as shallow bands that end
    in the void along their own stones and roots, never along a straight line;
    only walking lines are straight, and faces stand a few pixels proud of the
-   collision. **The inside of every mass is the void colour**, so the
+   collision. **The inside of every mass is the void colour** (except an upright
+   pier, open on both sides within 3 tiles, which is lit with its masonry so it
+   doesn't read as a hole), so the
    black box itself becomes the natural shadow and depth: a slab between a
    floor and the ceiling below it is grass and soil, then black, then the
    ceiling's edge. One material per face; never several bands stacked in one
    space.
 3. **Parallax camera:** `Camera2D` plus `Parallax2D` layers, at roughly
    sky 0.05 · far 0.15 · mid 0.35 · back wall 0.7 · **playfield 1.0** ·
-   foreground 1.2. The foreground is a few dark clumps of the region's own
-   plants standing on the walking lines, close to the camera: they scroll
-   faster sideways but stay in the world vertically, so they never slide when
-   the camera rises or falls.
+   foreground 1.2. The foreground is foreground art (P5) along the room's top
+   and bottom edges, close to the camera: it scrolls faster sideways but stays
+   in the world vertically, so it never slides when the camera rises or falls,
+   and it never stands among the props on a walking line.
 4. **Atmosphere:** a screen vignette (a `CanvasLayer` shader), depth fog per
    layer, light shafts, particles, and `PointLight2D` for lanterns
    (`CanvasModulate` darkens the scene). Glows are lights or additive

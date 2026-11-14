@@ -17,6 +17,7 @@ extends Node2D
 
 const TILE := 16
 const MAX_DEPTH := 5  # tiles looked through when measuring how thick a mass is
+const PIER := 3  # a mass with open space this close on both sides is an upright pier
 const FOOT := 22.0   # px a wall's face runs on below a floor it stands on (the soil's depth)
 const SIDES := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
 
@@ -145,6 +146,22 @@ func _read(layer: TileMapLayer) -> Dictionary:
 	return out
 
 
+## True if a solid cell is part of an upright pier: open space within PIER
+## cells on its left and on its right. Floor slabs and ground stay void inside;
+## a pier's void would read as a hole.
+func _is_pier(solid: Callable, c: Vector2i) -> bool:
+	if not solid.call(c):
+		return false
+	var left := false
+	var right := false
+	for i in range(1, PIER + 1):
+		if not left and not solid.call(c + Vector2i(-i, 0)):
+			left = true
+		if not right and not solid.call(c + Vector2i(i, 0)):
+			right = true
+	return left and right
+
+
 ## True if a cell is solid in either layer (or outside the room).
 func is_solid(c: Vector2i) -> bool:
 	return _rock.has(c) or _mass.has(c) or not room_rect.has_point(c)
@@ -185,7 +202,12 @@ func _build_cell_texture(p: Dictionary) -> void:
 			continue
 		var dd: float = min(dist.get(c, 31), 31)
 		var painted := 0.0 if _skip.has(c) else 1.0
-		img.set_pixel(local.x, local.y, Color(dd / 32.0, float(cells[c]) / 8.0, 0.0, painted))
+		# B: an upright pier (open space on both sides within PIER cells) is lit
+		# inside, so it reads as solid; 0.5 marks its top row, which fades in.
+		var pier := 0.0
+		if _is_pier(solid, c):
+			pier = 0.5 if (solid.call(c + Vector2i.UP) and not _is_pier(solid, c + Vector2i.UP)) else 1.0
+		img.set_pixel(local.x, local.y, Color(dd / 32.0, float(cells[c]) / 8.0, pier, painted))
 	var mat: ShaderMaterial = p["mat"]
 	mat.set_shader_parameter("cells", ImageTexture.create_from_image(img))
 	mat.set_shader_parameter("origin_cell", Vector2(room_rect.position))
@@ -338,25 +360,36 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 	var bw := m.wall_face + 1
 	# Columns past the face: stones standing proud of the collision, into the air.
 	var over := m.wall_band.get_width() - bw
-	var sy := float(posmod(c.y * TILE, m.wall_band.get_height()))
+	var bh := m.wall_band.get_height()
 	# A wall standing on a floor sinks into it: its face runs on below the walking
 	# line as deep as the floor's soil, so the floor's band doesn't end in a cut.
 	var foot := 0.0
 	if solid.call(c + Vector2i.DOWN):
 		foot = FOOT
-	if not solid.call(c + Vector2i.RIGHT):
-		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.LEFT))
-		var f := foot if solid.call(c + Vector2i.RIGHT + Vector2i.DOWN) else 0.0
-		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x + TILE - depth, p.y, depth + over, TILE + f), Rect2(bw - depth, sy, depth + over, TILE + f))
-	if not solid.call(c + Vector2i.LEFT):
-		var depth: float = min(bw, _wall_room(cells, solid, c, Vector2i.RIGHT))
-		# A negative width draws the region flipped within [x, x + |width|] (Godot keeps
-		# the rect's x), so the rect starts at the proud stones' outer end and the face
-		# lands on the cell's left edge.
-		var f := foot if solid.call(c + Vector2i.LEFT + Vector2i.DOWN) else 0.0
-		canvas.draw_texture_rect_region(m.wall_band,
-			Rect2(p.x - over, p.y, -(depth + over), TILE + f), Rect2(bw - depth, sy, depth + over, TILE + f))
+	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
+		if solid.call(c + side):
+			continue
+		var depth: float = min(bw, _wall_room(cells, solid, c, -side))
+		var f := foot if solid.call(c + side + Vector2i.DOWN) else 0.0
+		# A ceiling over the open side meets this wall: the face runs on up past the
+		# ceiling line as high as the ceiling's band, so the band ends against it.
+		var head := 0.0
+		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP):
+			head = float(m.under_line)
+		# Left-facing faces read the band half a repeat further on, so the two faces
+		# of a pier never mirror each other.
+		var phase := 0 if side == Vector2i.RIGHT else bh / 2
+		var sy := float(posmod(c.y * TILE + phase - int(head), bh))
+		var src := Rect2(bw - depth, sy, depth + over, head + TILE + f)
+		if side == Vector2i.RIGHT:
+			canvas.draw_texture_rect_region(m.wall_band,
+				Rect2(p.x + TILE - depth, p.y - head, depth + over, head + TILE + f), src)
+		else:
+			# A negative width draws the region flipped within [x, x + |width|] (Godot
+			# keeps the rect's x), so the rect starts at the proud stones' outer end
+			# and the face lands on the cell's left edge.
+			canvas.draw_texture_rect_region(m.wall_band,
+				Rect2(p.x - over, p.y - head, -(depth + over), head + TILE + f), src)
 
 
 func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) -> void:

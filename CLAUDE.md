@@ -254,10 +254,13 @@ She steps forward with every hit.
   bands and corners are cut from the IB5 and K4 kits by `tools/make_terrain.py`,
   which writes their anchors to `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
-- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): a
-  few dark, unlit clumps of the region's own plants standing on walking lines,
-  roots sunk in the slab. They sit in the world vertically, so they never slide
-  when the camera rises or falls.
+- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): P5's
+  canopy along the room's top edge and its fern tops along the bottom, unlit.
+  It sits in the world vertically, so it never slides when the camera rises or
+  falls, and it never stands on a walking line among the props.
+- **Piers:** a mass with open space within 3 tiles on both sides is an upright
+  pier; the fill shader lights its inside (stone: K5's pier masonry, earth:
+  IB1) so it reads solid. Slabs and ground stay void inside.
 - **Placed pieces:** one-way platforms are on physics layer 7 (`one_way`); Kleo
   drops through with down + jump. Pots, barrels and crates are `Breakable`
   (one sword hit breaks them into tumbling pieces). Anything Kleo's sword can
