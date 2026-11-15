@@ -30,7 +30,7 @@ ROOMS = {
         "water": [(78, 37, 42, 2)],
         "ramps": [((228, 304), (160, 256)), ((356, 352), (288, 304)), ((612, 464), (544, 416)), ((868, 592), (800, 544))],
         "routes": [("tour", AMBER), ("upper", TEAL)],
-        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (84, 19.4, "HIGH PATH: the floating islands"), (84, 33.2, "LOW PATH: six small islands"), (116, 38.2, "EXIT > IB-01"), (112, 11.4, "Wing-Cloak lock")],
+        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (80, 15.4, "HIGH PATH: islands at different heights"), (84, 33.2, "LOW PATH: six small islands"), (116, 38.2, "EXIT > IB-01"), (112, 11.4, "Wing-Cloak lock")],
         "legend": [(AMBER, "low path (walked in engine)"), (TEAL, "high path, way back (walked)")],
     },
 }

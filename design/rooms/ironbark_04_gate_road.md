@@ -29,10 +29,17 @@ So the pool is 42 tiles long (more than a screen) and has two ways over it:
   jump is the lesson. They are spaced for her measured jump (about 55 px of
   water, 48 px to land on); a first version with piers 64 px apart could not be
   hopped, because a full jump sails over the next one.
-- **High path:** the big floating islands above the water. It starts on the
-  hill (the second terrace), crosses the bush chunk, the tree island and the
-  root-held island, then goes out over the pool by the ruin island, the
-  graveyard island and the headstone chunk, and drops to the far bank.
+- **High path:** the floating islands above the water. It starts on the hill
+  (the second terrace), crosses the bush chunk, the tree island and the
+  root-held island, then goes out over the pool.
+3. Then: *"make the bigger islands above the water at different heights so you
+   don't just jump straight across in a line."* So over the pool every island
+   is at its own level: the ruin island (two up), the crystal-shrine island
+   (three down), a bush chunk (three up), a second ruin island (three down),
+   the headstone chunk (four down), then the far bank. The headstone chunk
+   sits right over the bank, so a full jump that overshoots it lands on the
+   bank, not in the water (a first version ended on a three-tile chunk over
+   open water, and a full jump sailed past it).
 
 ## Spec
 
@@ -44,11 +51,11 @@ So the pool is 42 tiles long (more than a screen) and has two ways over it:
 | **Purpose** | The other half of the movement lesson: stairs down, two drops, then a choice of two ways over the water. Shows the first lock |
 | **Size** | 128 × 40 tiles (2048 × 640 px): 3.2 screens wide, 1.8 tall |
 | **Ground** | The west hill's six terraces (rows 16, 19, 22, 26, 29, 34); the road (row 37, 24 flat tiles); the pool (42 long); the far bank (8) |
-| **Islands (painted)** | The bush chunk (3 wide, row 17); the tree island (19, row 16); the root-held island (16, row 20); the ruin island (9, row 21); the graveyard island (27, row 22, mirrored); the headstone chunk (5, row 25); a far bush chunk (3, row 14) |
+| **Islands (painted)** | The bush chunk (3 wide, row 17); the tree island (19, row 16); the root-held island (16, row 20); over the pool, the ruin island (9, row 18), the crystal-shrine island (11, row 21), a bush chunk (3, row 18), a second ruin island (9, row 21, mirrored), the headstone chunk (5, row 25); a far bush chunk (3, row 14) |
 | **Placed collision** | Four flights of stairs; the pool's six small islands |
 | **Lines** | **Low:** the arch → two flights down → a drop → a flight → a drop → a flight → the road → the pool by its six islands → the East door. **High:** from the second terrace along the islands, out over the pool, down to the far bank. **Way back:** ledge catches of 5 and 4 tiles and the flights |
 | **Locks seen here** | **Wing-Cloak:** a far chunk high over the road's end, something glinting on it, out of reach from every island |
-| **Encounters** | None yet. The road (24 flat tiles) and the graveyard island (27) are where a chill enemy belongs |
+| **Encounters** | None yet. The road (24 flat tiles) is where a chill enemy belongs |
 | **Story** | A crystal shrine by the road; the timber gate before the water; lanterns on both banks |
 
 ## Validation
@@ -59,7 +66,7 @@ reached; 100% of the ungated floor reached; no traps.
 
 Walked in the engine (`tests/playtest.gd room=ib04`): the low path
 (`mode=tour`): down the hill, across the pool (all seven jumps landed) and out
-into IB-01. The high path (`mode=upper`): every island to the far bank; then
+into IB-01. The high path (`mode=upper`): every island, up and down, to the far bank (the test's full last jump lands on the bank); then
 the way back up the hill, and a walk into the water (returns her to safe
 ground). The doors (`mode=doors`) with IB-01 and IB-03. All completed. Camera:
 slide 0, wobble 0.
@@ -70,7 +77,7 @@ slide 0, wobble 0.
   themselves more tightly.
 - The pool is two tiles deep (the room ends there), so the piers stand in
   shallow water; its banks are plain earth. No waterfall or ruins around it.
-- The graveyard island is IB-03's great island again, mirrored: the seven
-  island paintings are stretched over two rooms.
+- The ruin island appears twice over the pool (once mirrored), and the bush
+  chunk three times in the room: seven island paintings are stretched thin.
 - The pool's piers are tinted SF11 pieces, two side by side per island.
 - No enemies yet.
