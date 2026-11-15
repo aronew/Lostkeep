@@ -447,7 +447,12 @@ She steps forward with every hit.
   win: drops, islands, and a machine for the long climb.
 - **Rooms not built yet:** the Undercroft
   (under the clearing, through IB-05's lower East door: the next room on the
-  main line), the Refuge road (west of IB-02, behind the plated door: needs
+  main line; it also takes the shaft under IB-05's pit, behind the cracked
+  bark plate W4 (Ironbark Ward): build that shaft as in the creative lead's
+  reference `docs/mockups/undercroft/shaft_reference.webp`, a narrow masonry
+  shaft with small wall ledges taking turns on each wall, spaced so she can
+  climb back up (each about 3 tiles above the last, never over the one below).
+  The creative lead: steps like these in a shaft "don't read as weird"), the Refuge road (west of IB-02, behind the plated door: needs
   the Ward), the Guard Post above IB-02's well (the surface rooms lie over the
   crypt instead). All three end in darkness today.
 - **The Old Crypt's first section is built as IB-05, the Shrine Hall, and

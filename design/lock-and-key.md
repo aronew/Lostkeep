@@ -87,6 +87,7 @@ rescue or a truth).
 | W1 | Ironbark | The first descent, under the great tree: a cracked plate floor | Hard | ✔ min ~5 | A shortcut back to the start lantern |
 | W2 | Ironbark **IB-02** | The Old Crypt: a plated door across the west gallery (upper line) | Hard | ✔ | The Refuge road, a health shard and a warden's journal |
 | W3 | Ironbark | The keep wall beside the bridge (lower route) | Hard | ✔ | The route to the armory, where the key is |
+| W4 | Ironbark **IB-05** | The Shrine Hall: the pit in the lower floor has a cracked bark-plate floor, motes rising through the cracks and a faint light below | Hard | ✔ | A shaft down into the Undercroft, stepping down on wall ledges that take turns on each wall: a shortcut into its depths, and the way back up |
 | W4 | Refuge | A plated hatch under the camp | Hard | — | The Refuge cellar: the map-maker rescue |
 | W5 | Dusk-Drifter | Carapax-plated shutters | Hard | — | The critical path into the forge |
 

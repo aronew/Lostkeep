@@ -39,6 +39,7 @@ const SPACES := [
 	[54, 22, 4, 4],     # the lower East door, under the shelf
 	[15, 26, 10, 1],    # the dip in the lower floor (row 27)
 	[29, 26, 4, 5],     # the pit
+	[29, 31, 4, 3],     # under the pit's cracked plate (Ironbark Ward, W4): the shaft down to the Undercroft
 ]
 ## Islands, plates and ledges: one tile of collision under each painting's
 ## walking line. Each ledge stands beside what it leads to, never over it.
@@ -107,6 +108,7 @@ func _initialize() -> void:
 	_hide_island_tiles()
 	_dress(behind)
 	_build_air(t["front"])
+	_build_pit_plate(behind)
 	_edge_shades()
 	_door("East", Rect2i(50, 2, 8, 5), 1, IB01, "WestLower")
 	_door("West", Rect2i(0, 3, 8, 5), -1, IB02, "East")
@@ -248,3 +250,33 @@ func _build_air(front: Node) -> void:
 	dust.material = _add_mat
 	dust.z_index = 14
 	_crypt_foreground()
+
+
+## W4: the pit's floor is a cracked bark plate (Ironbark Ward lock), the
+## horizontal plate from the plate sheet; under it the shaft drops on into the
+## Undercroft, where wall ledges taking turns on each wall step down (the
+## creative lead's reference: docs/mockups/undercroft/shaft_reference.webp).
+## Its tells: motes rising through the cracks, a faint cool light from below.
+func _build_pit_plate(behind: Node) -> void:
+	var plate := _node(StaticBody2D.new(), "BarkPlateW4", _root) as StaticBody2D
+	plate.position = Vector2(29 * TILE, 31 * TILE)
+	plate.z_index = 8
+	var pc := CollisionShape2D.new()
+	var pr := RectangleShape2D.new()
+	pr.size = Vector2(4 * TILE, TILE)
+	pc.shape = pr
+	pc.position = Vector2(2 * TILE, 0.5 * TILE)
+	_node(pc, "Shape", plate)
+	_sprite(plate, ENV + "gate_bark_plate.png", Rect2(65, 97, 63, 29), Vector2(0, -4)).name = "Art"
+	_light(behind, Vector2(31 * TILE, 33 * TILE), Color(0.55, 0.75, 1.0), 0.5, 0.7, "ShaftGlow")
+	var draught := _particles("ShaftDraught", load("res://assets/fx/mote.png"), 6, 3.0, Rect2(29.6 * TILE, 30.4 * TILE, 2.8 * TILE, 0.4 * TILE))
+	draught.direction = Vector2(0, -1)
+	draught.spread = 14.0
+	draught.gravity = Vector2.ZERO
+	draught.initial_velocity_min = 5.0
+	draught.initial_velocity_max = 10.0
+	draught.color = Color(0.8, 0.92, 1.0, 0.75)
+	draught.scale_amount_min = 0.5
+	draught.scale_amount_max = 0.5
+	draught.material = _add_mat
+	draught.z_index = 21
