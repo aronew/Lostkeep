@@ -98,6 +98,10 @@ const CY_GRADE := Color(0.8, 0.77, 0.86)
 var _secret_rects: Array[Rect2i] = []
 ## Which detail pass `_finish()` runs: "crypt", "surface" or none.
 var _detail_kind := ""
+## The moody look (the creative lead: "I like that look instead of so bright",
+## docs/mockups/mood/): set by a room before _finish(), which sinks it into
+## a teal murk with fog along its floors. See _moody().
+var _mood := false
 
 
 func _use_crypt_y_stone() -> void:
@@ -414,6 +418,8 @@ func _terrain(tileset: TileSet) -> Dictionary:
 func _finish() -> void:
 	if _detail_kind != "":
 		_room_detail(_detail_kind == "surface")
+	if _mood:
+		_moody()
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
 	_node(kleo, "Kleo", _root, false)
@@ -672,7 +678,7 @@ func _parallax(name: String, scale: Vector2, tex_path: String, y: float, base_co
 	return p
 
 
-func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> void:
+func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> ColorRect:
 	var r := _node(ColorRect.new(), "Fog", parent) as ColorRect
 	r.position = rect.position
 	r.size = rect.size
@@ -693,6 +699,7 @@ func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2
 	m.set_shader_parameter("drift", drift)
 	m.set_shader_parameter("scale", Vector2(rect.size.x / 512.0, rect.size.y / 256.0))
 	r.material = m
+	return r
 
 
 func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rect2) -> CPUParticles2D:
@@ -1142,3 +1149,107 @@ func _light(parent: Node, pos: Vector2, color: Color, energy: float, scale: floa
 	l.position = pos.round()
 	l.set_script(load("res://scripts/world/lantern_light.gd"))
 	return l
+
+
+# --- The moody look -------------------------------------------------------------------------
+
+const MOOD_MURK := Color(0.36, 0.46, 0.52)         # the CanvasModulate: low key, teal
+const MOOD_HAZE := Color(0.04, 0.11, 0.13, 0.24)   # washes the backdrops into the murk
+const MOOD_FOG := Color(0.32, 0.48, 0.52)          # the fog's own colour
+const MOOD_FAR := Color(0.7, 0.88, 0.9)            # the backdrops, greyed toward teal
+
+
+## After the creative lead's moody references (docs/mockups/mood/): the room
+## sinks into a teal murk, a haze lies over its backdrops, ground fog runs along
+## every floor (behind Kleo and, thinner, in front of her feet), a low bank fills
+## the drops, a bank lies along the bottom of the view, the warm lights carry
+## the scene and the cold ones fall back, and the vignette deepens.
+func _moody() -> void:
+	var dark := _root.get_node_or_null("Darkness") as CanvasModulate
+	if dark:
+		dark.color = MOOD_MURK
+	for c in _root.get_children():
+		if c is Parallax2D and (c as Parallax2D).z_index < 0:
+			(c as Parallax2D).modulate = MOOD_FAR
+	var rect := Rect2(room.position * TILE, room.size * TILE)
+	var haze := _node(ColorRect.new(), "MoodHaze", _root) as ColorRect
+	haze.color = MOOD_HAZE
+	haze.position = rect.position - Vector2(400, 400)
+	haze.size = rect.size + Vector2(800, 800)
+	haze.z_index = -9
+	haze.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var mood_poly := _root.get_node_or_null("Mood")
+	if mood_poly:
+		_root.move_child(haze, mood_poly.get_index() + 1)
+	var low := _mood_fog(_root, "DeepFog", Rect2(rect.position.x, rect.position.y + rect.size.y * 0.45, rect.size.x, rect.size.y * 0.6), 0.28, 1)
+	low.material.set_shader_parameter("scale", Vector2(rect.size.x / 800.0, rect.size.y / 140.0))
+	low.material.set_shader_parameter("side_fade", 0.08)
+	_mood_floor_fog()
+	var fg := _root.get_node_or_null("Foreground") as Parallax2D
+	if fg:
+		var w := rect.size.x * 1.3 + 800.0
+		var bank := _mood_fog(fg, "ScreenFog", Rect2(-400, 250, w, 120), 0.45, 0)
+		bank.material.set_shader_parameter("scale", Vector2(w / 600.0, 0.6))
+	for l in _root.find_children("*", "PointLight2D", true, false):
+		var pl := l as PointLight2D
+		if pl.color.r > pl.color.b:
+			pl.energy *= 1.9
+			pl.texture_scale *= 1.15
+		else:
+			pl.energy *= 0.5
+	var vig := _root.get_node_or_null("Screen/Vignette") as ColorRect
+	if vig and vig.material:
+		var vm := (vig.material as ShaderMaterial).duplicate() as ShaderMaterial
+		vm.set_shader_parameter("strength", 0.74)
+		vm.set_shader_parameter("inner", 0.32)
+		vm.set_shader_parameter("shadow", Color(0.01, 0.03, 0.04))
+		vig.material = vm
+
+
+## Ground fog along every floor run of four tiles or more.
+func _mood_floor_fog() -> void:
+	var cells := {}
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm:
+			for c in tm.get_used_cells():
+				cells[c] = true
+	var rows := {}
+	for c in cells:
+		if not cells.has(c + Vector2i(0, -1)) and not cells.has(c + Vector2i(0, -2)):
+			if not rows.has(c.y):
+				rows[c.y] = []
+			rows[c.y].append(c.x)
+	var n := 0
+	var keys := rows.keys()
+	keys.sort()
+	for y in keys:
+		var xs: Array = rows[y]
+		xs.sort()
+		var start: int = xs[0]
+		var prev: int = xs[0]
+		for i in range(1, xs.size() + 1):
+			if i < xs.size() and xs[i] == prev + 1:
+				prev = xs[i]
+				continue
+			if prev - start + 1 >= 4:
+				var fy := float(y * TILE)
+				var x0 := float(start * TILE) - 24.0
+				var w := float((prev - start + 1) * TILE) + 48.0
+				var back := _mood_fog(_root, "FloorFog%d" % n, Rect2(x0, fy - 3.4 * TILE, w, 3.8 * TILE), 0.4, 3)
+				back.material.set_shader_parameter("side_fade", 0.12)
+				var front := _mood_fog(_root, "FloorFogFront%d" % n, Rect2(x0, fy - 1.4 * TILE, w, 2.0 * TILE), 0.22, 12)
+				front.material.set_shader_parameter("side_fade", 0.15)
+				front.material.set_shader_parameter("drift", Vector2(-0.008, 0.0))
+				n += 1
+			if i < xs.size():
+				start = xs[i]
+				prev = xs[i]
+
+
+func _mood_fog(parent: Node, fog_name: String, rect: Rect2, density: float, z: int) -> ColorRect:
+	var r := _fog(parent, rect, MOOD_FOG, density, Vector2(0.005, 0.0))
+	r.name = fog_name
+	r.z_index = z
+	r.material.set_shader_parameter("scale", Vector2(rect.size.x / 640.0, rect.size.y / 90.0))
+	return r

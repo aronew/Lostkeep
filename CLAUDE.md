@@ -640,7 +640,12 @@ She steps forward with every hit.
   bank across the bottom of the view, warm lights up and cold ones down, a
   deeper vignette). `scenes/tests/mood_ib05.tscn` is IB-05 in it; pictures in
   `docs/rooms/mood_test/` (taken with `tests/mood_shot.gd`). Not applied to any
-  room yet. The fog shader's `side_fade` softens a band's ends.
+  room by the tool. The fog shader's `side_fade` softens a band's ends.
+  **IB-05 now wears it as its own look** (the creative lead: "I like that look
+  instead of so bright"; `docs/mockups/mood/shrine_hall_moody.webp`): a room
+  sets `_mood = true` and `_finish()` calls `_moody()` in `room_builder.gd`
+  (`MOOD_*` constants). Other rooms can switch it on once IB-05 is approved.
+  Don't run `mood_test.gd` on IB-05: it would double the fog.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's

@@ -525,9 +525,11 @@ func _tour_ib05() -> void:
 	await _hold_until(["move_left"], func(): return kleo.global_position.x < 51.0 * TILE, 300)
 	await _hold_until(["move_left", "jump"], func(): return _floor_at(9) and kleo.global_position.x < 46 * TILE, 200)
 	lines.append("over the gap by the landing, down to the east gallery: %s (x %.0f)" % [_floor_at(9) and kleo.global_position.x < 46 * TILE, kleo.global_position.x])
-	await _hold_until(["move_left"], func(): return kleo.global_position.x < 22.6 * TILE, 600)
-	await _hold_until(["move_left", "jump"], func(): return _floor_at(8) and kleo.global_position.x < 19 * TILE, 200)
-	lines.append("over the gap between the galleries, up to the west gallery: %s (x %.0f)" % [_floor_at(8) and kleo.global_position.x < 19 * TILE, kleo.global_position.x])
+	# Up the step out of the arcade bay (row 9 to 8), then over the gap: the
+	# west gallery's floor steps up toward it (row 7).
+	await _jump_to(31.0 * TILE, 23.0 * TILE, 27.0 * TILE, 8)
+	var up := await _jump_to(25.0 * TILE, 14.0 * TILE, 18.5 * TILE, 7, 22.4 * TILE)
+	lines.append("over the gap between the galleries, up to the west gallery's step: %s (x %.0f)" % [up, kleo.global_position.x])
 	await _hold_until(["move_left"], func(): return room.name != "IronbarkShrineHall", 500)
 	await _wait(50)
 	lines.append("out the West door into: %s, standing at x %.0f, y %.0f, on the floor: %s" % [room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])

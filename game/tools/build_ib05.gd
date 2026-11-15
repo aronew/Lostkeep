@@ -29,10 +29,18 @@ const IB06 := "res://scenes/rooms/ironbark_06_undercroft.tscn"
 const ROOM := Rect2i(0, 0, 58, 34)
 const ROCK := [[0, 0, 58, 34, 1]]
 const SPACES := [
-	[0, 3, 19, 5],      # the west gallery (its floor row 8), to the upper West door
+	# The galleries step, floor and ceiling, as in the creative lead's moody
+	# mockup of this room (docs/mockups/mood/shrine_hall_moody.webp), never one
+	# straight corridor.
+	[0, 3, 14, 5],      # the west gallery (its floor row 8), to the upper West door
+	[8, 2, 5, 1],       # its ceiling rises a course in the middle
+	[14, 3, 5, 4],      # and its floor steps up toward the gap (row 7)
 	[19, 0, 3, 3],      # the shaft above the galleries' gap, going up out of sight
 	[19, 3, 3, 8],      # the gap between the galleries, open down into the hall
-	[22, 4, 24, 5],     # the east gallery (floor row 9)
+	[22, 3, 4, 5],      # the east gallery: its west end, floor row 8, ceiling row 3
+	[26, 4, 3, 4],      # under a bulkhead (ceiling row 4)
+	[29, 3, 9, 6],      # the tall bay with the arcade, a step down (floor row 9)
+	[38, 4, 8, 5],      # on to the gap by the East door (floor row 9)
 	[46, 2, 4, 9],      # the gap by the East door, open down into the hall
 	[50, 2, 8, 5],      # the landing at the East door (floor row 7)
 	[3, 11, 51, 15],    # the hall (its floor row 26)
@@ -205,10 +213,10 @@ func _dress(behind: Node) -> void:
 	# The west gallery: a single arch, pots, crystals and flowers.
 	_sh(behind, ARC, Rect2(144, 32, 64, 80), 120, WEST, "Arch")
 	_sh(behind, ARC, Rect2(304, 88, 40, 24), 200, WEST, "Pots")
-	_sh(behind, FLORA2, Rect2(8, 72, 32, 20), 250, WEST, "Flowers")
+	_sh(behind, FLORA2, Rect2(8, 72, 32, 20), 250, WEST - TILE, "Flowers")
 	# The east gallery: the arcade, pillars, the chest, pots, crystals.
-	_sh(behind, ARC, Rect2(4, 32, 128, 80), 430, EAST, "Arcade")
-	_sh(behind, ARC, Rect2(272, 32, 20, 80), 380, EAST, "Pillar")
+	_sh(behind, ARC, Rect2(4, 32, 128, 80), 474, EAST, "Arcade")
+	_sh(behind, ARC, Rect2(272, 32, 20, 80), 380, EAST - TILE, "Pillar")
 	_sh(behind, ARC, Rect2(352, 96, 24, 16), 600, EAST, "Chest")
 	_sh(behind, FLORA2, Rect2(64, 64, 48, 28), 630, EAST, "Flowers")
 	_breakable(bag, POT, 690.0, EAST, CLAY)
@@ -241,6 +249,7 @@ func _dress(behind: Node) -> void:
 func _build_air(front: Node) -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
 	mod.color = Color(0.9, 0.9, 0.96)
+	_mood = true
 	_fog(_root, Rect2(48, 350, 800, 70), Color("#66647e"), 0.16, Vector2(0.005, 0.0))
 	var dust := _particles("Dust", load("res://assets/fx/mote.png"), 30, 9.0, Rect2(48, 60, 820, 360))
 	dust.color = Color(0.8, 0.86, 1.0, 0.7)
