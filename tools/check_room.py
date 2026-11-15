@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [ib01|ib02|ib03]
+Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04]
 """
 import json
 import sys
@@ -49,17 +49,24 @@ ROOMS = {
     },
     "ib03": {
         "cells": "game/tests/out/ib03/map/cells.json",
-        "spawn": (18, 23),
+        "spawn": (2, 36),
         # Stairs (slopes under painted steps): foot and head, both ways.
-        "lift": [((27, 26), (23, 23)), ((30, 26), (34, 24)), ((53, 26), (49, 24)), ((56, 26), (60, 23)),
-                 ((65, 23), (69, 20)), ((74, 20), (78, 17)), ((83, 17), (87, 14))],
-        "water": (34, 27, 16, 4),
-        "gated": {"far island over the road (Wing-Cloak)": (100, 0, 4, 9)},
-        # Collision that isn't rock: the root ledge, the bridge's two decks, the two great
-        # branches (one-way), and the islands' single tile under their art.
-        "seals": [(12, 22, 4, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1), (49, 18, 15, 1),
-                  (23, 18, 11, 1), (38, 17, 7, 1), (100, 9, 4, 1)],
-        "exits": {"east (to the Lantern Clearing)": (111, 28), "west (the forest road)": (0, 23)},
+        "lift": [((3, 36), (8, 33)), ((19, 30), (24, 27)), ((74, 21), (79, 18)), ((80, 18), (85, 15))],
+        "water": (0, 0, 0, 0),
+        "gated": {},
+        # Collision that isn't rock: the log (one-way), and the painted islands'
+        # single tile of collision (their paintings are thick; the rule is for rock).
+        "seals": [(66, 22, 5, 1), (32, 25, 5, 1), (39, 22, 27, 1), (44, 31, 11, 1)],
+        "exits": {"east (to the Gate Road)": (92, 15), "west (the forest road)": (0, 36)},
+    },
+    "ib04": {
+        "cells": "game/tests/out/ib04/map/cells.json",
+        "spawn": (4, 15),
+        "lift": [((14, 18), (9, 15)), ((22, 21), (17, 18)), ((38, 28), (33, 25)), ((54, 36), (49, 33))],
+        "water": (88, 37, 4, 2),
+        "gated": {"far island over the road (Wing-Cloak)": (76, 6, 9, 11)},
+        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (76, 17, 9, 1)],
+        "exits": {"east (to the Lantern Clearing)": (111, 36), "west (to the Ruin Gardens)": (0, 15)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

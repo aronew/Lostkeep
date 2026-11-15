@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Lost Keep"
 config/description="A 2D Metroidvania. Kleo of the Ironbark Guard searches for her missing people."
-run/main_scene="res://scenes/rooms/ironbark_03_guard_post.tscn"
+run/main_scene="res://scenes/rooms/ironbark_03_ruin_gardens.tscn"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

@@ -113,7 +113,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | G1 | Ironbark | The broken arch bridge with its centre fallen, a torn banner over the gap | Hard | ✔ | The far bank: an express lane over the graveyard |
-| G1b | Ironbark **IB-03** | The Guard Post: a far island over the road east, a glint on it, out of reach from the chapel's hilltop | Hard | ✔ | A relic; and a glide from the chapel deep into IB-01 |
+| G1b | Ironbark **IB-04** | The Gate Road: the far ruin island over the road, something glinting in its arch, out of reach from the root-held island | Hard | ✔ | A relic |
 | G2 | Hearth-Plains | The wind-mill gorge | Hard | ✔ | Rootling village outskirts: a rescue |
 | G3 | Dusk-Drifter | Heat updrafts from braziers lit with Emberwick, with nothing to ride them yet | Hard | ✔ (a planted combo) | A sky route over the forge |
 | G4 | Fen-Stalker | The swamp's canopy chasm | Hard | — | The critical path west |
@@ -123,7 +123,6 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | D1 | Ironbark **IB-01** | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
 | D1b | Ironbark **IB-02** | The Old Crypt: the cistern and its flooded gallery, a glint deep inside | Hard | ✔ | A drowned burial: a relic |
-| D1c | Ironbark **IB-03** | The Guard Post: a glint deep in the pool under the broken bridge's gap | Hard | ✔ | The pool's bed; below it, the Old Crypt's Root Well |
 | D2 | Refuge | The flooded undercroft under the camp | Hard | ✔ | The undercroft shortcut to the Vats |
 | D3 | Fen-Stalker | Deep fen pools | Hard | ✔ | Mire-Kin rescues |
 | D4 | Tide-Weaver | The whole region | Hard | — | Return region |

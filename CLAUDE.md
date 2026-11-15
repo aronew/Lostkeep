@@ -220,8 +220,8 @@ She steps forward with every hit.
 
 ### The Godot project (`game/`)
 - **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is
-  IB-03, the Guard Post; its East door leads to IB-01, the Lantern Clearing,
-  whose hall door leads into IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
+  IB-03, the Ruin Gardens; then IB-04, the Gate Road; then IB-01, the Lantern
+  Clearing, whose hall door leads into IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
   cloud sessions (the environment's setup script installs it to `/opt/godot/`).
 - **Controls:** move A/D or arrows; jump Space/Z/K; attack **left click** or X/J;
   interact E/C or up; gamepad too. **Right click** (or V/L, gamepad B) is the
@@ -243,8 +243,8 @@ She steps forward with every hit.
   tileset, materials, back walls, terrain, and helpers: `_door`, `_lift`,
   `_water`, `_breakable`, `_light`, `_fog`, `_edge_shades`); each room has its
   own builder on top of it, holding its plan and its dressing:
-  `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02) and `build_ib03.gd`
-  (IB-03). Each saves an
+  `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02), and `build_ib03.gd`
+  and `build_ib04.gd` (the surface rooms, on `surface_builder.gd`). Each saves an
   ordinary scene:
   `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
@@ -330,9 +330,9 @@ She steps forward with every hit.
     `ROOMS` in `tests/playtest.gd` and `tools/check_room.py` (its spawn, lift,
     water, gates and exits), its scripted lines, and its routes in
     `stitch_map.py`.
-  - IB-03 (`room=ib03`): `mode=tour` (bridge, hill, chapel, out the East
-    door), `mode=upper` (branches and islands, the way back, the pool) and
-    `mode=doors`.
+  - IB-03 and IB-04 (`room=ib03`, `room=ib04`): `mode=tour` (the main line
+    and out the East door), `mode=upper` (the optional lines and the ways
+    back) and `mode=doors` (IB-01, IB-04 and IB-03).
     `python3 tools/blockout_map.py ib03` draws a labelled black-box map with
     the walked routes, for blockout reviews (the in-game box view is too dark
     to read in a picture).
@@ -363,66 +363,41 @@ She steps forward with every hit.
 6. **Judge art in the game,** not on its own.
 
 ### Open items
-- **NEXT: build the Ironbark surface sector (3 to 4 rooms) before going any
-  deeper underground.** Why: IB-01 was a test room, and gravity is the compass:
-  the player should know the surface before being pulled down. Today the game
-  starts at the shrine and is in the crypt within a minute, skipping the
-  story's start (Kleo at the Guard Post noticing her people are missing), the
-  forest itself, the first sight of the Lost Keep gate across the broken
-  bridge, and the surface's locks (the bridge gap, the moat, the thorn knots),
-  which must each be seen a few times before their keys.
-  - **The Guard Post is built as IB-03, with art, and awaits review**
-    (`design/rooms/ironbark_03_guard_post.md`, images in
-    `docs/rooms/ironbark_03/`). The creative lead asked for it to "look just
-    like my mockups" and said "it can go high and then drop down": it starts
-    low under the great tree, crosses the pool by the broken bridge, climbs
-    four flights of stairs to the chapel, and drops down the far side to
-    IB-01's `WestUpper` door. It is composed from SF9 to SF13 at their own
-    scale. It is the project's main scene. Its spec lists the rough edges.
-    **The creative lead's taste, from its review:** they prefer IB-01's
-    palette (purple sky, moons, plum stone, teal forest) to the SF kit's bluer,
-    yellower one, and they disliked SF9's twisted trunk. So IB-03 uses IB-01's
-    backdrops, darkness and canopy, the Great Ironbark painting as its tree (a
-    stand-in), and tints the SF pieces toward plum (`SF_TINT`). SF13's
-    backdrops and SF9's trunk and leaf piece are not used. New surface art
-    should be prompted in IB-01's palette. They also said the room "looks
-    nothing like the mockup": the layout question (one dense screen vs. the
-    pieces spread over 2.8 screens) is still open with them.
-    Don't start the next surface room until it is reviewed.
-  - **How the surface is built** (new with IB-03, reuse it): stairs are painted
-    steps over a slope (`_stairs`, a StaticBody polygon, about 40 degrees);
-    bridge decks and the root ledge are solid slabs; branches are one-way
-    slabs (layer 7); floating islands are one tile of tile collision under
-    placed art (ledge catches only work on tiles). The checker can't see
-    non-tile collision: list it under `seals` and list each stair as a `lift`
-    pair in `tools/check_room.py`.
-  - **Rooms (proposed, not yet approved by the creative lead):** the **Guard
-    Post** (the opening room, above IB-01 through its west upper exit at the
-    terrace, rows 24 up), a **forest walk**, and the **approach to the Keep
-    gate**, looping back to IB-01. The game opens at the Guard Post; IB-01
-    becomes the second room. The creative lead hasn't yet chosen surface-first
-    vs. finishing IB-02's art; recommend surface-first.
-  - **Method:** progression first, blockout first, art last; one room approved
-    before the next. Each room is a builder extending `game/tools/room_builder.gd`
-    (copy `build_ib02.gd`), a spec in `design/rooms/`, entries in `ROOMS` in
-    `tests/playtest.gd` and `tools/check_room.py`, and doors on the shared grid.
-  - **Level-design ideas:** mockups R, S, T (see the end of
-    `design/world-and-regions.md`): a great tree whose branches are walkways
-    across the upper air, a hill chapel climbed by stair terraces, a pool at
-    the lowest point with a broken bridge and stumps, floating ruin islands,
-    and three readable heights (branch, terrace, water). Rows of tiny floating
-    blocks in the mockups are overruled by the principles. Stairs: no
-    staircases in collision; each step is a full 128 px (art) / 16 px tread or
-    a short run of floors.
-  - **Art ready for it:** SF9 to SF13 are processed in
-    `game/assets/environment/ironbark/surface_*.png` (great tree and branches,
-    chapel and terraces, pool/bridge/falls/stumps, ruin islands and arches,
-    stacked far + mid backdrops) but not placed anywhere. Their README warns
-    stair treads, fence repeat, walking lines and shadow edges need tidying when
-    cut. Base-kit cards SF1 to SF8 (ground bands, walls/corners, islands, stone,
-    backdrops, foreground) are in Book 1 but not generated yet; until then the
-    surface uses IB2's top band and IB6's walls and corners.
-  - Mockups U, V, W (greener deepwood) are for a different area later.
+- **The Ironbark surface: two rooms built, awaiting the creative lead's
+  review.** The game opens in **IB-03, the Ruin Gardens** (a climb: a hill of
+  terraces, the great graveyard island, a log, the cliff's arch) and goes on
+  through **IB-04, the Gate Road** (wind back down a hill under the islands,
+  the straight road, a jump over the water) into IB-01, which the creative lead
+  calls the guard post. Specs: `design/rooms/ironbark_03_ruin_gardens.md`,
+  `ironbark_04_gate_road.md`; images in `docs/rooms/`.
+  - **What the creative lead wants here** (their words and reviews):
+    - The look of their "Moonlit" mockups (`docs/mockups/ironbark_surface/`):
+      plum boulder terrain, **large floating islands**, IB-01's purple sky,
+      moons and teal forest. They rejected the SF kit's bluer colours, SF9's
+      twisted trunk, badly cut stairs, and a first IB-03 (bridge, hill, chapel)
+      that "looks nothing like the mockup".
+    - These rooms are "to learn movement, get the feel for the game, do some
+      jumps, maybe a chill enemy or two".
+  - **Their art for it** is in `art/source/ironbark/islands/` (seven painted
+    islands and a cliff atlas, as generated at 8x), reduced 8:1 with nothing
+    else done to `game/assets/environment/ironbark/island_*.png` and
+    `cliffs_and_ruins.png`. The atlas holds two stair flights, two arch doors,
+    a crystal shrine, a timber gate, a lantern post, two corner silhouettes and
+    three terrace slabs (the slabs and the five-step flight are not used yet).
+  - **How a surface room is built** (`game/tools/surface_builder.gd`, on
+    `room_builder.gd`): `_surface_begin` / `_surface_finish` give IB-01's
+    backdrops, darkness, moonlight, canopy and corner silhouettes. A painted
+    island is `_island(kind, tile_x, row, tiles)` over a one-tile mass in the
+    plan (also in SKIP; `_hide_island_tiles()` hides the tiles, the box view
+    shows them). Stairs are `_flight(edge_x, foot_y, down_east)`: the
+    eight-step painting over a slope, three tiles up in 68 px. `_log` is a
+    one-way timber. The checker can't see non-tile collision: list logs and
+    island tiles under `seals`, and each flight as a `lift` pair.
+  - **Next for these rooms:** the first enemy (none exist), pickups for the
+    cave and the shrine island, and a tree of the surface's own (both rooms
+    borrow IB-01's Great Ironbark). SF9 to SF13 are no longer used anywhere
+    except a few tinted graves-and-ruins pieces; mockups R to W and the SF
+    cards in Book 1 are superseded by the Moonlit mockups for this area.
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
 - **The crypt kit is in** (CR1 to CR3, the generator's painted originals,
@@ -455,8 +430,8 @@ She steps forward with every hit.
 - **Rooms not built yet,** which IB-02's doors already face: the Undercroft
   (under the clearing, through IB-02's lower East door: the next room on the
   main line), the Refuge road (west, behind the plated door: needs the Ward),
-  the Guard Post (IB-03, built: the well comes up under its pool). The first
-  two end in darkness today.
+  the Guard Post above the well (not built; the surface rooms IB-03 and IB-04
+  lie over the crypt instead). All three end in darkness today.
 - **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.

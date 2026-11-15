@@ -43,3 +43,7 @@ func set_box_view(on: bool) -> void:
 		var n := get_node_or_null(path)
 		if n:
 			n.visible = not on
+	# Islands that are paintings: their collision tiles show only in the box view.
+	var masses := get_node_or_null("Masses")
+	if masses and masses.has_meta("under_art"):
+		masses.visible = on

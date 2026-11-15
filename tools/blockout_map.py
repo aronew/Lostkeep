@@ -18,25 +18,20 @@ AMBER, TEAL, INK = (242, 176, 74), (63, 224, 200), (235, 238, 245)
 # Per room: seals and water as tile rects, routes, and labels at tile positions.
 ROOMS = {
     "ib03": {
-        "seals": [(12, 22, 4, 2), (34, 25, 6, 1), (44, 25, 6, 1), (6, 19, 14, 1)],
-        "water": [(34, 27, 16, 4)],
-        "ramps": [((440, 432), (384, 384)), ((488, 432), (544, 400)), ((856, 432), (800, 400)), ((904, 432), (960, 384)),
-                  ((1048, 384), (1104, 336)), ((1192, 336), (1248, 288)), ((1336, 288), (1392, 240))],
+        "seals": [(66, 22, 5, 1)],
+        "water": [],
+        "ramps": [((60, 592), (128, 544)), ((316, 496), (384, 448)), ((1196, 352), (1264, 304)), ((1292, 304), (1360, 256))],
         "routes": [("tour", AMBER), ("upper", TEAL)],
-        "labels": [
-            (1, 25.2, "START  row 24\nunder the great tree"),
-            (8, 16.4, "BRANCH (one-way)"),
-            (23, 15.2, "RUIN ISLAND"),
-            (37, 14.2, "GRAVE ISLAND"),
-            (50, 15.2, "LONG ISLAND"),
-            (34, 22.4, "BROKEN BRIDGE: 4-tile gap"),
-            (36, 29.2, "POOL: Breath lock"),
-            (60, 25.2, "HILL: four flights of stairs"),
-            (84, 11.4, "CHAPEL  row 15\nthe guard's post"),
-            (97, 5.2, "FAR ISLAND\nWing-Cloak lock"),
-            (101, 30.2, "EAST DOOR > IB-01"),
-        ],
-        "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "upper line (walked in engine)")],
+        "labels": [(1, 38.2, "START"), (46, 19.6, "GREAT ISLAND"), (84, 13.4, "EXIT > IB-04"), (72, 34.2, "cave"), (40, 38.2, "garden")],
+        "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "garden, cave, ways back (walked)")],
+    },
+    "ib04": {
+        "seals": [],
+        "water": [(88, 37, 4, 2)],
+        "ramps": [((228, 304), (160, 256)), ((356, 352), (288, 304)), ((612, 464), (544, 416)), ((868, 592), (800, 544))],
+        "routes": [("tour", AMBER), ("upper", TEAL)],
+        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (72, 14.6, "FAR ISLAND: Wing-Cloak lock"), (84, 34.6, "water: 4-tile jump"), (100, 38.2, "EXIT > IB-01")],
+        "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "islands and the way back (walked)")],
     },
 }
 
