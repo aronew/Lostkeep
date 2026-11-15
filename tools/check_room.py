@@ -63,12 +63,13 @@ ROOMS = {
         "cells": "game/tests/out/ib04/map/cells.json",
         "spawn": (4, 15),
         "lift": [((14, 18), (9, 15)), ((22, 21), (17, 18)), ((38, 28), (33, 25)), ((54, 36), (49, 33))],
-        "water": (81, 37, 23, 2),
-        "gated": {"far island over the road (Wing-Cloak)": (76, 6, 9, 11)},
-        # The painted islands' tiles, and the pool's three small islands.
-        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (76, 17, 9, 1),
-                  (85, 36, 2, 1), (91, 35, 3, 1), (98, 36, 2, 1)],
-        "exits": {"east (to the Lantern Clearing)": (111, 36), "west (to the Ruin Gardens)": (0, 15)},
+        "water": (78, 37, 42, 2),
+        "gated": {"far chunk over the road's end (Wing-Cloak)": (120, 4, 8, 11)},
+        # The painted islands' tiles, and the pool's six small islands.
+        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (70, 21, 9, 1), (83, 22, 27, 1),
+                  (114, 25, 5, 1), (122, 14, 3, 1),
+                  (82, 36, 2, 1), (88, 35, 3, 1), (95, 36, 2, 1), (101, 36, 3, 1), (108, 35, 2, 1), (114, 36, 3, 1)],
+        "exits": {"east (to the Lantern Clearing)": (127, 36), "west (to the Ruin Gardens)": (0, 15)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

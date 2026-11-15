@@ -26,12 +26,12 @@ ROOMS = {
         "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "garden, cave, ways back (walked)")],
     },
     "ib04": {
-        "seals": [(84.5, 36, 3, 0.6), (91, 35, 3, 0.6), (97.5, 36, 3, 0.6)],
-        "water": [(81, 37, 23, 2)],
+        "seals": [(81.5, 36, 3, 0.6), (88, 35, 3, 0.6), (94.4, 36, 3, 0.6), (100.8, 36, 3, 0.6), (107.25, 35, 3, 0.6), (113.7, 36, 3, 0.6)],
+        "water": [(78, 37, 42, 2)],
         "ramps": [((228, 304), (160, 256)), ((356, 352), (288, 304)), ((612, 464), (544, 416)), ((868, 592), (800, 544))],
         "routes": [("tour", AMBER), ("upper", TEAL)],
-        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (72, 14.6, "FAR ISLAND: Wing-Cloak lock"), (82, 33.6, "pool: three small islands to hop"), (100, 38.2, "EXIT > IB-01")],
-        "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "islands and the way back (walked)")],
+        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (84, 19.4, "HIGH PATH: the floating islands"), (84, 33.2, "LOW PATH: six small islands"), (116, 38.2, "EXIT > IB-01"), (112, 11.4, "Wing-Cloak lock")],
+        "legend": [(AMBER, "low path (walked in engine)"), (TEAL, "high path, way back (walked)")],
     },
 }
 

@@ -367,7 +367,8 @@ She steps forward with every hit.
   review.** The game opens in **IB-03, the Ruin Gardens** (a climb: a hill of
   terraces, the great graveyard island, a log, the cliff's arch) and goes on
   through **IB-04, the Gate Road** (wind back down a hill under the islands,
-  the straight road, a pool hopped by three small islands) into IB-01, which the creative lead
+  the road, then a long pool with two ways over it: six small islands to hop,
+  or the big floating islands above) into IB-01, which the creative lead
   calls the guard post. Specs: `design/rooms/ironbark_03_ruin_gardens.md`,
   `ironbark_04_gate_road.md`; images in `docs/rooms/`.
   - **What the creative lead wants here** (their words and reviews):

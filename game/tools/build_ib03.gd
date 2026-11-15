@@ -9,7 +9,7 @@ extends "res://tools/surface_builder.gd"
 ## learn to move. Climb the west hill, cross the great floating island, and
 ## leave by the arch high on the east cliff.
 ##
-## World grid: origin at IB-01's (-196, -13). Its East door (rows 11 to 15) is
+## World grid: origin at IB-01's (-221, -13). Its East door (rows 11 to 15) is
 ## IB-04's West door.
 
 const ROOM_PATH := "res://scenes/rooms/ironbark_03_ruin_gardens.tscn"

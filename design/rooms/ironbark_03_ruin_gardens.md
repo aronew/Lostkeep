@@ -22,7 +22,7 @@ unlike the mockups.
 | Field | Content |
 | --- | --- |
 | **Identity** | Ironbark Guard, IB-03. East (high): IB-04, the Gate Road. West: the forest road (not built) |
-| **World grid** | Origin at IB-01's (-205, -13). Its East door (rows 11 to 15) is IB-04's West door |
+| **World grid** | Origin at IB-01's (-221, -13). Its East door (rows 11 to 15) is IB-04's West door |
 | **Idea** | The old burial gardens at dusk: a hill of terraces, a great island of graves hanging in the moonlight, a cliff with an arch at its top |
 | **Purpose** | Learn to move with nothing at stake: run, stairs, a jump up, two island hops, a long walk across the great island, a log, more stairs. Fall anywhere and you land in the garden, with a way back up |
 | **Size** | 93 × 40 tiles (1488 × 640 px): 2.3 screens wide, 1.8 tall |
