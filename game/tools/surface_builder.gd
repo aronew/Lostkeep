@@ -275,6 +275,46 @@ func _row(parent: Node, tex: String, floor_y: float, items: Array) -> void:
 		_ground(parent, tex, it[0], it[1], floor_y, 0.97, "Prop")
 
 
+## A Mossback (the gardens' gentle enemy) on a flat floor, walking between two
+## x positions (world px). Seven sword hits put it down.
+func _mossback(x: float, floor_y: float, left_x: float, right_x: float) -> Node2D:
+	var m := _node(Node2D.new(), "Mossback", _root) as Node2D
+	m.set_script(load("res://scripts/world/mossback.gd"))
+	m.position = Vector2(x, floor_y)
+	m.z_index = 7
+	m.set("left_x", left_x)
+	m.set("right_x", right_x)
+	var art := _node(Sprite2D.new(), "Art", m) as Sprite2D
+	art.texture = load("res://assets/characters/mossback/mossback.png")
+	art.hframes = 6
+	art.centered = false
+	art.position = Vector2(-16, -22)
+	var flash := ShaderMaterial.new()
+	flash.shader = load("res://shaders/hit_flash.gdshader")
+	art.material = flash
+	var hb := _node(Area2D.new(), "Hurtbox", m) as Area2D
+	hb.collision_layer = 4
+	hb.collision_mask = 0
+	hb.monitoring = false
+	var hs := CollisionShape2D.new()
+	var hr := RectangleShape2D.new()
+	hr.size = Vector2(22, 18)
+	hs.shape = hr
+	hs.position = Vector2(0, -9)
+	_node(hs, "Shape", hb)
+	var touch := _node(Area2D.new(), "Touch", m) as Area2D
+	touch.collision_layer = 0
+	touch.collision_mask = 2
+	touch.monitorable = false
+	var ts := CollisionShape2D.new()
+	var tr := RectangleShape2D.new()
+	tr.size = Vector2(14, 14)
+	ts.shape = tr
+	ts.position = Vector2(0, -8)
+	_node(ts, "Shape", touch)
+	return m
+
+
 func _glint(parent: Node, pos: Vector2, tint: Color) -> void:
 	var g := _sprite(parent, "res://assets/characters/kleo/fx_small.png", Rect2(0, 0, 64, 64), pos)
 	g.name = "Glint"

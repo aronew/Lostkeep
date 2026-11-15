@@ -74,6 +74,9 @@ func _initialize() -> void:
 	_flight(placed, 800, GROUND, true)
 	_build_pool(behind, placed)
 	_dress(behind, placed)
+	# Two Mossbacks: one on the road before the pool, one on the great island over it.
+	_mossback(1000, GROUND, 900, 1180)
+	_mossback(1560, 19 * TILE, 1380, 1700)
 	_surface_finish()
 	_door("West", Rect2i(0, 11, 8, 5), -1, IB03, "East")
 	_door("East", Rect2i(120, 32, 8, 5), 1, IB01, "WestUpper")

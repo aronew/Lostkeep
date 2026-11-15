@@ -54,7 +54,7 @@ So the pool is 42 tiles long (more than a screen) and has two ways over it:
 | **Placed collision** | Four flights of stairs; the pool's six small islands |
 | **Lines** | **Low:** the arch → two flights down → a drop → a flight → a drop → a flight → the road → the pool by its six islands → the East door. **High:** from the second terrace along the islands, out over the pool, down to the far bank. **Way back:** ledge catches of 5 and 4 tiles and the flights |
 | **Locks seen here** | **Wing-Cloak:** a far chunk high over the road's end, something glinting on it, out of reach from every island |
-| **Encounters** | None yet. The road (24 flat tiles) and the graveyard island (27) are where a chill enemy belongs |
+| **Encounters** | Two Mossbacks (see IB-03): one on the road before the pool, one on the graveyard island over it |
 | **Story** | A crystal shrine by the road; the timber gate before the water; lanterns on both banks |
 
 ## Validation
@@ -79,4 +79,3 @@ slide 0, wobble 0.
 - The graveyard island is IB-03's great island again, mirrored (the creative
   lead likes it here): seven island paintings are stretched over two rooms.
 - The pool's piers are tinted SF11 pieces, two side by side per island.
-- No enemies yet.

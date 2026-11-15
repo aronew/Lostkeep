@@ -72,6 +72,8 @@ func _ready() -> void:
 					await _upper_ib04()
 			"doors":
 				await _doors_surface()
+			"enemy":
+				await _enemy()
 		get_tree().quit()
 		return
 	if room_id == "ib02":
@@ -625,6 +627,56 @@ func _upper_ib04() -> void:
 	_report(lines, "upper")
 
 const GROUND_Y := 592.0
+
+
+## The Mossback: walk into it (a shove), then stand and swing until it is gone,
+## counting the hits it takes. Run it in IB-03 (the garden's Mossback).
+func _enemy() -> void:
+	var lines := []
+	var moss: Node2D = null
+	for e in get_tree().get_nodes_in_group("enemy"):
+		if moss == null or e.global_position.y > moss.global_position.y:
+			moss = e
+	lines.append("enemies in the room: %d" % get_tree().get_nodes_in_group("enemy").size())
+	_place((moss.global_position.x - 60.0) / TILE, moss.global_position.y / TILE, 1)
+	await _frames(10)
+	_start_tour()
+	await _wait(50)
+	# Walk into it.
+	var shoved := false
+	_press("move_right")
+	for i in 200:
+		await _step()
+		if kleo.state == Kleo.State.HURT:
+			shoved = true
+			break
+	_release_all()
+	lines.append("walking into it shoves her back: %s" % shoved)
+	await _wait(80)
+	# Face it and swing until it is gone.
+	var swings := 0
+	var hits := 0
+	while is_instance_valid(moss) and not moss.dead and swings < 30:
+		var want := 1 if moss.global_position.x > kleo.global_position.x else -1
+		var gap := absf(moss.global_position.x - kleo.global_position.x)
+		if gap > 26.0:
+			await _hold_until(["move_right" if want > 0 else "move_left"], func(): return not is_instance_valid(moss) or absf(moss.global_position.x - kleo.global_position.x) < 24.0 or kleo.state == Kleo.State.HURT, 120)
+		elif kleo.facing != want:
+			await _tap("move_right" if want > 0 else "move_left")
+		if kleo.state == Kleo.State.HURT:
+			await _wait(50)
+			continue
+		await _tap("attack")
+		swings += 1
+		for i in 26:
+			await _step()
+			if is_instance_valid(moss):
+				hits = moss.hits
+	await _wait(40)
+	lines.append("sword hits it took before it went down: %d (rule: 7), in %d swings; gone: %s" % [hits, swings, not is_instance_valid(moss)])
+	lines.append("game speed after: %.2f; enemies left in the room: %d" % [Engine.time_scale, get_tree().get_nodes_in_group("enemy").size()])
+	_release_all()
+	_report(lines, "enemy")
 
 
 ## IB-01's terrace west into IB-04, west across... no: straight back east.

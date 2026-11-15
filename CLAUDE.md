@@ -401,7 +401,15 @@ She steps forward with every hit.
     (the creative lead asked for them in IB-04's pool). Space them for her real
     jump, about 95 px long from a standing run-up: roughly 56 px of gap and
     48 px to land on. Closer than that and a full jump overshoots.
-  - **Next for these rooms:** the first enemy (none exist), pickups for the
+  - **The first enemy is in: the Mossback** (`scripts/world/mossback.gd`,
+    placed with `_mossback(x, floor_y, left_x, right_x)`): the creative lead
+    asked for "a chill enemy or two" that "take like 7 hits to kill". It walks
+    between two x positions on a flat floor (no physics body), rests, never
+    chases, shoves Kleo on contact (`kleo.hurt`, she has no health yet), and
+    dies on the seventh sword hit (`hits_to_kill`). Two in each surface room.
+    Its sprite is a stand-in from `tools/make_mossback.py`. Test:
+    `room=ib03 mode=enemy` (run it with `--max-fps 60` too).
+  - **Next for these rooms:** a generated Mossback sheet, pickups for the
     cave and the shrine island, and a tree of the surface's own (both rooms
     borrow IB-01's Great Ironbark). SF9 to SF13 are no longer used anywhere
     except a few tinted graves-and-ruins pieces; mockups R to W and the SF
@@ -443,7 +451,8 @@ She steps forward with every hit.
 - **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.
-- No enemies exist yet; IB-02's long gallery and cave are shaped for the first.
+- IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
+  Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
   three moons are large (consider regenerating P1 with smaller moons).
 - **Textures that tile** are cut with a minimum-error seam

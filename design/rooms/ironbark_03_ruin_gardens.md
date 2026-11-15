@@ -31,7 +31,7 @@ unlike the mockups.
 | **Placed collision** | Four flights of stairs; the log from the great island to the cliff (one-way) |
 | **Lines** | **Main:** the road → a flight → a three-tile jump up → a flight → the stepping chunk → the great island → the log → the cliff's two flights → the arch (East door). **Garden (optional, and where a fall lands):** back up to the hill by two ledge catches (4 and 5 tiles); the cliff's shelf, its cave, and the crystal-shrine island |
 | **Locks seen here** | None yet. The opening is about movement |
-| **Encounters** | None yet: no enemies exist. The garden (22 flat tiles) and the great island (27) are where the first chill enemy or two belong |
+| **Encounters** | Two **Mossbacks** (the game's first enemy: a mossy boulder on little legs that ambles and rests, never chases, shoves her if she walks into it, and takes seven sword hits). One grazes in the garden; one walks the great island, on the main line: fight it or jump it |
 | **Story** | Graves everywhere, lanterns lit, nobody tending them |
 
 ## Validation
@@ -43,8 +43,10 @@ collision under thick paintings; they are listed as placed collision.)
 
 Walked in the engine (`tests/playtest.gd room=ib03`): the main line
 (`mode=tour`) to the arch and out into IB-04; the garden (`mode=upper`): both
-ledge catches back up to the hill, the shelf and cave, the low island. All
-completed. Camera: slide 0, wobble 0.
+ledge catches back up to the hill, the shelf and cave, the low island; the
+Mossback (`mode=enemy`): walking into it shoves her, it goes down on the
+seventh sword hit, and the game is at full speed after (also run in real
+time). All completed. Camera: slide 0, wobble 0.
 
 ## Rough edges
 
@@ -53,4 +55,6 @@ completed. Camera: slide 0, wobble 0.
 - The start's tree is IB-01's Great Ironbark, mostly out of frame.
 - The hill, the garden and the cliff are terrain-kit boulders with a few
   graves: thinner dressing than the mockup.
-- No enemies; no pickups in the cave or on the shrine island yet.
+- The Mossback's sprite is a stand-in drawn by `tools/make_mossback.py` (six
+  frames); it wants a generated sheet. It has no sound and drops nothing.
+- No pickups in the cave or on the shrine island yet.

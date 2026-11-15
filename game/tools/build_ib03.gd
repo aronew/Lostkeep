@@ -66,6 +66,10 @@ func _initialize() -> void:
 	_flight(placed, 1360, 19 * TILE, false)
 	_log(placed, 1056, 1136, 22 * TILE)
 	_dress(behind)
+	# Two Mossbacks: one grazing in the garden, one on the great island (on the
+	# main line: fight it, or jump it).
+	_mossback(760, GROUND, 600, 880)
+	_mossback(900, 22 * TILE, 700, 1020)
 	_surface_finish()
 	# West: the forest road she came by (nothing built beyond it).
 	_door("West", Rect2i(0, 32, 4, 5), -1, "", "")
