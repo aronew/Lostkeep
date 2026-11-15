@@ -59,7 +59,8 @@ def main():
     for name in ("sh_top", "sh_under", "sh_wall"):
         clear_void(ENV + "terrain/" + name + ".png")
     # The fill: SH1's lit blocks (floor band rows 11 to 34), stacked with a
-    # half-width offset so the courses don't line up, a step darker.
+    # half-width offset so the courses don't line up, darkened toward reference
+    # Y's plum-grey masonry under the lit rim (about #2F283D on screen).
     blocks = bands.crop((0, 11, 384, 35))
     fill = Image.new("RGBA", (384, 48))
     fill.paste(blocks, (0, 0))
@@ -69,7 +70,7 @@ def main():
     for y in range(48):
         for x in range(384):
             r, g, b, a = px[x, y]
-            px[x, y] = (int(r * 0.62), int(g * 0.62), int(b * 0.66), 255)
+            px[x, y] = (int(r * 0.63), int(g * 0.56), int(b * 0.68), 255)
     fill.save(ENV + "terrain/sh_fill.png")
     print("terrain: sh_top (line 8), sh_under (line 48), sh_wall (face 37), corners, sh_fill")
 

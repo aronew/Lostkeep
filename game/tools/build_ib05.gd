@@ -103,6 +103,7 @@ func _initialize() -> void:
 	var behind: Node = t["behind"]
 	var placed: Node = t["placed"]
 	_build_islands(placed)
+	_grade_stone()
 	_hide_island_tiles()
 	_dress(behind)
 	_build_air(t["front"])

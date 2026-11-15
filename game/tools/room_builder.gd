@@ -77,15 +77,29 @@ func _shared() -> TileSet:
 ## blocks, made for the Shrine Hall). A room calls this after _shared() to use
 ## it as its stone in place of the plum crypt kit.
 func _use_shrine_stone() -> void:
-	# A masonry fill that darkens with depth (4 tiles): thin slabs are solid
+	# A masonry fill that darkens with depth (5 tiles): thin slabs are solid
 	# stone, as in the mockup, and only deep rock goes to the void.
-	var m := _material("sh", 8, 48, 37, 4.0, Color(0, 0, 0, 0))
+	var m := _material("sh", 8, 48, 37, 5.0, Color(0, 0, 0, 0))
 	m.corner_top = load(TERRAIN + "sh_corner_top.png")
 	m.corner_top_anchor = Vector2(36, 29)
 	m.corner_under = load(TERRAIN + "sh_corner_under.png")
 	m.corner_under_anchor = Vector2(42, 42)
 	ResourceSaver.save(m, m.resource_path)
 	_stone = m
+
+
+## The crypt stone's grade (the creative lead: "too bright"; reference Y's stone):
+## SH1 to SH4 as painted are bluer and brighter than Y's grey-lavender, so the
+## terrain, the placed islands and the props behind are all multiplied by this.
+## Lit faces then measure about (72, 70, 87) on screen, as in Y.
+const STONE_GRADE := Color(0.82, 0.76, 0.74)
+
+
+func _grade_stone() -> void:
+	for n in ["TerrainSkin", "PlacedArt", "Behind"]:
+		var node := _root.get_node_or_null(n) as CanvasItem
+		if node:
+			node.modulate = STONE_GRADE
 
 
 ## The crypts' depth (the creative lead: "more moody colors like in this

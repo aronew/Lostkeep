@@ -88,6 +88,7 @@ func _initialize() -> void:
 	_root.get_node("EarthBackWalls").set("brightness", 0.85)
 	var t := _terrain(tileset)
 	_build_well(t["behind"], t["placed"])
+	_grade_stone()
 	_build_galleries(t["behind"])
 	_build_west(t["behind"])
 	_build_machines()

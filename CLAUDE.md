@@ -483,6 +483,12 @@ She steps forward with every hit.
   over 4 tiles. Thin slabs are solid stone and joins have no black notches;
   deep rock still goes dark. This departs from the earth's shadow rule on
   purpose: the crypt mockup fills its masses with blocks.
+  **Stone colour:** graded toward reference Y (the creative lead: "too bright";
+  Y's stone "goes into the black ... at a slight darker color"):
+  `STONE_GRADE` (0.82, 0.76, 0.74) multiplies the terrain, placed islands and
+  props in both crypt rooms (`_grade_stone()`), so lit faces measure about
+  (72, 70, 87) as in Y; `sh_fill` is darkened to Y's plum-grey masonry (about
+  #2F283D) and fades over 5 tiles. Comparison: `docs/rooms/ironbark_05/stone_vs_reference_y.png`.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative
