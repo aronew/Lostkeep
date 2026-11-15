@@ -200,22 +200,60 @@ func _shrine_far() -> void:
 ## In front of everything: OC7's dark rock along the top and bottom of the view.
 ## Scrolls faster than the playfield; stays put vertically.
 func _crypt_foreground() -> void:
-	var h := float(room.size.y * TILE)
+	# Depth in two value steps in front of the playfield (the creative lead: "2
+	# layers of foreground, one not all the way silhouetted and one full
+	# silhouette"). Both frame the screen: they slide sideways faster than the
+	# room (nearer the camera) but hold their height on screen (scroll y 0), so
+	# a tall room has them on every floor and they never slide up or down when
+	# the camera changes floors. Thin shapes (roots, rubble, a pillar), never big
+	# blobs: a big black shape reads as a hole.
+	var w := float(room.size.x * TILE)
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
-	p.scroll_scale = Vector2(1.15, 1.0)
-	p.repeat_size = Vector2(768, 0)
-	p.repeat_times = 4
-	p.z_index = 30
-	var top := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 0, 768, 96), Vector2(0, -6))
-	top.name = "Top"
-	top.material = unlit
-	var bottom := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 250, 768, 110), Vector2(0, h - 96))
-	bottom.name = "Bottom"
-	bottom.material = unlit
-	# (A nearer layer of pillars and roots goes here when FG1 and FG2 arrive: the
-	# first try, P5 and SH pieces blown up into black shapes, read as holes.)
+	# The mid step: roots and ivy along the top of the view, rubble, crystals and
+	# a broken pillar along its bottom, darkened to about half value and tinted
+	# toward the room's plum, their form still showing.
+	var mid := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
+	mid.scroll_scale = Vector2(1.15, 0.0)
+	mid.repeat_size = Vector2(960, 0)
+	mid.repeat_times = maxi(3, int(w / 960.0) + 3)
+	mid.z_index = 30
+	var mid_tint := Color(0.4, 0.36, 0.5)
+	var pieces := [
+		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(60, -6), 2.0],
+		[ENV + "sh_flora.png", Rect2(88, 112, 24, 64), Vector2(420, -10), 2.0],
+		[ENV + "sh_flora.png", Rect2(184, 112, 16, 32), Vector2(700, -4), 2.0],
+		[ENV + "oc_foreground.png", Rect2(0, 250, 120, 110), Vector2(180, 360 - 70), 1.0],
+		[ENV + "sh_flora.png", Rect2(152, 0, 64, 40), Vector2(520, 360 - 50), 1.6],
+		[ENV + "sh_arcades.png", Rect2(224, 80, 16, 32), Vector2(820, 360 - 58), 2.0],
+	]
+	for pc in pieces:
+		var reg: Rect2 = pc[1]
+		var sp := _sprite(mid, pc[0], reg, pc[2])
+		sp.name = "MidPiece"
+		sp.scale = Vector2(pc[3], pc[3])
+		sp.modulate = mid_tint
+		sp.material = unlit
+	# The near step: pure silhouettes, sparse, scrolling fastest: long roots
+	# from the top, rubble along the very bottom, a great pillar now and then.
+	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
+	near.scroll_scale = Vector2(1.5, 0.0)
+	near.repeat_size = Vector2(1500, 0)
+	near.repeat_times = maxi(3, int(w / 1500.0) + 3)
+	near.z_index = 31
+	var black := Color(0.03, 0.022, 0.05)
+	var near_pieces := [
+		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(260, -14), 2.2],
+		[ENV + "oc_foreground.png", Rect2(400, 290, 80, 70), Vector2(640, 360 - 44), 1.6],
+		[ENV + "sh_arcades.png", Rect2(272, 32, 20, 80), Vector2(1100, -20), 4.8],
+	]
+	for pc in near_pieces:
+		var reg: Rect2 = pc[1]
+		var sp := _sprite(near, pc[0], reg, pc[2])
+		sp.name = "Silhouette"
+		sp.scale = Vector2(pc[3], pc[3])
+		sp.modulate = black
+		sp.material = unlit
 
 
 ## The room's root node.

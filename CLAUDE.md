@@ -294,10 +294,20 @@ She steps forward with every hit.
   `tools/make_terrain.py`, which writes their anchors to
   `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
-- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): P5's
-  canopy along the room's top edge and its fern tops along the bottom, unlit.
-  It sits in the world vertically, so it never slides when the camera rises or
-  falls, and it never stands on a walking line among the props.
+- **The foreground, in two value steps** (the creative lead: "2 layers of
+  foreground, one not all the way silhouetted and one full silhouette"):
+  `Foreground` (the mid step, scroll 1.15 to 1.2) is the room's own art
+  darkened to about half value and tinted toward its mood, its form still
+  showing (surface: P5's canopy and ferns; crypts: roots and ivy along the top,
+  crystals, rubble and a broken pillar along the bottom); `ForegroundNear`
+  (scroll 1.5) is sparse pure-black silhouettes in thin shapes (a branch,
+  vines, grass; long roots, rubble, a great pillar). Never big blobs: a big
+  black shape reads as a hole. Both frame the screen (scroll y 0): they slide
+  sideways faster than the room but hold their height on screen, so a tall
+  room has them on every floor and they never slide up or down when the
+  camera changes floors. `_build_foreground()` in `surface_builder.gd`,
+  `_crypt_foreground()` in `room_builder.gd`. IB-01 keeps its own. Comparison:
+  `docs/rooms/foreground_two_steps.png`.
 - **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
   mass is the nearest thing to the camera, so it shadows to black toward its
   centre and only its edges get art. Every mass is black inside, piers
