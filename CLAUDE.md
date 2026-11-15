@@ -503,6 +503,12 @@ She steps forward with every hit.
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
   the black silhouette (1.4). FG5 is the rubble, painted at full value so the
   game darkens copies to each step; FG1 and FG2 are the silhouettes.
+  **The fade rule** (the creative lead, pointing at broken slabs in a generated
+  CY set): stone fades into the dark gradually, brick by brick, lavender grey
+  to dusky plum to near-black plum to void, loose bricks at the edge; never a
+  straight light/dark line, a flat black slab or a hard cut. It is `FADE_RULE`
+  in Book 1 (in every CY card) and CY6 is a set of big masses built on it.
+  Judge every new terrain sheet by it.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative

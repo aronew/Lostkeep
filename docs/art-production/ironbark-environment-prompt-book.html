@@ -330,6 +330,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <span class="eyebrow">Prompts</span>
       <h2>Crypt stone after reference Y (the tile set)</h2>
       <p>The creative lead's pick for the crypts' stone: the fine grey-lavender brick of reference Y, with its pale cap row and its masses stepping down into darker plum masonry before the black. It replaces SH1 and SH2 (the chunky blue-grey blocks) as the terrain of IB-02 and IB-05; the SH islands, shrine and props stay unless they clash. Make CY1 first; every later card attaches it. These are terrain pieces painted onto black-box collision: walking lines perfectly straight, every piece joining its neighbours, sizes in the room's grid (one tile = 16 px in game = 128 px at x8).</p>
+      <p><strong>Every piece fades into the dark gradually.</strong> The creative lead's pick from a generated CY set: broken slabs whose stone runs on under the walking line and steps down brick by brick, lavender grey to dusky plum to near-black, loose bricks crumbling at the edge, then black. That rule (FADE in every card) is what makes a mass read as solid and deep; a straight line between light and dark, a flat black slab or a hard cut is a fail. CY6 is a set of big masses built around it.</p>
       <div class="cards" id="cards-cryptstone"></div>
     </section>
     <section id="foreground" class="group-section">
@@ -443,7 +444,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
-    ["Crypt stone after Y: bands, walls and corners, inside fill, stairs, supports, ledges", "SH1 and SH2 graded toward Y", "need", "CY1 to CY5"],
+    ["Crypt stone after Y: bands, walls and corners, inside fill, stairs, supports, ledges, masses fading into the dark", "SH1 and SH2 graded toward Y", "need", "CY1 to CY6"],
     ["Foreground depth: crypt and surface silhouettes, side frames, rubble for the value steps", "Placeholders (OC7, P5 blown up)", "need", "FG1 to FG5"],
     ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
@@ -538,7 +539,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   // Canvas sizes
   var WIDE = "3072×1024 px (art 384 × 128 px at x8)";
   var SH_STYLE = "STYLE: match attached mockup X exactly in palette and finish: pale blue-grey block masonry (#8C93AA, #6E7590, #4E5470, dark mortar #2A2C40), chunky square blocks with a carved light cap row on walking edges, moss and ivy, pink-violet crystal blocks, purple flowers, amber flames only as flame. Crisp pixel art, four tones per material, thin dark outlines on silhouettes only. Do not copy X's layout or its character. Never plum or purple stone.";
-  var CY_STYLE = "STYLE: match attached reference Y's masonry exactly in palette, brick size and finish: fine grey-lavender bricks in staggered courses, a pale worn cap row on every walking edge, moss in the joints, thin dull brick-red roots (never the Blight's crimson), lit faces #6E6C80 to #85839A, darker plum masonry #3A3248 to #2A2438 behind them, void #0B0812 at the heart. Crisp pixel art, four tones per material, thin dark outlines only on silhouettes. Strict side view, no perspective. Do not copy Y's layout or its character.";
+  var CY_STYLE = "STYLE: match attached reference Y's masonry exactly in palette, brick size and finish: fine grey-lavender bricks in staggered courses, a pale worn cap row on every walking edge, moss in the joints, thin dull brick-red roots (never the Blight's crimson), lit faces #6E6C80 to #85839A, darker plum masonry #3A3248 to #2A2438 behind them, void #0B0812 at the heart. Crisp pixel art, four tones per material, thin dark outlines only on silhouettes. Strict side view, no perspective. Do not copy Y's layout or its character. " + FADE_RULE;
+  var FADE_RULE = "FADE INTO THE DARK (the creative lead's rule for every mass): below a walking line, behind a wall face, above a ceiling, the stone fades GRADUALLY into the void, brick by brick: the lit cap row, then two or three courses of lit brick, then each course a step darker (lavender grey to dusky plum #4A3A5E, to deep plum #2E2438, to near-black plum #1A1424), the bricks still faintly visible in the dark ones, then void #0B0812. The fade boundary follows the bricks: some bricks stay lit longer, some drop out early, loose single bricks scattered at the edge of the dark. Never a straight line between light and dark, never a flat black slab, never a hard cut.";
   var FG_STYLE = "STYLE: the nearest layer in front of the playfield, as in attached mockup Y's dark edges: near-black silhouettes (#0B0812 to #1A1424 for crypt stone, #14101C to #241A2A for wood and roots), painted, not flat: a faint rim light (one or two pixels, dull violet #4A3A5E or teal #2E5A5C) along the edges that face the room, and soft internal shapes one value step apart so the forms read. No bright colours except where stated. Large, readable shapes with wide transparent gaps between pieces. Crisp pixel art, thin dark outlines only where a shape needs separating, no blur.";
   var SH_SHADOW = "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 192 px of lit blocks with no gaps, then 96 px stepping down into void #0B0812 along the blocks' own outlines, never a straight line. Only walking lines are perfectly straight.";
   var BG = "3072×1440 px (art 768 × 360 px at x4)";
@@ -1201,6 +1203,19 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "1. Three small floating ledges, tops 256 px long: a slab two bricks thick with a short ragged underside and a hanging vine.",
         "2. Two wall ledges, tops 256 and 384 px long, jutting from a wall on their LEFT end on a stepped corbel of bricks.",
         "3. Two broken slab ends, 384 px wide, 384 px tall: CY1's floor face ending in a ragged break, loose bricks falling away, one facing right and one facing left (not mirrored copies)."
+      ] },
+    { id: "CY6", group: "cryptstone", file: "crypt_y_masses", title: "Crypt stone after Y: big masses fading into the dark",
+      about: "The creative lead's favourite piece of the CY set: broken slabs whose stone runs on below the walking line and fades, brick by brick, through darker and darker plum into black, with loose bricks crumbling off the edge. Large chunks for the ends of floors, the bases of walls and the rock under islands.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Pieces cut apart", attach: ["Y", "Your approved CY1"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the approved CY1 brick. Each walking top is a perfectly straight line with CY1's pale cap row and a little moss and hanging ivy.",
+        "",
+        CY_STYLE,
+        "",
+        "1. Two broken slab ends, each 1024 px wide: a straight walking top 256 px thick of lit brick, then the mass below it 768 px deep, tapering down to a ragged point on its open side (one opening to the right, one to the left; not mirrored copies). The whole underside fades gradually into the dark exactly as the FADE rule says, single loose bricks dropping off the slope, a few thin dull red roots hanging through.",
+        "2. Two wall bases, 512 px wide, 1024 px tall: a wall face (facing right on one, left on the other) with brick running up, its foot spreading into a heap of fallen bricks that fades into the dark.",
+        "3. One big floating mass, 1536 px wide, 1024 px tall: a straight lit top, the bulk below fading through every step of plum into void, its outline stepping in brick by brick to a point.",
+        "4. Two small chunks, 384 and 512 px wide, the same fade compressed into a shorter depth."
       ] },
     // ------------------------------------------------------------- foreground depth
     { id: "FG1", group: "foreground", file: "crypt_fg_near", title: "Crypt foreground: pillars, roots and chains", scale: 4,
