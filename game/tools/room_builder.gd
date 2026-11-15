@@ -662,6 +662,67 @@ func _lift(node_name: String, pos: Vector2, drop: float, winch_dx := -3.5 * TILE
 	return lift
 
 
+## A lantern on a chain from the ceiling: `x` its centre, `ceiling_y` the ceiling line (px).
+func _hanging_lantern(parent: Node, x: float, ceiling_y: float) -> void:
+	_sprite(parent, ENV + "props_lanterns.png", Rect2(201, 1, 21, 60), Vector2(x - 10, ceiling_y - 2)).name = "HangingLantern"
+	_light(parent, Vector2(x, ceiling_y + 46), Color(1.0, 0.72, 0.4), 1.0, 1.0, "LanternLight")
+
+
+## A lantern on an iron bracket from a wall: `wall_x` the wall's face (px),
+## `y` the bracket's top; `faces` the side the room is on (1: right of the wall).
+func _bracket_lantern(parent: Node, wall_x: float, y: float, faces: int) -> void:
+	var sp := _sprite(parent, ENV + "props_lanterns.png", Rect2(110, 4, 42, 56), Vector2(wall_x if faces > 0 else wall_x - 42, y))
+	sp.name = "BracketLantern"
+	sp.flip_h = faces < 0
+	_light(parent, Vector2(wall_x + faces * 31, y + 42), Color(1.0, 0.72, 0.4), 0.95, 0.9, "LanternLight")
+
+
+## Ivy or roots hanging under a ledge or a ceiling: kind 0-2 ivy (short to
+## long), 3-5 roots (short to long); `x` its left edge, `y` where it hangs from.
+func _hang(parent: Node, kind: int, x: float, y: float) -> void:
+	var regions := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
+		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
+	_sprite(parent, ENV + "sh_flora.png", regions[kind], Vector2(x, y - 2)).name = "Hanging"
+
+
+## A wall torch (SH6) with its light, its top left at `x`, `y` (px).
+func _sh_torch(parent: Node, x: float, y: float) -> void:
+	_sprite(parent, ENV + "sh_doorways.png", Rect2(48, 160, 16, 32), Vector2(x, y)).name = "Torch"
+	_light(parent, Vector2(x + 8, y + 6), Color(1.0, 0.7, 0.38), 1.0, 0.8, "TorchLight")
+
+
+## A lit doorway (SH6) standing on `floor_y`, left edge `x`, a torch beside it.
+func _sh_doorway(parent: Node, x: float, floor_y: float, flip: bool, ruined := false) -> void:
+	var sp := _ground(parent, ENV + "sh_doorways.png", Rect2(144 if ruined else 16, 16, 80, 96), x, floor_y + 1.0, 1.0, "Doorway")
+	sp.flip_h = flip
+	_light(parent, Vector2(x + 40, floor_y - 40), Color(0.55, 0.7, 1.0), 0.6, 0.9, "DoorwayGlow")
+	_sh_torch(parent, x + (-14.0 if flip else 82.0), floor_y - 56)
+
+
+## A piece of SH art (the arcades sheet, the flora sheet) standing on `floor_y`.
+func _sh_piece(parent: Node, sheet: String, region: Rect2, x: float, floor_y: float, piece_name: String, flip := false) -> Sprite2D:
+	var sp := _ground(parent, ENV + "sh_" + sheet + ".png", region, x, floor_y + 1.0, 1.0, piece_name)
+	sp.flip_h = flip
+	return sp
+
+
+## Dust drifting in a tall space, lit by nothing: the air moves.
+func _dust(node_name: String, box: Rect2, amount: int) -> void:
+	var dust := _particles(node_name, load("res://assets/fx/mote.png"), amount, 9.0, box)
+	dust.color = Color(0.8, 0.9, 1.0, 0.6)
+	dust.gravity = Vector2(0, 3)
+	dust.initial_velocity_min = 2.0
+	dust.initial_velocity_max = 6.0
+	dust.spread = 180.0
+	dust.scale_amount_min = 0.5
+	dust.scale_amount_max = 1.0
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	dust.material = add
+	dust.z_index = 14
+
+
 ## A bead (or a few) of Resin hanging at `pos` (px). `flag` keeps it taken.
 func _pickup(parent: Node, pos: Vector2, value: int, flag: String) -> Area2D:
 	var p := _node(Area2D.new(), "Resin", parent) as Area2D

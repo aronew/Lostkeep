@@ -27,6 +27,7 @@ Ward's: the plate from above, and a bark plate on the Undercroft's side.
 | **Lines** | **In, with the Ward:** drop through the plate onto the walkway → through its gap onto the landing → across to the arched-door room and back → down the west cave by its two ledges to the bottom → east, up the three ledges on the right (54, 50, 46) to the niche → the passage → the East door into the Undercroft. Or off the walkway's east end, down beside the tall wall onto the passage. **On:** the lantern room's door, east to the deep |
 | **The upper half is a descent** | The walkway, the chasm, the landing, the arched-door room and the west cave are reached only by dropping from the plate; the climb on the right brings her back to the way out |
 | **Checker** | Its floor-run and small-step rules are written for horizontal rooms and fail here by design (a tall shaft has no long floors); coverage and traps pass |
+| **Art** | Dressed after the mockup (`_dress` in `build_ib07.gd`): torches on two broken stubs and two tall pillars on the walkway, a lantern in the alcove, the arched door with its torches, crystals and flowers on the landing, roots and ivy down the west cave, a chest in the niche, a lantern in the passage, crystals, flowers, pots and a stub at the bottom, the lantern room with its doorway on. Images: `docs/rooms/ironbark_07/dressed.png` |
 
 ## Validation
 

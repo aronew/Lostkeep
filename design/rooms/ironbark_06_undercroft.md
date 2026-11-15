@@ -28,6 +28,7 @@ sides of a tall void, a broken arch across it, a basin at the bottom.
 | **Locks seen here** | **Barkgrip:** the alcove high in the void's east wall. **Deep-Glow Breath:** the sump in the basin. **Ironbark Ward (W1c):** the bark plate in L5's west door: the Pit Shaft stays shut until the Ward's slam |
 | **Encounters, rewards** | None yet. Each lantern room is shaped for one (a lore beat, a pot cache, a health shard) |
 | **Next pass** | The mockup's outlines are rounded and crumbling, its rooms have arcades and lanterns: shape the room walls that way when the layout is approved |
+| **Art** | Dressed from the kit (`_dress` in `build_ib06.gd`): a hanging lantern in each lantern room and bracket lanterns on R2's and R4's walls; SH7's arcade in R1 and L3, an arch and pillars in R3; SH6's doorways at the West door and the way on east; the guard's stores as breakable crates, barrels and pots; SH5's crystals and flowers; grass and flowers on the root arch with roots and ivy hanging under it and from the lips; a bier and bones (OC8); dust down the void, mist on the basin, the darkness. Images: `docs/rooms/ironbark_06/dressed.png` |
 
 ## Validation
 

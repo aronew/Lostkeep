@@ -84,7 +84,8 @@ func _initialize() -> void:
 	var t := _terrain(tileset)
 	_grade_stone()
 	_build_plate(t["behind"])
-	_build_lights(t["behind"])
+	_dress(t["behind"])
+	_build_air()
 	_build_secrets()
 	_crypt_foreground()
 	_edge_shades()
@@ -106,11 +107,55 @@ func _build_plate(behind: Node) -> void:
 	_light(behind, Vector2(17 * TILE, 2 * TILE), Color(0.55, 0.75, 1.0), 0.6, 0.8, "PlateLight")
 
 
-## Blockout light only: enough to read the spaces in the review shots.
-func _build_lights(behind: Node) -> void:
-	for p in [Vector2(15, 10), Vector2(28, 8), Vector2(4, 25), Vector2(18, 25), Vector2(28, 38), Vector2(35, 54),
-			Vector2(9, 44), Vector2(18, 58), Vector2(31, 20)]:
-		_light(behind, Vector2(p.x * TILE, p.y * TILE), LAMP, 0.9, 1.4, "BlockoutLight")
+## Dressed after the mockup: torches on two stubs on the walkway and pillars
+## rising from it, a lantern in the alcove, the arched door with its torches,
+## crystals on the landing, roots and ivy down the west cave, a chest in the
+## niche, the lantern room with its doorway on, crystals and flowers below.
+func _dress(behind: Node) -> void:
+	var bag := ENV + "props_guard_belongings.png"
+	var T := float(TILE)
+	# The walkway: two broken stubs with torches on them, two tall pillars.
+	_sh_piece(behind, "arcades", Rect2(272, 32, 20, 80), 12.4 * T, 12 * T, "Pillar")
+	_sh_piece(behind, "arcades", Rect2(272, 32, 20, 80), 28.6 * T, 12 * T, "Pillar")
+	_sh_piece(behind, "arcades", Rect2(224, 80, 16, 32), 14.6 * T, 12 * T, "Stub")
+	_sh_torch(behind, 14.6 * T, 12 * T - 44)
+	_sh_piece(behind, "arcades", Rect2(224, 80, 16, 32), 21.2 * T, 12 * T, "Stub")
+	_sh_torch(behind, 21.2 * T, 12 * T - 44)
+	# The alcove top right: a lantern on its chain.
+	_hanging_lantern(behind, 26.5 * T, 3 * T)
+	# The arched-door room: the door and its torches.
+	_sh_doorway(behind, 1.6 * T, 28 * T, false)
+	_sh_torch(behind, 0.4 * T, 28 * T - 56)
+	# The landing: crystals and flowers.
+	_sh_piece(behind, "flora", Rect2(8, 16, 32, 24), 15.2 * T, 28 * T, "Crystals")
+	_sh_piece(behind, "flora", Rect2(8, 72, 32, 20), 18.0 * T, 28 * T, "Flowers")
+	# Down the west cave: ivy under the arched room's floor, roots under the ledges.
+	_hang(behind, 2, 7.0 * T, 32 * T)
+	_hang(behind, 4, 12.0 * T, 38 * T)
+	_hang(behind, 1, 9.6 * T, 52 * T)
+	_hang(behind, 5, 22.0 * T, 30 * T)
+	# The niche: a chest, crystals beside it.
+	_sh_piece(behind, "arcades", Rect2(352, 96, 24, 16), 26.0 * T, 41 * T, "Chest")
+	_sh_piece(behind, "flora", Rect2(8, 16, 32, 24), 27.6 * T, 41 * T, "Crystals")
+	# The passage out: a lantern.
+	_hanging_lantern(behind, 38.0 * T, 36 * T)
+	# The bottom: crystals, flowers on the west step, pots, a stub on the east step.
+	_sh_piece(behind, "flora", Rect2(152, 0, 64, 40), 21.6 * T, 60 * T, "Crystals")
+	_sh_piece(behind, "flora", Rect2(152, 56, 64, 36), 9.0 * T, 58 * T, "Flowers")
+	_sh_piece(behind, "arcades", Rect2(304, 88, 40, 24), 6.2 * T, 60 * T, "Pots")
+	_sh_piece(behind, "arcades", Rect2(224, 80, 16, 32), 28.6 * T, 58 * T, "Stub")
+	# The lantern room: its lantern, the doorway on east, a crate.
+	_hanging_lantern(behind, 35.2 * T, 43 * T + 6 * T)
+	_sh_doorway(behind, 44 * T - 62, 60 * T, true)
+	_breakable(bag, CRATE_B, 32.2 * T, 60 * T, WOOD)
+
+
+## The air: the darkness, dust down the shaft, the plate's light from above.
+func _build_air() -> void:
+	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
+	mod.color = Color(0.8, 0.8, 0.9)
+	_dust("ShaftDust", Rect2(4 * TILE, 3 * TILE, 32 * TILE, 56 * TILE), 30)
+	_fog(_root, Rect2(2 * TILE, 56 * TILE, 36 * TILE, 5 * TILE), Color("#66647e"), 0.2, Vector2(0.005, 0.0))
 
 
 ## A secret room at the foot of the west wall: from the bottom floor the wall
