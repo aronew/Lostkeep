@@ -92,6 +92,16 @@ func _use_shrine_stone() -> void:
 ## the chunky brick). Its bands fade into the dark brick by brick themselves, so
 ## the inside of every mass is the void (fade 0). Cut by tools/make_crypt_cy.py.
 var _cy_stone := false
+## The CY stone's grade: a step darker and a touch cooler than as painted.
+const CY_GRADE := Color(0.8, 0.77, 0.86)
+## The hidden rooms behind false walls: no detail is placed in them.
+var _secret_rects: Array[Rect2i] = []
+## Which detail pass `_finish()` runs: "crypt", "surface" or none.
+var _detail_kind := ""
+## The moody look (the creative lead: "I like that look instead of so bright",
+## docs/mockups/mood/): set by a room before _finish(), which sinks it into
+## a teal murk with fog along its floors. See _moody().
+var _mood := false
 
 
 func _use_crypt_y_stone() -> void:
@@ -120,7 +130,9 @@ const STONE_GRADE := Color(0.82, 0.76, 0.74)
 func _grade_stone() -> void:
 	for n in ["TerrainSkin", "PlacedArt", "Behind"]:
 		if n == "TerrainSkin" and _cy_stone:
-			continue  # the CY stone is painted in Y's colours already
+			# The CY stone a step darker (the creative lead: "a little too bright").
+			(_root.get_node(n) as CanvasItem).modulate = CY_GRADE
+			continue
 		var node := _root.get_node_or_null(n) as CanvasItem
 		if node:
 			node.modulate = STONE_GRADE
@@ -200,22 +212,154 @@ func _shrine_far() -> void:
 ## In front of everything: OC7's dark rock along the top and bottom of the view.
 ## Scrolls faster than the playfield; stays put vertically.
 func _crypt_foreground() -> void:
-	var h := float(room.size.y * TILE)
+	# Depth in two value steps in front of the playfield (the creative lead: "2
+	# layers of foreground, one not all the way silhouetted and one full
+	# silhouette"). Both frame the screen: they slide sideways faster than the
+	# room (nearer the camera) but hold their height on screen (scroll y 0), so
+	# a tall room has them on every floor and they never slide up or down when
+	# the camera changes floors. Thin shapes (roots, rubble, a pillar), never big
+	# blobs: a big black shape reads as a hole.
+	_detail_kind = "crypt"
+	var w := float(room.size.x * TILE)
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
-	p.scroll_scale = Vector2(1.15, 1.0)
-	p.repeat_size = Vector2(768, 0)
-	p.repeat_times = 4
-	p.z_index = 30
-	var top := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 0, 768, 96), Vector2(0, -6))
-	top.name = "Top"
-	top.material = unlit
-	var bottom := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 250, 768, 110), Vector2(0, h - 96))
-	bottom.name = "Bottom"
-	bottom.material = unlit
-	# (A nearer layer of pillars and roots goes here when FG1 and FG2 arrive: the
-	# first try, P5 and SH pieces blown up into black shapes, read as holes.)
+	# The mid step: roots and ivy along the top of the view, rubble, crystals and
+	# a broken pillar along its bottom, darkened to about half value and tinted
+	# toward the room's plum, their form still showing.
+	var mid := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
+	mid.scroll_scale = Vector2(1.15, 0.0)
+	mid.repeat_size = Vector2(960, 0)
+	mid.repeat_times = maxi(3, int(w / 960.0) + 3)
+	mid.z_index = 30
+	var mid_tint := Color(0.4, 0.36, 0.5)
+	var pieces := [
+		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(60, -6), 2.0],
+		[ENV + "sh_flora.png", Rect2(88, 112, 24, 64), Vector2(420, -10), 2.0],
+		[ENV + "sh_flora.png", Rect2(184, 112, 16, 32), Vector2(700, -4), 2.0],
+		[ENV + "oc_foreground.png", Rect2(0, 250, 120, 110), Vector2(180, 360 - 70), 1.0],
+		[ENV + "sh_flora.png", Rect2(152, 0, 64, 40), Vector2(520, 360 - 50), 1.6],
+		[ENV + "sh_arcades.png", Rect2(224, 80, 16, 32), Vector2(820, 360 - 58), 2.0],
+	]
+	for pc in pieces:
+		var reg: Rect2 = pc[1]
+		var sp := _sprite(mid, pc[0], reg, pc[2])
+		sp.name = "MidPiece"
+		sp.scale = Vector2(pc[3], pc[3])
+		sp.modulate = mid_tint
+		sp.material = unlit
+	# The near step: pure silhouettes, sparse, scrolling fastest: long roots
+	# from the top, rubble along the very bottom, a great pillar now and then.
+	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
+	near.scroll_scale = Vector2(1.5, 0.0)
+	near.repeat_size = Vector2(1500, 0)
+	near.repeat_times = maxi(3, int(w / 1500.0) + 3)
+	near.z_index = 31
+	var black := Color(0.03, 0.022, 0.05)
+	var near_pieces := [
+		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(260, -14), 2.2],
+		[ENV + "oc_foreground.png", Rect2(400, 290, 80, 70), Vector2(640, 360 - 44), 1.6],
+		[ENV + "sh_arcades.png", Rect2(272, 32, 20, 80), Vector2(1100, -20), 4.8],
+	]
+	for pc in near_pieces:
+		var reg: Rect2 = pc[1]
+		var sp := _sprite(near, pc[0], reg, pc[2])
+		sp.name = "Silhouette"
+		sp.scale = Vector2(pc[3], pc[3])
+		sp.modulate = black
+		sp.material = unlit
+
+
+# --- Detail: what hangs from the ceilings, what stands in front of the floors ----------------
+#
+# The creative lead: "every place needs 2 layers on the floor level to create
+# depth", "hanging things on ceilings", "the stone looks so bare and weird with
+# so many 90 degree corners". Once a room is built, this reads its collision
+# and places, from the kit's art (stand-ins until the new cards in Book 1):
+#   - along every ceiling, roots and ivy, each sized to the space below it;
+#   - under every floor's end over open air, ivy over the corner;
+#   - in front of the floors, the mid step (the art darkened to about 60 %, in
+#     front of Kleo); the near step frames the screen (`_crypt_foreground`,
+#     `_build_foreground`) until FD2's floor-front silhouettes arrive.
+# Never in a door's way, on placed art, or in a secret room.
+
+func _cellhash(c: Vector2i, salt: int) -> int:
+	return absi((c.x * 73856093) ^ (c.y * 19349663) ^ (salt * 83492791)) % 1000
+
+
+func _room_detail(surface: bool) -> void:
+	var solid_layer := _root.get_node("Solid") as TileMapLayer
+	var mass_layer := _root.get_node("Masses") as TileMapLayer
+	var solid := {}
+	for c in solid_layer.get_used_cells():
+		solid[c] = true
+	for c in mass_layer.get_used_cells():
+		solid[c] = true
+	var is_solid := func(c: Vector2i) -> bool: return solid.has(c) or not room.has_point(c)
+	var skipped := func(c: Vector2i) -> bool:
+		for r in skip:
+			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
+				return true
+		for r in _secret_rects:
+			if r.grow(1).has_point(c):
+				return true
+		return c.x < room.position.x + 3 or c.x >= room.end.x - 3
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var hang_node := _node(Node2D.new(), "Hanging", _root) as Node2D
+	hang_node.z_index = 3  # under the skin's bands: each tucks up under its ceiling
+	var mid_node := _node(Node2D.new(), "FloorMid", _root) as Node2D
+	mid_node.z_index = 26  # in front of Kleo
+	var flora := ENV + "sh_flora.png"
+	var hangs := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
+		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
+	var mid_pieces := [Rect2(16, 208, 48, 24), Rect2(8, 16, 32, 24), Rect2(8, 72, 32, 20), Rect2(112, 208, 48, 24)]
+	var mid_tint := Color(0.62, 0.58, 0.72) if not surface else Color(0.52, 0.56, 0.62)
+	for y in range(room.position.y, room.end.y):
+		for x in range(room.position.x, room.end.x):
+			var c := Vector2i(x, y)
+			if is_solid.call(c) or skipped.call(c):
+				continue
+			# A ceiling over this cell: roots or ivy, by chance, sized to the room below.
+			if is_solid.call(c + Vector2i.UP) and room.has_point(c + Vector2i.UP) and _cellhash(c, 1) < 260:
+				var open := 0
+				while open < 10 and not is_solid.call(c + Vector2i(0, open + 1)):
+					open += 1
+				var kinds := []
+				if open >= 9:
+					kinds = [1, 2, 4, 5]
+				elif open >= 6:
+					kinds = [0, 1, 3, 4]
+				elif open >= 4:
+					kinds = [0, 3]
+				if not kinds.is_empty():
+					var kind: int = kinds[_cellhash(c, 2) % kinds.size()]
+					var sp := _sprite(hang_node, flora, hangs[kind], Vector2(x * TILE + (_cellhash(c, 3) % 8), y * TILE - 2))
+					sp.name = "Hang"
+			# A floor under this cell.
+			if is_solid.call(c + Vector2i.DOWN) and room.has_point(c + Vector2i.DOWN):
+				var floor_y := float((y + 1) * TILE)
+				# Its end over open air: ivy hangs over the corner, under the slab.
+				for side in [-1, 1]:
+					var n := c + Vector2i(side, 0)
+					if not is_solid.call(n) and not is_solid.call(n + Vector2i.DOWN) and _cellhash(c, 4) < 600:
+						var under := c + Vector2i(0, 1)
+						var depth := 0
+						while depth < 8 and is_solid.call(under + Vector2i(0, depth)):
+							depth += 1
+						if depth < 8:
+							var ivy := _sprite(hang_node, flora, hangs[[0, 1, 3][_cellhash(c, 5) % 3]],
+								Vector2(x * TILE + (2 if side < 0 else 6), (y + 1 + depth) * TILE - 2))
+							ivy.name = "CornerIvy"
+				# In front of the floor: the mid step, by chance.
+				if _cellhash(c, 6) < 90:
+					var reg: Rect2 = mid_pieces[_cellhash(c, 7) % mid_pieces.size()]
+					var m := _sprite(mid_node, flora, reg, Vector2(x * TILE - reg.size.x * 0.25, floor_y - reg.size.y * 1.25 + 7))
+					m.name = "FloorMid"
+					m.scale = Vector2(1.25, 1.25)
+					m.modulate = mid_tint
+					m.material = unlit
+				# (The near step at floor level waits for art made for it, FD2 in Book 1:
+				# the kit's grass, blown up in black, read as spiky blobs.)
 
 
 ## The room's root node.
@@ -272,6 +416,10 @@ func _terrain(tileset: TileSet) -> Dictionary:
 
 ## Kleo, the camera and the screen vignette; then the scene is saved.
 func _finish() -> void:
+	if _detail_kind != "":
+		_room_detail(_detail_kind == "surface")
+	if _mood:
+		_moody()
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
 	_node(kleo, "Kleo", _root, false)
@@ -530,7 +678,7 @@ func _parallax(name: String, scale: Vector2, tex_path: String, y: float, base_co
 	return p
 
 
-func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> void:
+func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2) -> ColorRect:
 	var r := _node(ColorRect.new(), "Fog", parent) as ColorRect
 	r.position = rect.position
 	r.size = rect.size
@@ -551,6 +699,7 @@ func _fog(parent: Node, rect: Rect2, tint: Color, density: float, drift: Vector2
 	m.set_shader_parameter("drift", drift)
 	m.set_shader_parameter("scale", Vector2(rect.size.x / 512.0, rect.size.y / 256.0))
 	r.material = m
+	return r
 
 
 func _particles(name: String, tex: Texture2D, amount: int, life: float, box: Rect2) -> CPUParticles2D:
@@ -662,6 +811,96 @@ func _lift(node_name: String, pos: Vector2, drop: float, winch_dx := -3.5 * TILE
 	return lift
 
 
+## A lantern on a chain from the ceiling: `x` its centre, `ceiling_y` the ceiling line (px).
+func _hanging_lantern(parent: Node, x: float, ceiling_y: float) -> void:
+	_sprite(parent, ENV + "props_lanterns.png", Rect2(201, 1, 21, 60), Vector2(x - 10, ceiling_y - 2)).name = "HangingLantern"
+	_light(parent, Vector2(x, ceiling_y + 46), Color(1.0, 0.72, 0.4), 1.0, 1.0, "LanternLight")
+
+
+## A lantern on an iron bracket from a wall: `wall_x` the wall's face (px),
+## `y` the bracket's top; `faces` the side the room is on (1: right of the wall).
+func _bracket_lantern(parent: Node, wall_x: float, y: float, faces: int) -> void:
+	var sp := _sprite(parent, ENV + "props_lanterns.png", Rect2(110, 4, 42, 56), Vector2(wall_x if faces > 0 else wall_x - 42, y))
+	sp.name = "BracketLantern"
+	sp.flip_h = faces < 0
+	_light(parent, Vector2(wall_x + faces * 31, y + 42), Color(1.0, 0.72, 0.4), 0.95, 0.9, "LanternLight")
+
+
+## Ivy or roots hanging under a ledge or a ceiling: kind 0-2 ivy (short to
+## long), 3-5 roots (short to long); `x` its left edge, `y` where it hangs from.
+func _hang(parent: Node, kind: int, x: float, y: float) -> void:
+	var regions := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
+		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
+	_sprite(parent, ENV + "sh_flora.png", regions[kind], Vector2(x, y - 2)).name = "Hanging"
+
+
+## SH4's painted platforms (the creative lead's Shrine Hall kit), each over
+## one row of collision in the plan (a mass one tile tall, also in SKIP so the
+## skin leaves it to the painting): [region, walking line row, line x0, line x1].
+const SH4_PLATE_A := [Rect2(144, 24, 32, 32), 7, 5, 27]
+const SH4_PLATE_B := [Rect2(208, 24, 32, 32), 7, 4, 30]
+const SH4_PLATE_C := [Rect2(272, 24, 32, 32), 5, 2, 30]
+const SH4_BROKEN_LEDGE := [Rect2(208, 128, 32, 32), 3, 0, 31]
+const SH4_WALL_LEDGE := [Rect2(104, 120, 64, 56), 16, 0, 63]  # its wall on the left; flip for a wall on the right
+const SH4_ARCH_ISLAND := [Rect2(8, 8, 96, 88), 50, 0, 95]
+
+
+## One of SH4's pieces on its mass [tile_x, row, tiles]: its walking line on the
+## mass's top, centred over it.
+func _platform(parent: Node, spec: Array, tile_x: int, row: int, tiles: int, flip := false) -> Sprite2D:
+	var region: Rect2 = spec[0]
+	var x0: int = spec[2]
+	var x1: int = spec[3]
+	if flip:
+		var w := int(region.size.x) - 1
+		var t := x0
+		x0 = w - x1
+		x1 = w - t
+	var x: float = tile_x * TILE + (tiles * TILE - float(x1 - x0 + 1)) * 0.5 - x0
+	var sp := _sprite(parent, ENV + "sh_platforms.png", region, Vector2(x, row * TILE - int(spec[1])))
+	sp.name = "Platform"
+	sp.flip_h = flip
+	return sp
+
+
+## A wall torch (SH6) with its light, its top left at `x`, `y` (px).
+func _sh_torch(parent: Node, x: float, y: float) -> void:
+	_sprite(parent, ENV + "sh_doorways.png", Rect2(48, 160, 16, 32), Vector2(x, y)).name = "Torch"
+	_light(parent, Vector2(x + 8, y + 6), Color(1.0, 0.7, 0.38), 1.0, 0.8, "TorchLight")
+
+
+## A lit doorway (SH6) standing on `floor_y`, left edge `x`, a torch beside it.
+func _sh_doorway(parent: Node, x: float, floor_y: float, flip: bool, ruined := false) -> void:
+	var sp := _ground(parent, ENV + "sh_doorways.png", Rect2(144 if ruined else 16, 16, 80, 96), x, floor_y + 1.0, 1.0, "Doorway")
+	sp.flip_h = flip
+	_light(parent, Vector2(x + 40, floor_y - 40), Color(0.55, 0.7, 1.0), 0.6, 0.9, "DoorwayGlow")
+	_sh_torch(parent, x + (-14.0 if flip else 82.0), floor_y - 56)
+
+
+## A piece of SH art (the arcades sheet, the flora sheet) standing on `floor_y`.
+func _sh_piece(parent: Node, sheet: String, region: Rect2, x: float, floor_y: float, piece_name: String, flip := false) -> Sprite2D:
+	var sp := _ground(parent, ENV + "sh_" + sheet + ".png", region, x, floor_y + 1.0, 1.0, piece_name)
+	sp.flip_h = flip
+	return sp
+
+
+## Dust drifting in a tall space, lit by nothing: the air moves.
+func _dust(node_name: String, box: Rect2, amount: int) -> void:
+	var dust := _particles(node_name, load("res://assets/fx/mote.png"), amount, 9.0, box)
+	dust.color = Color(0.8, 0.9, 1.0, 0.6)
+	dust.gravity = Vector2(0, 3)
+	dust.initial_velocity_min = 2.0
+	dust.initial_velocity_max = 6.0
+	dust.spread = 180.0
+	dust.scale_amount_min = 0.5
+	dust.scale_amount_max = 1.0
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	dust.material = add
+	dust.z_index = 14
+
+
 ## A bead (or a few) of Resin hanging at `pos` (px). `flag` keeps it taken.
 func _pickup(parent: Node, pos: Vector2, value: int, flag: String) -> Area2D:
 	var p := _node(Area2D.new(), "Resin", parent) as Area2D
@@ -742,6 +981,9 @@ func _false_wall(node_name: String, hide: Rect2i, face_x: int, rows: Vector2i, f
 	skin.set("skip_regions", _rects(skip))
 	skin.set("solid_layer", fake)
 	skin.set("mass_layer", _root.get_node("Masses"))
+	if _cy_stone:
+		skin.modulate = CY_GRADE
+	_secret_rects.append(hide)
 	var trig := _node(Area2D.new(), "Trigger", cover) as Area2D
 	var tc := CollisionShape2D.new()
 	var tr := RectangleShape2D.new()
@@ -907,3 +1149,107 @@ func _light(parent: Node, pos: Vector2, color: Color, energy: float, scale: floa
 	l.position = pos.round()
 	l.set_script(load("res://scripts/world/lantern_light.gd"))
 	return l
+
+
+# --- The moody look -------------------------------------------------------------------------
+
+const MOOD_MURK := Color(0.36, 0.46, 0.52)         # the CanvasModulate: low key, teal
+const MOOD_HAZE := Color(0.04, 0.11, 0.13, 0.24)   # washes the backdrops into the murk
+const MOOD_FOG := Color(0.32, 0.48, 0.52)          # the fog's own colour
+const MOOD_FAR := Color(0.7, 0.88, 0.9)            # the backdrops, greyed toward teal
+
+
+## After the creative lead's moody references (docs/mockups/mood/): the room
+## sinks into a teal murk, a haze lies over its backdrops, ground fog runs along
+## every floor (behind Kleo and, thinner, in front of her feet), a low bank fills
+## the drops, a bank lies along the bottom of the view, the warm lights carry
+## the scene and the cold ones fall back, and the vignette deepens.
+func _moody() -> void:
+	var dark := _root.get_node_or_null("Darkness") as CanvasModulate
+	if dark:
+		dark.color = MOOD_MURK
+	for c in _root.get_children():
+		if c is Parallax2D and (c as Parallax2D).z_index < 0:
+			(c as Parallax2D).modulate = MOOD_FAR
+	var rect := Rect2(room.position * TILE, room.size * TILE)
+	var haze := _node(ColorRect.new(), "MoodHaze", _root) as ColorRect
+	haze.color = MOOD_HAZE
+	haze.position = rect.position - Vector2(400, 400)
+	haze.size = rect.size + Vector2(800, 800)
+	haze.z_index = -9
+	haze.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	var mood_poly := _root.get_node_or_null("Mood")
+	if mood_poly:
+		_root.move_child(haze, mood_poly.get_index() + 1)
+	var low := _mood_fog(_root, "DeepFog", Rect2(rect.position.x, rect.position.y + rect.size.y * 0.45, rect.size.x, rect.size.y * 0.6), 0.28, 1)
+	low.material.set_shader_parameter("scale", Vector2(rect.size.x / 800.0, rect.size.y / 140.0))
+	low.material.set_shader_parameter("side_fade", 0.08)
+	_mood_floor_fog()
+	var fg := _root.get_node_or_null("Foreground") as Parallax2D
+	if fg:
+		var w := rect.size.x * 1.3 + 800.0
+		var bank := _mood_fog(fg, "ScreenFog", Rect2(-400, 250, w, 120), 0.45, 0)
+		bank.material.set_shader_parameter("scale", Vector2(w / 600.0, 0.6))
+	for l in _root.find_children("*", "PointLight2D", true, false):
+		var pl := l as PointLight2D
+		if pl.color.r > pl.color.b:
+			pl.energy *= 1.9
+			pl.texture_scale *= 1.15
+		else:
+			pl.energy *= 0.5
+	var vig := _root.get_node_or_null("Screen/Vignette") as ColorRect
+	if vig and vig.material:
+		var vm := (vig.material as ShaderMaterial).duplicate() as ShaderMaterial
+		vm.set_shader_parameter("strength", 0.74)
+		vm.set_shader_parameter("inner", 0.32)
+		vm.set_shader_parameter("shadow", Color(0.01, 0.03, 0.04))
+		vig.material = vm
+
+
+## Ground fog along every floor run of four tiles or more.
+func _mood_floor_fog() -> void:
+	var cells := {}
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm:
+			for c in tm.get_used_cells():
+				cells[c] = true
+	var rows := {}
+	for c in cells:
+		if not cells.has(c + Vector2i(0, -1)) and not cells.has(c + Vector2i(0, -2)):
+			if not rows.has(c.y):
+				rows[c.y] = []
+			rows[c.y].append(c.x)
+	var n := 0
+	var keys := rows.keys()
+	keys.sort()
+	for y in keys:
+		var xs: Array = rows[y]
+		xs.sort()
+		var start: int = xs[0]
+		var prev: int = xs[0]
+		for i in range(1, xs.size() + 1):
+			if i < xs.size() and xs[i] == prev + 1:
+				prev = xs[i]
+				continue
+			if prev - start + 1 >= 4:
+				var fy := float(y * TILE)
+				var x0 := float(start * TILE) - 24.0
+				var w := float((prev - start + 1) * TILE) + 48.0
+				var back := _mood_fog(_root, "FloorFog%d" % n, Rect2(x0, fy - 3.4 * TILE, w, 3.8 * TILE), 0.4, 3)
+				back.material.set_shader_parameter("side_fade", 0.12)
+				var front := _mood_fog(_root, "FloorFogFront%d" % n, Rect2(x0, fy - 1.4 * TILE, w, 2.0 * TILE), 0.22, 12)
+				front.material.set_shader_parameter("side_fade", 0.15)
+				front.material.set_shader_parameter("drift", Vector2(-0.008, 0.0))
+				n += 1
+			if i < xs.size():
+				start = xs[i]
+				prev = xs[i]
+
+
+func _mood_fog(parent: Node, fog_name: String, rect: Rect2, density: float, z: int) -> ColorRect:
+	var r := _fog(parent, rect, MOOD_FOG, density, Vector2(0.005, 0.0))
+	r.name = fog_name
+	r.z_index = z
+	r.material.set_shader_parameter("scale", Vector2(rect.size.x / 640.0, rect.size.y / 90.0))
+	return r

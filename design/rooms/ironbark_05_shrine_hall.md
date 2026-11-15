@@ -67,3 +67,45 @@ slide 0, wobble 0.
 - The doorways' torches are placed by eye beside each arch.
 - The mockup's stepped outer rim (the masonry stepping out into the dark around
   the hall) is plain black past the edge bands.
+
+## The moody pass (after the creative lead's moody mockup of this room)
+
+The creative lead's mockup `docs/mockups/mood/shrine_hall_moody.webp`: "I like
+that look instead of so bright ... the fog looks really cool", and its top
+galleries have "more character" than our straight corridor.
+
+- **The mood is the room's own now** (`_mood = true` in `_build_air()`;
+  `_moody()` in `room_builder.gd`): a teal murk (`MOOD_MURK`), a haze over the
+  backdrops, ground fog along every floor run behind Kleo and thinner in front
+  of her feet, a low bank in the drops, a bank along the bottom of the view,
+  the warm lights stronger and the cold doorway glows dimmer, a deeper
+  vignette.
+- **The galleries step.** The west gallery's ceiling rises a course in its
+  middle (row 2, x 8 to 12) and its floor steps up toward the gap (row 7,
+  x 14 to 18). The east gallery: its west end on row 8 under a ceiling on
+  row 3, a bulkhead (ceiling row 4, x 26 to 28), then a step down into the
+  tall bay with the arcade (floor row 9, ceiling row 3, x 29 to 37), then on
+  under row 4 to the gap by the East door. The doors' rows are unchanged.
+- **Tried and taken out:** single-course hangs of stone under the galleries.
+  On a three-tile slab the skin drew each as a window frame with a black slot.
+  The mockup's sagging undersides wait for CH1 (slab ends and undersides).
+- **Validation:** `check_room.py ib05` passes everything but its small-step
+  count (4, rule <= 2): the steps are the mockup's, on purpose. Coverage 100 %,
+  no traps, all four exits. `mode=tour` (it now hops the bay's step and jumps
+  the gap onto the west gallery's step) and `mode=upper` pass.
+- Image: `docs/rooms/ironbark_05/moody_vs_mockup.png` (the mockup above, the
+  room below).
+
+### The galleries wear CH7 (the creative lead: the top hallway "still doesn't match the mockup look")
+
+The skin draws straight bands; the mockup's galleries are ragged slabs whose
+undersides hang into the hall, under a lumpy cobble ceiling, with a brick wall
+behind. `_galleries()` in `build_ib05.gd`: CH7's cave strips (`ch_cave.png`)
+over every gallery floor run with their cap on the walking line, and upside
+down along every ceiling run (only the cap and the masonry under it: the creative
+lead found the whole strip upside down "a little wild", its crystals and
+tufts dangling); the skin skips the galleries' slabs and ceilings
+(`GALLERY_SKIP`) so the strips are their only edge; a brick back wall
+(`sh_fill`, `GalleryBackWall`) stands behind them. Only stretches of the strips
+clear of their roots are used (`STRIPS`). Collision unchanged; tours, checker
+as before.

@@ -29,10 +29,18 @@ const IB06 := "res://scenes/rooms/ironbark_06_undercroft.tscn"
 const ROOM := Rect2i(0, 0, 58, 34)
 const ROCK := [[0, 0, 58, 34, 1]]
 const SPACES := [
-	[0, 3, 19, 5],      # the west gallery (its floor row 8), to the upper West door
+	# The galleries step, floor and ceiling, as in the creative lead's moody
+	# mockup of this room (docs/mockups/mood/shrine_hall_moody.webp), never one
+	# straight corridor.
+	[0, 3, 14, 5],      # the west gallery (its floor row 8), to the upper West door
+	[8, 2, 5, 1],       # its ceiling rises a course in the middle
+	[14, 3, 5, 4],      # and its floor steps up toward the gap (row 7)
 	[19, 0, 3, 3],      # the shaft above the galleries' gap, going up out of sight
 	[19, 3, 3, 8],      # the gap between the galleries, open down into the hall
-	[22, 4, 24, 5],     # the east gallery (floor row 9)
+	[22, 3, 4, 5],      # the east gallery: its west end, floor row 8, ceiling row 3
+	[26, 4, 3, 4],      # under a bulkhead (ceiling row 4)
+	[29, 3, 9, 6],      # the tall bay with the arcade, a step down (floor row 9)
+	[38, 4, 8, 5],      # on to the gap by the East door (floor row 9)
 	[46, 2, 4, 9],      # the gap by the East door, open down into the hall
 	[50, 2, 8, 5],      # the landing at the East door (floor row 7)
 	[3, 11, 51, 15],    # the hall (its floor row 26)
@@ -59,6 +67,8 @@ const MASSES := [
 	[47, 13, 2, 1, 1],    # the ledge under the east gap (the way back up)
 	[50, 21, 4, 1, 1],    # the shelf on the east wall, over the lower East door
 ]
+## The galleries' slabs and ceilings are painted by CH7's strips (_galleries()).
+const GALLERY_SKIP := [[0, 0, 19, 3], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 4], [22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
 const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 4, 1], [22, 22, 2, 1], [29, 22, 2, 1],
 	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [50, 21, 4, 1]]
 const STONE := [[0, 0, 58, 34]]
@@ -88,7 +98,7 @@ func _initialize() -> void:
 	spaces = SPACES
 	masses = MASSES
 	stone = STONE
-	skip = SKIP
+	skip = SKIP + GALLERY_SKIP
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	_unlit = CanvasItemMaterial.new()
@@ -106,6 +116,7 @@ func _initialize() -> void:
 	var behind: Node = t["behind"]
 	var placed: Node = t["placed"]
 	_build_islands(placed)
+	_galleries(placed)
 	_grade_stone()
 	_hide_island_tiles()
 	_dress(behind)
@@ -205,10 +216,10 @@ func _dress(behind: Node) -> void:
 	# The west gallery: a single arch, pots, crystals and flowers.
 	_sh(behind, ARC, Rect2(144, 32, 64, 80), 120, WEST, "Arch")
 	_sh(behind, ARC, Rect2(304, 88, 40, 24), 200, WEST, "Pots")
-	_sh(behind, FLORA2, Rect2(8, 72, 32, 20), 250, WEST, "Flowers")
+	_sh(behind, FLORA2, Rect2(8, 72, 32, 20), 250, WEST - TILE, "Flowers")
 	# The east gallery: the arcade, pillars, the chest, pots, crystals.
-	_sh(behind, ARC, Rect2(4, 32, 128, 80), 430, EAST, "Arcade")
-	_sh(behind, ARC, Rect2(272, 32, 20, 80), 380, EAST, "Pillar")
+	_sh(behind, ARC, Rect2(4, 32, 128, 80), 474, EAST, "Arcade")
+	_sh(behind, ARC, Rect2(272, 32, 20, 80), 380, EAST - TILE, "Pillar")
 	_sh(behind, ARC, Rect2(352, 96, 24, 16), 600, EAST, "Chest")
 	_sh(behind, FLORA2, Rect2(64, 64, 48, 28), 630, EAST, "Flowers")
 	_breakable(bag, POT, 690.0, EAST, CLAY)
@@ -241,6 +252,7 @@ func _dress(behind: Node) -> void:
 func _build_air(front: Node) -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
 	mod.color = Color(0.9, 0.9, 0.96)
+	_mood = true
 	_fog(_root, Rect2(48, 350, 800, 70), Color("#66647e"), 0.16, Vector2(0.005, 0.0))
 	var dust := _particles("Dust", load("res://assets/fx/mote.png"), 30, 9.0, Rect2(48, 60, 820, 360))
 	dust.color = Color(0.8, 0.86, 1.0, 0.7)
@@ -291,3 +303,68 @@ func _build_secrets() -> void:
 	_false_wall("WestWallSecret", Rect2i(0, 13, 3, 3), 3, Vector2i(13, 3), 1, "ib05_west_secret")
 	_draught("WestWallDraught", Rect2(3.2 * TILE, 13.3 * TILE, 2.0 * TILE, 2.4 * TILE), Vector2(-1, 0))
 	_resin_cache(_root, 0.6 * TILE, 2.4 * TILE, 16.0 * TILE, 3, "ib05_west_resin")
+
+
+# --- The galleries after the moody mockup ------------------------------------------------
+## The creative lead: the top hallway "still doesn't match the mockup look"
+## (docs/mockups/mood/shrine_hall_moody.webp). In the mockup each gallery is a
+## slab whose underside tapers and hangs into the hall, under a ragged cobble
+## ceiling, with a brick wall behind it. The skin draws straight bands, so the
+## galleries wear CH7's cave strips (ch_cave.png): over each floor run with its
+## cap on the walking line, and upside down along each ceiling run; and a brick
+## back wall stands behind them.
+const CAVE := ENV + "ch_cave.png"
+## CH7's long strips: [x, y, w, h] in ch_cave.png and the cap row in each.
+## Each: [x, y, w, h, cap row]: the stretches of each strip clear of its roots.
+const STRIPS := [[71, 105, 370, 66, 10], [66, 9, 375, 82, 12], [241, 191, 200, 71, 13], [11, 191, 150, 71, 13], [11, 275, 130, 77, 15]]
+## Floor runs [x0, x1, row] and ceiling runs [x0, x1, row of the ceiling's
+## underside], in tiles.
+const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50, 58, 7]]
+const GALLERY_CEILINGS := [[0, 8, 3], [8, 13, 2], [13, 19, 3], [22, 26, 3], [26, 29, 4], [29, 38, 3], [38, 46, 4], [46, 50, 2], [50, 58, 2]]
+const GALLERY_BACK := [[0, 3, 14, 5], [8, 2, 5, 1], [14, 3, 5, 4], [22, 3, 4, 5], [26, 4, 3, 4], [29, 3, 9, 6], [38, 4, 8, 5], [50, 2, 8, 5]]
+
+
+func _galleries(placed: Node) -> void:
+	var wall := _node(Node2D.new(), "GalleryBackWall", _root) as Node2D
+	wall.set_script(load("res://scripts/world/back_wall.gd"))
+	wall.z_index = -2
+	wall.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	wall.set("fill", load(TERRAIN + "sh_fill.png"))
+	wall.set("brightness", 0.62)
+	var regions: Array[Rect2i] = []
+	for r in GALLERY_BACK:
+		regions.append(Rect2i(r[0], r[1], r[2], r[3]))
+	wall.set("regions", regions)
+	var strips := _node(Node2D.new(), "GalleryStrips", placed) as Node2D
+	var i := 0
+	for f in GALLERY_FLOORS:
+		_strip(strips, f[0], f[1], f[2] * TILE, false, i)
+		i += 1
+	for c in GALLERY_CEILINGS:
+		_strip(strips, c[0], c[1], c[2] * TILE, true, i)
+		i += 1
+
+
+## A run of CH7 strip from tile x0 to x1, its cap on the line y (a floor), or
+## upside down with its cap under the line (a ceiling's underside).
+func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> void:
+	var w := (x1 - x0) * TILE + 4
+	# The first strip, counting on from n, long enough for the run.
+	var st: Array = STRIPS[0]
+	for k in STRIPS.size():
+		var cand: Array = STRIPS[(n + k) % STRIPS.size()]
+		if int(cand[2]) >= w:
+			st = cand
+			break
+	var off := (n * 97) % maxi(1, int(st[2]) - w)
+	var region := Rect2(st[0] + off, st[1], mini(w, int(st[2])), st[3])
+	if ceiling:
+		# Only the cap and the masonry under it, upside down: the cap row is the
+		# ceiling's clean edge and the ragged underside rises into the dark. What
+		# grows on the strip's top (crystals, tufts) would dangle, so it is left off.
+		region = Rect2(region.position.x, st[1] + st[4], region.size.x, st[3] - st[4])
+	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE - 2, y - st[4]))
+	sp.name = "CeilingStrip" if ceiling else "FloorStrip"
+	if ceiling:
+		sp.flip_v = true
+		sp.position.y = y - region.size.y

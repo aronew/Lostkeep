@@ -52,7 +52,7 @@ const SPACES := [
 const MASSES := [
 	[13, 16, 3, 2, 1],   # L1's lip (row 16): a short drop across to R1's
 	[18, 18, 4, 2, 1],   # R1's lip (row 18): off its west end, down onto the step
-	[16, 28, 2, 2, 1],   # a step in the void (row 28): up to L2, across to R2
+	[16, 28, 2, 1, 1],   # a plate in the void (row 28, SH4's): up to L2, across to R2
 	[13, 25, 3, 2, 1],   # L2's lip (row 25)
 	[20, 28, 2, 2, 1],   # R2's lip (row 28): off its west end, down onto R3's
 	[18, 39, 4, 2, 1],   # R3's lip (row 39): across to L3's, or off it onto the arch
@@ -61,7 +61,8 @@ const MASSES := [
 	[13, 53, 4, 2, 1],   # L4's lip (row 53): off it down to the basin
 ]
 const STONE := [[0, 0, 44, 72]]
-const SKIP := []
+## Cells painted by placed art (SH4's plate), not the skin.
+const SKIP := [[16, 28, 2, 1]]
 const SPAWN := Vector2(6 * 16, 16 * 16)
 const LAMP := Color(1.0, 0.72, 0.4)
 
@@ -80,9 +81,11 @@ func _initialize() -> void:
 	_begin("IronbarkUndercroft")
 	_shrine_far()
 	var t := _terrain(tileset)
+	_platform(t["placed"], SH4_PLATE_B, 16, 28, 2).name = "VoidPlate"
 	_grade_stone()
 	_build_machines()
-	_build_lights(t["behind"])
+	_dress(t["behind"])
+	_build_air()
 	_build_secrets()
 	_crypt_foreground()
 	_edge_shades()
@@ -114,11 +117,86 @@ func _build_machines() -> void:
 	_sprite(plate, ENV + "gate_bark_plate.png", Rect2(77, 2, 41, 82), Vector2(-6, -2)).name = "Art"
 
 
-## Blockout light only: enough to read the spaces in the review shots.
-func _build_lights(behind: Node) -> void:
-	for p in [Vector2(6, 12), Vector2(30, 12), Vector2(10, 22), Vector2(30, 24), Vector2(6, 34), Vector2(30, 35),
-			Vector2(9, 49), Vector2(30, 47), Vector2(7, 61), Vector2(32, 61), Vector2(17, 60), Vector2(17, 30)]:
-		_light(behind, Vector2(p.x * TILE, p.y * TILE), LAMP, 0.9, 1.4, "BlockoutLight")
+## The cellar rooms, dressed from the kit: a lantern in each lantern room,
+## arcades in the arcade rooms (SH7), the guard's stores in crates and barrels
+## (they break), crystals and flowers where the light reaches, ivy and roots
+## hanging into the void, the doorways at the doors.
+func _dress(behind: Node) -> void:
+	var bag := ENV + "props_guard_belongings.png"
+	var T := float(TILE)
+	# L1, the storeroom: the doorway in from the Shrine Hall, its stores.
+	_sh_doorway(behind, -18, 16 * T, false)
+	_hanging_lantern(behind, 7.0 * T, 8 * T)
+	_breakable(bag, CRATE_A, 8.0 * T, 16 * T, WOOD)
+	_breakable(bag, BARREL, 10.2 * T, 16 * T, WOOD)
+	_breakable(bag, POT_SMALL, 11.8 * T, 16 * T, CLAY)
+	# R1, the arcade: the arcade along its back, a pillar, crystals, the lift.
+	_sh_piece(behind, "arcades", Rect2(4, 32, 128, 80), 23.5 * T, 18 * T, "Arcade")
+	_sh_piece(behind, "arcades", Rect2(272, 32, 20, 80), 32.8 * T, 18 * T, "Pillar")
+	_sh_piece(behind, "flora", Rect2(8, 16, 32, 24), 34.6 * T, 18 * T, "Crystals")
+	_sh_piece(behind, "flora", Rect2(8, 72, 32, 20), 21.4 * T, 18 * T, "Flowers")
+	# L2, a lantern room: its lantern, pots, flowers.
+	_hanging_lantern(behind, 10.0 * T, 19 * T)
+	_breakable(bag, POT_SMALL, 7.6 * T, 25 * T, CLAY)
+	_breakable(bag, POT, 8.8 * T, 25 * T, CLAY)
+	_sh_piece(behind, "flora", Rect2(8, 72, 32, 20), 11.0 * T, 25 * T, "Flowers")
+	# R2, a lantern room: a lantern on its east wall, stores, crystals.
+	_bracket_lantern(behind, 37.0 * T, 22.0 * T, -1)
+	_sh_piece(behind, "flora", Rect2(64, 8, 48, 32), 23.0 * T, 28 * T, "Crystals")
+	_breakable(bag, CRATE_B, 28.0 * T, 28 * T, WOOD)
+	_breakable(bag, BARREL_BIG, 30.4 * T, 28 * T, WOOD)
+	_breakable(bag, CRATE_C, 32.6 * T, 28 * T, WOOD)
+	# L3, the long arcade: the arcade, its lantern, flowers out to the lip.
+	_sh_piece(behind, "arcades", Rect2(4, 32, 128, 80), 0.5 * T, 39 * T, "Arcade")
+	_hanging_lantern(behind, 11.0 * T, 30 * T)
+	_sh_piece(behind, "flora", Rect2(152, 56, 64, 36), 9.4 * T, 39 * T, "Flowers")
+	# R3, the arcade across: an arch, pillars (one broken), crystals, pots.
+	_sh_piece(behind, "arcades", Rect2(144, 32, 64, 80), 25.5 * T, 39 * T, "Arch")
+	_sh_piece(behind, "arcades", Rect2(248, 56, 16, 56), 30.6 * T, 39 * T, "Pillar")
+	_sh_piece(behind, "arcades", Rect2(224, 80, 16, 32), 32.4 * T, 39 * T, "BrokenPillar")
+	_sh_piece(behind, "flora", Rect2(64, 8, 48, 32), 33.6 * T, 39 * T, "Crystals")
+	_sh_piece(behind, "arcades", Rect2(304, 88, 40, 24), 22.6 * T, 39 * T, "Pots")
+	# The root arch: grass and flowers on it, roots and ivy hanging under it.
+	_sh_piece(behind, "flora", Rect2(16, 208, 48, 24), 14.0 * T, 46 * T, "Grass")
+	_sh_piece(behind, "flora", Rect2(112, 208, 48, 24), 20.6 * T, 46 * T, "WhiteFlowers")
+	_hang(behind, 5, 15.6 * T, 48 * T)
+	_hang(behind, 2, 19.2 * T, 48 * T)
+	_hang(behind, 4, 23.0 * T, 48 * T)
+	# L4, a lantern room: its lantern, a bier, a pot.
+	_hanging_lantern(behind, 10.4 * T, 43 * T)
+	_ground(behind, ENV + "oc_props.png", Rect2(2, 91, 77, 28), 6.2 * T, 53 * T + 1, 1.0, "Bier")
+	_breakable(bag, POT_SMALL, 11.6 * T, 53 * T, CLAY)
+	# R4, a cellar under the arch's east end: barrels, a crate, a lantern.
+	_bracket_lantern(behind, 37.0 * T, 43.0 * T, -1)
+	_breakable(bag, BARREL_BIG, 28.0 * T, 53 * T, WOOD)
+	_breakable(bag, BARREL, 30.0 * T, 53 * T, WOOD)
+	_breakable(bag, CRATE_A, 32.4 * T, 53 * T, WOOD)
+	# L5, the bottom-left room, by the plated door: a lantern, bones, crystals.
+	_hanging_lantern(behind, 8.0 * T, 57 * T)
+	_ground(behind, ENV + "oc_props.png", Rect2(41, 46, 46, 21), 4.6 * T, 65 * T + 1, 1.0, "Bones")
+	_sh_piece(behind, "flora", Rect2(64, 8, 48, 32), 9.4 * T, 65 * T, "Crystals")
+	# R5, the bottom-right room: the doorway on east, stores, a lantern.
+	_sh_doorway(behind, 44 * T - 62, 65 * T, true)
+	_hanging_lantern(behind, 29.0 * T, 57 * T)
+	_breakable(bag, CRATE_B, 23.2 * T, 65 * T, WOOD)
+	_breakable(bag, POT_BIG, 25.6 * T, 65 * T, CLAY)
+	# The basin: grass and flowers round the sump.
+	_sh_piece(behind, "flora", Rect2(16, 208, 48, 24), 17.0 * T, 68 * T, "Grass")
+	_sh_piece(behind, "flora", Rect2(8, 72, 32, 20), 21.0 * T, 68 * T, "Flowers")
+	# Ivy and roots hanging from the lips into the void.
+	_hang(behind, 1, 13.4 * T, 18 * T)
+	_hang(behind, 2, 19.6 * T, 20 * T)
+	_hang(behind, 0, 20.2 * T, 30 * T)
+	_hang(behind, 4, 13.8 * T, 41 * T)
+	_hang(behind, 1, 14.2 * T, 55 * T)
+
+
+## The air: the darkness, dust drifting down the void, mist on the basin.
+func _build_air() -> void:
+	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
+	mod.color = Color(0.82, 0.82, 0.92)
+	_dust("VoidDust", Rect2(13 * TILE, 2 * TILE, 9 * TILE, 64 * TILE), 30)
+	_fog(_root, Rect2(13 * TILE, 64 * TILE, 11 * TILE, 5 * TILE), Color("#5f8a8c"), 0.3, Vector2(0.006, 0.0))
 
 
 ## Two secret rooms, each behind a false wall at the back of a lantern room on

@@ -16,9 +16,12 @@ non-negotiables.
 - A Metroidvania is about **exploration and curiosity**, not the quickest
   path to the goal or the next ability.
 - **Platforms are rare, strategic and subtle.** Never fill space with
-  platforms. Prefer **large masses of floor**, **multiple storeys made of
-  floors**, and **floating islands** that read as natural landforms over
-  dozens of small ledges.
+  platforms. Build with a **mixture**: **large masses of floor** (and
+  **multiple storeys made of floors**), **large floating islands** that read
+  as natural landforms, and **platforms**. The creative lead: "when I say keep
+  platforms rare I mean don't put 50 platforms in a room to get to fill in
+  space instead you add a mixture of large masses, large floating islands and
+  platforms." The character mockups (`docs/mockups/character/`) show the mix.
 - Progression keys are permanent **verbs** (`ability-atlas.md`).
 
 ## The four pillars

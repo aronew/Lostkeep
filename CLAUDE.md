@@ -204,9 +204,12 @@ She steps forward with every hit.
 ### Design rules (from `design/pillars.md`)
 - **Exploration and curiosity come first.** A Metroidvania is not a race to
   the next ability.
-- **Platforms are rare, strategic and subtle.** Build with large masses of
-  floor, storeys of floor and natural floating islands, never rows of small
-  ledges.
+- **Platforms are rare, strategic and subtle.** Build with a mixture of
+  large masses of floor (storeys of floor), large floating islands and
+  platforms. What is ruled out is filling a room with dozens of platforms to
+  cover space (the creative lead: "don't put 50 platforms in a room to get to
+  fill in space"), not platforms themselves; the character mockups
+  (`docs/mockups/character/`) show the mix.
 - **Progression keys are permanent verbs.** Show each lock at least three
   times, on at least two routes, before its key. Every region except the last
   plants locks for at least two later abilities.
@@ -294,10 +297,20 @@ She steps forward with every hit.
   `tools/make_terrain.py`, which writes their anchors to
   `terrain/kit_anchors.json` for the builder. Stone walking edges get a pale lip so ledges read. In the
   editor, paint or erase tiles and the skin follows.
-- **The foreground:** `Foreground` is a `Parallax2D` at scroll (1.2, 1.0): P5's
-  canopy along the room's top edge and its fern tops along the bottom, unlit.
-  It sits in the world vertically, so it never slides when the camera rises or
-  falls, and it never stands on a walking line among the props.
+- **The foreground, in two value steps** (the creative lead: "2 layers of
+  foreground, one not all the way silhouetted and one full silhouette"):
+  `Foreground` (the mid step, scroll 1.15 to 1.2) is the room's own art
+  darkened to about half value and tinted toward its mood, its form still
+  showing (surface: P5's canopy and ferns; crypts: roots and ivy along the top,
+  crystals, rubble and a broken pillar along the bottom); `ForegroundNear`
+  (scroll 1.5) is sparse pure-black silhouettes in thin shapes (a branch,
+  vines, grass; long roots, rubble, a great pillar). Never big blobs: a big
+  black shape reads as a hole. Both frame the screen (scroll y 0): they slide
+  sideways faster than the room but hold their height on screen, so a tall
+  room has them on every floor and they never slide up or down when the
+  camera changes floors. `_build_foreground()` in `surface_builder.gd`,
+  `_crypt_foreground()` in `room_builder.gd`. IB-01 keeps its own. Comparison:
+  `docs/rooms/foreground_two_steps.png`.
 - **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
   mass is the nearest thing to the camera, so it shadows to black toward its
   centre and only its edges get art. Every mass is black inside, piers
@@ -472,6 +485,13 @@ She steps forward with every hit.
   Shaft** (`ironbark_07_pit_shaft.md`, origin (-44, 64), 44 x 64), after the
   far-left one, mass by mass, entered only with the Ward: the cracked plate
   above (W1b) or the bark plate in the Undercroft's bottom-left room (W1c).
+  **Floating platforms are painted pieces, never floor:** a floating ledge or
+  plate is SH4's art (`_platform(parent, spec, tile_x, row, tiles, flip)` with
+  `SH4_PLATE_A/B/C`, `SH4_BROKEN_LEDGE`, `SH4_WALL_LEDGE`, `SH4_ARCH_ISLAND` in
+  `room_builder.gd`) over a one-tile mass that is also in SKIP and in the
+  checker's `seals` (the creative lead: "why are the floating islands and
+  platforms ... just floor tiles"). Floors that run out into a void (the
+  Undercroft's lips, the Pit Shaft's walkway) stay terrain.
   **Every gap meant for dropping through is 2 tiles wide:** Kleo runs straight
   over a 1-tile gap (the checker thinks she can drop through one; she can't).
   Both: `room=ib06` / `room=ib07` with `mode=tour`, `upper`, `shots`, `map`
@@ -594,6 +614,47 @@ She steps forward with every hit.
 - **Art the Old Crypt wants** (older list) is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.
+- **The detail pass** (the creative lead: "hanging things on ceilings", "so many
+  90 degree corners", "the stone is a little too bright", "2 layers on the floor
+  level"): `_room_detail()` in `room_builder.gd`, run by `_finish()` in any room
+  whose foreground set `_detail_kind`, hangs SH flora roots and ivy under ceilings
+  and corner ivy off floor ends (chosen by a cell hash, never in skip regions,
+  secrets or the room's edge tiles), and stands darkened pieces along floors
+  (`FloorMid`, the mid step). The floor's black near step waits for art (CH8):
+  the blown-up placeholders read as spiky blobs. `CY_GRADE` darkens the CY
+  terrain. Image: `docs/rooms/detail_pass.png`.
+- **Character mockups** (`docs/mockups/character/`, ten of them; the creative
+  lead: "they have so much character to the level"): no bare right angle. Slabs
+  taper into hanging stone with moss off them, floors stand on columns, corbels
+  and arches, edges step course by course, every top carries something, alcoves
+  are rooms inside the room, and the room sits in a rounded cobble cave wound
+  with roots. Book 1's CH1 to CH8 ask for those pieces (CH1 replaces the plates,
+  lips and walkway the creative lead called weird). Their crimson roots are the
+  Blight's colour, so the cards ask for dull roots. Their floating slabs are
+  welcome: they sit in the mix with the large masses and islands.
+- **Mood test** (the creative lead's moody fog reference,
+  `docs/mockups/mood/moody_fog_reference.webp`: "maybe an idea for another
+  place"): `tools/mood_test.gd` loads a built room and saves a copy sunk into a
+  teal murk (`MURK` CanvasModulate, a haze over the backdrops, ground fog along
+  every floor run behind and in front of Kleo, a low bank in the drops, a fog
+  bank across the bottom of the view, warm lights up and cold ones down, a
+  deeper vignette). `scenes/tests/mood_ib05.tscn` is IB-05 in it; pictures in
+  `docs/rooms/mood_test/` (taken with `tests/mood_shot.gd`). Not applied to any
+  room by the tool. The fog shader's `side_fade` softens a band's ends.
+  **IB-05 now wears it as its own look** (the creative lead: "I like that look
+  instead of so bright"; `docs/mockups/mood/shrine_hall_moody.webp`): a room
+  sets `_mood = true` and `_finish()` calls `_moody()` in `room_builder.gd`
+  (`MOOD_*` constants). Other rooms can switch it on once IB-05 is approved.
+  Don't run `mood_test.gd` on IB-05: it would double the fog.
+- **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
+  grid-aligned: resampled from their drafts onto the grid by another tool, so
+  03 stairs and 06 alcoves show a crosshatch shimmer; the others are clean).
+  Originals in `art/source/ironbark/crypt_ch/`; `tools/make_crypt_ch.py`
+  reduces them by their cell size to `ch_*.png` and lists each sheet's pieces
+  (rect, walking line) in `ch_pieces.json`. First use: IB-05's galleries wear
+  CH7's strips (`_galleries()`). Don't use the CH1 slab with the icy-blue
+  crystal (the Prism's colour). New PNGs need `godot --headless --import`
+  before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
