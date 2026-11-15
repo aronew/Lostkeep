@@ -350,7 +350,7 @@ She steps forward with every hit.
 ### Art pipeline
 1. **Prompt books:** prompts live in `docs/art-production/*-prompt-book.html`
    (layout copied from the user's MetroidVania repo). Reference images are in
-   `docs/art-production/lostkeep-attach/` (A–N).
+   `docs/art-production/lostkeep-attach/` (A to Z).
 2. **The user generates sheets.** Unchanged originals go in
    `art/source/<region>/`.
 3. **Processing:** `python3 tools/process_art.py <src> <out>` reduces each

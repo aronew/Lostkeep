@@ -196,6 +196,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <a href="#surface">Ironbark surface</a>
       <a href="#shrinehall">The Shrine Hall (IB-05)</a>
       <a href="#oldcrypt">The Old Crypt (IB-02)</a>
+      <a href="#foreground">Foreground depth</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
       <a href="#props">Lived-in dressing</a>
@@ -324,6 +325,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p>The guard's burial galleries beside a root-choked well, after mockups O, P and Q. One set, made in order (OC1 first): every card attaches the ones before it. Terrain follows the shadow rule: lit at the open edge, black at the heart.</p>
       <div class="cards" id="cards-oldcrypt"></div>
     </section>
+    <section id="foreground" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Foreground depth (the nearest layers)</h2>
+      <p>The layers in front of Kleo, nearest the camera, that give a room its depth: they scroll faster than the playfield (1.3 to 1.5) and frame the view like the dark roots and pillars at the edges of mockup Y. Today they are placeholders (the crypt's OC7 strip, and P5's ferns blown up into flat black shapes). These are near-black silhouettes, but painted ones: lit faintly at their rims by the room's own light, never flat black cut-outs. They must be sparse: big shapes with wide gaps, so Kleo is behind them only for a moment. FG1 and FG2 are for the crypts (IB-02, IB-05), FG3 and FG4 for the surface (IB-03, IB-04).</p>
+      <div class="cards" id="cards-foreground"></div>
+    </section>
     <section id="parallax" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Parallax layers</h2>
@@ -428,6 +435,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
+    ["Foreground depth: crypt and surface silhouettes, side frames", "Placeholders (OC7, P5 blown up)", "need", "FG1 to FG4"],
     ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
@@ -466,6 +474,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["P", "P-crypt-cistern.jpg", "Crypt cistern", "IB-02: the flooded lower gallery, waterfall into the cistern, pillar stumps in the water."],
     ["Q", "Q-crypt-shrine.jpg", "Crypt shrine", "IB-02: a hooded statue shrine on a floating ruin, ruined arcades, rubble and purple flora."],
     ["X", "X-crypt-shrine-hall.jpg", "Shrine Hall (the Old Crypt's first section)", "The creative lead's target for IB-05: pale blue-grey block masonry with thick rims, the hooded statue's carved island, crystal blocks, lit doorways, small stone plates. Attach to every SH card."],
+    ["Y", "Y-crypt-mood-depth.jpg", "Crypt mood and depth", "The creative lead's reference for the crypts' mood and depth: purple above, deep teal below, many receding layers, dark roots and pillars framing the edges. Attach to the FG cards."],
+    ["Z", "Z-moonlit-forest-islands.jpg", "Moonlit forest and islands", "The surface rooms' target (IB-03, IB-04): plum boulder terrain, large floating islands, purple sky, teal forest. Attach to the surface FG cards."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
     ["S", "S-surface-aqueduct-garden.jpg", "Surface: aqueduct garden", "Terraced earth, waterfalls, a far aqueduct, ruined arches, fenced chapel. Style target for the SF cards."],
     ["T", "T-surface-chapel-gully.jpg", "Surface: chapel gully", "The chapel over a gully, floating islands, stone terraces, a sunken arch. Style target for the SF cards."],
@@ -519,6 +529,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   // Canvas sizes
   var WIDE = "3072×1024 px (art 384 × 128 px at x8)";
   var SH_STYLE = "STYLE: match attached mockup X exactly in palette and finish: pale blue-grey block masonry (#8C93AA, #6E7590, #4E5470, dark mortar #2A2C40), chunky square blocks with a carved light cap row on walking edges, moss and ivy, pink-violet crystal blocks, purple flowers, amber flames only as flame. Crisp pixel art, four tones per material, thin dark outlines on silhouettes only. Do not copy X's layout or its character. Never plum or purple stone.";
+  var FG_STYLE = "STYLE: the nearest layer in front of the playfield, as in attached mockup Y's dark edges: near-black silhouettes (#0B0812 to #1A1424 for crypt stone, #14101C to #241A2A for wood and roots), painted, not flat: a faint rim light (one or two pixels, dull violet #4A3A5E or teal #2E5A5C) along the edges that face the room, and soft internal shapes one value step apart so the forms read. No bright colours except where stated. Large, readable shapes with wide transparent gaps between pieces. Crisp pixel art, thin dark outlines only where a shape needs separating, no blur.";
   var SH_SHADOW = "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 192 px of lit blocks with no gaps, then 96 px stepping down into void #0B0812 along the blocks' own outlines, never a straight line. Only walking lines are perfectly straight.";
   var BG = "3072×1440 px (art 768 × 360 px at x4)";
 
@@ -1108,6 +1119,57 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "- Tier upon tier of ruined arcades, stairs and tall pillars, two far hooded statues in niches, all in soft blue mist #2A3150 to #4A5478, very low contrast, flat values, no ledge that could read as walkable.",
         "- A paler haze in the middle, darker toward the top and bottom. Two or three tiny far-off flames #F2B04A, no other warm colour."
+      ] },
+    // ------------------------------------------------------------- foreground depth
+    { id: "FG1", group: "foreground", file: "crypt_fg_near", title: "Crypt foreground: pillars, roots and chains", scale: 4,
+      about: "The nearest crypt layer (scroll 1.35): pieces that pass in front of Kleo: a broken column, thick twisted roots, hanging chains, rubble. Placed one by one, sparse.",
+      canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Y", "X", "Your approved SH1"],
+      text: [
+        "TASK: foreground silhouettes for the crypt, on a transparent canvas, each piece separated by transparent space.",
+        "",
+        FG_STYLE,
+        "",
+        "- Two broken stone columns of the SH1 masonry, 160 and 240 px wide, 900 and 1300 px tall, standing on the canvas's bottom edge (they will rise from the bottom of the screen).",
+        "- Three masses of thick twisted roots hanging from the canvas's top edge, 300 to 600 px wide, 500 to 900 px long, dull plum-brown, one with a few ivy strands.",
+        "- Two hanging chains, 1000 px long, one with a broken lantern cage at its end (dark, no flame).",
+        "- Two heaps of rubble and fallen blocks, 500 and 800 px wide, sitting on the bottom edge, a few dark leaves and one cluster of tiny teal glowing mushrooms (the only light colour, as in Y)."
+      ] },
+    { id: "FG2", group: "foreground", file: "crypt_fg_frames", title: "Crypt side frames (left and right edges)", scale: 4,
+      about: "Y's frame: massive dark roots wrapped round a pillar at the left and right edges of the view. Placed at a room's two ends, at scroll 1.3, so a room opens and closes like a stage.",
+      canvas: BG, game: "Two frames, left and right", attach: ["Y", "X"],
+      text: [
+        "TASK: two edge frames on one transparent canvas: the LEFT frame against the canvas's left edge (x 0 to 900), the RIGHT frame against its right edge (x 2172 to 3072), transparent between.",
+        "",
+        FG_STYLE,
+        "",
+        "- Each: a thick ancient pillar of dark masonry, partly crumbled, wrapped and split by huge twisted roots that also reach up off the top and down off the bottom of the canvas; a few hanging vines; at its foot, roots and rubble and one tiny cluster of teal glowing mushrooms.",
+        "- Full canvas height (1440 px). The inner side (toward the middle of the canvas) is ragged and open, never a straight line; the outer side is solid to the canvas edge.",
+        "- Different from each other, not mirrored."
+      ] },
+    { id: "FG3", group: "foreground", file: "surface_fg_near", title: "Surface foreground: ferns, leaves, branches, trunks", scale: 4,
+      about: "The nearest surface layer (scroll 1.45) for IB-03 and IB-04: big fern clumps and leaves rising from the bottom, a branch and leaves hanging from the top, one trunk. Replaces P5's ferns blown up into black shapes.",
+      canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Z", "A", "B"],
+      text: [
+        "TASK: foreground silhouettes for the Ironbark forest at dusk, on a transparent canvas, each piece separated by transparent space.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        "- Three clumps of big ferns and broad leaves rising from the canvas's bottom edge, 400, 600 and 800 px wide, 300 to 500 px tall, very dark teal-green with plum shadows, a faint moonlit rim on their tops.",
+        "- Two leafy branches hanging from the top edge, 900 and 1300 px wide, 300 to 450 px deep, with trailing vines, dark plum bark and dark teal leaves.",
+        "- One tree trunk, 300 px wide, full canvas height, gnarled ironbark with roots at its foot, nearly black, a thin purple rim from the sky.",
+        "- One stone grave marker and a broken fence section half hidden in ferns, standing on the bottom edge, dark."
+      ] },
+    { id: "FG4", group: "foreground", file: "surface_fg_frames", title: "Surface side frames (left and right edges)", scale: 4,
+      about: "Great dark trees and undergrowth framing the surface rooms' two ends, at scroll 1.3.",
+      canvas: BG, game: "Two frames, left and right", attach: ["Z", "A"],
+      text: [
+        "TASK: two edge frames on one transparent canvas: the LEFT frame against the canvas's left edge (x 0 to 900), the RIGHT frame against its right edge (x 2172 to 3072), transparent between.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        "- Each: the trunk of a great ironbark tree with spreading roots, its lower branches and leaves reaching in from the top, dense ferns and broad leaves at its foot.",
+        "- Full canvas height. The inner side is ragged and open, never a straight line. Different from each other, not mirrored.",
+        "- Nearly black, plum and teal in the shadows, a faint purple moonlit rim on the edges facing the sky."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
