@@ -531,9 +531,12 @@ She steps forward with every hit.
   bands' lit bricks show there, and the wall's fade only below them. Beside a
   step down of one or two tiles, the lower floor's band runs on under the first
   3 tiles of the upper one (`_step_drop`), so both fade out at one depth.
-  **CY4 and CY5 were tried and rejected** (the creative lead: "those don't
-  look good at all"): the sheets are kept in `art/source/ironbark/crypt_y/`,
-  but IB-05's plates, ledges and wall ledges stay SH4's.
+  **CY4 and CY5** are kept in `art/source/ironbark/crypt_y/` but not used:
+  CY5's ledges were tried in IB-05 and rejected ("just the ledges don't look
+  good"; IB-05's plates, ledges and wall ledges stay SH4's), CY4's arcade and
+  pier too ("look bad"). Kept for later: CY4's stairs and CY5's broken slab
+  ends. Book 1 asks again: CY4b (the arcade and pier after Y's) and CY5's
+  ledges (wedges of broken masonry, not flat bars).
   **Next for the crypts' look:** foreground
   depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
