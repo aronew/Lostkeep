@@ -101,6 +101,10 @@ func _use_crypt_y_stone() -> void:
 	m.corner_under = load(TERRAIN + "cy_corner_under.png")
 	m.corner_under_anchor = Vector2(65, 65)
 	m.thin_wall_depth = 12  # the quoin column
+	m.inner_under = load(TERRAIN + "cy_inner_under.png")
+	m.inner_under_anchor = Vector2(59, 48)
+	m.inner_top = load(TERRAIN + "cy_inner_top.png")
+	m.inner_top_anchor = Vector2(64, 48)
 	ResourceSaver.save(m, m.resource_path)
 	_stone = m
 	_cy_stone = true

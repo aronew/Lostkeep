@@ -15,7 +15,7 @@ from PIL import Image
 
 SRC = "art/source/ironbark/crypt_y/"
 OUT = "game/assets/environment/ironbark/terrain/"
-DARK = 20
+DARK = 32  # also clears the bands' last flat dark course, so they end along the bricks
 
 
 def small(name):
@@ -49,9 +49,17 @@ def main():
     # Outer ceiling corner (CY2b's left cell): ceiling line row 65, face column 64;
     # moss hangs below the line: anchor (65, 65).
     clear_dark(cy2b.crop((0, 0, 72, 80))).save(OUT + "cy_corner_under.png")
+    # Inner ceiling corner (CY2b's right cell): wall on the left of the notch at
+    # (59, 65). Cut across the whole stone side of the cell, so its own fade
+    # reaches the dark instead of ending on a straight cut, and 48 px along the
+    # ceiling (short of the quoins at the cell's far edge): anchor (59, 48).
+    clear_dark(cy2b.crop((128, 17, 128 + 107, 128))).save(OUT + "cy_inner_under.png")
+    # Inner floor corner (CY2's right cell): wall rising on the left of the notch
+    # at (64, 64), cut the same way: anchor (64, 48).
+    clear_dark(cy2.crop((256, 16, 256 + 112, 128))).save(OUT + "cy_inner_top.png")
     # The inside of a mass is the void: the bands carry the fade.
     Image.new("RGBA", (16, 16), (11, 8, 18, 255)).save(OUT + "cy_fill.png")
-    print("terrain: cy_top (line 8), cy_under (line 48), cy_wall (face 55), corners (64, 8) and (65, 65), cy_fill")
+    print("terrain: cy_top (line 8), cy_under (line 48), cy_wall (face 55), corners (64, 8) and (65, 65), inner corners (59, 48) and (64, 48), cy_fill")
 
 
 if __name__ == "__main__":

@@ -49,6 +49,16 @@ extends Resource
 @export var corner_top_anchor := Vector2.ZERO
 @export var corner_under: Texture2D
 @export var corner_under_anchor := Vector2.ZERO
+## Painted inner corners: where a ceiling runs into a wall below it
+## (`inner_under`), and where a floor runs into a wall rising from it
+## (`inner_top`). Each is painted with its wall on the LEFT of the notch (the
+## open space to its right; mirrored for the other side), and its anchor is the
+## notch, where the ceiling or walking line meets the wall's face. With these,
+## walls stop at the line instead of running on past it into the slab.
+@export var inner_under: Texture2D
+@export var inner_under_anchor := Vector2.ZERO
+@export var inner_top: Texture2D
+@export var inner_top_anchor := Vector2.ZERO
 ## For a ceiling corner that stands on the floor (an arcade's end pier): how far
 ## it reaches below the ceiling line. It is placed only where the floor lies
 ## within 16 px of that, so it never hangs in mid-air. 0: it hangs freely.

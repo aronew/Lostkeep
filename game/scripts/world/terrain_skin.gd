@@ -274,6 +274,10 @@ func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector
 		return
 	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
 		if solid.call(c + side):
+			if m.inner_under and not solid.call(c + Vector2i.DOWN) and solid.call(c + side + Vector2i.DOWN):
+				_inner(canvas, cells, c, side, m, m.inner_under, m.inner_under_anchor, false)
+			if m.inner_top and not solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP):
+				_inner(canvas, cells, c, side, m, m.inner_top, m.inner_top_anchor, true)
 			# A ceiling meeting a wall that runs down to the floor: the arcade ends
 			# on a pier set against that wall.
 			if m.corner_under and m.corner_under_inner and not solid.call(c + Vector2i.DOWN) \
@@ -284,6 +288,38 @@ func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector
 			_corner(canvas, cells, solid, c, side, m.corner_top, m.corner_top_anchor, true)
 		if m.corner_under and not solid.call(c + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
 			_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false)
+
+
+## A painted inner corner at cell c's edge toward `side`, where c's ceiling
+## (or walking line, if `top`) meets the wall on that side. The piece is painted
+## with its wall on the left of the notch, so it is mirrored for a wall on the right.
+func _inner(canvas: Node2D, cells: Dictionary, c: Vector2i, side: Vector2i, m: Resource,
+		tex: Texture2D, anchor: Vector2, top: bool) -> void:
+	var p := Vector2(c * TILE)
+	var nx: float = p.x + (TILE if side == Vector2i.RIGHT else 0.0)
+	var ny: float = p.y + (0.0 if top else TILE)
+	var w := float(tex.get_width())
+	var h := float(tex.get_height())
+	# Into the slab (up from a ceiling, down from a floor): the share its band takes.
+	var thick := _run(cells, c, Vector2i.DOWN if top else Vector2i.UP) * TILE
+	var src: Rect2
+	var y0: float
+	if top:
+		var down: float = h - anchor.y
+		if thick < MAX_DEPTH * TILE:
+			down = min(down, thick - min(m.under_line, thick * 0.5))
+		src = Rect2(0, 0, w, anchor.y + down)
+		y0 = ny - anchor.y
+	else:
+		var up: float = anchor.y
+		if thick < MAX_DEPTH * TILE:
+			up = min(up, max(thick * 0.5, thick - 24.0))
+		src = Rect2(0, anchor.y - up, w, up + h - anchor.y)
+		y0 = ny - up
+	var dest := Rect2(nx - anchor.x, y0, w, src.size.y)
+	if side == Vector2i.RIGHT:
+		dest = Rect2(nx - (w - anchor.x), y0, -w, src.size.y)
+	canvas.draw_texture_rect_region(tex, dest, src)
 
 
 ## True if a standing piece reaching `reach` px below this ceiling cell lands on
@@ -369,10 +405,12 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 		if m.thin_wall_depth > 0 and tall < MAX_DEPTH:
 			depth = min(depth, float(m.thin_wall_depth))
 		var f := foot if solid.call(c + side + Vector2i.DOWN) else 0.0
+		if m.inner_top:
+			f = 0.0  # the inner floor corner paints the wall's foot
 		# A ceiling over the open side meets this wall: the face runs on up past the
 		# ceiling line as high as the ceiling's band, so the band ends against it.
 		var head := 0.0
-		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP):
+		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP) and not m.inner_under:
 			head = float(m.under_line)
 		# Left-facing faces read the band half a repeat further on, so the two faces
 		# of a pier never mirror each other.

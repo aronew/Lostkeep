@@ -511,6 +511,14 @@ She steps forward with every hit.
   `thin_wall_depth` (12 for CY: the quoin column) limits walls and corners
   there to their face stones, and each corner to its band's share of the
   slab. Materials without it (earth, SH) draw as before.
+  **Inner corners** (the creative lead: "these corners look weird", where a
+  slab's ceiling met a wall below it and the wall's quoins ran on up into the
+  slab): a material can carry painted `inner_under` (a ceiling running into a
+  wall) and `inner_top` (a floor running into a wall rising from it), each
+  painted with its wall on the left of the notch and mirrored for the other
+  side. With them, walls stop at the line instead of running past it. CY's come
+  from CY2b's and CY2's right cells, cut across the whole stone side so their
+  own fades reach the dark (anchors (59, 48) and (64, 48)).
   **Next for the crypts' look:** foreground
   depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then

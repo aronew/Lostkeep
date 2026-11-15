@@ -1,12 +1,14 @@
 [gd_resource type="Resource" script_class="TerrainMaterial" format=3]
 
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_corner_top.png" id="1_eaiay"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_fill.png" id="1_fkuvc"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_corner_top.png" id="1_m4ofq"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_corner_under.png" id="2_2bipo"]
 [ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_n2ib3"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_corner_under.png" id="2_r2kon"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_top.png" id="3_m4ofq"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_under.png" id="4_2bipo"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_inner_top.png" id="4_cj4mk"]
 [ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_wall.png" id="5_eaiay"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/cy_inner_under.png" id="5_ljmp8"]
 
 [resource]
 script = ExtResource("2_n2ib3")
@@ -17,8 +19,12 @@ under_band = ExtResource("4_2bipo")
 under_line = 48
 wall_band = ExtResource("5_eaiay")
 thin_wall_depth = 12
-corner_top = ExtResource("1_m4ofq")
+corner_top = ExtResource("1_eaiay")
 corner_top_anchor = Vector2(64, 8)
-corner_under = ExtResource("2_2bipo")
+corner_under = ExtResource("2_r2kon")
 corner_under_anchor = Vector2(65, 65)
+inner_under = ExtResource("5_ljmp8")
+inner_under_anchor = Vector2(59, 48)
+inner_top = ExtResource("4_cj4mk")
+inner_top_anchor = Vector2(64, 48)
 outline_color = Color(0, 0, 0, 0)
