@@ -26,3 +26,16 @@ mass behind the pillar), and the bottom-right piece is a wall with a ledge
 jutting from it instead of an inner ceiling corner. There is no outer ceiling
 corner. The ceiling corners are what to regenerate (or try the floor corners
 flipped upside down in the game first).
+
+## CY2b, the ceiling corners (`CY2b_ceiling_corners.png`)
+
+Right first time. Outer ceiling corner (left cell: mass in the upper-left
+quarter) and inner ceiling corner (right cell: open lower-right quarter), both
+meeting at their cell's centre, both fading brick by brick toward the far
+inside, moss hanging down. A true 8x grid (2048 x 1024 reduces losslessly to
+256 x 128). Cut the corners close around the centre: the right cell's far
+right edge has a column of quoins above the ceiling that a corner piece
+should not include.
+
+Before the set goes in, CY1 and CY2's wall band need the same clean 8x grid
+(their drafts are resampled, not on whole pixels).
