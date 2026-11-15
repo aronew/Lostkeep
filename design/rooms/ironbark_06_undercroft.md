@@ -1,44 +1,41 @@
 # Room IB-06: The Undercroft
 
-> **Status: blockout, awaiting the creative lead's review** (no art placed:
-> the terrain shows the CY stone because the skin paints every room). Scene:
+> **Status: second blockout, awaiting the creative lead's review.** Scene:
 > `game/scenes/rooms/ironbark_06_undercroft.tscn`, built by
 > `game/tools/build_ib06.gd`. Review images: `docs/rooms/ironbark_06/`
-> (`blockout_map.png`, the black-box map with the walked routes).
+> (`blockout_map.png`; `both_vs_mockups.png`, beside the mockup).
 
 ## The brief
 
-The next room on the main line: under the Lantern Clearing, through the
-Shrine Hall's lower East door (the creative lead: "start building the
-Undercroft blockout"). It also takes the way down from the Shrine Hall's pit
-(W1b), which is its own room, IB-07, the Pit Shaft.
+The next room on the main line, under the Lantern Clearing, through the Shrine
+Hall's lower East door. The first blockout (three long switchback corridors and
+a root chamber) was rejected: "the undercroft room is poorly designed". This
+one is laid out after the creative lead's middle vertical-level mockup
+(`docs/mockups/undercroft/vertical_levels.webp`): rooms stacked down both
+sides of a tall void, a broken arch across it, a basin at the bottom.
 
 ## Spec
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-06. West: IB-05's lower East door. West lower: IB-07, the Pit Shaft. East lower: on toward the Lost Keep (not built). High in the root chamber's east wall: a passage (Barkgrip) |
-| **World grid** | Origin at IB-01's (0, 40): under the clearing. Its West door (rows 12 to 15) is IB-05's lower East door (rows 22 to 25); its lower West door (rows 32 to 36) is IB-07's East door (rows 8 to 12; IB-07's origin is (-44, 64)) |
-| **Size** | 96 × 40 tiles (1536 × 640 px): 2.4 screens wide, 1.8 tall |
-| **Idea** | The guard's cellars under the clearing, broken open by the Great Ironbark's roots: three floors stacked like a ploughed field (east, back west, east again), a tall root chamber at the turn, and a lift that folds the bottom back to the door you came in by |
-| **Purpose** | The principles' switchback (pancake) stacking; the friction of a long way down, then the fold back up (the lift, from below); two locks seen before their keys |
-| **Spaces** | F1, the storeroom gallery (46 × 5, floor row 16); the root chamber (30 × 22, floor row 26) with two root masses (8 wide, rows 22 and 19); F2, the root passage back west (36 × 5, floor row 26) ending in a collapse; F3, the cistern walk (96 × 5, floor row 37) with the sump (4 wide); the lift's shaft (F3 up to F1, beside the West door); the passage high in the chamber's east wall |
-| **Lines** | **Main:** the West door → east along F1 → off its end into the root chamber → back west along F2 → down its collapse into F3 → east over the sump → the lower East door. **Ways back up:** the cellar lift (from F3: the winch frees it, it carries her to F1 by the West door); the root chamber's climb (floor → the low root mass → the high one → F1), each mass beside the next, never over it. **Side:** F3's west end, the lower West door into the Pit Shaft |
-| **Locks seen here** | **Barkgrip:** a passage high in the root chamber's east wall, 17 tiles of sheer wall below it. **Deep-Glow Breath:** the sump in F3's floor, dark water going on down, a glint in it |
-| **Shortcut** | The cellar lift: jammed at the top (its deck plugs F1's floor beside the West door); freed from below, it folds F3 back to the Shrine Hall's door |
-| **Encounters** | None yet (F1 and F3 are long, flat and shaped for them) |
-| **Art** | None yet. Ideas for it: roots of the Great Ironbark breaking through the masonry in the chamber; storeroom racks, barrels and sacks along F1; water seeping from the moat above along F3 |
+| **Identity** | Ironbark Guard, IB-06. West (top): IB-05's lower East door. West (bottom), behind a bark plate (the Ward): IB-07, the Pit Shaft. East (bottom): on toward the Keep's foundations (not built) |
+| **World grid** | Origin at IB-01's (0, 40). Its West door (rows 12 to 15) is IB-05's lower East door (rows 22 to 25); its lower West door (rows 60 to 64) is IB-07's East door (rows 36 to 40; IB-07's origin is (-44, 64)) |
+| **Size** | 44 × 72 tiles (704 × 1152 px): 1.1 screens wide, 3.2 tall |
+| **Idea** | The guard's cellar rooms stacked down both sides of a void under the clearing; the way down crosses the void from side to side, room by room; a lift folds the bottom back to the top |
+| **Spaces** | The void (9 wide, the room's full height, open far above). West: L1 the storeroom (floor 16), L2 a lantern room (25), L3 the long arcade (39), L4 a lantern room (53), L5 the bottom-left room (65). East: R1 the arcade (18), R2 a lantern room (28), R3 an arcade (39), R4 a cellar (53), R5 the bottom-right room (65). The root arch across the void (46). The basin (68) and its sump. An alcove high in the void's east wall (5). The lift's shaft beside the east rooms |
+| **Lips** | Each room's floor runs out into the void as a lip; a step in the void at row 28. Every gap she is meant to drop through is 2 tiles wide: she runs straight over a 1-tile gap (found walking it) |
+| **Lines** | **Main:** the West door → L1 → a short jump across to R1 → off its lip onto the step → across to R2 → off its lip onto R3's → across to L3 → off L3's lip onto the root arch → east into R4 → off its west side to the basin → up into R5 → the East door. **Side:** L2 from the step; L4 off the arch's west end; L5 from the basin over the sump. **The fold:** the cellar lift, R5 up to R1 (freed from below at its winch), then the short jump back to L1 by the door |
+| **Locks seen here** | **Barkgrip:** the alcove high in the void's east wall. **Deep-Glow Breath:** the sump in the basin. **Ironbark Ward (W1c):** the bark plate in L5's west door: the Pit Shaft stays shut until the Ward's slam |
+| **Encounters, rewards** | None yet. Each lantern room is shaped for one (a lore beat, a pot cache, a health shard) |
+| **Next pass** | The mockup's outlines are rounded and crumbling, its rooms have arcades and lanterns: shape the room walls that way when the layout is approved |
 
 ## Validation
 
-`python3 tools/check_room.py ib06`: longest floor 62 tiles; 99% in runs of
-8+; no small steps, staircases or thin rock; the Barkgrip passage holds; all
-three exits reached; 100% of the floor reached with the base kit; no traps.
+`python3 tools/check_room.py ib06`: longest floor 24 tiles; 94% in runs of 8+;
+no small steps, staircases or thin rock; the Barkgrip alcove holds; both exits
+reached; 100% of the floor reached with the base kit; no traps.
 
-Walked in the engine (`tests/playtest.gd room=ib06`): the main line
-(`mode=tour`: F1, the chamber, F2, the collapse, F3, over the sump, to the
-lower East door); the ways back (`mode=upper`: the winch and the lift from F3
-to F1; the chamber's climb by both root masses to F1; falling in the sump
-returns her to safe ground); the doors (`mode=doors`: IB-05's lower East door
-into the Undercroft and back). The Pit Shaft's tour leaves by its East door
-into the Undercroft's lower West door.
+Walked in the engine (`tests/playtest.gd room=ib06`): the main line down every
+crossing to the East door (`mode=tour`); the winch, the lift up to R1 and the
+jump back to L1; L2, L4, L5; the plated door holds; the sump returns her to
+safe ground (`mode=upper`); IB-05's lower East door in and out (`mode=doors`).

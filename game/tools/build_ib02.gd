@@ -229,33 +229,8 @@ func _build_west(behind: Node) -> void:
 	# and the wall's own face running on across the opening (rows 21 to 23), read
 	# from the same band at the same height as the skin reads it, so nothing
 	# shows. Tell: masonry in a raw cave, moss where the air moves.
-	var cover := _node(Node2D.new(), "VaultCover", _root)
-	cover.set_script(load("res://scripts/world/secret_cover.gd"))
-	cover.set("flag", "ib02_vault")
-	cover.z_index = 22
-	var dark := _node(Polygon2D.new(), "Dark", cover) as Polygon2D
-	var x0 := 3.0 * TILE - 8.0
-	var x1 := 14.0 * TILE
-	var y0 := 19.0 * TILE - 30.0
-	var y1 := 24.0 * TILE + 28.0
-	dark.polygon = PackedVector2Array([Vector2(x0, y0), Vector2(x1, y0), Vector2(x1, y1), Vector2(x0, y1)])
-	dark.color = Color(0.043, 0.031, 0.071)
-	# The room's stone is the Shrine Hall's (SH2's wall band, face column 37).
-	var band: Texture2D = load(TERRAIN + "sh_wall.png")
-	var face := 37
-	var rows := 5  # the opening's three rows, and two below it over the vault's floor edge
-	var face_art := _sprite(cover, TERRAIN + "sh_wall.png",
-		Rect2(0, posmod(21 * TILE, band.get_height()), band.get_width(), rows * TILE),
-		Vector2(14 * TILE - (face + 1), 21 * TILE))
-	face_art.name = "Face"
-	face_art.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
-	var trig := _node(Area2D.new(), "Trigger", cover) as Area2D
-	var tc := CollisionShape2D.new()
-	var tr := RectangleShape2D.new()
-	tr.size = Vector2(10 * TILE, 5 * TILE)
-	tc.shape = tr
-	tc.position = Vector2(8 * TILE + 8, 21.5 * TILE)
-	_node(tc, "Shape", trig)
+	_false_wall("VaultCover", Rect2i(3, 19, 11, 5), 14, Vector2i(21, 5), 1, "ib02_vault")
+	_resin_cache(_root, 5.0 * TILE, 12.5 * TILE, vault, 6, "ib02_vault_resin")
 	# Moss on the wall over the hidden opening, in front of the cover.
 	var moss := _sprite(_root, FLORA, Rect2(89, 162, 70, 37), Vector2(14 * TILE - 30, 21 * TILE - 6))
 	moss.name = "VaultMoss"

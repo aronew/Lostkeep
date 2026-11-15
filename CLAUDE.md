@@ -262,10 +262,24 @@ She steps forward with every hit.
 - **What a room remembers** goes in `Game.flags` (a freed lift, a woken shrine,
   a found secret): give the machine a `flag` name and it restores itself when
   the room is entered again. F5 clears them. There is no save file yet.
-- **Secrets:** a `SecretCover` is a false wall: black fill and the wall's own
-  band drawn over a hidden space, which fades for good when Kleo steps inside.
-  Always give it a tell (in IB-02: masonry in a raw cave, moss, a draught of
-  motes drifting into the stone).
+- **Secrets:** a false wall (`_false_wall(name, hide, face_x, rows, faces, flag)`
+  in `room_builder.gd`, script `secret_cover.gd`) has no collision: Kleo walks
+  straight through, and once she is inside it fades for good (`flag`). It
+  carries a copy of the rock layer with the hidden room filled in and a second
+  terrain skin that paints it, clipped to the wall round the room, so from
+  outside the room's own stone, bands and dark run on unbroken (the creative
+  lead: "something that looks like a wall but has no collision ... a fake black
+  silhouette wall too"). Always give it a tell (`_draught`: motes drifting into
+  the stone; moss) and a reward. Secrets so far: IB-02's vault, IB-05 behind
+  the hall's west wall (off its ledge), IB-06 behind L2's and L4's west walls,
+  IB-07 at the foot of the west wall. `mode=secrets` walks into every one.
+- **Resin, the currency** (a stand-in name and sprite, `tools/make_resin.py`;
+  the creative lead asked for currency to reward curiosity): beads that hang
+  and bob, drift to Kleo when she is near, and add to `Game.currency`, shown by
+  the counter at the top left (it appears with the first bead). Placed with
+  `_pickup(parent, pos, value, flag)` or `_resin_cache(parent, x0, x1, floor_y,
+  count, flag)`; each bead's flag keeps it taken. F5 clears the count with the
+  flags. To be spent at the Refuge (not built). 24 beads so far, all in secrets.
 - **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
@@ -446,23 +460,25 @@ She steps forward with every hit.
   Those mockups guide the large shape of a sector (a well, strata, loops,
   pockets); where they show ladders or rows of small platforms, the principles
   win: drops, islands, and a machine for the long climb.
-- **Two blockouts await the creative lead's review:** **IB-06, the
-  Undercroft** (`design/rooms/ironbark_06_undercroft.md`, `build_ib06.gd`,
-  origin (0, 40), under the clearing): three switchback floors, a root chamber
-  at the turn, a cellar lift folding the bottom back to IB-05's lower East
-  door, Barkgrip and Breath locks; and **IB-07, the Pit Shaft**
-  (`ironbark_07_pit_shaft.md`, `build_ib07.gd`, origin (-44, 64), under IB-05):
-  the shaft below IB-05's cracked plate W1b, eight 2-wide ledges taking turns
-  across it every 4 or 5 rows (each beside the one below, never over it),
-  pockets off alternating sides, the deep chamber at the bottom; its East door
-  is IB-06's lower West door. After the creative lead's shaft reference
-  (`docs/mockups/undercroft/shaft_reference.webp`: steps like these in a shaft
-  "don't read as weird") and vertical-level mockups
-  (`docs/mockups/undercroft/vertical_levels.webp`, "especially the one on the
-  far left": use them for any thin vertical level). Both: `room=ib06` /
-  `room=ib07` with `mode=tour`, `upper`, `shots`, `map` (IB-06 also `doors`);
-  `check_room.py` and `blockout_map.py` take their names. `tools/world_map.py`
-  draws every room on the world grid (`docs/maps/where_we_are.png`).
+- **Two blockouts await the creative lead's review (second pass):** the first
+  pass of both was rejected ("the undercroft room is poorly designed"; "make
+  the vertical shaft one look just like my far left mockup"; "I shouldn't be
+  able to get into that room until I get that slam"). Both now follow the
+  creative lead's vertical-level mockups (`docs/mockups/undercroft/vertical_levels.webp`):
+  **IB-06, the Undercroft** (`design/rooms/ironbark_06_undercroft.md`, origin
+  (0, 40), 44 x 72), after the middle one: cellar rooms stacked down both sides
+  of a tall void, crossed side to side on the way down, a root arch, a basin,
+  a lift from the bottom-right room back to the top; and **IB-07, the Pit
+  Shaft** (`ironbark_07_pit_shaft.md`, origin (-44, 64), 44 x 64), after the
+  far-left one, mass by mass, entered only with the Ward: the cracked plate
+  above (W1b) or the bark plate in the Undercroft's bottom-left room (W1c).
+  **Every gap meant for dropping through is 2 tiles wide:** Kleo runs straight
+  over a 1-tile gap (the checker thinks she can drop through one; she can't).
+  Both: `room=ib06` / `room=ib07` with `mode=tour`, `upper`, `shots`, `map`
+  (IB-06 also `doors`); `check_room.py` and `blockout_map.py` take their names.
+  A tall shaft fails the checker's floor-run and small-step rules by design.
+  `tools/world_map.py` draws every room on the world grid
+  (`docs/maps/where_we_are.png`).
 - **Rooms not built yet:** the Keep's foundations (east of the Undercroft's
   lower East door: next on the main line), the Refuge road (west of IB-02,
   behind the plated door: needs the Ward), the Guard Post above IB-02's well

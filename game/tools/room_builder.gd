@@ -662,6 +662,115 @@ func _lift(node_name: String, pos: Vector2, drop: float, winch_dx := -3.5 * TILE
 	return lift
 
 
+## A bead (or a few) of Resin hanging at `pos` (px). `flag` keeps it taken.
+func _pickup(parent: Node, pos: Vector2, value: int, flag: String) -> Area2D:
+	var p := _node(Area2D.new(), "Resin", parent) as Area2D
+	p.set_script(load("res://scripts/world/pickup.gd"))
+	p.position = pos.round()
+	p.z_index = 15
+	p.set("value", value)
+	p.set("flag", flag)
+	var cs := CollisionShape2D.new()
+	var cc := CircleShape2D.new()
+	cc.radius = 6.0
+	cs.shape = cc
+	_node(cs, "Shape", p)
+	var art := _node(Sprite2D.new(), "Art", p) as Sprite2D
+	art.texture = load("res://assets/items/resin.png")
+	art.hframes = 6
+	art.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	art.material = CanvasItemMaterial.new()
+	(art.material as CanvasItemMaterial).light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	return p
+
+
+## A little hoard of Resin in a row along a floor (`floor_y` px), from `x0` to `x1`.
+func _resin_cache(parent: Node, x0: float, x1: float, floor_y: float, count: int, flag: String) -> void:
+	for i in count:
+		var t := 0.5 if count == 1 else float(i) / float(count - 1)
+		_pickup(parent, Vector2(lerpf(x0, x1, t), floor_y - 10.0 - (i % 2) * 6.0), 1, "%s_%d" % [flag, i])
+
+
+## A false wall: from the room it is unbroken wall. Over the hidden space
+## `hide` (tiles) it draws the room's own terrain as if that space were solid
+## rock, so the wall's face at tile column `face_x` runs on across the opening
+## (rows `rows`: from, count) and its bands and dark run on round it.
+## `faces` is the side the wall faces (1: the open room is to the right of the
+## face). No collision: Kleo walks through, and once she is inside it fades for
+## good (`flag`). Give it a tell: moss over it, a draught (`_draught`).
+func _false_wall(node_name: String, hide: Rect2i, face_x: int, rows: Vector2i, faces: int, flag: String) -> Node2D:
+	var cover := _node(Node2D.new(), node_name, _root) as Node2D
+	cover.set_script(load("res://scripts/world/secret_cover.gd"))
+	cover.set("flag", flag)
+	cover.z_index = 22
+	# The wall as it would be if the hidden room were solid rock: a copy of the
+	# rock layer with the room filled in (no collision, never shown itself),
+	# painted by a second skin and clipped to the wall around the room. Inside
+	# the clip it is the room's own terrain: the lit bands run on across, the
+	# inside fades to the void, and nothing shows.
+	var src := _root.get_node("Solid") as TileMapLayer
+	var fake := _node(TileMapLayer.new(), "FakeRock", cover) as TileMapLayer
+	fake.tile_set = src.tile_set
+	fake.collision_enabled = false
+	fake.visible = false
+	for c in src.get_used_cells():
+		fake.set_cell(c, 0, src.get_cell_atlas_coords(c))
+	var mat_col := src.get_cell_atlas_coords(Vector2i(face_x - faces, rows.x))
+	if mat_col == Vector2i(-1, -1):
+		mat_col = Vector2i(1, 0)
+	for x in range(hide.position.x, hide.end.x):
+		for y in range(hide.position.y, hide.end.y):
+			fake.set_cell(Vector2i(x, y), 0, mat_col)
+	# The clip: the hidden room and 3 tiles of wall round it, up to the face.
+	var m := 3
+	var x0 := (hide.position.x - m) * TILE
+	var x1 := (hide.end.x + m) * TILE
+	if faces > 0:
+		x1 = face_x * TILE
+	else:
+		x0 = face_x * TILE
+	var clip := _node(Polygon2D.new(), "Clip", cover) as Polygon2D
+	var y0 := (hide.position.y - m) * TILE
+	var y1 := (hide.end.y + m) * TILE
+	clip.polygon = PackedVector2Array([Vector2(x0, y0), Vector2(x1, y0), Vector2(x1, y1), Vector2(x0, y1)])
+	clip.clip_children = CanvasItem.CLIP_CHILDREN_ONLY
+	var skin := _node(Node2D.new(), "FakeSkin", clip)
+	skin.set_script(load("res://scripts/world/terrain_skin.gd"))
+	var area := Rect2i(hide.position - Vector2i(m + 3, m + 3), hide.size + Vector2i(2 * (m + 3), 2 * (m + 3))).intersection(room)
+	skin.set("room_rect", area)
+	skin.set("materials", Array([_earth, _stone], TYPE_OBJECT, &"Resource", load("res://scripts/world/terrain_material.gd")))
+	skin.set("skip_regions", _rects(skip))
+	skin.set("solid_layer", fake)
+	skin.set("mass_layer", _root.get_node("Masses"))
+	var trig := _node(Area2D.new(), "Trigger", cover) as Area2D
+	var tc := CollisionShape2D.new()
+	var tr := RectangleShape2D.new()
+	tr.size = Vector2(hide.size * TILE)
+	tc.shape = tr
+	tc.position = Vector2(hide.position * TILE) + tr.size * 0.5
+	_node(tc, "Shape", trig)
+	return cover
+
+
+## A secret's tell: a few motes drifting into the wall where the air moves.
+func _draught(node_name: String, box: Rect2, dir: Vector2) -> CPUParticles2D:
+	var p := _particles(node_name, load("res://assets/fx/mote.png"), 6, 2.6, box)
+	p.direction = dir
+	p.spread = 12.0
+	p.gravity = Vector2.ZERO
+	p.initial_velocity_min = 8.0
+	p.initial_velocity_max = 15.0
+	p.color = Color(0.85, 0.95, 0.8, 0.8)
+	p.scale_amount_min = 0.5
+	p.scale_amount_max = 0.5
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	p.material = add
+	p.z_index = 21
+	return p
+
+
 ## Deep, dark water Kleo can't swim yet (falling in returns her to safe ground),
 ## with a glint below the surface at `glint_pos`.
 func _water(node_name: String, pos: Vector2, size: Vector2, glint_pos: Vector2) -> Node2D:
