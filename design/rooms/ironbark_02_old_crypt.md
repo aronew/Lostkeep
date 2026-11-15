@@ -20,6 +20,17 @@ mockups and the principles pull apart:
 | Built stone beside raw cave | East: the guard's masonry (the crypt kit). West: a gallery, then a root cave that has broken into it |
 | A flooded lowest level | The cistern: the well's water runs east into a drowned gallery |
 
+## Reskin (the creative lead: "reskin the Old Crypt with the same stone")
+
+All its masonry is now the Shrine Hall's (SH1 and SH2, `_use_shrine_stone()` in
+`room_builder.gd`): floors, ceilings, walls and corners, and the false wall over
+the vault, which draws SH2's wall band so it still reads as unbroken wall. The
+galleries no longer have a plum masonry back wall: they open onto SH8's misty
+hall behind, as the Shrine Hall does. It is brighter and bluer
+(CanvasModulate 0.8, 0.82, 0.96). The Root Well and the root cave keep their
+raw earth and their islands (IB4, IB5), by design: a natural cavern broken
+into the crypt. Collision unchanged.
+
 ## Spec
 
 | Field | Content |

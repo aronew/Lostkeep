@@ -96,12 +96,7 @@ func _initialize() -> void:
 	var tileset := _shared()
 	# This room's stone is the crypt kit's pale masonry (OC1, OC2), not the plum kit.
 	# The hall's masonry: the creative lead's SH1 and SH2 (pale blue-grey blocks).
-	_stone = _material("sh", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
-	_stone.corner_top = load(TERRAIN + "sh_corner_top.png")
-	_stone.corner_top_anchor = Vector2(36, 29)
-	_stone.corner_under = load(TERRAIN + "sh_corner_under.png")
-	_stone.corner_under_anchor = Vector2(42, 42)
-	ResourceSaver.save(_stone, _stone.resource_path)
+	_use_shrine_stone()
 	_begin("IronbarkShrineHall")
 	_build_far()
 	var t := _terrain(tileset)
@@ -121,19 +116,8 @@ func _initialize() -> void:
 	quit()
 
 
-## SH8: the distant hall in blue mist, behind everything.
 func _build_far() -> void:
-	var far := _node(Parallax2D.new(), "Far", _root) as Parallax2D
-	far.scroll_scale = Vector2(0.2, 0.2)
-	far.repeat_size = Vector2(768, 0)
-	far.repeat_times = 3
-	far.z_index = -10
-	for row in 2:
-		_sprite(far, SH + "far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358)).name = "Art"
-	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
-	fog.scroll_scale = Vector2(0.55, 0.6)
-	fog.z_index = -10
-	_fog(fog, Rect2(-200, 200, 1500, 320), Color("#7a88b8"), 0.16, Vector2(0.005, 0.0))
+	_shrine_far()
 
 
 ## A painting on its collision: `line` is the walking line's row in the region,

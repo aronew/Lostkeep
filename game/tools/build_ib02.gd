@@ -75,8 +75,14 @@ func _initialize() -> void:
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	var tileset := _shared()
+	# The same stone as the Shrine Hall next door (the creative lead's SH kit).
+	_use_shrine_stone()
 	_begin("IronbarkOldCrypt")
+	_shrine_far()
 	_back_walls()
+	# The galleries open onto the misty hall behind, as in the Shrine Hall: no
+	# plum masonry back wall. The well and the cave keep their raw earth.
+	_root.get_node("BackWalls").set("regions", Array([], TYPE_RECT2I, &"", null))
 	_root.get_node("EarthBackWalls").set("brightness", 0.85)
 	var t := _terrain(tileset)
 	_build_well(t["behind"], t["placed"])
@@ -230,11 +236,11 @@ func _build_west(behind: Node) -> void:
 	var y1 := 24.0 * TILE + 28.0
 	dark.polygon = PackedVector2Array([Vector2(x0, y0), Vector2(x1, y0), Vector2(x1, y1), Vector2(x0, y1)])
 	dark.color = Color(0.043, 0.031, 0.071)
-	var kit: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(TERRAIN + "kit_anchors.json"))
-	var band: Texture2D = load(TERRAIN + "stone_wall.png")
-	var face := int(kit["stone_wall_face"])
+	# The room's stone is the Shrine Hall's (SH2's wall band, face column 37).
+	var band: Texture2D = load(TERRAIN + "sh_wall.png")
+	var face := 37
 	var rows := 5  # the opening's three rows, and two below it over the vault's floor edge
-	var face_art := _sprite(cover, TERRAIN + "stone_wall.png",
+	var face_art := _sprite(cover, TERRAIN + "sh_wall.png",
 		Rect2(0, posmod(21 * TILE, band.get_height()), band.get_width(), rows * TILE),
 		Vector2(14 * TILE - (face + 1), 21 * TILE))
 	face_art.name = "Face"
@@ -267,7 +273,7 @@ func _build_machines() -> void:
 
 func _build_atmosphere() -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
-	mod.color = Color(0.56, 0.56, 0.74)
+	mod.color = Color(0.8, 0.82, 0.96)
 	var add := CanvasItemMaterial.new()
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED

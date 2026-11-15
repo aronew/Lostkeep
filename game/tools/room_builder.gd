@@ -73,6 +73,34 @@ func _shared() -> TileSet:
 	return tileset
 
 
+## The Old Crypt's masonry: the creative lead's SH1 and SH2 (pale blue-grey
+## blocks, made for the Shrine Hall). A room calls this after _shared() to use
+## it as its stone in place of the plum crypt kit.
+func _use_shrine_stone() -> void:
+	var m := _material("sh", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
+	m.corner_top = load(TERRAIN + "sh_corner_top.png")
+	m.corner_top_anchor = Vector2(36, 29)
+	m.corner_under = load(TERRAIN + "sh_corner_under.png")
+	m.corner_under_anchor = Vector2(42, 42)
+	ResourceSaver.save(m, m.resource_path)
+	_stone = m
+
+
+## SH8: the distant hall in blue mist, behind everything (scroll 0.2).
+func _shrine_far() -> void:
+	var far := _node(Parallax2D.new(), "Far", _root) as Parallax2D
+	far.scroll_scale = Vector2(0.2, 0.2)
+	far.repeat_size = Vector2(768, 0)
+	far.repeat_times = 3
+	far.z_index = -10
+	for row in 2:
+		_sprite(far, ENV + "sh_far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358)).name = "Art"
+	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
+	fog.scroll_scale = Vector2(0.55, 0.6)
+	fog.z_index = -10
+	_fog(fog, Rect2(-200, 200, 2400, 320), Color("#7a88b8"), 0.16, Vector2(0.005, 0.0))
+
+
 ## The room's root node.
 func _begin(node_name: String) -> void:
 	_root = Node2D.new()
