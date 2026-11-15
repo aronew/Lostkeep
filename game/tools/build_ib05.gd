@@ -234,8 +234,8 @@ func _dress(behind: Node) -> void:
 
 func _build_air(front: Node) -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
-	mod.color = Color(0.88, 0.9, 1.0)
-	_fog(_root, Rect2(48, 350, 800, 70), Color("#7a8ac0"), 0.18, Vector2(0.005, 0.0))
+	mod.color = Color(0.9, 0.9, 0.96)
+	_fog(_root, Rect2(48, 350, 800, 70), Color("#66647e"), 0.16, Vector2(0.005, 0.0))
 	var dust := _particles("Dust", load("res://assets/fx/mote.png"), 30, 9.0, Rect2(48, 60, 820, 360))
 	dust.color = Color(0.8, 0.86, 1.0, 0.7)
 	dust.gravity = Vector2(0, 3)

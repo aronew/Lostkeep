@@ -36,20 +36,22 @@ const SPACES := [
 ]
 ## Masses put back: [x, y, w, h, material]
 const MASSES := [
-	[45, 17, 15, 2, 0],   # the grave island: E1 down to E2 and across to W1
-	[45, 28, 6, 2, 0],    # the lower well's two islands: E3 across to the cave
-	[54, 28, 5, 2, 0],
+	[45, 17, 15, 2, 1],   # the grave island: E1 down to E2 and across to W1 (a slab of masonry)
+	[45, 28, 6, 2, 1],    # the lower well's two islands: E3 across to the cave
+	[54, 28, 5, 2, 1],
 	[23, 26, 6, 2, 0],    # the fallen rock under W1's collapse
 ]
-## Masonry: the east galleries, the west gallery, and the vault's walls. The
-## cave, the well and everything else is earth.
-const STONE := [[62, 0, 50, 40], [0, 7, 41, 12], [0, 19, 14, 10]]
-## Cells painted by placed art (the islands) instead of the skin.
-const SKIP := [[45, 17, 15, 2], [45, 28, 6, 2], [54, 28, 5, 2]]
+## Masonry: the east galleries, the west gallery, the vault's walls, and the
+## Root Well (the creative lead: "make the well stone too"). The cave is earth.
+const STONE := [[62, 0, 50, 40], [0, 7, 41, 12], [0, 19, 14, 10], [41, 0, 21, 40], [0, 0, 41, 7], [39, 28, 2, 12]]
+## Cells painted by placed art instead of the skin: the west low island is SH4's
+## arch island. The grave island and the east low island are masonry slabs the
+## skin paints.
+const SKIP := [[45, 28, 6, 2]]
 ## Back walls: masonry behind the galleries, raw earth behind the well and cave.
 const BACK := [[62, 5, 50, 5], [62, 14, 27, 5], [85, 19, 4, 4], [62, 23, 50, 5], [96, 10, 4, 13],
 	[62, 32, 28, 5], [0, 11, 41, 5], [3, 19, 11, 5]]
-const BACK_EARTH := [[41, 0, 21, 37], [24, 16, 4, 5], [14, 21, 27, 7]]
+const BACK_EARTH := [[24, 16, 4, 5], [14, 21, 27, 7]]
 
 ## Where Kleo stands if the room is run on its own: just inside the East door.
 const SPAWN := Vector2(112 * 16 - 40, 10 * 16)
@@ -104,13 +106,13 @@ func _initialize() -> void:
 
 func _build_well(behind: Node, placed: Node) -> void:
 	# The grave island (IB4's middle island), its flat top on the collision.
-	_sprite(placed, ISLANDS, Rect2(130, 2, 246, 85), Vector2(45 * TILE - 3, 17 * TILE - 31)).name = "GraveIsland"
+	# The grave on the masonry slab in the moonlight, crystals and flowers.
 	_ground(behind, GRAVE, Rect2(165, 2, 35, 45), 51.4 * TILE, 17 * TILE, 0.95, "IslandGrave")
-	_ground(behind, FLORA, Rect2(126, 93, 42, 27), 46.0 * TILE, 17 * TILE, 1.0, "IslandMushrooms")
-	# The lower well's islands: IB4's small island, and IB5's.
-	_sprite(placed, ISLANDS, Rect2(9, 9, 104, 81), Vector2(45 * TILE - 6, 28 * TILE - 19)).name = "LowIslandWest"
-	_sprite(placed, ENV + "ironbark_earth_faces_corners.png", Rect2(145, 170, 95, 73),
-		Vector2(54 * TILE + 40 - 48, 28 * TILE - 19)).name = "LowIslandEast"
+	_ground(behind, ENV + "sh_flora.png", Rect2(64, 8, 48, 32), 46.0 * TILE, 17 * TILE, 1.0, "IslandCrystals")
+	_ground(behind, ENV + "sh_flora.png", Rect2(64, 64, 48, 28), 55.5 * TILE, 17 * TILE, 1.0, "IslandFlowers")
+	_ground(behind, ENV + "sh_flora.png", Rect2(8, 72, 32, 20), 55.2 * TILE, 28 * TILE, 1.0, "LowFlowers")
+	# The west low island: SH4's arch island, its walking line (row 50) on the collision.
+	_sprite(placed, ENV + "sh_platforms.png", Rect2(8, 8, 96, 88), Vector2(45 * TILE, 28 * TILE - 50)).name = "LowIslandWest"
 
 	# The hanging cocoon (Emberwick lock E2): someone wrapped in silk, hung over
 	# the gap by W1's mouth on a strand no blade reaches.
@@ -273,7 +275,7 @@ func _build_machines() -> void:
 
 func _build_atmosphere() -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
-	mod.color = Color(0.8, 0.82, 0.96)
+	mod.color = Color(0.9, 0.9, 0.96)
 	var add := CanvasItemMaterial.new()
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED

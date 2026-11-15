@@ -27,9 +27,16 @@ All its masonry is now the Shrine Hall's (SH1 and SH2, `_use_shrine_stone()` in
 the vault, which draws SH2's wall band so it still reads as unbroken wall. The
 galleries no longer have a plum masonry back wall: they open onto SH8's misty
 hall behind, as the Shrine Hall does. It is brighter and bluer
-(CanvasModulate 0.8, 0.82, 0.96). The Root Well and the root cave keep their
-raw earth and their islands (IB4, IB5), by design: a natural cavern broken
-into the crypt. Collision unchanged.
+(CanvasModulate 0.8, 0.82, 0.96). Then *"make the well stone too"*: the Root Well's walls, its mouth, the lip of
+the cave mouth, the grave island and the east low island are SH masonry (the
+west low island is SH4's arch island); the grave carries crystals and flowers.
+Only the root cave stays earth. Collision unchanged.
+
+Colour: SH8 as painted read *"so much bluer than the reference mockup"*; it is
+graded toward the mockup's dark slate (`SHRINE_FAR_TINT` in `room_builder.gd`,
+greyer violet mist, CanvasModulate 0.9, 0.9, 0.96 in both crypt rooms). On
+screen the background now measures about (45-63, 47-67, 69-100) against the
+mockup's (46-60, 50-68, 75-99).
 
 ## Spec
 

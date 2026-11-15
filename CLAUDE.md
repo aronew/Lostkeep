@@ -461,7 +461,11 @@ She steps forward with every hit.
   whose origin moved to IB-01's (-170, 28). Its pale masonry is a third terrain
   material. **IB-02 now uses the same SH stone** (the creative lead asked for
   it): `_use_shrine_stone()` and `_shrine_far()` in `room_builder.gd` give any
-  room the SH masonry and the SH8 backdrop. IB-02's well and cave stay earth.
+  room the SH masonry and the SH8 backdrop. IB-02's well is stone too; only its
+  root cave stays earth. **Colour:** the backdrop is graded toward the mockup's
+  dark slate (`SHRINE_FAR_TINT`), not SH8's brighter blue: the creative lead
+  found it "so much bluer than the mockup". Compare against the mockup's
+  measured background (about #373A55) before changing it.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative

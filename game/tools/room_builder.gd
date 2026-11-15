@@ -86,7 +86,10 @@ func _use_shrine_stone() -> void:
 	_stone = m
 
 
-## SH8: the distant hall in blue mist, behind everything (scroll 0.2).
+## SH8: the distant hall in mist, behind everything (scroll 0.2). Graded toward
+## the mockup's dark slate (about #373A55 on screen): SH8 as painted is bluer
+## and brighter (the creative lead: "so much bluer than the mockup").
+const SHRINE_FAR_TINT := Color(0.94, 0.82, 0.8)
 func _shrine_far() -> void:
 	var far := _node(Parallax2D.new(), "Far", _root) as Parallax2D
 	far.scroll_scale = Vector2(0.2, 0.2)
@@ -94,11 +97,13 @@ func _shrine_far() -> void:
 	far.repeat_times = 3
 	far.z_index = -10
 	for row in 2:
-		_sprite(far, ENV + "sh_far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358)).name = "Art"
+		var art := _sprite(far, ENV + "sh_far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358))
+		art.name = "Art"
+		art.modulate = SHRINE_FAR_TINT
 	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
 	fog.scroll_scale = Vector2(0.55, 0.6)
 	fog.z_index = -10
-	_fog(fog, Rect2(-200, 200, 2400, 320), Color("#7a88b8"), 0.16, Vector2(0.005, 0.0))
+	_fog(fog, Rect2(-200, 200, 2400, 320), Color("#5e5c7a"), 0.14, Vector2(0.005, 0.0))
 
 
 ## The room's root node.
