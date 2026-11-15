@@ -145,6 +145,7 @@ func _build_atmosphere() -> void:
 ## pure silhouettes in thin shapes (a branch, vines, tall grass), scrolling
 ## fastest; never big blobs, which read as holes.
 func _build_foreground() -> void:
+	_detail_kind = "surface"
 	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
 	p.scroll_scale = Vector2(1.2, 0.0)  # frames the screen: sideways faster than the room, height held
 	p.repeat_size = Vector2(720, 0)

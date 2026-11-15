@@ -92,6 +92,12 @@ func _use_shrine_stone() -> void:
 ## the chunky brick). Its bands fade into the dark brick by brick themselves, so
 ## the inside of every mass is the void (fade 0). Cut by tools/make_crypt_cy.py.
 var _cy_stone := false
+## The CY stone's grade: a step darker and a touch cooler than as painted.
+const CY_GRADE := Color(0.8, 0.77, 0.86)
+## The hidden rooms behind false walls: no detail is placed in them.
+var _secret_rects: Array[Rect2i] = []
+## Which detail pass `_finish()` runs: "crypt", "surface" or none.
+var _detail_kind := ""
 
 
 func _use_crypt_y_stone() -> void:
@@ -120,7 +126,9 @@ const STONE_GRADE := Color(0.82, 0.76, 0.74)
 func _grade_stone() -> void:
 	for n in ["TerrainSkin", "PlacedArt", "Behind"]:
 		if n == "TerrainSkin" and _cy_stone:
-			continue  # the CY stone is painted in Y's colours already
+			# The CY stone a step darker (the creative lead: "a little too bright").
+			(_root.get_node(n) as CanvasItem).modulate = CY_GRADE
+			continue
 		var node := _root.get_node_or_null(n) as CanvasItem
 		if node:
 			node.modulate = STONE_GRADE
@@ -207,6 +215,7 @@ func _crypt_foreground() -> void:
 	# a tall room has them on every floor and they never slide up or down when
 	# the camera changes floors. Thin shapes (roots, rubble, a pillar), never big
 	# blobs: a big black shape reads as a hole.
+	_detail_kind = "crypt"
 	var w := float(room.size.x * TILE)
 	var unlit := CanvasItemMaterial.new()
 	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
@@ -254,6 +263,99 @@ func _crypt_foreground() -> void:
 		sp.scale = Vector2(pc[3], pc[3])
 		sp.modulate = black
 		sp.material = unlit
+
+
+# --- Detail: what hangs from the ceilings, what stands in front of the floors ----------------
+#
+# The creative lead: "every place needs 2 layers on the floor level to create
+# depth", "hanging things on ceilings", "the stone looks so bare and weird with
+# so many 90 degree corners". Once a room is built, this reads its collision
+# and places, from the kit's art (stand-ins until the new cards in Book 1):
+#   - along every ceiling, roots and ivy, each sized to the space below it;
+#   - under every floor's end over open air, ivy over the corner;
+#   - in front of the floors, the mid step (the art darkened to about 60 %, in
+#     front of Kleo); the near step frames the screen (`_crypt_foreground`,
+#     `_build_foreground`) until FD2's floor-front silhouettes arrive.
+# Never in a door's way, on placed art, or in a secret room.
+
+func _cellhash(c: Vector2i, salt: int) -> int:
+	return absi((c.x * 73856093) ^ (c.y * 19349663) ^ (salt * 83492791)) % 1000
+
+
+func _room_detail(surface: bool) -> void:
+	var solid_layer := _root.get_node("Solid") as TileMapLayer
+	var mass_layer := _root.get_node("Masses") as TileMapLayer
+	var solid := {}
+	for c in solid_layer.get_used_cells():
+		solid[c] = true
+	for c in mass_layer.get_used_cells():
+		solid[c] = true
+	var is_solid := func(c: Vector2i) -> bool: return solid.has(c) or not room.has_point(c)
+	var skipped := func(c: Vector2i) -> bool:
+		for r in skip:
+			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
+				return true
+		for r in _secret_rects:
+			if r.grow(1).has_point(c):
+				return true
+		return c.x < room.position.x + 3 or c.x >= room.end.x - 3
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var hang_node := _node(Node2D.new(), "Hanging", _root) as Node2D
+	hang_node.z_index = 3  # under the skin's bands: each tucks up under its ceiling
+	var mid_node := _node(Node2D.new(), "FloorMid", _root) as Node2D
+	mid_node.z_index = 26  # in front of Kleo
+	var flora := ENV + "sh_flora.png"
+	var hangs := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
+		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
+	var mid_pieces := [Rect2(16, 208, 48, 24), Rect2(8, 16, 32, 24), Rect2(8, 72, 32, 20), Rect2(112, 208, 48, 24)]
+	var mid_tint := Color(0.62, 0.58, 0.72) if not surface else Color(0.52, 0.56, 0.62)
+	for y in range(room.position.y, room.end.y):
+		for x in range(room.position.x, room.end.x):
+			var c := Vector2i(x, y)
+			if is_solid.call(c) or skipped.call(c):
+				continue
+			# A ceiling over this cell: roots or ivy, by chance, sized to the room below.
+			if is_solid.call(c + Vector2i.UP) and room.has_point(c + Vector2i.UP) and _cellhash(c, 1) < 260:
+				var open := 0
+				while open < 10 and not is_solid.call(c + Vector2i(0, open + 1)):
+					open += 1
+				var kinds := []
+				if open >= 9:
+					kinds = [1, 2, 4, 5]
+				elif open >= 6:
+					kinds = [0, 1, 3, 4]
+				elif open >= 4:
+					kinds = [0, 3]
+				if not kinds.is_empty():
+					var kind: int = kinds[_cellhash(c, 2) % kinds.size()]
+					var sp := _sprite(hang_node, flora, hangs[kind], Vector2(x * TILE + (_cellhash(c, 3) % 8), y * TILE - 2))
+					sp.name = "Hang"
+			# A floor under this cell.
+			if is_solid.call(c + Vector2i.DOWN) and room.has_point(c + Vector2i.DOWN):
+				var floor_y := float((y + 1) * TILE)
+				# Its end over open air: ivy hangs over the corner, under the slab.
+				for side in [-1, 1]:
+					var n := c + Vector2i(side, 0)
+					if not is_solid.call(n) and not is_solid.call(n + Vector2i.DOWN) and _cellhash(c, 4) < 600:
+						var under := c + Vector2i(0, 1)
+						var depth := 0
+						while depth < 8 and is_solid.call(under + Vector2i(0, depth)):
+							depth += 1
+						if depth < 8:
+							var ivy := _sprite(hang_node, flora, hangs[[0, 1, 3][_cellhash(c, 5) % 3]],
+								Vector2(x * TILE + (2 if side < 0 else 6), (y + 1 + depth) * TILE - 2))
+							ivy.name = "CornerIvy"
+				# In front of the floor: the mid step, by chance.
+				if _cellhash(c, 6) < 90:
+					var reg: Rect2 = mid_pieces[_cellhash(c, 7) % mid_pieces.size()]
+					var m := _sprite(mid_node, flora, reg, Vector2(x * TILE - reg.size.x * 0.25, floor_y - reg.size.y * 1.25 + 7))
+					m.name = "FloorMid"
+					m.scale = Vector2(1.25, 1.25)
+					m.modulate = mid_tint
+					m.material = unlit
+				# (The near step at floor level waits for art made for it, FD2 in Book 1:
+				# the kit's grass, blown up in black, read as spiky blobs.)
 
 
 ## The room's root node.
@@ -310,6 +412,8 @@ func _terrain(tileset: TileSet) -> Dictionary:
 
 ## Kleo, the camera and the screen vignette; then the scene is saved.
 func _finish() -> void:
+	if _detail_kind != "":
+		_room_detail(_detail_kind == "surface")
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
 	_node(kleo, "Kleo", _root, false)
@@ -870,6 +974,9 @@ func _false_wall(node_name: String, hide: Rect2i, face_x: int, rows: Vector2i, f
 	skin.set("skip_regions", _rects(skip))
 	skin.set("solid_layer", fake)
 	skin.set("mass_layer", _root.get_node("Masses"))
+	if _cy_stone:
+		skin.modulate = CY_GRADE
+	_secret_rects.append(hide)
 	var trig := _node(Area2D.new(), "Trigger", cover) as Area2D
 	var tc := CollisionShape2D.new()
 	var tr := RectangleShape2D.new()

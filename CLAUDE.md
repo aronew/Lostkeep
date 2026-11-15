@@ -611,6 +611,24 @@ She steps forward with every hit.
 - **Art the Old Crypt wants** (older list) is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.
+- **The detail pass** (the creative lead: "hanging things on ceilings", "so many
+  90 degree corners", "the stone is a little too bright", "2 layers on the floor
+  level"): `_room_detail()` in `room_builder.gd`, run by `_finish()` in any room
+  whose foreground set `_detail_kind`, hangs SH flora roots and ivy under ceilings
+  and corner ivy off floor ends (chosen by a cell hash, never in skip regions,
+  secrets or the room's edge tiles), and stands darkened pieces along floors
+  (`FloorMid`, the mid step). The floor's black near step waits for art (CH8):
+  the blown-up placeholders read as spiky blobs. `CY_GRADE` darkens the CY
+  terrain. Image: `docs/rooms/detail_pass.png`.
+- **Character mockups** (`docs/mockups/character/`, ten of them; the creative
+  lead: "they have so much character to the level"): no bare right angle. Slabs
+  taper into hanging stone with moss off them, floors stand on columns, corbels
+  and arches, edges step course by course, every top carries something, alcoves
+  are rooms inside the room, and the room sits in a rounded cobble cave wound
+  with roots. Book 1's CH1 to CH8 ask for those pieces (CH1 replaces the plates,
+  lips and walkway the creative lead called weird). Their crimson roots are the
+  Blight's colour and their rows of small floating slabs break the platform
+  rule: the cards ask for dull roots and the few slabs only.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
