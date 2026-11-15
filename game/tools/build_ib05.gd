@@ -46,7 +46,7 @@ const MASSES := [
 	[13, 17, 15, 1, 1],   # the shrine island: the hooded statue
 	[7, 20, 2, 1, 1],     # the small island west of the shrine
 	[10, 22, 2, 1, 1],    # the pedestal on its column
-	[3, 16, 4, 1, 1],     # the ledge on the west wall
+	[3, 16, 3, 1, 1],     # the ledge on the west wall (CY5's wall ledge, 3 tiles)
 	[22, 22, 2, 1, 1],    # the nook under the shrine
 	[29, 22, 2, 1, 1],    # the ledge over the pit
 	[31, 18, 2, 1, 1],    # three small stone plates, rising east
@@ -54,10 +54,10 @@ const MASSES := [
 	[37, 16, 2, 1, 1],
 	[41, 18, 6, 1, 1],    # the arch island
 	[47, 13, 2, 1, 1],    # the ledge under the east gap (the way back up)
-	[50, 21, 4, 1, 1],    # the shelf on the east wall, over the lower East door
+	[51, 21, 3, 1, 1],    # the shelf on the east wall, over the lower East door (CY5's wall ledge)
 ]
-const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 4, 1], [22, 22, 2, 1], [29, 22, 2, 1],
-	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [50, 21, 4, 1]]
+const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 3, 1], [22, 22, 2, 1], [29, 22, 2, 1],
+	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [51, 21, 3, 1]]
 const STONE := [[0, 0, 58, 34]]
 const SPAWN := Vector2(58 * 16 - 40, 7 * 16)
 
@@ -144,18 +144,29 @@ func _piece_on(parent: Node, tex: String, spec: Array, m: Array, flip := false) 
 	return sp
 
 
+# The creative lead's CY5 (the chunky brick of the crypt terrain): three
+# floating ledges, two tiles each, and a wall ledge on a corbel whose quoin
+# column (5 px) stands against the wall, its top three tiles from the wall.
+const CY5 := ENV + "cy5_ledges.png"
+const CY_LEDGES := [[Rect2(8, 0, 32, 32), 8, 0, 31], [Rect2(72, 0, 32, 32), 8, 0, 31], [Rect2(136, 0, 32, 32), 8, 0, 31]]
+const CY_WALL_LEDGE := [Rect2(72, 40, 48, 40), 8, 5, 52]
+const CY_WALL_LEDGE_FLIPPED := [Rect2(72, 40, 48, 40), 8, -5, 42]
+
+
 func _build_islands(placed: Node) -> void:
 	_piece_on(placed, SH + "shrine_island.png", SHRINE_ISLAND, MASSES[0]).name = "ShrineIsland"
-	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[1]).name = "WestIsland"
 	_piece_on(placed, PLAT, PEDESTAL, MASSES[2]).name = "Pedestal"
-	_piece_on(placed, PLAT, WALL_LEDGE_FLOWERS, MASSES[3]).name = "WestWallLedge"
-	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[4], true).name = "Nook"
-	_piece_on(placed, PLAT, PLATES[0], MASSES[5], true).name = "PitLedge"
-	for i in 3:
-		_piece_on(placed, PLAT, PLATES[i], MASSES[6 + i]).name = "Plate"
 	_piece_on(placed, PLAT, ARCH_ISLAND, MASSES[9]).name = "ArchIsland"
-	_piece_on(placed, PLAT, PLATES[1], MASSES[10], true).name = "GapLedge"
-	_piece_on(placed, PLAT, WALL_LEDGE_POTS, MASSES[11], true).name = "EastShelf"
+	# The CY pieces are painted in the terrain's own colours: not graded.
+	var cy := _node(Node2D.new(), "PlacedCY", placed.get_parent())
+	_piece_on(cy, CY5, CY_LEDGES[0], MASSES[1]).name = "WestIsland"
+	_piece_on(cy, CY5, CY_WALL_LEDGE, MASSES[3]).name = "WestWallLedge"
+	_piece_on(cy, CY5, CY_LEDGES[2], MASSES[4], true).name = "Nook"
+	_piece_on(cy, CY5, CY_LEDGES[1], MASSES[5], true).name = "PitLedge"
+	for i in 3:
+		_piece_on(cy, CY5, CY_LEDGES[i], MASSES[6 + i], i == 1).name = "Plate"
+	_piece_on(cy, CY5, CY_LEDGES[2], MASSES[10]).name = "GapLedge"
+	_piece_on(cy, CY5, CY_WALL_LEDGE_FLIPPED, MASSES[11], true).name = "EastShelf"
 
 
 func _prop(parent: Node, region: Rect2, x: float, floor_y: float, prop_name: String) -> Sprite2D:

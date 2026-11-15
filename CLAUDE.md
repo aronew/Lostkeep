@@ -531,6 +531,13 @@ She steps forward with every hit.
   bands' lit bricks show there, and the wall's fade only below them. Beside a
   step down of one or two tiles, the lower floor's band runs on under the first
   3 tiles of the upper one (`_step_drop`), so both fade out at one depth.
+  **CY5 is in** (`art/source/ironbark/crypt_y/CY5_ledges_broken_ends.png`,
+  reduced 8:1 to `cy5_ledges.png`): IB-05's plates and two-tile ledges are its
+  floating ledges, and its two wall ledges are CY5's wall ledge on a corbel
+  (their masses now 3 tiles: [3, 16, 3] and [51, 21, 3]), in a `PlacedCY` node
+  that is not graded. The shrine island, arch island and pedestal are still SH.
+  CY4's stairs are kept for later; its arcade and pier were rejected ("look
+  bad") and CY4b in Book 1 asks for them again after Y's arcades.
   **Next for the crypts' look:** foreground
   depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
