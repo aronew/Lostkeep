@@ -22,6 +22,10 @@ mockups and the principles pull apart:
 
 ## Reskin (the creative lead: "reskin the Old Crypt with the same stone")
 
+> **Now the CY stone** (chunky brick after reference Y, `_use_crypt_y_stone()`),
+> as in IB-05; what follows describes the SH stone it replaced. The vault's
+> false wall still draws SH2's wall band.
+
 All its masonry is now the Shrine Hall's (SH1 and SH2, `_use_shrine_stone()` in
 `room_builder.gd`): floors, ceilings, walls and corners, and the false wall over
 the vault, which draws SH2's wall band so it still reads as unbroken wall. The

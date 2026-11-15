@@ -96,7 +96,7 @@ func _initialize() -> void:
 	var tileset := _shared()
 	# This room's stone is the crypt kit's pale masonry (OC1, OC2), not the plum kit.
 	# The hall's masonry: the creative lead's SH1 and SH2 (pale blue-grey blocks).
-	_use_shrine_stone()
+	_use_crypt_y_stone()
 	_begin("IronbarkShrineHall")
 	_build_far()
 	var t := _terrain(tileset)

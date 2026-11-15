@@ -78,7 +78,7 @@ func _initialize() -> void:
 	room_path = ROOM_PATH
 	var tileset := _shared()
 	# The same stone as the Shrine Hall next door (the creative lead's SH kit).
-	_use_shrine_stone()
+	_use_crypt_y_stone()
 	_begin("IronbarkOldCrypt")
 	_shrine_far()
 	_back_walls()

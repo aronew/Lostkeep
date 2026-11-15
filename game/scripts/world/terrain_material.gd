@@ -35,6 +35,10 @@ extends Resource
 ## It is mirrored for walls that face left.
 @export var wall_band: Texture2D
 @export var wall_face := 55
+## On a slab thinner than the skin looks through (5 tiles), how far in from the
+## face the wall band is drawn (its face stones only), so its inward fade never
+## covers the floor and ceiling bands' lit bricks. 0: the whole band.
+@export var thin_wall_depth := 0
 @export_group("Corners")
 ## Painted outer corners: where a walking top turns down into a face, and where a
 ## ceiling turns up into one. Each faces right (mirrored for left), and its anchor

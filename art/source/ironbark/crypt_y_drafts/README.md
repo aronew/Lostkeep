@@ -49,3 +49,9 @@ sheets use three brick sizes, compared at game scale beside Kleo in
 4 x 2 px, CY2b about 11 x 5 px. They cannot join until one size is chosen.
 CY2's inner floor corner also ends its fade in a flat black block with
 straight edges.
+
+## In the game
+
+The chunky set the creative lead picked is in `art/source/ironbark/crypt_y/`
+(CY1, CY2 at the large brick, and CY2b) and is the terrain of IB-02 and IB-05.
+The drafts above are kept for reference only.

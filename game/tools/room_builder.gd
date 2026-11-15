@@ -88,6 +88,24 @@ func _use_shrine_stone() -> void:
 	_stone = m
 
 
+## The crypt stone after reference Y (CY1, CY2, CY2b: the creative lead's pick,
+## the chunky brick). Its bands fade into the dark brick by brick themselves, so
+## the inside of every mass is the void (fade 0). Cut by tools/make_crypt_cy.py.
+var _cy_stone := false
+
+
+func _use_crypt_y_stone() -> void:
+	var m := _material("cy", 8, 48, 55, 0.0, Color(0, 0, 0, 0))
+	m.corner_top = load(TERRAIN + "cy_corner_top.png")
+	m.corner_top_anchor = Vector2(64, 8)
+	m.corner_under = load(TERRAIN + "cy_corner_under.png")
+	m.corner_under_anchor = Vector2(65, 65)
+	m.thin_wall_depth = 12  # the quoin column
+	ResourceSaver.save(m, m.resource_path)
+	_stone = m
+	_cy_stone = true
+
+
 ## The crypt stone's grade (the creative lead: "too bright"; reference Y's stone):
 ## SH1 to SH4 as painted are bluer and brighter than Y's grey-lavender, so the
 ## terrain, the placed islands and the props behind are all multiplied by this.
@@ -97,6 +115,8 @@ const STONE_GRADE := Color(0.82, 0.76, 0.74)
 
 func _grade_stone() -> void:
 	for n in ["TerrainSkin", "PlacedArt", "Behind"]:
+		if n == "TerrainSkin" and _cy_stone:
+			continue  # the CY stone is painted in Y's colours already
 		var node := _root.get_node_or_null(n) as CanvasItem
 		if node:
 			node.modulate = STONE_GRADE

@@ -310,16 +310,31 @@ func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, si
 	var along := _face_room(cells, solid, c, side, Vector2i.DOWN if top else Vector2i.UP)
 	if inner:
 		along = anchor.y  # no face above to clip to: the masonry above sits in the slab
+	# A thin slab, for a material that asks for it (thin_wall_depth): each corner
+	# takes only the share of the slab its band takes
+	# (see _draw_top and _draw_under), so a ceiling corner's dark inside never
+	# paints over the floor's lit bricks above it, and the reverse.
+	var m := _mat(cells, c)
+	var thick := _run(cells, c, Vector2i.DOWN if top else Vector2i.UP) * TILE
+	var share := INF
+	if m and m.thin_wall_depth > 0 and thick < MAX_DEPTH * TILE and not inner:
+		if top:
+			share = thick - min(m.under_line, thick * 0.5)
+		else:
+			share = max(thick * 0.5, thick - 24.0)
+		# Its dark inside would show against the bands' lit bricks: only the
+		# corner's face stones and the brick beside them.
+		inward = min(inward, float(m.thin_wall_depth + 6))
 	var sx := anchor.x - inward
 	var sw := w - sx
 	var src: Rect2
 	var dy: float
 	if top:
-		var down: float = min(h - anchor.y, along)
+		var down: float = min(min(h - anchor.y, along), share)
 		src = Rect2(sx, 0, sw, anchor.y + down)
 		dy = cy - anchor.y
 	else:
-		var up: float = min(anchor.y, along)
+		var up: float = min(min(anchor.y, along), share)
 		src = Rect2(sx, anchor.y - up, sw, up + h - anchor.y)
 		dy = cy - up
 	var dest := Rect2(cx - inward, dy, sw, src.size.y)
@@ -348,6 +363,11 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 		if solid.call(c + side):
 			continue
 		var depth: float = min(bw, _wall_room(cells, solid, c, -side))
+		# A thin slab (its floor and ceiling bands meet inside it): the wall's
+		# inward fade would paint over their lit bricks, so only its face stones show.
+		var tall := _run(cells, c, Vector2i.UP) + _run(cells, c, Vector2i.DOWN) - 1
+		if m.thin_wall_depth > 0 and tall < MAX_DEPTH:
+			depth = min(depth, float(m.thin_wall_depth))
 		var f := foot if solid.call(c + side + Vector2i.DOWN) else 0.0
 		# A ceiling over the open side meets this wall: the face runs on up past the
 		# ceiling line as high as the ceiling's band, so the band ends against it.

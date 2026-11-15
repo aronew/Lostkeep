@@ -496,9 +496,22 @@ She steps forward with every hit.
   props in both crypt rooms (`_grade_stone()`), so lit faces measure about
   (72, 70, 87) as in Y; `sh_fill` is darkened to Y's plum-grey masonry (about
   #2F283D) and fades over 5 tiles. Comparison: `docs/rooms/ironbark_05/stone_vs_reference_y.png`.
-  **Next for the crypts' look** (the creative lead's direction): Y's tile set,
-  cards CY1 to CY5 in Book 1 (fine grey-lavender brick, pale cap row, darker
-  plum masonry inside), to replace SH1 and SH2 as the terrain; and foreground
+  **The crypt terrain is now the CY stone** (the creative lead's chunky brick
+  after reference Y, about 11 x 5 px; they tried the finer brick in a scene and
+  rejected it): CY1 (floor and ceiling), CY2 (wall, outer floor corner) and
+  CY2b (outer ceiling corner), clean 8x exports in `art/source/ironbark/crypt_y/`,
+  cut by `tools/make_crypt_cy.py` into `terrain/cy_*` (material `terrain_cy.tres`,
+  `_use_crypt_y_stone()` in `room_builder.gd`, used by IB-02 and IB-05). The
+  SH paragraphs above describe the stone it replaced; the SH islands, shrine
+  and props stay. Its bands fade into the dark brick by brick themselves, so
+  the inside of a mass is the void (fade 0, no masonry fill) and the terrain
+  is not graded (`_grade_stone()` skips it; islands and props still are).
+  **Thin slabs** (under 5 tiles): the wall band's and the corners' inward
+  fades would paint dark alcoves over the bands' lit bricks, so a material's
+  `thin_wall_depth` (12 for CY: the quoin column) limits walls and corners
+  there to their face stones, and each corner to its band's share of the
+  slab. Materials without it (earth, SH) draw as before.
+  **Next for the crypts' look:** foreground
   depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
   the black silhouette (1.4). FG5 is the rubble, painted at full value so the
