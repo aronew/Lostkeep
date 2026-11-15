@@ -1,0 +1,435 @@
+{
+  "project": "Lost Keep",
+  "status": "Generated asset drafts",
+  "assets": [
+    {
+      "id": "SH1",
+      "file": "SH1_masonry_bands.png",
+      "width": 3072,
+      "height": 1024,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH2",
+      "file": "SH2_wall_and_corners.png",
+      "width": 2048,
+      "height": 2048,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH3",
+      "file": "SH3_shrine_island.png",
+      "width": 3072,
+      "height": 1536,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH4",
+      "file": "SH4_platforms_and_pedestal.png",
+      "width": 3072,
+      "height": 1536,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH5",
+      "file": "SH5_crystals_flowers_vines.png",
+      "width": 2048,
+      "height": 2048,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH6",
+      "file": "SH6_doorways_and_lights.png",
+      "width": 2048,
+      "height": 2048,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH7",
+      "file": "SH7_arcades_pillars_props.png",
+      "width": 3072,
+      "height": 1024,
+      "pixel_scale": 8
+    },
+    {
+      "id": "SH8",
+      "file": "SH8_distant_hall.png",
+      "width": 3072,
+      "height": 1440,
+      "pixel_scale": 4
+    }
+  ],
+  "cuts": [
+    {
+      "sheet": "SH2",
+      "piece": "outer_floor_corner",
+      "rect_px": [
+        704,
+        256,
+        512,
+        512
+      ]
+    },
+    {
+      "sheet": "SH2",
+      "piece": "outer_ceiling_corner",
+      "rect_px": [
+        1408,
+        256,
+        512,
+        512
+      ]
+    },
+    {
+      "sheet": "SH2",
+      "piece": "inner_floor_corner",
+      "rect_px": [
+        704,
+        1152,
+        512,
+        512
+      ]
+    },
+    {
+      "sheet": "SH2",
+      "piece": "inner_ceiling_corner",
+      "rect_px": [
+        1408,
+        1152,
+        512,
+        512
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "arch_island",
+      "rect_px": [
+        64,
+        64,
+        768,
+        704
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "plate_1",
+      "rect_px": [
+        1152,
+        192,
+        256,
+        256
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "plate_2",
+      "rect_px": [
+        1664,
+        192,
+        256,
+        256
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "plate_3",
+      "rect_px": [
+        2176,
+        192,
+        256,
+        256
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "wall_ledge_flowers",
+      "rect_px": [
+        64,
+        960,
+        512,
+        448
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "wall_ledge_pots",
+      "rect_px": [
+        832,
+        960,
+        512,
+        448
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "broken_ledge_roots",
+      "rect_px": [
+        1664,
+        1024,
+        256,
+        256
+      ]
+    },
+    {
+      "sheet": "SH6",
+      "piece": "doorway_complete",
+      "rect_px": [
+        128,
+        128,
+        640,
+        768
+      ]
+    },
+    {
+      "sheet": "SH6",
+      "piece": "doorway_ruined",
+      "rect_px": [
+        1152,
+        128,
+        640,
+        768
+      ]
+    },
+    {
+      "sheet": "SH6",
+      "piece": "torch",
+      "rect_px": [
+        384,
+        1280,
+        128,
+        256
+      ]
+    },
+    {
+      "sheet": "SH6",
+      "piece": "bracket_lantern",
+      "rect_px": [
+        1280,
+        1216,
+        256,
+        384
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "three_arch_arcade",
+      "rect_px": [
+        32,
+        256,
+        1024,
+        640
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "single_arch",
+      "rect_px": [
+        1152,
+        256,
+        512,
+        640
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "pillar_short",
+      "rect_px": [
+        1792,
+        640,
+        128,
+        256
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "pillar_medium",
+      "rect_px": [
+        1984,
+        448,
+        128,
+        448
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "pillar_tall",
+      "rect_px": [
+        2176,
+        256,
+        160,
+        640
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "pots_and_urn",
+      "rect_px": [
+        2432,
+        704,
+        320,
+        192
+      ]
+    },
+    {
+      "sheet": "SH7",
+      "piece": "chest",
+      "rect_px": [
+        2816,
+        768,
+        192,
+        128
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "crystals_small",
+      "rect_px": [
+        64,
+        128,
+        256,
+        192
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "crystals_medium",
+      "rect_px": [
+        512,
+        64,
+        384,
+        256
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "crystals_large",
+      "rect_px": [
+        1216,
+        0,
+        512,
+        320
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "flowers_small",
+      "rect_px": [
+        64,
+        576,
+        256,
+        160
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "flowers_medium",
+      "rect_px": [
+        512,
+        512,
+        384,
+        224
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "flowers_large",
+      "rect_px": [
+        1216,
+        448,
+        512,
+        288
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "ivy_128",
+      "rect_px": [
+        64,
+        896,
+        128,
+        128
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "ivy_256",
+      "rect_px": [
+        384,
+        896,
+        128,
+        256
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "ivy_512",
+      "rect_px": [
+        704,
+        896,
+        192,
+        512
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "roots_128",
+      "rect_px": [
+        1152,
+        896,
+        128,
+        128
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "roots_256",
+      "rect_px": [
+        1472,
+        896,
+        128,
+        256
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "roots_512",
+      "rect_px": [
+        1792,
+        896,
+        160,
+        512
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "pale_grass",
+      "rect_px": [
+        128,
+        1664,
+        384,
+        192
+      ]
+    },
+    {
+      "sheet": "SH5",
+      "piece": "white_flowers",
+      "rect_px": [
+        896,
+        1664,
+        384,
+        192
+      ]
+    },
+    {
+      "sheet": "SH4",
+      "piece": "pedestal",
+      "rect_px": [
+        2432,
+        768,
+        256,
+        640
+      ],
+      "column_height_px": 512
+    }
+  ]
+}

@@ -10,7 +10,7 @@ extends "res://tools/room_builder.gd"
 ## door (rows 5 to 9) is IB-01's hall door (rows 32 to 36).
 
 const ROOM_PATH := "res://scenes/rooms/ironbark_02_old_crypt.tscn"
-const IB01 := "res://scenes/rooms/ironbark_test_room.tscn"
+const IB05 := "res://scenes/rooms/ironbark_05_shrine_hall.tscn"
 
 # --- The room plan (tiles) ---------------------------------------------------------
 ## "The guard's burial galleries, stacked beside a root-choked well that has
@@ -36,20 +36,22 @@ const SPACES := [
 ]
 ## Masses put back: [x, y, w, h, material]
 const MASSES := [
-	[45, 17, 15, 2, 0],   # the grave island: E1 down to E2 and across to W1
-	[45, 28, 6, 2, 0],    # the lower well's two islands: E3 across to the cave
-	[54, 28, 5, 2, 0],
+	[45, 17, 15, 2, 1],   # the grave island: E1 down to E2 and across to W1 (a slab of masonry)
+	[45, 28, 6, 2, 1],    # the lower well's two islands: E3 across to the cave
+	[54, 28, 5, 2, 1],
 	[23, 26, 6, 2, 0],    # the fallen rock under W1's collapse
 ]
-## Masonry: the east galleries, the west gallery, and the vault's walls. The
-## cave, the well and everything else is earth.
-const STONE := [[62, 0, 50, 40], [0, 7, 41, 12], [0, 19, 14, 10]]
-## Cells painted by placed art (the islands) instead of the skin.
-const SKIP := [[45, 17, 15, 2], [45, 28, 6, 2], [54, 28, 5, 2]]
+## Masonry: the east galleries, the west gallery, the vault's walls, and the
+## Root Well (the creative lead: "make the well stone too"). The cave is earth.
+const STONE := [[62, 0, 50, 40], [0, 7, 41, 12], [0, 19, 14, 10], [41, 0, 21, 40], [0, 0, 41, 7], [39, 28, 2, 12]]
+## Cells painted by placed art instead of the skin: the west low island is SH4's
+## arch island. The grave island and the east low island are masonry slabs the
+## skin paints.
+const SKIP := [[45, 28, 6, 2]]
 ## Back walls: masonry behind the galleries, raw earth behind the well and cave.
 const BACK := [[62, 5, 50, 5], [62, 14, 27, 5], [85, 19, 4, 4], [62, 23, 50, 5], [96, 10, 4, 13],
 	[62, 32, 28, 5], [0, 11, 41, 5], [3, 19, 11, 5]]
-const BACK_EARTH := [[41, 0, 21, 37], [24, 16, 4, 5], [14, 21, 27, 7]]
+const BACK_EARTH := [[24, 16, 4, 5], [14, 21, 27, 7]]
 
 ## Where Kleo stands if the room is run on its own: just inside the East door.
 const SPAWN := Vector2(112 * 16 - 40, 10 * 16)
@@ -75,8 +77,14 @@ func _initialize() -> void:
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	var tileset := _shared()
+	# The same stone as the Shrine Hall next door (the creative lead's SH kit).
+	_use_shrine_stone()
 	_begin("IronbarkOldCrypt")
+	_shrine_far()
 	_back_walls()
+	# The galleries open onto the misty hall behind, as in the Shrine Hall: no
+	# plum masonry back wall. The well and the cave keep their raw earth.
+	_root.get_node("BackWalls").set("regions", Array([], TYPE_RECT2I, &"", null))
 	_root.get_node("EarthBackWalls").set("brightness", 0.85)
 	var t := _terrain(tileset)
 	_build_well(t["behind"], t["placed"])
@@ -84,12 +92,13 @@ func _initialize() -> void:
 	_build_west(t["behind"])
 	_build_machines()
 	_build_atmosphere()
+	_crypt_foreground()
 	_edge_shades()
 	# The East door: back up to the Lantern Clearing's hall (IB-01).
-	_door("East", Rect2i(104, 5, 8, 5), 1, IB01, "WestLower")
+	_door("East", Rect2i(104, 5, 8, 5), 1, IB05, "West")
 	# The lower East door leads on under the clearing (the Undercroft, not built
 	# yet), so it has a marker to arrive at but no way through.
-	_door("EastLower", Rect2i(104, 23, 8, 5), 1, "", "")
+	_door("EastLower", Rect2i(104, 23, 8, 5), 1, IB05, "WestLower")
 	_finish()
 	quit()
 
@@ -98,13 +107,13 @@ func _initialize() -> void:
 
 func _build_well(behind: Node, placed: Node) -> void:
 	# The grave island (IB4's middle island), its flat top on the collision.
-	_sprite(placed, ISLANDS, Rect2(130, 2, 246, 85), Vector2(45 * TILE - 3, 17 * TILE - 31)).name = "GraveIsland"
+	# The grave on the masonry slab in the moonlight, crystals and flowers.
 	_ground(behind, GRAVE, Rect2(165, 2, 35, 45), 51.4 * TILE, 17 * TILE, 0.95, "IslandGrave")
-	_ground(behind, FLORA, Rect2(126, 93, 42, 27), 46.0 * TILE, 17 * TILE, 1.0, "IslandMushrooms")
-	# The lower well's islands: IB4's small island, and IB5's.
-	_sprite(placed, ISLANDS, Rect2(9, 9, 104, 81), Vector2(45 * TILE - 6, 28 * TILE - 19)).name = "LowIslandWest"
-	_sprite(placed, ENV + "ironbark_earth_faces_corners.png", Rect2(145, 170, 95, 73),
-		Vector2(54 * TILE + 40 - 48, 28 * TILE - 19)).name = "LowIslandEast"
+	_ground(behind, ENV + "sh_flora.png", Rect2(64, 8, 48, 32), 46.0 * TILE, 17 * TILE, 1.0, "IslandCrystals")
+	_ground(behind, ENV + "sh_flora.png", Rect2(64, 64, 48, 28), 55.5 * TILE, 17 * TILE, 1.0, "IslandFlowers")
+	_ground(behind, ENV + "sh_flora.png", Rect2(8, 72, 32, 20), 55.2 * TILE, 28 * TILE, 1.0, "LowFlowers")
+	# The west low island: SH4's arch island, its walking line (row 50) on the collision.
+	_sprite(placed, ENV + "sh_platforms.png", Rect2(8, 8, 96, 88), Vector2(45 * TILE, 28 * TILE - 50)).name = "LowIslandWest"
 
 	# The hanging cocoon (Emberwick lock E2): someone wrapped in silk, hung over
 	# the gap by W1's mouth on a strand no blade reaches.
@@ -230,11 +239,11 @@ func _build_west(behind: Node) -> void:
 	var y1 := 24.0 * TILE + 28.0
 	dark.polygon = PackedVector2Array([Vector2(x0, y0), Vector2(x1, y0), Vector2(x1, y1), Vector2(x0, y1)])
 	dark.color = Color(0.043, 0.031, 0.071)
-	var kit: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(TERRAIN + "kit_anchors.json"))
-	var band: Texture2D = load(TERRAIN + "stone_wall.png")
-	var face := int(kit["stone_wall_face"])
+	# The room's stone is the Shrine Hall's (SH2's wall band, face column 37).
+	var band: Texture2D = load(TERRAIN + "sh_wall.png")
+	var face := 37
 	var rows := 5  # the opening's three rows, and two below it over the vault's floor edge
-	var face_art := _sprite(cover, TERRAIN + "stone_wall.png",
+	var face_art := _sprite(cover, TERRAIN + "sh_wall.png",
 		Rect2(0, posmod(21 * TILE, band.get_height()), band.get_width(), rows * TILE),
 		Vector2(14 * TILE - (face + 1), 21 * TILE))
 	face_art.name = "Face"
@@ -267,7 +276,7 @@ func _build_machines() -> void:
 
 func _build_atmosphere() -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
-	mod.color = Color(0.56, 0.56, 0.74)
+	mod.color = Color(0.9, 0.9, 0.96)
 	var add := CanvasItemMaterial.new()
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED

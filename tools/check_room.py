@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [ib01|ib02]
+Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04|ib05]
 """
 import json
 import sys
@@ -45,7 +45,43 @@ ROOMS = {
         "gated": {"west gallery past the plated door (Ironbark Ward, W2)": (0, 11, 16, 5)},
         # The plated door, and the hoist's deck jammed at its head.
         "seals": [(16, 11, 2, 5), (96, 10, 4, 1)],
-        "exits": {"east upper (to the Lantern Clearing)": (111, 9), "east lower (to the Undercroft)": (111, 27)},
+        "exits": {"east upper (to the Shrine Hall)": (111, 9), "east lower (to the Shrine Hall)": (111, 27)},
+    },
+    "ib03": {
+        "cells": "game/tests/out/ib03/map/cells.json",
+        "spawn": (2, 36),
+        # Stairs (slopes under painted steps): foot and head, both ways.
+        "lift": [((3, 36), (8, 33)), ((19, 30), (24, 27)), ((74, 21), (79, 18)), ((80, 18), (85, 15))],
+        "water": (0, 0, 0, 0),
+        "gated": {},
+        # Collision that isn't rock: the log (one-way), and the painted islands'
+        # single tile of collision (their paintings are thick; the rule is for rock).
+        "seals": [(66, 22, 5, 1), (32, 25, 5, 1), (39, 22, 27, 1), (44, 31, 11, 1)],
+        "exits": {"east (to the Gate Road)": (92, 15), "west (the forest road)": (0, 36)},
+    },
+    "ib04": {
+        "cells": "game/tests/out/ib04/map/cells.json",
+        "spawn": (4, 15),
+        "lift": [((14, 18), (9, 15)), ((22, 21), (17, 18)), ((38, 28), (33, 25)), ((54, 36), (49, 33))],
+        "water": (78, 37, 42, 2),
+        "gated": {"far chunk over the road's end (Wing-Cloak)": (120, 4, 8, 11)},
+        # The painted islands' tiles, and the pool's six small islands.
+        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (70, 22, 9, 1), (82, 19, 27, 1),
+                  (114, 23, 5, 1), (122, 14, 3, 1),
+                  (82, 36, 2, 1), (88, 35, 3, 1), (95, 36, 2, 1), (101, 36, 3, 1), (108, 35, 2, 1), (114, 36, 3, 1)],
+        "exits": {"east (to the Lantern Clearing)": (127, 36), "west (to the Ruin Gardens)": (0, 15)},
+    },
+    "ib05": {
+        "cells": "game/tests/out/ib05/map/cells.json",
+        "spawn": (55, 6),
+        "lift": [],
+        "water": (0, 0, 0, 0),
+        "gated": {},
+        # The painted islands', plates' and ledges' single tile of collision.
+        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 4, 1), (22, 22, 2, 1), (29, 22, 2, 1),
+                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (50, 21, 4, 1)],
+        "exits": {"east upper (to the Lantern Clearing)": (57, 6), "west upper (to the Old Crypt)": (0, 7),
+                  "west lower (to the Old Crypt's long gallery)": (0, 25), "east lower (to the Undercroft)": (57, 25)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]
@@ -99,6 +135,7 @@ def main(path):
     report.append(f"floors: {100 * long8 / total:.0f}% in runs of 8+ (rule: >= 60%) {'OK' if long8 / total >= 0.6 else 'FAIL'}")
 
     # --- Steps: neighbouring floor heights 1-2 apart -------------------------
+    placed = {(x, y) for x0, y0, w, h in SEALS for x in range(x0, x0 + w) for y in range(y0, y0 + h)}
     steps = 0
     stairs = 0
     tops = {}
@@ -108,6 +145,8 @@ def main(path):
         for y in tops.get(x, []):
             for dy in (1, 2, -1, -2):
                 if (x + 1, y + dy) in spots and (x + 1, y) not in spots:
+                    if (x, y + 1) in placed or (x + 1, y + dy + 1) in placed:
+                        continue  # a deck, branch or island beside the ground: not a step in the floor
                     steps += 1
                     if (x + 2, y + 2 * dy) in spots and (x + 2, y + dy) not in spots:
                         stairs += 1

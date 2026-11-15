@@ -1,0 +1,62 @@
+{
+  "project": "Lost Keep",
+  "assets": [
+    {
+      "file": "OC1_masonry_bands.png",
+      "width": 3072,
+      "height": 1024,
+      "pixel_scale": 8,
+      "description": "Floor walkline y=64; ceiling guide y=960."
+    },
+    {
+      "file": "OC2_walls_corners_pillar.png",
+      "width": 2048,
+      "height": 2048,
+      "pixel_scale": 8,
+      "description": "Four corner cells and vertical strips; art joins require review."
+    },
+    {
+      "file": "OC3_floating_ruins.png",
+      "width": 3072,
+      "height": 1536,
+      "pixel_scale": 8,
+      "description": "Island nominal widths 1920,768,640px."
+    },
+    {
+      "file": "OC4_gallery_ledges.png",
+      "width": 2048,
+      "height": 1024,
+      "pixel_scale": 8,
+      "description": "Balcony and ledge nominal widths640,384,256px."
+    },
+    {
+      "file": "OC5_distant_well.png",
+      "width": 3072,
+      "height": 1440,
+      "pixel_scale": 4,
+      "description": "Opaque distant crypt well."
+    },
+    {
+      "file": "OC6_middle_arcades.png",
+      "width": 3072,
+      "height": 1440,
+      "pixel_scale": 4,
+      "description": "Transparent mid-distance arcades, bones and banners."
+    },
+    {
+      "file": "OC7_foreground_strips.png",
+      "width": 3072,
+      "height": 1440,
+      "pixel_scale": 4,
+      "description": "Top y0..379, bottom y1000..1439, transparent center."
+    },
+    {
+      "file": "OC8_crypt_props.png",
+      "width": 2048,
+      "height": 2048,
+      "pixel_scale": 8,
+      "description": "Niches384px wide; false wall512x640; statue768px tall."
+    }
+  ],
+  "status": "Generated asset drafts; see README.md for outstanding art/tiling checks."
+}

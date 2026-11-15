@@ -220,7 +220,9 @@ She steps forward with every hit.
 
 ### The Godot project (`game/`)
 - **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is
-  IB-01, the Lantern Clearing; its hall door leads into IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
+  IB-03, the Ruin Gardens; then IB-04, the Gate Road; then IB-01, the Lantern
+  Clearing, whose hall door leads into IB-05, the Shrine Hall, and on into
+  IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
   cloud sessions (the environment's setup script installs it to `/opt/godot/`).
 - **Controls:** move A/D or arrows; jump Space/Z/K; attack **left click** or X/J;
   interact E/C or up; gamepad too. **Right click** (or V/L, gamepad B) is the
@@ -242,7 +244,9 @@ She steps forward with every hit.
   tileset, materials, back walls, terrain, and helpers: `_door`, `_lift`,
   `_water`, `_breakable`, `_light`, `_fog`, `_edge_shades`); each room has its
   own builder on top of it, holding its plan and its dressing:
-  `build_test_room.gd` (IB-01) and `build_ib02.gd` (IB-02). Each saves an
+  `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02), and `build_ib03.gd`
+  and `build_ib04.gd` (the surface rooms, on `surface_builder.gd`), and
+  `build_ib05.gd` (the Shrine Hall). Each saves an
   ordinary scene:
   `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
@@ -328,6 +332,12 @@ She steps forward with every hit.
     `ROOMS` in `tests/playtest.gd` and `tools/check_room.py` (its spawn, lift,
     water, gates and exits), its scripted lines, and its routes in
     `stitch_map.py`.
+  - IB-03 and IB-04 (`room=ib03`, `room=ib04`): `mode=tour` (the main line
+    and out the East door), `mode=upper` (the optional lines and the ways
+    back) and `mode=doors` (IB-01, IB-04 and IB-03).
+    `python3 tools/blockout_map.py ib03` draws a labelled black-box map with
+    the walked routes, for blockout reviews (the in-game box view is too dark
+    to read in a picture).
   - After any change to shared code (the builder, Kleo, the camera, `Game`),
     run IB-01's modes again as well: both rooms must keep passing.
 - **Rules for every room:** base resolution 640×360, integer-scaled; a tile is
@@ -355,41 +365,57 @@ She steps forward with every hit.
 6. **Judge art in the game,** not on its own.
 
 ### Open items
-- **NEXT: build the Ironbark surface sector (3 to 4 rooms) before going any
-  deeper underground.** Why: IB-01 was a test room, and gravity is the compass:
-  the player should know the surface before being pulled down. Today the game
-  starts at the shrine and is in the crypt within a minute, skipping the
-  story's start (Kleo at the Guard Post noticing her people are missing), the
-  forest itself, the first sight of the Lost Keep gate across the broken
-  bridge, and the surface's locks (the bridge gap, the moat, the thorn knots),
-  which must each be seen a few times before their keys.
-  - **Rooms (proposed, not yet approved by the creative lead):** the **Guard
-    Post** (the opening room, above IB-01 through its west upper exit at the
-    terrace, rows 24 up), a **forest walk**, and the **approach to the Keep
-    gate**, looping back to IB-01. The game opens at the Guard Post; IB-01
-    becomes the second room. The creative lead hasn't yet chosen surface-first
-    vs. finishing IB-02's art; recommend surface-first.
-  - **Method:** progression first, blockout first, art last; one room approved
-    before the next. Each room is a builder extending `game/tools/room_builder.gd`
-    (copy `build_ib02.gd`), a spec in `design/rooms/`, entries in `ROOMS` in
-    `tests/playtest.gd` and `tools/check_room.py`, and doors on the shared grid.
-  - **Level-design ideas:** mockups R, S, T (see the end of
-    `design/world-and-regions.md`): a great tree whose branches are walkways
-    across the upper air, a hill chapel climbed by stair terraces, a pool at
-    the lowest point with a broken bridge and stumps, floating ruin islands,
-    and three readable heights (branch, terrace, water). Rows of tiny floating
-    blocks in the mockups are overruled by the principles. Stairs: no
-    staircases in collision; each step is a full 128 px (art) / 16 px tread or
-    a short run of floors.
-  - **Art ready for it:** SF9 to SF13 are processed in
-    `game/assets/environment/ironbark/surface_*.png` (great tree and branches,
-    chapel and terraces, pool/bridge/falls/stumps, ruin islands and arches,
-    stacked far + mid backdrops) but not placed anywhere. Their README warns
-    stair treads, fence repeat, walking lines and shadow edges need tidying when
-    cut. Base-kit cards SF1 to SF8 (ground bands, walls/corners, islands, stone,
-    backdrops, foreground) are in Book 1 but not generated yet; until then the
-    surface uses IB2's top band and IB6's walls and corners.
-  - Mockups U, V, W (greener deepwood) are for a different area later.
+- **The Ironbark surface: two rooms built, awaiting the creative lead's
+  review.** The game opens in **IB-03, the Ruin Gardens** (a climb: a hill of
+  terraces, the great graveyard island, a log, the cliff's arch) and goes on
+  through **IB-04, the Gate Road** (wind back down a hill under the islands,
+  the road, then a long pool with two ways over it: six small islands to hop,
+  or the big floating islands above) into IB-01, which the creative lead
+  calls the guard post. Specs: `design/rooms/ironbark_03_ruin_gardens.md`,
+  `ironbark_04_gate_road.md`; images in `docs/rooms/`.
+  - **What the creative lead wants here** (their words and reviews):
+    - The look of their "Moonlit" mockups (`docs/mockups/ironbark_surface/`):
+      plum boulder terrain, **large floating islands**, IB-01's purple sky,
+      moons and teal forest. They rejected the SF kit's bluer colours, SF9's
+      twisted trunk, badly cut stairs, and a first IB-03 (bridge, hill, chapel)
+      that "looks nothing like the mockup".
+    - These rooms are "to learn movement, get the feel for the game, do some
+      jumps, maybe a chill enemy or two".
+  - **Their art for it** is in `art/source/ironbark/islands/` (seven painted
+    islands and a cliff atlas, as generated at 8x), reduced 8:1 with nothing
+    else done to `game/assets/environment/ironbark/island_*.png` and
+    `cliffs_and_ruins.png`. The atlas holds two stair flights, two arch doors,
+    a crystal shrine, a timber gate, a lantern post, two corner silhouettes and
+    three terrace slabs (the slabs and the five-step flight are not used yet).
+  - **How a surface room is built** (`game/tools/surface_builder.gd`, on
+    `room_builder.gd`): `_surface_begin` / `_surface_finish` give IB-01's
+    backdrops, darkness, moonlight, canopy and corner silhouettes. A painted
+    island is `_island(kind, tile_x, row, tiles)` over a one-tile mass in the
+    plan (also in SKIP; `_hide_island_tiles()` hides the tiles, the box view
+    shows them). Stairs are `_flight(edge_x, foot_y, down_east)`: the
+    eight-step painting over a slope, three tiles up in 68 px. `_log` is a
+    one-way timber. The checker can't see non-tile collision: list logs and
+    island tiles under `seals`, and each flight as a `lift` pair.
+  - **Floating islands on a path sit at different heights** (the creative
+    lead: "so it doesn't feel so straight"), and they like the big graveyard
+    island: vary the levels around the big pieces, don't swap them for small ones.
+  - **Small islands over water are allowed where the jump is the lesson**
+    (the creative lead asked for them in IB-04's pool). Space them for her real
+    jump, about 95 px long from a standing run-up: roughly 56 px of gap and
+    48 px to land on. Closer than that and a full jump overshoots.
+  - **The first enemy is in: the Mossback** (`scripts/world/mossback.gd`,
+    placed with `_mossback(x, floor_y, left_x, right_x)`): the creative lead
+    asked for "a chill enemy or two" that "take like 7 hits to kill". It walks
+    between two x positions on a flat floor (no physics body), rests, never
+    chases, shoves Kleo on contact (`kleo.hurt`, she has no health yet), and
+    dies on the seventh sword hit (`hits_to_kill`). Two in each surface room.
+    Its sprite is a stand-in from `tools/make_mossback.py`. Test:
+    `room=ib03 mode=enemy` (run it with `--max-fps 60` too).
+  - **Next for these rooms:** a generated Mossback sheet, pickups for the
+    cave and the shrine island, and a tree of the surface's own (both rooms
+    borrow IB-01's Great Ironbark). SF9 to SF13 are no longer used anywhere
+    except a few tinted graves-and-ruins pieces; mockups R to W and the SF
+    cards in Book 1 are superseded by the Moonlit mockups for this area.
 - Regenerate G3 and the crown knots of S1, which are still red. Regenerate
   P2 and P5 taller, with transparent skies. (P3 v2, IB5 and K4 are in.)
 - **The crypt kit is in** (CR1 to CR3, the generator's painted originals,
@@ -419,15 +445,51 @@ She steps forward with every hit.
   Those mockups guide the large shape of a sector (a well, strata, loops,
   pockets); where they show ladders or rows of small platforms, the principles
   win: drops, islands, and a machine for the long climb.
-- **Rooms not built yet,** which IB-02's doors already face: the Undercroft
-  (under the clearing, through IB-02's lower East door: the next room on the
-  main line), the Refuge road (west, behind the plated door: needs the Ward),
-  the Guard Post (above, up the well: needs Barkgrip). Their doors end in
-  darkness today.
-- **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
+- **Rooms not built yet:** the Undercroft
+  (under the clearing, through IB-05's lower East door: the next room on the
+  main line), the Refuge road (west of IB-02, behind the plated door: needs
+  the Ward), the Guard Post above IB-02's well (the surface rooms lie over the
+  crypt instead). All three end in darkness today.
+- **The Old Crypt's first section is built as IB-05, the Shrine Hall, and
+  awaits review** (`design/rooms/ironbark_05_shrine_hall.md`, images in
+  `docs/rooms/ironbark_05/`), after the creative lead's mockup
+  `docs/mockups/old_crypt/old-crypt-first-section.jpg` ("exactly how I want
+  that first section of the Old Crypt to look") and their kit OC1 to OC8
+  (`art/source/ironbark/crypt_oc/`, reduced 8:1 / 4:1 with nothing else done
+  by `tools/make_crypt_oc.py` to `game/assets/environment/ironbark/oc_*.png`
+  and the `terrain/oc_*` bands). It sits between IB-01's hall door and IB-02,
+  whose origin moved to IB-01's (-170, 28). Its pale masonry is a third terrain
+  material. **IB-02 now uses the same SH stone** (the creative lead asked for
+  it): `_use_shrine_stone()` and `_shrine_far()` in `room_builder.gd` give any
+  room the SH masonry and the SH8 backdrop. IB-02's well is stone too; only its
+  root cave stays earth. **Colour:** the backdrop is graded toward the mockup's
+  dark slate (`SHRINE_FAR_TINT`), not SH8's brighter blue: the creative lead
+  found it "so much bluer than the mockup". Compare against the mockup's
+  measured background (about #373A55) before changing it. **Then the creative
+  lead asked for moodier colour and more depth** (after a reference of a ruin
+  hall in purple above and deep teal below, `docs/rooms/ironbark_05/depth_before_after.png`):
+  `_shrine_far()` now builds six layers behind the playfield (SH8 far hall,
+  teal mist, OC6 arcades twice at 0.32 and 0.58, mist, SH7 ruins in dark
+  silhouette at 0.78) under a multiply grade (`Mood`, purple at the room's top,
+  teal at its bottom: `MOOD_TOP`, `MOOD_BOTTOM`); `_crypt_foreground()` adds
+  OC7's dark rock and a nearer layer of dark pillars and roots (1.35). The
+  surface rooms got the same idea: `ForegroundNear` in `surface_builder.gd`,
+  P5's ferns and a branch enlarged as silhouettes at 1.45.
+  - **Its layout follows the mockup piece by piece** (second layout, after the
+    creative lead said the first "looks very different from the mockup"):
+    `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative
+    lead's SH1 to SH8** (`art/source/ironbark/shrine_hall/`, brought in by
+    `tools/make_crypt_sh.py` to `sh_*.png` and `terrain/sh_*`; material
+    `terrain_sh.tres` made in `build_ib05.gd`). The OC kit is no longer used
+    in IB-05 except OC7's foreground and OC8's bier and bones.
+  - **Small ledges stand beside what they lead to, never over it:** a one-tile
+    ledge above an island or floor she jumps from bumps her head (found in
+    IB-05's first layout).
+- **Art the Old Crypt wants** (older list) is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.
-- No enemies exist yet; IB-02's long gallery and cave are shaped for the first.
+- IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
+  Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
   three moons are large (consider regenerating P1 with smaller moons).
 - **Textures that tile** are cut with a minimum-error seam

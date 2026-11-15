@@ -113,6 +113,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | G1 | Ironbark | The broken arch bridge with its centre fallen, a torn banner over the gap | Hard | ✔ | The far bank: an express lane over the graveyard |
+| G1b | Ironbark **IB-04** | The Gate Road: a far chunk high over the road's end, something glinting on it, out of reach from every island | Hard | ✔ | A relic |
 | G2 | Hearth-Plains | The wind-mill gorge | Hard | ✔ | Rootling village outskirts: a rescue |
 | G3 | Dusk-Drifter | Heat updrafts from braziers lit with Emberwick, with nothing to ride them yet | Hard | ✔ (a planted combo) | A sky route over the forge |
 | G4 | Fen-Stalker | The swamp's canopy chasm | Hard | — | The critical path west |
