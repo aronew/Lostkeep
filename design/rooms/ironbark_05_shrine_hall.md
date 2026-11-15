@@ -29,14 +29,14 @@ islands. Now it follows the mockup piece by piece (`docs/rooms/ironbark_05/layou
 | Three small stone plates rising toward the right island | Three plates (rows 18, 17, 16) |
 | The arch island on the right | The arch island (6 wide, row 18) |
 | Ledges up the east wall, a shelf over the lower right door | A ledge under the east gap (row 13, the way back up) and the shelf (row 21) over the lower East door |
-| A lower floor that dips, a pit in the middle | The dip (row 27) and the pit (to row 31) |
+| A lower floor that dips, a pit in the middle | The dip (row 27) and the pit (to row 31). The pit's floor is a cracked bark plate (W1b, the Ironbark Ward), the plate sheet's horizontal plate; under it the shaft runs on down out of the room into the Undercroft (the creative lead: it "looks like it should" go down; their reference for the shaft: `docs/mockups/undercroft/shaft_reference.webp`) |
 | Doors in all four corners | The East door at the landing, the West door in the west gallery, both lower doors |
 
 ## Spec
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-05. East (upper): IB-01's hall door. West (upper and lower): IB-02's two East doors. East (lower): the Undercroft (not built) |
+| **Identity** | Ironbark Guard, IB-05. East (upper): IB-01's hall door. West (upper and lower): IB-02's two East doors. East (lower): IB-06, the Undercroft (its West door) |
 | **World grid** | Origin at IB-01's (-58, 30). Its East door (rows 2 to 6) is IB-01's hall door (rows 32 to 36); its West doors (rows 3 to 7, 21 to 25) are IB-02's East doors (rows 5 to 9, 23 to 27). IB-02's origin is at IB-01's (-170, 28) |
 | **Size** | 58 × 34 tiles (928 × 544 px) |
 | **Lines** | **Main:** the landing → over the gap down to the east gallery → along it → over the galleries' gap, up one → the West door. **The hall:** drop through the galleries' gap onto the shrine; east by the three plates to the arch island; up by the ledge under the east gap to the east gallery (the way back up). West: floor → pedestal → small island → shrine; the island → the west wall's ledge. The nook under the shrine; the ledge over the pit → the first plate; the shelf → the arch island. The pit, and the lower doors |

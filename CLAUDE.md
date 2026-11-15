@@ -246,7 +246,8 @@ She steps forward with every hit.
   own builder on top of it, holding its plan and its dressing:
   `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02), and `build_ib03.gd`
   and `build_ib04.gd` (the surface rooms, on `surface_builder.gd`), and
-  `build_ib05.gd` (the Shrine Hall). Each saves an
+  `build_ib05.gd` (the Shrine Hall), `build_ib06.gd` (the Undercroft) and
+  `build_ib07.gd` (the Pit Shaft). Each saves an
   ordinary scene:
   `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
@@ -445,11 +446,27 @@ She steps forward with every hit.
   Those mockups guide the large shape of a sector (a well, strata, loops,
   pockets); where they show ladders or rows of small platforms, the principles
   win: drops, islands, and a machine for the long climb.
-- **Rooms not built yet:** the Undercroft
-  (under the clearing, through IB-05's lower East door: the next room on the
-  main line), the Refuge road (west of IB-02, behind the plated door: needs
-  the Ward), the Guard Post above IB-02's well (the surface rooms lie over the
-  crypt instead). All three end in darkness today.
+- **Two blockouts await the creative lead's review:** **IB-06, the
+  Undercroft** (`design/rooms/ironbark_06_undercroft.md`, `build_ib06.gd`,
+  origin (0, 40), under the clearing): three switchback floors, a root chamber
+  at the turn, a cellar lift folding the bottom back to IB-05's lower East
+  door, Barkgrip and Breath locks; and **IB-07, the Pit Shaft**
+  (`ironbark_07_pit_shaft.md`, `build_ib07.gd`, origin (-44, 64), under IB-05):
+  the shaft below IB-05's cracked plate W1b, eight 2-wide ledges taking turns
+  across it every 4 or 5 rows (each beside the one below, never over it),
+  pockets off alternating sides, the deep chamber at the bottom; its East door
+  is IB-06's lower West door. After the creative lead's shaft reference
+  (`docs/mockups/undercroft/shaft_reference.webp`: steps like these in a shaft
+  "don't read as weird") and vertical-level mockups
+  (`docs/mockups/undercroft/vertical_levels.webp`, "especially the one on the
+  far left": use them for any thin vertical level). Both: `room=ib06` /
+  `room=ib07` with `mode=tour`, `upper`, `shots`, `map` (IB-06 also `doors`);
+  `check_room.py` and `blockout_map.py` take their names. `tools/world_map.py`
+  draws every room on the world grid (`docs/maps/where_we_are.png`).
+- **Rooms not built yet:** the Keep's foundations (east of the Undercroft's
+  lower East door: next on the main line), the Refuge road (west of IB-02,
+  behind the plated door: needs the Ward), the Guard Post above IB-02's well
+  (the surface rooms lie over the crypt instead). All end in darkness today.
 - **The Old Crypt's first section is built as IB-05, the Shrine Hall, and
   awaits review** (`design/rooms/ironbark_05_shrine_hall.md`, images in
   `docs/rooms/ironbark_05/`), after the creative lead's mockup
