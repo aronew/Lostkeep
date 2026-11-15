@@ -489,6 +489,13 @@ She steps forward with every hit.
   props in both crypt rooms (`_grade_stone()`), so lit faces measure about
   (72, 70, 87) as in Y; `sh_fill` is darkened to Y's plum-grey masonry (about
   #2F283D) and fades over 5 tiles. Comparison: `docs/rooms/ironbark_05/stone_vs_reference_y.png`.
+  **Next for the crypts' look** (the creative lead's direction): Y's tile set,
+  cards CY1 to CY5 in Book 1 (fine grey-lavender brick, pale cap row, darker
+  plum masonry inside), to replace SH1 and SH2 as the terrain; and foreground
+  depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
+  rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
+  the black silhouette (1.4). FG5 is the rubble, painted at full value so the
+  game darkens copies to each step; FG1 and FG2 are the silhouettes.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative
