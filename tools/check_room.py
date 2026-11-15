@@ -73,14 +73,15 @@ ROOMS = {
     },
     "ib05": {
         "cells": "game/tests/out/ib05/map/cells.json",
-        "spawn": (52, 9),
+        "spawn": (55, 6),
         "lift": [],
         "water": (0, 0, 0, 0),
         "gated": {},
-        # The painted islands' and ledges' single tile of collision.
-        "seals": [(6, 20, 15, 1), (36, 22, 6, 1), (43, 19, 5, 1), (49, 16, 4, 1), (22, 15, 2, 1), (4, 24, 2, 1), (32, 25, 2, 1)],
-        "exits": {"east upper (to the Lantern Clearing)": (55, 9), "west upper (to the Old Crypt)": (0, 9),
-                  "west lower (to the Old Crypt's long gallery)": (0, 27), "east lower (to the Undercroft)": (55, 27)},
+        # The painted islands', plates' and ledges' single tile of collision.
+        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 4, 1), (22, 22, 2, 1), (29, 22, 2, 1),
+                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (50, 21, 4, 1)],
+        "exits": {"east upper (to the Lantern Clearing)": (57, 6), "west upper (to the Old Crypt)": (0, 7),
+                  "west lower (to the Old Crypt's long gallery)": (0, 25), "east lower (to the Undercroft)": (57, 25)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

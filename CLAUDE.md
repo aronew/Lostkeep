@@ -458,10 +458,17 @@ She steps forward with every hit.
   (`art/source/ironbark/crypt_oc/`, reduced 8:1 / 4:1 with nothing else done
   by `tools/make_crypt_oc.py` to `game/assets/environment/ironbark/oc_*.png`
   and the `terrain/oc_*` bands). It sits between IB-01's hall door and IB-02,
-  whose origin moved to IB-01's (-168, 27). Its pale masonry is a third terrain
+  whose origin moved to IB-01's (-170, 28). Its pale masonry is a third terrain
   material (`terrain_oc.tres`, made in `build_ib05.gd`), so a room can use it
   in place of the plum crypt stone. IB-02 still uses the plum kit; reskinning
   it with OC is the obvious next step if the creative lead likes IB-05.
+  - **Its layout follows the mockup piece by piece** (second layout, after the
+    creative lead said the first "looks very different from the mockup"):
+    `docs/rooms/ironbark_05/layout_vs_mockup.png`. Its look does not yet: the OC
+    kit was made after mockups O to Q. **Book 1 now has SH1 to SH8** (mockup X
+    in `lostkeep-attach/`): the thick blue-grey masonry rim and corners, the
+    shrine island, the arch island, plates and ledges, crystals, doorways,
+    colonnades. When they arrive, swap them in over the same collision.
   - **Small ledges stand beside what they lead to, never over it:** a one-tile
     ledge above an island or floor she jumps from bumps her head (found in
     IB-05's first layout).

@@ -14,43 +14,56 @@ It is a new room between IB-01 and IB-02: the hall door of the Lantern
 Clearing now opens into it, and IB-02 (the galleries and the Root Well) lies
 on beyond its two west doors. IB-02 keeps its plum crypt kit for now.
 
+## Second layout (the creative lead: "the way you laid it out looks very different from the mockup")
+
+The first build ran one straight gallery along the top and scattered the
+islands. Now it follows the mockup piece by piece (`docs/rooms/ironbark_05/layout_vs_mockup.png`):
+
+| In the mockup | In the room |
+| --- | --- |
+| Two upper galleries with a gap between them and a shaft above it | The west gallery (floor row 8) and the east gallery (row 9), a 3-tile gap between them, a shaft above it going up out of sight |
+| A landing at the upper right door, higher than the gallery, a hole beside it | The landing at the East door (row 7) and a 4-tile gap down into the hall beside it |
+| The shrine island on the left of the hall | The shrine island (15 wide, row 17), the hooded statue and braziers on it |
+| A small island and a pedestal on a column west of it, a ledge on the west wall | The small island (row 20), the pedestal (row 22) on its column, the west wall's ledge (row 16) |
+| A small ledge hanging under the shrine | The nook under the shrine (row 22) |
+| Three small stone plates rising toward the right island | Three plates (rows 18, 17, 16) |
+| The arch island on the right | The arch island (6 wide, row 18) |
+| Ledges up the east wall, a shelf over the lower right door | A ledge under the east gap (row 13, the way back up) and the shelf (row 21) over the lower East door |
+| A lower floor that dips, a pit in the middle | The dip (row 27) and the pit (to row 31) |
+| Doors in all four corners | The East door at the landing, the West door in the west gallery, both lower doors |
+
 ## Spec
 
 | Field | Content |
 | --- | --- |
 | **Identity** | Ironbark Guard, IB-05. East (upper): IB-01's hall door. West (upper and lower): IB-02's two East doors. East (lower): the Undercroft (not built) |
-| **World grid** | Origin at IB-01's (-56, 27). Its East door (rows 5 to 9) is IB-01's hall door (rows 32 to 36); its West doors (rows 5 to 9, 23 to 27) are IB-02's East doors. IB-02's origin is now at IB-01's (-168, 27) |
-| **Idea** | A tall hall of pale masonry under the clearing: a gallery of burial niches along its top, the hooded statue's island floating in the middle air between two braziers, smaller ruins on islands, the dead on their biers below |
-| **Purpose** | The first sight of the crypts, as a landmark you see from the door and come back to. The main line is short (along the gallery, one jump over its break); the hall below is for the curious |
-| **Size** | 56 × 36 tiles (896 × 576 px): 1.4 screens wide, 1.6 tall |
-| **Ground** | The gallery (row 10, door to door, broken for 5 tiles over the shrine); the lower floor (row 28) with a 4-wide pit |
-| **Islands and ledges (painted, OC3 and OC4)** | The shrine island (15 wide, row 20) with the hooded statue; the arch island (6, row 22); the niche island (5, row 19); a balcony on the east wall (4, row 16); three small ledges, each beside the island it leads to, never over one (row 15 under the break, row 24 by the west wall, row 25 by the pit) |
-| **Lines** | **Main:** East door → west along the gallery → jump its break → West door (into IB-02). **The hall:** drop through the break onto the shrine; down to the floor; over the pit; up by the ledge, the arch island and the niche island to the balcony. **Back up:** the west ledge, the shrine island, the ledge under the break, then jump up through the break and catch the gallery's lip |
-| **Locks seen here** | None new. The lower East door leads on to the Undercroft (not built) |
+| **World grid** | Origin at IB-01's (-58, 30). Its East door (rows 2 to 6) is IB-01's hall door (rows 32 to 36); its West doors (rows 3 to 7, 21 to 25) are IB-02's East doors (rows 5 to 9, 23 to 27). IB-02's origin is at IB-01's (-170, 28) |
+| **Size** | 58 × 34 tiles (928 × 544 px) |
+| **Lines** | **Main:** the landing → over the gap down to the east gallery → along it → over the galleries' gap, up one → the West door. **The hall:** drop through the galleries' gap onto the shrine; east by the three plates to the arch island; up by the ledge under the east gap to the east gallery (the way back up). West: floor → pedestal → small island → shrine; the island → the west wall's ledge. The nook under the shrine; the ledge over the pit → the first plate; the shelf → the arch island. The pit, and the lower doors |
+| **Small plates** | The three plates are the creative lead's: their mockup has them, and they asked for them ("a couple small platforms that are missing") |
+| **Locks seen here** | The shaft above the galleries' gap, going up out of reach (a Barkgrip lock, for later) |
 | **Encounters** | None yet |
-| **Art (all the creative lead's, OC1 to OC8)** | Masonry floor and ceiling bands and wall strips (OC1, OC2) on the terrain skin, with OC2's outer corner; the islands and ledges (OC3, OC4); the distant well (OC5) and middle arcades (OC6) as parallax; the hooded statue, braziers, candles, niches, biers, bones, mushrooms, roots (OC8); OC7's dark stone along the bottom and top as foreground |
+| **Art** | The OC kit as before. The prompt book now has SH1 to SH8, after this mockup, to replace it here: the thick blue-grey masonry rim, its corners, the shrine island, the arch island, plates and ledges, crystals and flowers, lit doorways and torches, colonnades, and an optional backdrop |
 
 ## Validation
 
-`python3 tools/check_room.py ib05`: longest floor 32 tiles; 83% in runs of 8+;
-no small steps, staircases or thin rock; all four doors reached; 100% of the
-floor reached with the base kit; no traps.
+`python3 tools/check_room.py ib05`: longest floor 25 tiles; 75% in runs of 8+;
+2 small steps (the dip); no staircases or thin rock; all four doors reached;
+100% of the floor reached with the base kit; no traps.
 
 Walked in the engine (`tests/playtest.gd room=ib05`): the main line
-(`mode=tour`) and out the West door into IB-02; the hall (`mode=upper`): onto
-the shrine, the floor, over the pit, every island to the balcony, all four
-steps back up to the gallery, and out the lower West door into IB-02; the
-doors (`mode=doors`) from IB-01 and both of IB-02's East doors. All completed.
-Camera: slide 0, wobble 0. IB-01 and IB-02 still pass with the new doors.
+(`mode=tour`) and out the West door into IB-02. Every island, plate and ledge
+(`mode=upper`): the shrine, the three plates, the arch island, the ledge under
+the east gap and up to the east gallery; the pedestal, the small island, the
+shrine and the west wall's ledge; the nook; the pit ledge and the first plate;
+the shelf and the arch island; the pit; the lower West door. The doors
+(`mode=doors`) from IB-01 and both of IB-02's East doors. All completed. Camera:
+slide 0, wobble 0.
 
 ## Rough edges
 
-- Against the mockup: no lit doorways with torches, no purple crystal
-  clusters (only mushrooms), no arcades standing on the upper gallery; the
-  gallery is one straight floor where the mockup's steps up and down.
-- Only one of OC2's corners is used (the outer top corner); ceilings and the
-  slab's underside corners are plain band ends.
-- The pots are the guard's belongings from the old kit.
-- The last step back up (from the ledge through the break to the gallery)
-  needs a jump straight up and a push toward the lip at the top: a knowledge
-  move, not obvious.
+- The look is still the OC kit: a thin plum band of stone with black behind,
+  where the mockup has a thick rim of pale blue-grey blocks. SH1 and SH2 fix it.
+- The shrine is OC3's thin slab, not the mockup's carved platform (SH3). No
+  crystal blocks, flower bushes, lit doorways, torches or colonnades (SH5 to SH7).
+- The plates and ledges are OC4's ledges, reused.

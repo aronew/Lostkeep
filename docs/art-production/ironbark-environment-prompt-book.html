@@ -194,6 +194,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <a href="#terrain">Terrain on the black box</a>
       <a href="#keep">The Lost Keep masonry</a>
       <a href="#surface">Ironbark surface</a>
+      <a href="#shrinehall">The Shrine Hall (IB-05)</a>
       <a href="#oldcrypt">The Old Crypt (IB-02)</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
@@ -311,6 +312,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p>The surface rooms, after mockups R, S and T. SF1 to SF8 are the base kit (ground, walls, islands, stone, backdrops); SF9 to SF13 are the scenes' own set pieces: the great tree and its branch walks, the hill chapel and its stair terraces, the pool with its bridge and falls, the floating ruins, and the aqueduct backdrop. Mockups U, V and W are a greener, darker grove for a different area later.</p>
       <div class="cards" id="cards-surface"></div>
     </section>
+    <section id="shrinehall" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>The Shrine Hall (IB-05, the Old Crypt's first section)</h2>
+      <p>After mockup X, the creative lead's "exactly how I want that first section of the Old Crypt to look". The OC kit below was made after O, P and Q and does not match it: its stone is a thin, darker plum band where X has a thick rim of pale blue-grey blocks, and X's shrine island, crystals, doorways and small stone plates are missing. These cards replace it for this room. Make SH1 first; every later card attaches it. Sizes are the room's own (one tile = 16 px in game = 128 px at x8).</p>
+      <div class="cards" id="cards-shrinehall"></div>
+    </section>
     <section id="oldcrypt" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>The Old Crypt (IB-02)</h2>
@@ -420,7 +427,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
-    ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "Stand-ins", "need", "OC1 to OC8"],
+    ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
+    ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
@@ -457,6 +465,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["O", "O-crypt-ossuary.jpg", "Crypt ossuary", "IB-02, the Old Crypt: bone-filled galleries round a central well, skull niches, braziers, floating ruins. Attach to crypt and IB-02 cards."],
     ["P", "P-crypt-cistern.jpg", "Crypt cistern", "IB-02: the flooded lower gallery, waterfall into the cistern, pillar stumps in the water."],
     ["Q", "Q-crypt-shrine.jpg", "Crypt shrine", "IB-02: a hooded statue shrine on a floating ruin, ruined arcades, rubble and purple flora."],
+    ["X", "X-crypt-shrine-hall.jpg", "Shrine Hall (the Old Crypt's first section)", "The creative lead's target for IB-05: pale blue-grey block masonry with thick rims, the hooded statue's carved island, crystal blocks, lit doorways, small stone plates. Attach to every SH card."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
     ["S", "S-surface-aqueduct-garden.jpg", "Surface: aqueduct garden", "Terraced earth, waterfalls, a far aqueduct, ruined arches, fenced chapel. Style target for the SF cards."],
     ["T", "T-surface-chapel-gully.jpg", "Surface: chapel gully", "The chapel over a gully, floating islands, stone terraces, a sunken arch. Style target for the SF cards."],
@@ -509,6 +518,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   // Canvas sizes
   var WIDE = "3072×1024 px (art 384 × 128 px at x8)";
+  var SH_STYLE = "STYLE: match attached mockup X exactly in palette and finish: pale blue-grey block masonry (#8C93AA, #6E7590, #4E5470, dark mortar #2A2C40), chunky square blocks with a carved light cap row on walking edges, moss and ivy, pink-violet crystal blocks, purple flowers, amber flames only as flame. Crisp pixel art, four tones per material, thin dark outlines on silhouettes only. Do not copy X's layout or its character. Never plum or purple stone.";
+  var SH_SHADOW = "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 192 px of lit blocks with no gaps, then 96 px stepping down into void #0B0812 along the blocks' own outlines, never a straight line. Only walking lines are perfectly straight.";
   var BG = "3072×1440 px (art 768 × 360 px at x4)";
 
   var CARDS = [
@@ -997,6 +1008,106 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- A bier hoist: a timber frame with pulley, chain and a hanging platform, matching the guard's lift.",
         "- A cracked false-wall section, 512 × 640 px, of the OC2 masonry with a subtle draught-line crack and moss where air moves.",
         "- Two iron braziers and two tall candle stands (lit), a hooded stone statue 768 px tall, purple mushroom clusters (three sizes), hanging roots (three lengths)."
+      ] },
+    // ------------------------------------------------------------- shrine hall (IB-05)
+    { id: "SH1", group: "shrinehall", file: "shrinehall_masonry_bands", title: "Shrine Hall masonry: floor and ceiling rims",
+      about: "Every floor and ceiling edge in the hall. In X they are a thick rim of pale blue-grey blocks with a carved cap row on top and rubble hanging underneath: the room's whole look.",
+      canvas: WIDE, game: "2 bands, 384 wide, repeating left to right", attach: ["X", "B"],
+      text: [
+        "TASK: two long horizontal bands of the masonry in mockup X on one transparent canvas, each joining a copy of itself left to right.",
+        "",
+        SH_STYLE,
+        SH_SHADOW,
+        "",
+        "BAND 1, a floor, y = 0 to 448: a perfectly straight walking line at y = 64. On it a cap row of carved pale stones (the light grey row with a dark groove in X), small tufts of moss and a few tiny purple flowers above it. Below it, the rim: two to three rows of chunky square blocks, 64 to 96 px each, pale blue-grey #8C93AA to #5C6380 with dark mortar, lit, then the blocks break off downward into void by the shadow rule.",
+        "BAND 2, a ceiling, y = 576 to 1024, its ceiling line a straight guide at y = 960 (not drawn): the same chunky blocks seen from below, with loose blocks, rubble, vines and a few thin red roots hanging up to 64 px below the line; above, the blocks step up into void."
+      ] },
+    { id: "SH2", group: "shrinehall", file: "shrinehall_walls_corners", title: "Shrine Hall walls and corners",
+      about: "The sides of every mass and the corners where they meet floors and ceilings: X's stepped block edges.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "1 wall band, 4 corners, cut apart", attach: ["X", "Your approved SH1"],
+      text: [
+        "TASK: the ends of the SH1 masonry on one transparent canvas, pieces separated by transparent space, matching the approved SH1 exactly.",
+        "",
+        SH_STYLE,
+        SH_SHADOW,
+        "",
+        "1. A wall band on the left, top edge to bottom edge, joining a copy of itself top to bottom. Its face points RIGHT along an undrawn guide at x = 320: the same chunky blocks, some proud, some missing, a cap stone every few rows; inward, the shadow rule.",
+        "2. Four corners, each in its own 512 × 512 cell with the two edges meeting at the cell's centre: an outer floor corner (the SH1 floor turning down into a wall facing right, its cap row wrapping the corner), an outer ceiling corner, an inner floor corner (a wall rising on the left of a floor), an inner ceiling corner. Stepped like X's block edges, never a smooth curve."
+      ] },
+    { id: "SH3", group: "shrinehall", file: "shrinehall_shrine_island", title: "The shrine island (the hooded statue)",
+      about: "The landmark of the hall and of X: the big carved platform floating in the middle air, the hooded statue holding a light, crescent-moon arches behind it, braziers, crystal blocks.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "One island, its walking top 15 tiles wide", attach: ["X", "Your approved SH1"],
+      text: [
+        "TASK: the shrine island of mockup X as one piece on a transparent canvas, matching the approved SH1 stone.",
+        "",
+        SH_STYLE,
+        "",
+        "- Its walking top is a perfectly straight line, 1920 px long, at y = 640. On it: a stepped stone plinth in the middle with the hooded statue standing on it (about 640 px tall, hands holding a small pale orb), two smaller hooded statues in niches either side, two crescent-moon stone arches and broken columns rising behind, two lit braziers (flame only, no glow halo), clusters of pink-violet crystal blocks, purple flowers and ivy.",
+        "- Below the top: a thick carved slab with a round medallion carved in its front, then the underside tapering down in stepped blocks to a point, with vines and a few red roots hanging, 1.5 to 2 times as deep as the slab.",
+        "- Nothing stands beyond the ends of the walking line."
+      ] },
+    { id: "SH4", group: "shrinehall", file: "shrinehall_islands_plates", title: "Second island, small plates, ledges and the pedestal",
+      about: "Everything else she stands on in X: the arch island on the right, the three little stone plates between the islands, the ledges on the walls, and the stone ledge on a column.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Pieces cut apart; widths in tiles below", attach: ["X", "Your approved SH1", "Your approved SH3"],
+      text: [
+        "TASK: on a transparent canvas, separated by transparent space, matching the approved SH1 and SH3. Every walking top is a perfectly straight line.",
+        "",
+        SH_STYLE,
+        "",
+        "1. The arch island, top 768 px long (6 tiles): a ruined arch with a broken pillar and a small crystal cluster on top, a carved slab, an underside stepping down to a point.",
+        "2. Three small floating stone plates, each top 256 px long (2 tiles), each a slab two blocks thick with a short tapering underside and one hanging vine. Slightly different from each other.",
+        "3. Two wall ledges, top 512 px long (4 tiles), each jutting from a wall on its LEFT end on a corbel, with purple flowers on one and pots on the other.",
+        "4. One small ledge, top 256 px long (2 tiles), jutting from nothing: a broken-off block with roots.",
+        "5. The pedestal: a stone ledge, top 256 px long (2 tiles), standing on a carved column 512 px tall, the column's foot standing on a straight bottom line."
+      ] },
+    { id: "SH5", group: "shrinehall", file: "shrinehall_crystals_flora", title: "Crystal blocks, flowers and hanging growth",
+      about: "X's colour: the pink-violet crystal blocks, the purple flower bushes, the ivy and thin red roots.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "Pieces cut apart", attach: ["X", "Your approved SH1"],
+      text: [
+        "TASK: dressing on a transparent canvas, pieces separated by transparent space, each standing on a flat bottom line where it stands.",
+        "",
+        SH_STYLE,
+        "",
+        "- Pink-violet crystal blocks as in X (#B07AA8 to #6A4A78, faceted squares stacked like masonry): three heaps, small, medium and large.",
+        "- Purple flower bushes (#9B6AD0 flowers on dark green leaves): three sizes.",
+        "- Hanging ivy, three lengths (128 to 512 px), and thin red roots, three lengths. Roots are dull brick red, never the Blight's crimson.",
+        "- Two small clusters of pale grass and white flowers for floor edges."
+      ] },
+    { id: "SH6", group: "shrinehall", file: "shrinehall_doors_torches", title: "Lit doorways and wall torches",
+      about: "X's four doorways: arched openings in the masonry, a cold blue light beyond, a torch beside each. They mark the hall's exits.",
+      canvas: "2048×2048 px (art 256 × 256 px at x8)", game: "Pieces cut apart", attach: ["X", "Your approved SH1"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the approved SH1 stone.",
+        "",
+        SH_STYLE,
+        "",
+        "1. An arched doorway set into a wall, 640 px wide and 768 px tall, standing on a straight bottom line: a carved stone arch, the opening filled with a deep blue misty corridor seen beyond (#2A3A6A to #4A6AA8), no door leaf.",
+        "2. A second doorway the same size, its arch partly fallen, ivy over it.",
+        "3. A wall torch on an iron sconce, lit (flame only, no glow halo), 128 × 256 px.",
+        "4. A lantern on a timber bracket, lit, 256 × 384 px, as in X's lower doorways."
+      ] },
+    { id: "SH7", group: "shrinehall", file: "shrinehall_colonnades", title: "Colonnades and ruins that stand on the floors",
+      about: "What stands along X's upper galleries and lower floor: arcades of columns, single arches, broken pillars, pots and urns.",
+      canvas: WIDE, game: "Pieces cut apart, each standing on a floor", attach: ["X", "Your approved SH1"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, each standing on a perfectly straight bottom line.",
+        "",
+        SH_STYLE,
+        "",
+        "- An arcade of three round arches on four columns, 1024 px wide, 640 px tall.",
+        "- A single arch with a column either side, 512 px wide.",
+        "- Three broken pillars of different heights (256 to 640 px).",
+        "- A stacked set of clay pots and an urn, and a small wooden chest, as in X's galleries."
+      ] },
+    { id: "SH8", group: "shrinehall", file: "shrinehall_backdrop", title: "Shrine Hall backdrops (optional retake of OC5)", scale: 4,
+      about: "Behind the hall in X: misty blue ruins, far hooded statues, stairs and arcades in silhouette. OC5 is close; retake only if it reads too purple in the game.",
+      canvas: BG, game: "768 × 360, repeating left to right", attach: ["X", "B"],
+      background: "Opaque: the backdrop fills the whole canvas.",
+      text: [
+        "TASK: a distant parallax backdrop for the hall, opaque edge to edge, its left and right edges joining.",
+        "",
+        "- Tier upon tier of ruined arcades, stairs and tall pillars, two far hooded statues in niches, all in soft blue mist #2A3150 to #4A5478, very low contrast, flat values, no ledge that could read as walkable.",
+        "- A paler haze in the middle, darker toward the top and bottom. Two or three tiny far-off flames #F2B04A, no other warm colour."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
