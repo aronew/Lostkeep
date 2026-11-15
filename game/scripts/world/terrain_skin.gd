@@ -16,6 +16,9 @@ extends Node2D
 ## the same position as the TileMapLayers.
 
 const TILE := 16
+## A painted inner corner is placed only where its wall runs at least this many
+## tiles from the notch: on a lower step its wall would stand up into the air.
+const INNER_WALL := 3
 const MAX_DEPTH := 5  # tiles looked through when measuring how thick a mass is
 const FOOT := 22.0   # px a wall's face runs on below a floor it stands on (the soil's depth)
 const SIDES := [Vector2i.UP, Vector2i.DOWN, Vector2i.LEFT, Vector2i.RIGHT]
@@ -274,9 +277,11 @@ func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector
 		return
 	for side in [Vector2i.RIGHT, Vector2i.LEFT]:
 		if solid.call(c + side):
-			if m.inner_under and not solid.call(c + Vector2i.DOWN) and solid.call(c + side + Vector2i.DOWN):
+			if m.inner_under and not solid.call(c + Vector2i.DOWN) and solid.call(c + side + Vector2i.DOWN) \
+					and _run(cells, c + side + Vector2i.DOWN, Vector2i.DOWN) >= INNER_WALL:
 				_inner(canvas, cells, c, side, m, m.inner_under, m.inner_under_anchor, false)
-			if m.inner_top and not solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP):
+			if m.inner_top and not solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP) \
+					and _run(cells, c + side + Vector2i.UP, Vector2i.UP) >= INNER_WALL:
 				_inner(canvas, cells, c, side, m, m.inner_top, m.inner_top_anchor, true)
 			# A ceiling meeting a wall that runs down to the floor: the arcade ends
 			# on a pier set against that wall.
@@ -288,6 +293,34 @@ func _draw_corners(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector
 			_corner(canvas, cells, solid, c, side, m.corner_top, m.corner_top_anchor, true)
 		if m.corner_under and not solid.call(c + Vector2i.DOWN) and _reaches_floor(solid, c, m.corner_under_reach):
 			_corner(canvas, cells, solid, c, side, m.corner_under, m.corner_under_anchor, false)
+
+
+## If a floor one or two tiles lower begins within 3 tiles of this walking
+## cell, across solid ground at this level, how many tiles lower it is; else 0.
+func _step_drop(solid: Callable, c: Vector2i) -> int:
+	for side in [Vector2i.LEFT, Vector2i.RIGHT]:
+		for d in range(1, 4):
+			var n: Vector2i = c + side * d
+			if solid.call(n):
+				if solid.call(n + Vector2i.UP):
+					break  # a wall rises: no step this way
+				continue
+			for k in [1, 2]:
+				if solid.call(n + Vector2i.DOWN * k):
+					return k
+			break
+	return 0
+
+
+## How many tiles long the face through cell c is, on its open `side`.
+func _face_len(solid: Callable, c: Vector2i, side: Vector2i) -> int:
+	var n := 1
+	for dir in [Vector2i.UP, Vector2i.DOWN]:
+		var p: Vector2i = c + dir
+		while n < 8 and solid.call(p) and not solid.call(p + side):
+			n += 1
+			p += dir
+	return n
 
 
 ## A painted inner corner at cell c's edge toward `side`, where c's ceiling
@@ -361,6 +394,10 @@ func _corner(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i, si
 		# Its dark inside would show against the bands' lit bricks: only the
 		# corner's face stones and the brick beside them.
 		inward = min(inward, float(m.thin_wall_depth + 6))
+	if m and m.thin_wall_depth > 0 and not inner:
+		# Only the corner's turn of quoins: its inside fades faster than the bands
+		# beside it, so the bands' lit bricks show there instead.
+		inward = min(inward, float(m.thin_wall_depth + 6))
 	var sx := anchor.x - inward
 	var sw := w - sx
 	var src: Rect2
@@ -402,15 +439,22 @@ func _draw_walls(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i
 		# A thin slab (its floor and ceiling bands meet inside it): the wall's
 		# inward fade would paint over their lit bricks, so only its face stones show.
 		var tall := _run(cells, c, Vector2i.UP) + _run(cells, c, Vector2i.DOWN) - 1
-		if m.thin_wall_depth > 0 and tall < MAX_DEPTH:
+		# Within the floor's or ceiling's band (3 tiles of its line), the band's lit
+		# bricks win over the wall's inward fade, which is darker that close to
+		# the face, so the light runs along both edges and the dark gathers inside.
+		var near_band := _run(cells, c, Vector2i.UP) <= 3 or _run(cells, c, Vector2i.DOWN) <= 3
+		if m.thin_wall_depth > 0 and (near_band or tall < MAX_DEPTH or _face_len(solid, c, side) < INNER_WALL):
+			# A thin slab, or a short face (a step): the inward fade would show as a
+			# dark patch behind it, so only the face stones.
 			depth = min(depth, float(m.thin_wall_depth))
 		var f := foot if solid.call(c + side + Vector2i.DOWN) else 0.0
-		if m.inner_top:
+		if m.inner_top and f > 0.0 and _run(cells, c, Vector2i.UP) >= INNER_WALL:
 			f = 0.0  # the inner floor corner paints the wall's foot
 		# A ceiling over the open side meets this wall: the face runs on up past the
 		# ceiling line as high as the ceiling's band, so the band ends against it.
 		var head := 0.0
-		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP) and not m.inner_under:
+		if solid.call(c + Vector2i.UP) and solid.call(c + side + Vector2i.UP) \
+				and not (m.inner_under and _run(cells, c, Vector2i.DOWN) >= INNER_WALL):
 			head = float(m.under_line)
 		# Left-facing faces read the band half a repeat further on, so the two faces
 		# of a pier never mirror each other.
@@ -444,6 +488,15 @@ func _draw_top(canvas: Node2D, cells: Dictionary, solid: Callable, c: Vector2i) 
 	if thick < MAX_DEPTH * TILE and not solid.call(bottom):  # a thin mass: leave room for its underside
 		below = min(below, thick - min(m.under_line, thick * 0.5))
 	var sx := float(posmod(c.x * TILE, m.top_band.get_width()))
+	# Beside a short step down (a material with thin_wall_depth): the lower floor's
+	# band runs on under the first tiles of this one, so both fade into the dark
+	# at the same depth and no dark notch opens under the step.
+	if m.thin_wall_depth > 0:
+		var drop := _step_drop(solid, c)
+		if drop > 0:
+			var lb: float = m.top_band.get_height() - m.top_line
+			canvas.draw_texture_rect_region(m.top_band,
+				Rect2(p.x, p.y + drop * TILE, TILE, lb), Rect2(sx, m.top_line, TILE, lb))
 	canvas.draw_texture_rect_region(m.top_band,
 		Rect2(p.x, p.y - m.top_line, TILE, m.top_line + below), Rect2(sx, 0, TILE, m.top_line + below))
 

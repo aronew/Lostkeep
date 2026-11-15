@@ -518,7 +518,19 @@ She steps forward with every hit.
   painted with its wall on the left of the notch and mirrored for the other
   side. With them, walls stop at the line instead of running past it. CY's come
   from CY2b's and CY2's right cells, cut across the whole stone side so their
-  own fades reach the dark (anchors (59, 48) and (64, 48)).
+  own fades reach the dark (anchors (59, 48) and (64, 48)). They are placed
+  only where the wall runs at least 3 tiles (`INNER_WALL`): on a one-tile step
+  the inner floor corner's wall stood up into the air (the creative lead: "this
+  looks a bit odd"), so steps keep the outer corner, wall foot and head.
+  **Light along the edges, dark inside** (the creative lead circled a step and
+  a pillar that "looks weird"): CY2's corners and wall fade into the dark
+  faster than CY1's bands, and walls are drawn over floors, so with a
+  `thin_wall_depth` material (CY) the skin draws only the face stones (a) for
+  outer corners, always (their turn of quoins); (b) for walls within 3 tiles of
+  a floor or ceiling line; (c) for short faces (steps under 3 tiles). The
+  bands' lit bricks show there, and the wall's fade only below them. Beside a
+  step down of one or two tiles, the lower floor's band runs on under the first
+  3 tiles of the upper one (`_step_drop`), so both fade out at one depth.
   **Next for the crypts' look:** foreground
   depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
   rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
