@@ -640,12 +640,13 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Outside the mass (past the open edge) is fully transparent.",
         "",
         "1. A wall face band on the left, from the top edge to the bottom edge, joining a copy of itself top to bottom. The face points RIGHT, its wall line at x = 320: packed earth #3E2E4A and #241A2E with embedded boulders and cut roots #3A2420 at the face, then the shadow inward (to the left), void from x = 128 leftward. No ferns or mushrooms growing out of it.",
-        "2. Four corners, each in its own 512 × 512 cell, separated by transparent space. In each, the two edges meet at the cell's centre (256, 256) and the shadow follows both edges, so the lit material is an L along them with the void inside the L:",
-        "   a. Outer top corner: a walkable top (IB2's grass and moss, its walking line at y = 256) turns down into a wall facing right at x = 256. The corner is worn round; moss rolls over it and hangs down the wall.",
-        "   b. Outer ceiling corner: a ceiling (IB2's underside, its line at y = 256) turns up into a wall facing right at x = 256, with roots hanging from the rounded corner.",
-        "   c. Inner floor corner: a walkable floor (line at y = 256, running right) meets a wall rising on its left (face at x = 256, facing right).",
-        "   d. Inner ceiling corner: a ceiling (line at y = 256, running right) meets a wall that drops below it on its left (face at x = 256, facing right).",
-        "3. A pillar top, in a 512 × 512 cell: the top of a column of earth 384 px wide (x 64 to 448) with a walkable top at y = 192 and walls on both sides. Grass rolls over both rounded edges; each face goes into shadow toward the middle, so the column's core is plain void from about y = 400 down."
+        "2. Four corners, each in its own 512 × 512 cell with the two edges meeting exactly at the cell's centre (256, 256). The stone is a solid mass that fills its part of the cell out to the cell's edges, not a thin L-shaped strip of brick:",
+        "   a. Outer floor corner: the mass fills the lower-left quarter; CY1's floor and cap row run along its top and turn down into a wall facing right, the cap row wrapping the corner as quoins.",
+        "   b. Outer ceiling corner: the mass fills the upper-left quarter; CY1's ceiling runs along its underside and turns up into a wall facing right.",
+        "   c. Inner floor corner: the mass fills everything except the upper-right quarter (open air); the floor runs along the bottom-right, the wall rises on the left, the cap row runs into the wall.",
+        "   d. Inner ceiling corner: the mass fills everything except the lower-right quarter; the ceiling runs along the top-right, the wall hangs on the left.",
+        "   Each corner's edges continue CY1's and the wall band's bricks so they join with no seam.",
+        "3. EVERY CORNER FADES, exactly as the wall and CY1 do (the first draft's corners were lit brick right through, and that is wrong): only about 48 px of lit brick follows each open edge. Away from the open edges, into the mass, each brick steps darker (dusky plum #4A3A5E, deep plum #2E2438, near-black plum #1A1424) to void #0B0812 about 200 px in. On an outer corner the dark gathers toward the far inside of the mass (the cell's lower-left or upper-left corner), meeting the two edges' fades in a ragged diagonal. On an inner corner the lit stone runs along both faces of the notch and the whole bulk of the mass behind them is dark plum, then void. The fade follows the bricks, with loose lit bricks inside the dark. NOT: an L of evenly lit brick, a lit band ending on a straight line, transparent space where the mass should be dark."
       ] },
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
