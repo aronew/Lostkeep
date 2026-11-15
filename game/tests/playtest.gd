@@ -700,10 +700,12 @@ func _doors_ib06() -> void:
 	var lines := []
 	await _swap_room(ROOMS["ib05"])
 	await _frames(2)
-	_place(50.0, 26, 1)
+	_place(36.0, 26, 1)
 	await _frames(10)
 	_start_tour()
-	await _hold_until(["move_right"], func(): return room.name == "IronbarkUndercroft", 300)
+	await _hold_until(["move_right"], func(): return room.name == "IronbarkUndercroft", 600)
+	if room.name != "IronbarkUndercroft":
+		lines.append("stuck in IB-05 at x %.0f, y %.0f" % [kleo.global_position.x, kleo.global_position.y])
 	await _wait(40)
 	lines.append("IB-05's lower East door leads to: %s; she stands at x %.0f, y %.0f, on the floor: %s" %
 		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])
