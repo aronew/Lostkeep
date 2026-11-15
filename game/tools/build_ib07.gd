@@ -48,6 +48,7 @@ const MASSES := [
 	[34, 9, 5, 27, 1],   # the tall wall on the right
 	[0, 28, 10, 4, 1],   # the arched-door room's floor (row 28)
 	[4, 32, 2, 24, 1],   # the wall under it
+	[1, 32, 3, 20, 1],   # and the rock behind it, down to the secret room at its foot
 	[14, 28, 10, 13, 1], # the zig-zag mass: the landing on top (row 28)
 	[12, 36, 2, 2, 1],   # a ledge off its west side (row 36)
 	[17, 41, 5, 11, 1],  # the mass going on down
@@ -84,6 +85,7 @@ func _initialize() -> void:
 	_grade_stone()
 	_build_plate(t["behind"])
 	_build_lights(t["behind"])
+	_build_secrets()
 	_crypt_foreground()
 	_edge_shades()
 	# The passage east ends at the Undercroft's plated door (Ironbark Ward).
@@ -109,3 +111,11 @@ func _build_lights(behind: Node) -> void:
 	for p in [Vector2(15, 10), Vector2(28, 8), Vector2(4, 25), Vector2(18, 25), Vector2(28, 38), Vector2(35, 54),
 			Vector2(9, 44), Vector2(18, 58), Vector2(31, 20)]:
 		_light(behind, Vector2(p.x * TILE, p.y * TILE), LAMP, 0.9, 1.4, "BlockoutLight")
+
+
+## A secret room at the foot of the west wall: from the bottom floor the wall
+## seems to run on down to it; its foot is a false wall. Tell: motes.
+func _build_secrets() -> void:
+	_false_wall("WestFootSecret", Rect2i(1, 52, 5, 8), 6, Vector2i(56, 4), 1, "ib07_foot_secret")
+	_draught("WestFootDraught", Rect2(6.2 * TILE, 56.5 * TILE, 2.0 * TILE, 3.0 * TILE), Vector2(-1, 0))
+	_resin_cache(_root, 1.4 * TILE, 3.6 * TILE, 60.0 * TILE, 5, "ib07_foot_resin")

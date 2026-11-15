@@ -262,10 +262,24 @@ She steps forward with every hit.
 - **What a room remembers** goes in `Game.flags` (a freed lift, a woken shrine,
   a found secret): give the machine a `flag` name and it restores itself when
   the room is entered again. F5 clears them. There is no save file yet.
-- **Secrets:** a `SecretCover` is a false wall: black fill and the wall's own
-  band drawn over a hidden space, which fades for good when Kleo steps inside.
-  Always give it a tell (in IB-02: masonry in a raw cave, moss, a draught of
-  motes drifting into the stone).
+- **Secrets:** a false wall (`_false_wall(name, hide, face_x, rows, faces, flag)`
+  in `room_builder.gd`, script `secret_cover.gd`) has no collision: Kleo walks
+  straight through, and once she is inside it fades for good (`flag`). It
+  carries a copy of the rock layer with the hidden room filled in and a second
+  terrain skin that paints it, clipped to the wall round the room, so from
+  outside the room's own stone, bands and dark run on unbroken (the creative
+  lead: "something that looks like a wall but has no collision ... a fake black
+  silhouette wall too"). Always give it a tell (`_draught`: motes drifting into
+  the stone; moss) and a reward. Secrets so far: IB-02's vault, IB-05 behind
+  the hall's west wall (off its ledge), IB-06 behind L2's and L4's west walls,
+  IB-07 at the foot of the west wall. `mode=secrets` walks into every one.
+- **Resin, the currency** (a stand-in name and sprite, `tools/make_resin.py`;
+  the creative lead asked for currency to reward curiosity): beads that hang
+  and bob, drift to Kleo when she is near, and add to `Game.currency`, shown by
+  the counter at the top left (it appears with the first bead). Placed with
+  `_pickup(parent, pos, value, flag)` or `_resin_cache(parent, x0, x1, floor_y,
+  count, flag)`; each bead's flag keeps it taken. F5 clears the count with the
+  flags. To be spent at the Refuge (not built). 24 beads so far, all in secrets.
 - **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so

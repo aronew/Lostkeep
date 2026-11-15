@@ -232,3 +232,18 @@ descending means going deeper into the truth:
       inside Ironbark (the region shows 7 locks for later abilities).
 - [ ] No route reaches any key without passing its lock first.
 - [ ] Every hard gate holds against the generous player model.
+
+## Secrets (false walls) and Resin
+
+False walls with no collision, painted as the room's own unbroken wall, each
+with a tell (motes drifting into the stone) and a cache of Resin (the
+currency, a stand-in name). Base kit: reward curiosity, never a lock.
+
+| Room | Where | Tell | Reward |
+|---|---|---|---|
+| IB-02 | The vault behind the root cave's west wall | Masonry in a raw cave, moss, a draught | 6 Resin; the empty Prism socket (S1b) |
+| IB-05 | Behind the hall's west wall, off the west wall's ledge | Motes drifting into the wall | 3 Resin |
+| IB-06 | Behind L2's west wall | Motes | 4 Resin |
+| IB-06 | Behind L4's west wall | Motes | 6 Resin |
+| IB-07 | At the foot of the west wall (behind the plate: needs the Ward) | Motes | 5 Resin |
+

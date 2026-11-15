@@ -71,6 +71,10 @@ func _ready() -> void:
 				await _doors_ib05()
 		get_tree().quit()
 		return
+	if mode == "secrets":
+		await _secrets()
+		get_tree().quit()
+		return
 	if room_id == "ib07":
 		match mode:
 			"shots":
@@ -807,6 +811,43 @@ func _upper_ib07() -> void:
 	lines.append("off the walkway's east end, down beside the tall wall: on row %d at x %.0f" % [int(roundf(kleo.global_position.y / TILE)), kleo.global_position.x])
 	_release_all()
 	_report(lines, "upper")
+
+
+# --- Secrets ------------------------------------------------------------------------------------
+
+## Every false wall: walk into it, see it open, take the Resin behind it.
+## [room, start x, floor row, face, walk until x is below, the cover's name]
+const SECRETS := [
+	["ib05", 5.0, 16, -1, 1.2, "WestWallSecret"],
+	["ib06", 10.0, 25, -1, 2.6, "L2Secret"],
+	["ib06", 9.0, 53, -1, 1.6, "L4Secret"],
+	["ib07", 8.0, 60, -1, 1.4, "WestFootSecret"],
+	["ib02", 13.0, 24, -1, 4.2, "VaultCover"],
+]
+
+
+func _secrets() -> void:
+	var lines := []
+	_start_tour()
+	for sc in SECRETS:
+		await _swap_room(ROOMS[sc[0]])
+		await _frames(2)
+		_place(sc[1], sc[2], sc[3])
+		await _wait(10)
+		var before := Game.currency
+		var cover := room.get_node_or_null(String(sc[5]))
+		_place(sc[1] + 0.5, sc[2], 1)
+		await _wait(30)
+		await _capture("%s_%s_before" % [sc[0], sc[5]])
+		_place(sc[1], sc[2], sc[3])
+		await _wait(10)
+		await _hold_until(["move_left"], func(): return kleo.global_position.x < sc[4] * TILE, 300)
+		await _hold_until(["move_right"], func(): return kleo.global_position.x > (sc[4] + 1.6) * TILE, 120)
+		await _wait(40)
+		await _capture("%s_%s" % [sc[0], sc[5]])
+		lines.append("%s %s: the wall opened: %s; Resin %d -> %d" % [sc[0], sc[5], cover != null and cover.get("found"), before, Game.currency])
+	_release_all()
+	_report(lines, "secrets")
 
 
 ## IB-01's hall door into IB-05 and back; IB-02's two East doors into IB-05.

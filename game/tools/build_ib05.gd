@@ -40,6 +40,7 @@ const SPACES := [
 	[54, 22, 4, 4],     # the lower East door, under the shelf
 	[15, 26, 10, 1],    # the dip in the lower floor (row 27)
 	[29, 26, 4, 5],     # the pit
+	[0, 13, 3, 3],      # a secret room behind the hall's west wall, off the west wall's ledge
 	[29, 31, 4, 3],     # under the pit's cracked plate (Ironbark Ward, W1b): the shaft down to the Undercroft
 ]
 ## Islands, plates and ledges: one tile of collision under each painting's
@@ -110,6 +111,7 @@ func _initialize() -> void:
 	_dress(behind)
 	_build_air(t["front"])
 	_build_pit_plate(behind)
+	_build_secrets()
 	_edge_shades()
 	_door("East", Rect2i(50, 2, 8, 5), 1, IB01, "WestLower")
 	_door("West", Rect2i(0, 3, 8, 5), -1, IB02, "East")
@@ -281,3 +283,11 @@ func _build_pit_plate(behind: Node) -> void:
 	draught.scale_amount_max = 0.5
 	draught.material = _add_mat
 	draught.z_index = 21
+
+
+## A secret room behind the hall's west wall, off the west wall's ledge: the
+## wall over it is a false wall. Tell: motes drifting into the wall.
+func _build_secrets() -> void:
+	_false_wall("WestWallSecret", Rect2i(0, 13, 3, 3), 3, Vector2i(13, 3), 1, "ib05_west_secret")
+	_draught("WestWallDraught", Rect2(3.2 * TILE, 13.3 * TILE, 2.0 * TILE, 2.4 * TILE), Vector2(-1, 0))
+	_resin_cache(_root, 0.6 * TILE, 2.4 * TILE, 16.0 * TILE, 3, "ib05_west_resin")

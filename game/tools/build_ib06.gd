@@ -43,6 +43,8 @@ const SPACES := [
 	[13, 65, 11, 3],    # the basin (floor row 68)
 	[13, 68, 3, 3],     # the sump in its floor: dark water going on down (Deep-Glow Breath)
 	[38, 18, 4, 47],    # the lift's shaft, R5 up to R1
+	[2, 21, 5, 4],      # a secret room behind L2's west wall (floor row 25)
+	[1, 48, 5, 5],      # a secret room behind L4's west wall (floor row 53)
 ]
 ## Each room's floor runs out into the void as a lip, so the rooms across from
 ## each other are a short jump apart, a little lower each time. Every gap she
@@ -81,6 +83,7 @@ func _initialize() -> void:
 	_grade_stone()
 	_build_machines()
 	_build_lights(t["behind"])
+	_build_secrets()
 	_crypt_foreground()
 	_edge_shades()
 	_door("West", Rect2i(0, 12, 8, 4), -1, IB05, "EastLower")
@@ -116,3 +119,14 @@ func _build_lights(behind: Node) -> void:
 	for p in [Vector2(6, 12), Vector2(30, 12), Vector2(10, 22), Vector2(30, 24), Vector2(6, 34), Vector2(30, 35),
 			Vector2(9, 49), Vector2(30, 47), Vector2(7, 61), Vector2(32, 61), Vector2(17, 60), Vector2(17, 30)]:
 		_light(behind, Vector2(p.x * TILE, p.y * TILE), LAMP, 0.9, 1.4, "BlockoutLight")
+
+
+## Two secret rooms, each behind a false wall at the back of a lantern room on
+## the west side. Tells: motes drifting into the wall.
+func _build_secrets() -> void:
+	_false_wall("L2Secret", Rect2i(2, 21, 5, 4), 7, Vector2i(21, 4), 1, "ib06_l2_secret")
+	_draught("L2Draught", Rect2(7.2 * TILE, 21.5 * TILE, 2.0 * TILE, 3.0 * TILE), Vector2(-1, 0))
+	_resin_cache(_root, 2.6 * TILE, 6.4 * TILE, 25.0 * TILE, 4, "ib06_l2_resin")
+	_false_wall("L4Secret", Rect2i(1, 48, 5, 5), 6, Vector2i(48, 5), 1, "ib06_l4_secret")
+	_draught("L4Draught", Rect2(6.2 * TILE, 49.0 * TILE, 2.0 * TILE, 3.5 * TILE), Vector2(-1, 0))
+	_resin_cache(_root, 1.6 * TILE, 5.4 * TILE, 53.0 * TILE, 6, "ib06_l4_resin")
