@@ -632,6 +632,15 @@ She steps forward with every hit.
   lips and walkway the creative lead called weird). Their crimson roots are the
   Blight's colour, so the cards ask for dull roots. Their floating slabs are
   welcome: they sit in the mix with the large masses and islands.
+- **Mood test** (the creative lead's moody fog reference,
+  `docs/mockups/mood/moody_fog_reference.webp`: "maybe an idea for another
+  place"): `tools/mood_test.gd` loads a built room and saves a copy sunk into a
+  teal murk (`MURK` CanvasModulate, a haze over the backdrops, ground fog along
+  every floor run behind and in front of Kleo, a low bank in the drops, a fog
+  bank across the bottom of the view, warm lights up and cold ones down, a
+  deeper vignette). `scenes/tests/mood_ib05.tscn` is IB-05 in it; pictures in
+  `docs/rooms/mood_test/` (taken with `tests/mood_shot.gd`). Not applied to any
+  room yet. The fog shader's `side_fade` softens a band's ends.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
