@@ -36,16 +36,13 @@ const MASSES := [
 	[21, 17, 3, 1, 0],     # the stepping island (bush chunk)
 	[27, 16, 19, 1, 0],    # the great island, over the terraces (the tree)
 	[50, 20, 16, 1, 0],    # the root-held island, over the road
-	# The high path over the pool: each island at its own height, up and down.
-	[70, 18, 9, 1, 0],     # the ruin island (two up)
-	[83, 21, 11, 1, 0],    # the crystal-shrine island (three down)
-	[97, 18, 3, 1, 0],     # a bush chunk (three up)
-	[104, 21, 9, 1, 0],    # a second ruin island (three down)
-	[115, 25, 5, 1, 0],    # the headstone chunk: the last step, right over the far bank
-	                       # (a full jump from the ruin overshoots it onto the bank, not into the water)
+	# The high path over the pool: each island at its own height, down, up, down.
+	[70, 22, 9, 1, 0],     # the ruin island (two down)
+	[82, 19, 27, 1, 0],    # the great graveyard island (three up): the creative lead's favourite
+	[114, 23, 5, 1, 0],    # the headstone chunk (four down), then the far bank
 	[122, 14, 3, 1, 0],    # the far chunk (Wing-Cloak)
 ]
-const SKIP := [[21, 17, 3, 1], [27, 16, 19, 1], [50, 20, 16, 1], [70, 18, 9, 1], [83, 21, 11, 1], [97, 18, 3, 1], [104, 21, 9, 1], [115, 25, 5, 1], [122, 14, 3, 1]]
+const SKIP := [[21, 17, 3, 1], [27, 16, 19, 1], [50, 20, 16, 1], [70, 22, 9, 1], [82, 19, 27, 1], [114, 23, 5, 1], [122, 14, 3, 1]]
 const SPAWN := Vector2(4 * 16, 16 * 16)
 
 const GROUND := 592.0
@@ -65,11 +62,9 @@ func _initialize() -> void:
 	_island(placed, "chunk_bush", 21, 17, 3)
 	_island(placed, "tree", 27, 16, 19)
 	_island(placed, "root_held", 50, 20, 16)
-	_island(placed, "ruin", 70, 18, 9)
-	_island(placed, "shrine", 83, 21, 11)
-	_island(placed, "chunk_bush", 97, 18, 3)
-	_island(placed, "ruin", 104, 21, 9).flip_h = true
-	_island(placed, "chunk_headstone", 115, 25, 5)
+	_island(placed, "ruin", 70, 22, 9)
+	_island(placed, "graveyard", 82, 19, 27).flip_h = true
+	_island(placed, "chunk_headstone", 114, 23, 5)
 	_island(placed, "chunk_bush", 122, 14, 3)
 	_hide_island_tiles()
 	# The flights down the hill.
@@ -89,7 +84,7 @@ func _initialize() -> void:
 ## The long pool across the road: more than a screen of water, and two ways
 ## over it (the creative lead's call, after their mockup). Low: the old wall's
 ## broken piers, six small islands to hop. High: the big floating islands above
-## (ruin, crystal shrine, bush chunk, ruin, headstone chunk), each at its own
+## (the ruin, the great graveyard island, the headstone chunk), each at its own
 ## height so the way across goes up and down, reached from the hill's island line. The piers are spaced for her real jump: about 55 px of water,
 ## then 48 px to land on; their tops stand a tile or two above the road so the
 ## stone shows over the water. She can't swim yet; a miss returns her to where

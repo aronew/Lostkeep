@@ -394,6 +394,9 @@ She steps forward with every hit.
     eight-step painting over a slope, three tiles up in 68 px. `_log` is a
     one-way timber. The checker can't see non-tile collision: list logs and
     island tiles under `seals`, and each flight as a `lift` pair.
+  - **Floating islands on a path sit at different heights** (the creative
+    lead: "so it doesn't feel so straight"), and they like the big graveyard
+    island: vary the levels around the big pieces, don't swap them for small ones.
   - **Small islands over water are allowed where the jump is the lesson**
     (the creative lead asked for them in IB-04's pool). Space them for her real
     jump, about 95 px long from a standing run-up: roughly 56 px of gap and

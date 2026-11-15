@@ -485,7 +485,7 @@ const SHOTS_IB04 := [
 	["03_great_island", 36.0, 16, 1],
 	["04_second_island", 58.0, 20, 1],
 	["05_lower_terraces", 38.0, 29, 1],
-	["06_high_path", 90.0, 21, 1],
+	["06_high_path", 92.0, 19, 1],
 	["07_pool_low_path", 96.0, 36, 1],
 	["08_road_end", 123.0, 37, 1],
 ]
@@ -591,19 +591,16 @@ func _upper_ib04() -> void:
 	await _hold_until(["move_right"], func(): return kleo.global_position.x > 45.4 * TILE, 400)
 	await _hold_until(["move_right", "jump"], func(): return _floor_at(20), 200)
 	lines.append("great island down to the second island (4 across, 4 down): %s (x %.0f)" % [_floor_at(20), kleo.global_position.x])
-	# The high path over the pool: up, down, up, down, then the last step (a
-	# full jump may carry her past the last chunk onto the bank: both are fine).
+	# The high path over the pool: down to the ruin, up to the great island, down
+	# to the headstone chunk, then the far bank.
 	var steps := []
-	for hop in [[65.4, 70.0, 18], [78.4, 83.0, 21], [93.4, 97.0, 18], [99.4, 104.0, 21]]:
-		await _hold_until(["move_right"], func(): return kleo.global_position.x > hop[0] * TILE, 400)
+	for hop in [[65.4, 70.0, 22], [78.4, 82.0, 19], [108.4, 114.0, 23]]:
+		await _hold_until(["move_right"], func(): return kleo.global_position.x > hop[0] * TILE, 700)
 		await _hold_until(["move_right", "jump"], func(): return _floor_at(hop[2]) and kleo.global_position.x > hop[1] * TILE, 300)
 		steps.append(_floor_at(hop[2]) and kleo.global_position.x > hop[1] * TILE)
 		await _wait(8)
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 112.4 * TILE, 400)
-	await _hold_until(["move_right", "jump"], func(): return kleo.is_on_floor() and kleo.global_position.x > 115 * TILE, 300)
-	var last := "the headstone chunk" if _floor_at(25) else ("the far bank" if _floor_at(37) else "nowhere (y %.0f)" % kleo.global_position.y)
 	await _hold_until(["move_right"], func(): return _floor_at(37) and kleo.global_position.x > 1920, 400)
-	lines.append("the high path over the pool (ruin +2, shrine -3, bush chunk +3, ruin -3): %s; the last jump landed on %s; on the far bank: %s (x %.0f)" % [str(steps), last, _floor_at(37), kleo.global_position.x])
+	lines.append("the high path over the pool (ruin -2, great island +3, headstone chunk -4): %s; on the far bank: %s (x %.0f)" % [str(steps), _floor_at(37), kleo.global_position.x])
 	await _wait(30)
 	_place(58.0, 37, -1)
 	await _wait(10)
