@@ -204,9 +204,12 @@ She steps forward with every hit.
 ### Design rules (from `design/pillars.md`)
 - **Exploration and curiosity come first.** A Metroidvania is not a race to
   the next ability.
-- **Platforms are rare, strategic and subtle.** Build with large masses of
-  floor, storeys of floor and natural floating islands, never rows of small
-  ledges.
+- **Platforms are rare, strategic and subtle.** Build with a mixture of
+  large masses of floor (storeys of floor), large floating islands and
+  platforms. What is ruled out is filling a room with dozens of platforms to
+  cover space (the creative lead: "don't put 50 platforms in a room to get to
+  fill in space"), not platforms themselves; the character mockups
+  (`docs/mockups/character/`) show the mix.
 - **Progression keys are permanent verbs.** Show each lock at least three
   times, on at least two routes, before its key. Every region except the last
   plants locks for at least two later abilities.
@@ -627,8 +630,8 @@ She steps forward with every hit.
   are rooms inside the room, and the room sits in a rounded cobble cave wound
   with roots. Book 1's CH1 to CH8 ask for those pieces (CH1 replaces the plates,
   lips and walkway the creative lead called weird). Their crimson roots are the
-  Blight's colour and their rows of small floating slabs break the platform
-  rule: the cards ask for dull roots and the few slabs only.
+  Blight's colour, so the cards ask for dull roots. Their floating slabs are
+  welcome: they sit in the mix with the large masses and islands.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
