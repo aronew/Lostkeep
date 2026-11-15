@@ -29,7 +29,7 @@ const ROCK := [
 	[42, 34, 8, 3, 0],
 ]
 const SPACES := [
-	[88, 37, 4, 2],        # the water across the road
+	[81, 37, 23, 2],       # the pool across the road
 ]
 ## The islands: one tile of collision under each painting's grass line.
 const MASSES := [
@@ -65,15 +65,55 @@ func _initialize() -> void:
 	_flight(placed, 288, 22 * TILE, true)
 	_flight(placed, 544, 29 * TILE, true)
 	_flight(placed, 800, GROUND, true)
-	# The water: she can't swim yet. A four-tile jump.
-	var brook := _water("Brook", Vector2(88 * TILE, GROUND + 5), Vector2(4 * TILE, 2 * TILE - 5), Vector2(32, 14))
-	brook.get_node("Glint").visible = false
+	_build_pool(behind, placed)
 	_dress(behind, placed)
 	_surface_finish()
 	_door("West", Rect2i(0, 11, 8, 5), -1, IB03, "East")
 	_door("East", Rect2i(104, 32, 8, 5), 1, IB01, "WestUpper")
 	_finish()
 	quit()
+
+
+## The pool across the road, and the old wall's broken piers standing in it:
+## three small islands to hop across (the creative lead's call, after their
+## mockup: a place to learn the jump). They are spaced for her real jump: 56 px
+## of water, then 48 px to land on. She can't swim yet; a miss returns her to
+## the bank. Their tops stand a tile or two above the road, so the stone shows
+## over the water. Each island is two piers side by side: [left edge x, top y].
+const POOL_ISLANDS := [[1352.0, 576.0], [1456.0, 560.0], [1560.0, 576.0]]
+## Piers from SF11: [region, the stone top's row in the region].
+const PIERS := [
+	[Rect2(1, 79, 30, 54), 9], [Rect2(81, 80, 31, 44), 7],
+	[Rect2(42, 141, 29, 44), 7], [Rect2(120, 140, 29, 46), 6],
+	[Rect2(81, 80, 31, 44), 7], [Rect2(1, 79, 30, 54), 9],
+]
+
+func _build_pool(behind: Node, placed: Node) -> void:
+	var n := 0
+	for isl in POOL_ISLANDS:
+		var x0: float = isl[0]
+		var top: float = isl[1]
+		for k in 2:
+			var pier: Array = PIERS[n]
+			var region: Rect2 = pier[0]
+			var px := x0 - 2.0 if k == 0 else x0 + 50.0 - region.size.x
+			_sprite(placed, PL, region, Vector2(px, top - float(pier[1]))).name = "Pier"
+			n += 1
+		var b := _body("PoolIsland", 1)
+		var cs := CollisionShape2D.new()
+		var r := RectangleShape2D.new()
+		r.size = Vector2(48, 10)
+		cs.shape = r
+		cs.position = Vector2(x0 + 24.0, top + 5.0)
+		_node(cs, "Shape", b)
+	var pool := _water("Pool", Vector2(81 * TILE, GROUND + 5), Vector2(23 * TILE, 2 * TILE - 5), Vector2(150, 14))
+	pool.get_node("Glint").visible = false
+	for pad in [[Rect2(272, 88, 64, 10), 1300.0], [Rect2(272, 102, 64, 10), 1404.0], [Rect2(272, 88, 64, 10), 1508.0], [Rect2(272, 102, 64, 10), 1606.0]]:
+		var lily := _sprite(behind, PL, pad[0], Vector2(pad[1], GROUND + 2))
+		lily.name = "LilyPads"
+		lily.z_index = 11
+	_ground(behind, PL, Rect2(270, 124, 20, 26), 1276.0, GROUND + 2, 1.0, "Reeds")
+	_ground(behind, PL, Rect2(336, 124, 14, 28), 1668.0, GROUND + 2, 1.0, "Reeds")
 
 
 func _dress(behind: Node, placed: Node) -> void:
@@ -88,13 +128,10 @@ func _dress(behind: Node, placed: Node) -> void:
 	# Something glints on the far island (Wing-Cloak).
 	_glint(behind, Vector2(1280, 17 * TILE - 44), Color(1.0, 0.85, 0.5))
 	# The road east: graves, a ruin, a crystal shrine, the timber gate over the water.
-	_row(behind, GRAVE, GROUND, [[GRAVE_CREST, 930.0], [FENCE, 1090.0]])
+	_row(behind, GRAVE, GROUND, [[GRAVE_CREST, 930.0]])
 	_piece(behind, DOOR_RUINED, 960, GROUND, "RoadRuin").modulate = Color(0.9, 0.9, 0.95)
 	_piece(behind, CRYSTAL_SHRINE, 1210, GROUND, "CrystalShrine")
-	_row(behind, FLORA, GROUND, [[TUFTS[1], 1060.0], [TUFTS[0], 1560.0]])
-	_lantern_post(behind, 1340, GROUND)
-	_piece(behind, TIMBER_GATE, 1400, GROUND, "TimberGate")
-	# The Great Ironbark's kin at the road's end, toward the clearing.
-	var tree := _sprite(behind, ENV + "landmark_great_ironbark.png", Rect2(1, 1, 255, 252), Vector2(1580, GROUND - 248))
-	tree.name = "RoadTree"
-	tree.flip_h = true
+	_row(behind, FLORA, GROUND, [[TUFTS[1], 1060.0], [TUFTS[0], 1730.0]])
+	_piece(behind, TIMBER_GATE, 1110, GROUND, "TimberGate")
+	_lantern_post(behind, 1236, GROUND)
+	_lantern_post(behind, 1700, GROUND)

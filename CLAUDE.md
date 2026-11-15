@@ -367,7 +367,7 @@ She steps forward with every hit.
   review.** The game opens in **IB-03, the Ruin Gardens** (a climb: a hill of
   terraces, the great graveyard island, a log, the cliff's arch) and goes on
   through **IB-04, the Gate Road** (wind back down a hill under the islands,
-  the straight road, a jump over the water) into IB-01, which the creative lead
+  the straight road, a pool hopped by three small islands) into IB-01, which the creative lead
   calls the guard post. Specs: `design/rooms/ironbark_03_ruin_gardens.md`,
   `ironbark_04_gate_road.md`; images in `docs/rooms/`.
   - **What the creative lead wants here** (their words and reviews):
@@ -393,6 +393,10 @@ She steps forward with every hit.
     eight-step painting over a slope, three tiles up in 68 px. `_log` is a
     one-way timber. The checker can't see non-tile collision: list logs and
     island tiles under `seals`, and each flight as a `lift` pair.
+  - **Small islands over water are allowed where the jump is the lesson**
+    (the creative lead asked for them in IB-04's pool). Space them for her real
+    jump, about 95 px long from a standing run-up: roughly 56 px of gap and
+    48 px to land on. Closer than that and a full jump overshoots.
   - **Next for these rooms:** the first enemy (none exist), pickups for the
     cave and the shrine island, and a tree of the surface's own (both rooms
     borrow IB-01's Great Ironbark). SF9 to SF13 are no longer used anywhere

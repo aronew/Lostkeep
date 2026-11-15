@@ -26,11 +26,11 @@ ROOMS = {
         "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "garden, cave, ways back (walked)")],
     },
     "ib04": {
-        "seals": [],
-        "water": [(88, 37, 4, 2)],
+        "seals": [(84.5, 36, 3, 0.6), (91, 35, 3, 0.6), (97.5, 36, 3, 0.6)],
+        "water": [(81, 37, 23, 2)],
         "ramps": [((228, 304), (160, 256)), ((356, 352), (288, 304)), ((612, 464), (544, 416)), ((868, 592), (800, 544))],
         "routes": [("tour", AMBER), ("upper", TEAL)],
-        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (72, 14.6, "FAR ISLAND: Wing-Cloak lock"), (84, 34.6, "water: 4-tile jump"), (100, 38.2, "EXIT > IB-01")],
+        "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (72, 14.6, "FAR ISLAND: Wing-Cloak lock"), (82, 33.6, "pool: three small islands to hop"), (100, 38.2, "EXIT > IB-01")],
         "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "islands and the way back (walked)")],
     },
 }

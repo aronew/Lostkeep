@@ -486,7 +486,7 @@ const SHOTS_IB04 := [
 	["04_second_island", 58.0, 20, 1],
 	["05_lower_terraces", 38.0, 29, 1],
 	["06_road_far_island", 74.0, 37, 1],
-	["07_water", 86.0, 37, 1],
+	["07_pool", 86.0, 36, 1],
 	["08_road_end", 104.0, 37, 1],
 ]
 
@@ -547,8 +547,7 @@ func _lower_ib03() -> void:
 	_report(lines, "upper")
 
 
-## IB-04's main line: down the hill's flights and drops, the road, the jump over
-## the water, and out the East door into IB-01.
+## IB-04's main line: down the hill's flights and drops, the road, the pool's piers, and out the East door into IB-01.
 func _tour_ib04() -> void:
 	var lines := []
 	_start_tour()
@@ -560,9 +559,15 @@ func _tour_ib04() -> void:
 	await _hold_until(["move_right"], func(): return _floor_at(34), 300)
 	await _hold_until(["move_right"], func(): return _floor_at(37), 300)
 	lines.append("wound down the hill to the road: %s (x %.0f)" % [_floor_at(37), kleo.global_position.x])
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 87.2 * TILE, 600)
-	await _hold_until(["move_right", "jump"], func(): return _floor_at(37) and kleo.global_position.x > 92 * TILE, 200)
-	lines.append("jumped the water: %s (x %.0f)" % [_floor_at(37) and kleo.global_position.x > 92 * TILE, kleo.global_position.x])
+	# The pool: four jumps, by its three small islands.
+	var hops := 0
+	for hop in [[1290.0, 1352.0], [1394.0, 1456.0], [1498.0, 1560.0], [1602.0, 1664.0]]:
+		await _hold_until(["move_right"], func(): return kleo.global_position.x > hop[0], 300)
+		await _hold_until(["move_right", "jump"], func(): return kleo.is_on_floor() and kleo.global_position.x > hop[1], 120)
+		if kleo.is_on_floor() and kleo.global_position.x > hop[1]:
+			hops += 1
+		await _wait(6)
+	lines.append("crossed the pool by its three islands: %d of 4 jumps landed (x %.0f, y %.0f)" % [hops, kleo.global_position.x, kleo.global_position.y])
 	await _hold_until(["move_right"], func(): return room.name != "IronbarkGateRoad", 400)
 	await _wait(50)
 	lines.append("out the East door into: %s, standing at x %.0f, y %.0f, on the floor: %s" % [room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])
@@ -602,7 +607,7 @@ func _upper_ib04() -> void:
 	await _hold_until(["move_left"], func(): return _floor_at(16), 500)
 	lines.append("back up the hill from the road (a 5-tile catch, a flight, a 4-tile catch, two flights): %s, %s, %s" % [a, b, _floor_at(16)])
 	# The water.
-	_place(86.0, 37, 1)
+	_place(79.0, 37, 1)
 	await _wait(10)
 	await _hold_until(["move_right"], func(): return kleo.global_position.y > GROUND_Y + 10, 200)
 	await _wait(90)

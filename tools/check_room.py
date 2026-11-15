@@ -63,9 +63,11 @@ ROOMS = {
         "cells": "game/tests/out/ib04/map/cells.json",
         "spawn": (4, 15),
         "lift": [((14, 18), (9, 15)), ((22, 21), (17, 18)), ((38, 28), (33, 25)), ((54, 36), (49, 33))],
-        "water": (88, 37, 4, 2),
+        "water": (81, 37, 23, 2),
         "gated": {"far island over the road (Wing-Cloak)": (76, 6, 9, 11)},
-        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (76, 17, 9, 1)],
+        # The painted islands' tiles, and the pool's three small islands.
+        "seals": [(21, 17, 3, 1), (27, 16, 19, 1), (50, 20, 16, 1), (76, 17, 9, 1),
+                  (85, 36, 2, 1), (91, 35, 3, 1), (98, 36, 2, 1)],
         "exits": {"east (to the Lantern Clearing)": (111, 36), "west (to the Ruin Gardens)": (0, 15)},
     },
 }
