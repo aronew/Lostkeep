@@ -483,6 +483,13 @@ She steps forward with every hit.
   over 4 tiles. Thin slabs are solid stone and joins have no black notches;
   deep rock still goes dark. This departs from the earth's shadow rule on
   purpose: the crypt mockup fills its masses with blocks.
+  **No straight seams inside a slab** (the creative lead: "a hard cut line, not
+  blending into the shadow"): the floor band's lit bricks are broken off below,
+  and the ceiling band's above, block by block (`ragged_top`/`ragged_bottom` in
+  `make_crypt_sh.py`, shaded at the break); `sh_fill` is cut only from SH1's
+  evenly lit courses (rows 13 to 28), never its cap row or darker tail; and the
+  fill shader nudges each fade step per 8 x 4 block so steps follow the
+  masonry. Check thin slabs (4 tiles) after any change to the stone.
   **Stone colour:** graded toward reference Y (the creative lead: "too bright";
   Y's stone "goes into the black ... at a slight darker color"):
   `STONE_GRADE` (0.82, 0.76, 0.74) multiplies the terrain, placed islands and

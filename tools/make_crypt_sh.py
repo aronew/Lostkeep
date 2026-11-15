@@ -37,6 +37,49 @@ def clear_void(path):
     im.save(path)
 
 
+def ragged_top(path, depth=10, shade=5, lit=60):
+    """Break a band's top edge back along whole blocks. Per column, the lit
+    bricks start at the first pixel brighter than `lit`; everything above is
+    cleared, then each 8 x 4 px block is cleared a further 0 to `depth` px, and
+    the bricks just below the break are shaded."""
+    import random
+    im = Image.open(path).convert("RGBA")
+    px = im.load()
+    w, h = im.size
+    def lum(c):
+        return (c[0] + c[1] + c[2]) / 3 if c[3] else -1
+    start = []
+    for x in range(w):
+        y = 0
+        while y < h and lum(px[x, y]) < lit:
+            y += 1
+        start.append(y)
+    rnd = random.Random(7)
+    cut = {}
+    for x in range(w):
+        for y in range(h):
+            if px[x, y][3] == 0:
+                continue
+            key = (x // 8, (y - start[x]) // 4)
+            if key not in cut:
+                cut[key] = rnd.choice([0, 0, 4, 4, 8, depth])
+            edge = start[x] + cut[key]
+            if y < edge:
+                px[x, y] = (0, 0, 0, 0)
+            elif y < edge + shade:
+                r, g, b, a = px[x, y]
+                k = 0.5 + 0.5 * (y - edge) / shade
+                px[x, y] = (int(r * k), int(g * k), int(b * k), a)
+    im.save(path)
+
+
+def ragged_bottom(path):
+    im = Image.open(path).convert("RGBA")
+    im.transpose(Image.FLIP_TOP_BOTTOM).save(path)
+    ragged_top(path)
+    Image.open(path).transpose(Image.FLIP_TOP_BOTTOM).save(path)
+
+
 def main():
     small = {}
     for name, (out, scale) in SHEETS.items():
@@ -58,16 +101,27 @@ def main():
     # the fill below shows through.
     for name in ("sh_top", "sh_under", "sh_wall"):
         clear_void(ENV + "terrain/" + name + ".png")
+    # The ceiling band's lit bricks began along one straight course, a hard line
+    # against the fill above (the creative lead: "a hard cut line, not blending
+    # into the shadow or the stone above"). Its top edge is broken back by
+    # whole blocks (8 x 4 px) by a varying depth, and the bricks just below the
+    # break are shaded, so it steps into the shadow as the floor band does.
+    ragged_top(ENV + "terrain/sh_under.png")
+    # The floor band's dark tail ended in a straight row where a thin slab's
+    # floor met its ceiling. Its lit bricks are broken off below the same way.
+    ragged_bottom(ENV + "terrain/sh_top.png")
     # The fill: SH1's lit blocks (floor band rows 11 to 34), stacked with a
     # half-width offset so the courses don't line up, darkened toward reference
     # Y's plum-grey masonry under the lit rim (about #2F283D on screen).
-    blocks = bands.crop((0, 11, 384, 35))
-    fill = Image.new("RGBA", (384, 48))
+    # (Only the evenly lit courses, rows 13 to 28: above is the carved cap row, below the band darkens,
+    # and a fill cut deeper carried that dark stripe into every repeat.)
+    blocks = bands.crop((0, 13, 384, 29))
+    fill = Image.new("RGBA", (384, 32))
     fill.paste(blocks, (0, 0))
-    fill.paste(blocks.crop((192, 0, 384, 24)), (0, 24))
-    fill.paste(blocks.crop((0, 0, 192, 24)), (192, 24))
+    fill.paste(blocks.crop((192, 0, 384, 16)), (0, 16))
+    fill.paste(blocks.crop((0, 0, 192, 16)), (192, 16))
     px = fill.load()
-    for y in range(48):
+    for y in range(32):
         for x in range(384):
             r, g, b, a = px[x, y]
             px[x, y] = (int(r * 0.63), int(g * 0.56), int(b * 0.68), 255)

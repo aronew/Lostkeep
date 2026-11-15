@@ -28,6 +28,12 @@ void fragment() {
 	}
 	// Distance, interpolated between tile centres for a smooth falloff.
 	float d = texture(cells, cellf / size_cells).r * 32.0;
+	// Each step of the fade follows the masonry, not the tile rows: the distance
+	// is nudged per block (8 x 4 px), so a step's edge is ragged along the
+	// blocks instead of a straight line across a slab (the creative lead: "a
+	// hard cut line ... doesn't look natural").
+	float j = fract(sin(dot(floor(world_px / vec2(8.0, 4.0)), vec2(12.9898, 78.233))) * 43758.5453);
+	d += (j - 0.5) * 0.9;
 	bool stone = c.g > 0.06;
 	vec3 base = stone
 		? texture(fill1, world_px / vec2(textureSize(fill1, 0))).rgb
