@@ -52,7 +52,7 @@ const SPACES := [
 const MASSES := [
 	[13, 16, 3, 2, 1],   # L1's lip (row 16): a short drop across to R1's
 	[18, 18, 4, 2, 1],   # R1's lip (row 18): off its west end, down onto the step
-	[16, 28, 2, 2, 1],   # a step in the void (row 28): up to L2, across to R2
+	[16, 28, 2, 1, 1],   # a plate in the void (row 28, SH4's): up to L2, across to R2
 	[13, 25, 3, 2, 1],   # L2's lip (row 25)
 	[20, 28, 2, 2, 1],   # R2's lip (row 28): off its west end, down onto R3's
 	[18, 39, 4, 2, 1],   # R3's lip (row 39): across to L3's, or off it onto the arch
@@ -61,7 +61,8 @@ const MASSES := [
 	[13, 53, 4, 2, 1],   # L4's lip (row 53): off it down to the basin
 ]
 const STONE := [[0, 0, 44, 72]]
-const SKIP := []
+## Cells painted by placed art (SH4's plate), not the skin.
+const SKIP := [[16, 28, 2, 1]]
 const SPAWN := Vector2(6 * 16, 16 * 16)
 const LAMP := Color(1.0, 0.72, 0.4)
 
@@ -80,6 +81,7 @@ func _initialize() -> void:
 	_begin("IronbarkUndercroft")
 	_shrine_far()
 	var t := _terrain(tileset)
+	_platform(t["placed"], SH4_PLATE_B, 16, 28, 2).name = "VoidPlate"
 	_grade_stone()
 	_build_machines()
 	_dress(t["behind"])

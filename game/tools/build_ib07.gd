@@ -50,20 +50,21 @@ const MASSES := [
 	[4, 32, 2, 24, 1],   # the wall under it
 	[1, 32, 3, 20, 1],   # and the rock behind it, down to the secret room at its foot
 	[14, 28, 10, 13, 1], # the zig-zag mass: the landing on top (row 28)
-	[12, 36, 2, 2, 1],   # a ledge off its west side (row 36)
+	[10, 36, 4, 1, 1],   # a wall ledge off its west side (row 36, SH4's)
 	[17, 41, 5, 11, 1],  # the mass going on down
 	[15, 52, 7, 6, 1],   # its foot
-	[9, 50, 4, 2, 1],    # a ledge low in the west cave (row 50)
-	[25, 41, 4, 2, 1],   # the niche (row 41)
+	[10, 50, 2, 1, 1],   # a plate low in the west cave (row 50, SH4's)
+	[25, 41, 2, 1, 1],   # the plate in the niche (row 41, SH4's)
 	[31, 41, 8, 8, 1],   # the passage out's floor (row 41), over the lantern room
-	[22, 46, 3, 2, 1],   # the climb from the bottom: 46
-	[26, 50, 3, 2, 1],   # 50
-	[22, 54, 3, 2, 1],   # 54
+	[23, 46, 2, 1, 1],   # the climb from the bottom, SH4's plates: 46
+	[26, 50, 2, 1, 1],   # 50
+	[22, 54, 2, 1, 1],   # 54
 	[9, 58, 5, 2, 1],    # the bottom floor's west step (row 58)
 	[26, 58, 6, 2, 1],   # and its east step
 ]
 const STONE := [[0, 0, 44, 64]]
-const SKIP := []
+## Cells painted by placed art (SH4's plates and wall ledge), not the skin.
+const SKIP := [[10, 36, 4, 1], [10, 50, 2, 1], [25, 41, 2, 1], [23, 46, 2, 1], [26, 50, 2, 1], [22, 54, 2, 1]]
 const SPAWN := Vector2(40 * 16, 41 * 16)
 const LAMP := Color(1.0, 0.72, 0.4)
 
@@ -82,6 +83,13 @@ func _initialize() -> void:
 	_begin("IronbarkPitShaft")
 	_shrine_far()
 	var t := _terrain(tileset)
+	var placed: Node = t["placed"]
+	_platform(placed, SH4_WALL_LEDGE, 10, 36, 4, true).name = "WestWallLedge"
+	_platform(placed, SH4_PLATE_A, 10, 50, 2).name = "WestCavePlate"
+	_platform(placed, SH4_BROKEN_LEDGE, 25, 41, 2).name = "NichePlate"
+	_platform(placed, SH4_PLATE_B, 23, 46, 2).name = "ClimbPlate46"
+	_platform(placed, SH4_PLATE_C, 26, 50, 2).name = "ClimbPlate50"
+	_platform(placed, SH4_PLATE_A, 22, 54, 2, true).name = "ClimbPlate54"
 	_grade_stone()
 	_build_plate(t["behind"])
 	_dress(t["behind"])
@@ -135,8 +143,7 @@ func _dress(behind: Node) -> void:
 	_hang(behind, 1, 9.6 * T, 52 * T)
 	_hang(behind, 5, 22.0 * T, 30 * T)
 	# The niche: a chest, crystals beside it.
-	_sh_piece(behind, "arcades", Rect2(352, 96, 24, 16), 26.0 * T, 41 * T, "Chest")
-	_sh_piece(behind, "flora", Rect2(8, 16, 32, 24), 27.6 * T, 41 * T, "Crystals")
+	_sh_piece(behind, "arcades", Rect2(352, 96, 24, 16), 25.2 * T, 41 * T, "Chest")
 	# The passage out: a lantern.
 	_hanging_lantern(behind, 38.0 * T, 36 * T)
 	# The bottom: crystals, flowers on the west step, pots, a stub on the east step.

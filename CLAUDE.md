@@ -482,6 +482,13 @@ She steps forward with every hit.
   Shaft** (`ironbark_07_pit_shaft.md`, origin (-44, 64), 44 x 64), after the
   far-left one, mass by mass, entered only with the Ward: the cracked plate
   above (W1b) or the bark plate in the Undercroft's bottom-left room (W1c).
+  **Floating platforms are painted pieces, never floor:** a floating ledge or
+  plate is SH4's art (`_platform(parent, spec, tile_x, row, tiles, flip)` with
+  `SH4_PLATE_A/B/C`, `SH4_BROKEN_LEDGE`, `SH4_WALL_LEDGE`, `SH4_ARCH_ISLAND` in
+  `room_builder.gd`) over a one-tile mass that is also in SKIP and in the
+  checker's `seals` (the creative lead: "why are the floating islands and
+  platforms ... just floor tiles"). Floors that run out into a void (the
+  Undercroft's lips, the Pit Shaft's walkway) stay terrain.
   **Every gap meant for dropping through is 2 tiles wide:** Kleo runs straight
   over a 1-tile gap (the checker thinks she can drop through one; she can't).
   Both: `room=ib06` / `room=ib07` with `mode=tour`, `upper`, `shots`, `map`

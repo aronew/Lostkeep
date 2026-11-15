@@ -723,6 +723,35 @@ func _hang(parent: Node, kind: int, x: float, y: float) -> void:
 	_sprite(parent, ENV + "sh_flora.png", regions[kind], Vector2(x, y - 2)).name = "Hanging"
 
 
+## SH4's painted platforms (the creative lead's Shrine Hall kit), each over
+## one row of collision in the plan (a mass one tile tall, also in SKIP so the
+## skin leaves it to the painting): [region, walking line row, line x0, line x1].
+const SH4_PLATE_A := [Rect2(144, 24, 32, 32), 7, 5, 27]
+const SH4_PLATE_B := [Rect2(208, 24, 32, 32), 7, 4, 30]
+const SH4_PLATE_C := [Rect2(272, 24, 32, 32), 5, 2, 30]
+const SH4_BROKEN_LEDGE := [Rect2(208, 128, 32, 32), 3, 0, 31]
+const SH4_WALL_LEDGE := [Rect2(104, 120, 64, 56), 16, 0, 63]  # its wall on the left; flip for a wall on the right
+const SH4_ARCH_ISLAND := [Rect2(8, 8, 96, 88), 50, 0, 95]
+
+
+## One of SH4's pieces on its mass [tile_x, row, tiles]: its walking line on the
+## mass's top, centred over it.
+func _platform(parent: Node, spec: Array, tile_x: int, row: int, tiles: int, flip := false) -> Sprite2D:
+	var region: Rect2 = spec[0]
+	var x0: int = spec[2]
+	var x1: int = spec[3]
+	if flip:
+		var w := int(region.size.x) - 1
+		var t := x0
+		x0 = w - x1
+		x1 = w - t
+	var x: float = tile_x * TILE + (tiles * TILE - float(x1 - x0 + 1)) * 0.5 - x0
+	var sp := _sprite(parent, ENV + "sh_platforms.png", region, Vector2(x, row * TILE - int(spec[1])))
+	sp.name = "Platform"
+	sp.flip_h = flip
+	return sp
+
+
 ## A wall torch (SH6) with its light, its top left at `x`, `y` (px).
 func _sh_torch(parent: Node, x: float, y: float) -> void:
 	_sprite(parent, ENV + "sh_doorways.png", Rect2(48, 160, 16, 32), Vector2(x, y)).name = "Torch"

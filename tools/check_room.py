@@ -92,8 +92,8 @@ ROOMS = {
         "lift": [((x, 17), (x, 64)) for x in range(38, 42)],
         "water": (13, 68, 3, 3),
         "gated": {"the alcove high in the void (Barkgrip)": (22, 1, 6, 4)},
-        # The bark plate; the lift's deck, jammed in R1's floor at the top.
-        "seals": [(0, 60, 2, 5), (38, 18, 4, 1)],
+        # The bark plate; the lift's deck, jammed in R1's floor at the top; SH4's plate.
+        "seals": [(0, 60, 2, 5), (38, 18, 4, 1), (16, 28, 2, 1)],
         "exits": {"west (to the Shrine Hall)": (0, 15), "east lower (toward the Keep's foundations)": (43, 64)},
     },
     "ib07": {
@@ -107,7 +107,8 @@ ROOMS = {
         "gated": {"the walkway and the top (from the plate)": (1, 3, 38, 10),
                   "the chasm and the landing (from the plate)": (15, 13, 9, 16),
                   "the arched-door room and the west cave (from the plate)": (0, 13, 17, 43)},
-        "seals": [],
+        # SH4's plates and wall ledge: one tile of collision under each painting.
+        "seals": [(10, 36, 4, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
         "exits": {"east (to the Undercroft's plated door)": (43, 40), "east lower (on to the deep)": (43, 59)},
     },
 }
