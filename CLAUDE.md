@@ -448,7 +448,18 @@ She steps forward with every hit.
   main line), the Refuge road (west, behind the plated door: needs the Ward),
   the Guard Post above the well (not built; the surface rooms IB-03 and IB-04
   lie over the crypt instead). All three end in darkness today.
-- **Art the Old Crypt wants** is in Book 1 as OC1 to OC8 (floor and ceiling,
+- **The Old Crypt's look is set by the creative lead's mockup**
+  `docs/mockups/old_crypt/old-crypt-first-section.jpg` ("exactly how I want
+  that first section of the Old Crypt to look"): a tall open cavern of
+  blue-grey masonry with carved cap stones and rubble undersides, an upper
+  gallery, a floating shrine island with a hooded statue, a second island, a
+  lower floor with a pit, wall torches, purple crystals and flowers, misty far
+  ruins. It supersedes mockups O to Q and the plum crypt kit for that section.
+  **No art for it has arrived yet** (the creative lead mentioned new assets
+  "for down below"; only the mockup reached the session). Don't rebuild the
+  section from stand-ins: wait for the pieces, then size the collision to them
+  (as with the surface islands).
+- **Art the Old Crypt wants** (older list) is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
