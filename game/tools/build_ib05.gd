@@ -62,6 +62,11 @@ const STONE := [[0, 0, 58, 34]]
 const SPAWN := Vector2(58 * 16 - 40, 7 * 16)
 
 const OC := ENV + "oc_"
+const SH := ENV + "sh_"
+const PLAT := SH + "platforms.png"
+const FLORA2 := SH + "flora.png"
+const DOORS := SH + "doorways.png"
+const ARC := SH + "arcades.png"
 const RUINS := OC + "floating_ruins.png"
 const LEDGES := OC + "gallery_ledges.png"
 const PROPS := OC + "props.png"
@@ -90,9 +95,12 @@ func _initialize() -> void:
 	_add_mat.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	var tileset := _shared()
 	# This room's stone is the crypt kit's pale masonry (OC1, OC2), not the plum kit.
-	_stone = _material("oc", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
-	_stone.corner_top = load(TERRAIN + "oc_corner_top.png")
-	_stone.corner_top_anchor = Vector2(60, 8)
+	# The hall's masonry: the creative lead's SH1 and SH2 (pale blue-grey blocks).
+	_stone = _material("sh", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
+	_stone.corner_top = load(TERRAIN + "sh_corner_top.png")
+	_stone.corner_top_anchor = Vector2(36, 29)
+	_stone.corner_under = load(TERRAIN + "sh_corner_under.png")
+	_stone.corner_under_anchor = Vector2(42, 42)
 	ResourceSaver.save(_stone, _stone.resource_path)
 	_begin("IronbarkShrineHall")
 	_build_far()
@@ -113,27 +121,19 @@ func _initialize() -> void:
 	quit()
 
 
-## OC5 and OC6: the crypt well far away in blue mist, and nearer arcades.
+## SH8: the distant hall in blue mist, behind everything.
 func _build_far() -> void:
 	var far := _node(Parallax2D.new(), "Far", _root) as Parallax2D
-	far.scroll_scale = Vector2(0.12, 0.12)
+	far.scroll_scale = Vector2(0.2, 0.2)
 	far.repeat_size = Vector2(768, 0)
 	far.repeat_times = 3
 	far.z_index = -10
 	for row in 2:
-		_sprite(far, OC + "far_well.png", Rect2(0, 0, 768, 360), Vector2(0, -20 + row * 356)).name = "Art"
-	var mid := _node(Parallax2D.new(), "Mid", _root) as Parallax2D
-	mid.scroll_scale = Vector2(0.4, 0.5)
-	mid.repeat_size = Vector2(768, 0)
-	mid.repeat_times = 3
-	mid.z_index = -10
-	var arcades := _sprite(mid, OC + "mid_arcades.png", Rect2(0, 0, 768, 360), Vector2(-40, 120))
-	arcades.name = "Art"
-	arcades.modulate = Color(0.72, 0.78, 0.98, 0.9)
+		_sprite(far, SH + "far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358)).name = "Art"
 	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
 	fog.scroll_scale = Vector2(0.55, 0.6)
 	fog.z_index = -10
-	_fog(fog, Rect2(-200, 200, 1500, 320), Color("#6a7ab0"), 0.2, Vector2(0.005, 0.0))
+	_fog(fog, Rect2(-200, 200, 1500, 320), Color("#7a88b8"), 0.16, Vector2(0.005, 0.0))
 
 
 ## A painting on its collision: `line` is the walking line's row in the region,
@@ -143,11 +143,14 @@ func _on_mass(parent: Node, tex: String, region: Rect2, line: int, x0: int, x1: 
 	return _sprite(parent, tex, region, Vector2(x, row * TILE - line))
 
 
-const ISLAND_BIG := [Rect2(16, 11, 240, 79), 32, 1, 239]
-const ISLAND_ARCH := [Rect2(33, 114, 94, 60), 27, 1, 93]
-const BALCONY := [Rect2(17, 16, 78, 62), 31, 6, 69]
-const LEDGE := [Rect2(144, 22, 47, 29), 12, 8, 38]
-const PLATE := [Rect2(193, 81, 31, 25), 6, 6, 29]
+# The creative lead's SH3 and SH4 pieces: [region, walking line row, line x0, line x1].
+const SHRINE_ISLAND := [Rect2(0, 0, 384, 192), 80, 73, 310]
+const ARCH_ISLAND := [Rect2(8, 8, 96, 88), 50, 0, 95]
+const PLATES := [[Rect2(144, 24, 32, 32), 7, 5, 27], [Rect2(208, 24, 32, 32), 7, 4, 30], [Rect2(272, 24, 32, 32), 5, 2, 30]]
+const WALL_LEDGE_FLOWERS := [Rect2(8, 120, 64, 56), 16, 0, 63]
+const WALL_LEDGE_POTS := [Rect2(104, 120, 64, 56), 16, 0, 63]
+const BROKEN_LEDGE := [Rect2(208, 128, 32, 32), 3, 0, 31]
+const PEDESTAL := [Rect2(304, 96, 32, 80), 7, 2, 29]
 
 
 func _piece_on(parent: Node, tex: String, spec: Array, m: Array, flip := false) -> Sprite2D:
@@ -157,17 +160,17 @@ func _piece_on(parent: Node, tex: String, spec: Array, m: Array, flip := false) 
 
 
 func _build_islands(placed: Node) -> void:
-	_piece_on(placed, RUINS, ISLAND_BIG, MASSES[0]).name = "ShrineIsland"
-	_piece_on(placed, LEDGES, LEDGE, MASSES[1]).name = "WestIsland"
-	_piece_on(placed, LEDGES, LEDGE, MASSES[2], true).name = "Pedestal"
-	_piece_on(placed, LEDGES, BALCONY, MASSES[3]).name = "WestWallLedge"
-	_piece_on(placed, LEDGES, PLATE, MASSES[4]).name = "Nook"
-	_piece_on(placed, LEDGES, PLATE, MASSES[5], true).name = "PitLedge"
+	_piece_on(placed, SH + "shrine_island.png", SHRINE_ISLAND, MASSES[0]).name = "ShrineIsland"
+	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[1]).name = "WestIsland"
+	_piece_on(placed, PLAT, PEDESTAL, MASSES[2]).name = "Pedestal"
+	_piece_on(placed, PLAT, WALL_LEDGE_FLOWERS, MASSES[3]).name = "WestWallLedge"
+	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[4], true).name = "Nook"
+	_piece_on(placed, PLAT, PLATES[0], MASSES[5], true).name = "PitLedge"
 	for i in 3:
-		_piece_on(placed, LEDGES, PLATE, MASSES[6 + i], i == 1).name = "Plate"
-	_piece_on(placed, RUINS, ISLAND_ARCH, MASSES[9]).name = "ArchIsland"
-	_piece_on(placed, LEDGES, LEDGE, MASSES[10]).name = "GapLedge"
-	_piece_on(placed, LEDGES, BALCONY, MASSES[11], true).name = "EastShelf"
+		_piece_on(placed, PLAT, PLATES[i], MASSES[6 + i]).name = "Plate"
+	_piece_on(placed, PLAT, ARCH_ISLAND, MASSES[9]).name = "ArchIsland"
+	_piece_on(placed, PLAT, PLATES[1], MASSES[10], true).name = "GapLedge"
+	_piece_on(placed, PLAT, WALL_LEDGE_POTS, MASSES[11], true).name = "EastShelf"
 
 
 func _prop(parent: Node, region: Rect2, x: float, floor_y: float, prop_name: String) -> Sprite2D:
@@ -184,51 +187,65 @@ func _candle(parent: Node, x: float, floor_y: float) -> void:
 	_light(parent, Vector2(x + 4, floor_y - 26), FLAME, 0.8, 0.6, "CandleLight")
 
 
+func _sh(parent: Node, tex: String, region: Rect2, x: float, floor_y: float, piece_name: String, flip := false) -> Sprite2D:
+	var sp := _ground(parent, tex, region, x, floor_y + 1.0, 1.0, piece_name)
+	sp.flip_h = flip
+	return sp
+
+
+func _torch(parent: Node, x: float, y: float) -> void:
+	_sprite(parent, DOORS, Rect2(48, 160, 16, 32), Vector2(x, y)).name = "Torch"
+	_light(parent, Vector2(x + 8, y + 6), FLAME, 1.0, 0.8, "TorchLight")
+
+
+## A lit doorway at a door: the arch, the blue corridor beyond, a torch beside it.
+func _doorway(parent: Node, x: float, floor_y: float, flip: bool, ruined := false) -> void:
+	_sh(parent, DOORS, Rect2(144 if ruined else 16, 16, 80, 96), x, floor_y, "Doorway", flip)
+	_light(parent, Vector2(x + 40, floor_y - 40), Color(0.55, 0.7, 1.0), 0.6, 0.9, "DoorwayGlow")
+	_torch(parent, x + (-14.0 if flip else 82.0), floor_y - 56)
+
+
 func _dress(behind: Node) -> void:
 	var bag := ENV + "props_guard_belongings.png"
-	# The shrine: the hooded statue between two braziers.
-	_prop(behind, Rect2(192, 144, 47, 95), 305, SHRINE, "HoodedStatue")
-	_brazier(behind, 262, SHRINE)
-	_brazier(behind, 364, SHRINE)
-	_prop(behind, Rect2(77, 202, 19, 14), 220, SHRINE, "Mushrooms")
-	_prop(behind, Rect2(110, 206, 11, 8), 420, SHRINE, "Mushrooms")
-	# The pedestal's column, down to the floor.
-	_sprite(behind, OC + "walls_corners.png", Rect2(225, 0, 31, 56), Vector2(161, 360)).name = "PedestalColumn"
-	# The west gallery: the doorway's candles, burial niches, the guard's pots.
-	_candle(behind, 40, WEST)
-	_prop(behind, Rect2(1, 1, 46, 39), 96, WEST, "Niche").modulate = Color(0.88, 0.9, 0.98)
-	_prop(behind, Rect2(112, 1, 47, 39), 200, WEST, "Niche").modulate = Color(0.88, 0.9, 0.98)
-	_breakable(bag, POT, 160.0, WEST, CLAY)
-	_breakable(bag, POT_SMALL, 176.0, WEST, CLAY)
-	_candle(behind, 280, WEST)
-	# The east gallery.
-	for x in [380.0, 500.0, 620.0]:
-		_prop(behind, Rect2(1 + 56 * (int(x) / 120 % 3), 1, 46, 39), x, EAST, "Niche").modulate = Color(0.88, 0.9, 0.98)
-	_candle(behind, 450, EAST)
-	_candle(behind, 690, EAST)
-	_breakable(bag, POT, 568.0, EAST, CLAY)
-	_breakable(bag, CRATE_B, 590.0, EAST, WOOD)
-	# The landing by the East door.
-	_candle(behind, 830, LANDING)
-	_candle(behind, 900, LANDING)
-	# The lower floor: the dead on their biers, bones, mushrooms; pots on the ledges.
-	_prop(behind, Rect2(2, 91, 77, 28), 50, FLOOR, "Bier")
-	_prop(behind, Rect2(41, 46, 46, 21), 270, DIP, "Bones")
-	_prop(behind, Rect2(89, 92, 78, 26), 560, FLOOR, "Bier")
-	_prop(behind, Rect2(1, 52, 30, 13), 660, FLOOR, "Bones")
-	_prop(behind, Rect2(77, 202, 19, 14), 330, DIP, "Mushrooms")
-	_prop(behind, Rect2(110, 206, 11, 8), 720, FLOOR, "Mushrooms")
-	_candle(behind, 20, FLOOR)
-	_candle(behind, 236, FLOOR)
-	_candle(behind, 890, FLOOR)
-	_breakable(bag, POT, 72.0, 256.0, CLAY)
-	_breakable(bag, POT_SMALL, 360.0, 352.0, CLAY)
-	_breakable(bag, POT_BIG, 832.0, 336.0, CLAY)
-	_breakable(bag, POT, 852.0, 336.0, CLAY)
-	# Roots and vines hanging from the galleries' undersides.
-	for r in [[Rect2(130, 218, 13, 29), 100.0, 11], [Rect2(102, 224, 8, 22), 260.0, 11], [Rect2(130, 218, 13, 29), 420.0, 11],
-			[Rect2(102, 224, 8, 22), 600.0, 11], [Rect2(130, 218, 13, 29), 870.0, 11]]:
-		_sprite(behind, PROPS, r[0], Vector2(r[1], r[2] * TILE + 2)).name = "Roots"
+	# The four doorways.
+	_doorway(behind, -18, WEST, false)
+	_doorway(behind, 58 * 16 - 62, LANDING, true)
+	_doorway(behind, -18, FLOOR, false, true)
+	_doorway(behind, 58 * 16 - 62, FLOOR, true)
+	# The west gallery: a single arch, pots, crystals and flowers.
+	_sh(behind, ARC, Rect2(144, 32, 64, 80), 120, WEST, "Arch")
+	_sh(behind, ARC, Rect2(304, 88, 40, 24), 200, WEST, "Pots")
+	_sh(behind, FLORA2, Rect2(8, 72, 32, 20), 250, WEST, "Flowers")
+	# The east gallery: the arcade, pillars, the chest, pots, crystals.
+	_sh(behind, ARC, Rect2(4, 32, 128, 80), 430, EAST, "Arcade")
+	_sh(behind, ARC, Rect2(272, 32, 20, 80), 380, EAST, "Pillar")
+	_sh(behind, ARC, Rect2(352, 96, 24, 16), 600, EAST, "Chest")
+	_sh(behind, FLORA2, Rect2(64, 64, 48, 28), 630, EAST, "Flowers")
+	_breakable(bag, POT, 690.0, EAST, CLAY)
+	_breakable(bag, POT_SMALL, 706.0, EAST, CLAY)
+	_sh(behind, FLORA2, Rect2(8, 16, 32, 24), 830, LANDING, "Crystals")
+	# The lower floor: pillars and arches, crystal heaps, flowers, the dead on their biers.
+	_sh(behind, ARC, Rect2(144, 32, 64, 80), 640, FLOOR, "Arch")
+	_sh(behind, ARC, Rect2(248, 56, 16, 56), 120, FLOOR, "Pillar")
+	_sh(behind, ARC, Rect2(224, 80, 16, 32), 560, FLOOR, "Pillar")
+	_sh(behind, FLORA2, Rect2(152, 0, 64, 40), 540, FLOOR, "Crystals")
+	_sh(behind, FLORA2, Rect2(64, 8, 48, 32), 230, DIP, "Crystals")
+	_sh(behind, FLORA2, Rect2(152, 56, 64, 36), 290, DIP, "Flowers")
+	_sh(behind, FLORA2, Rect2(64, 64, 48, 28), 740, FLOOR, "Flowers")
+	_sh(behind, FLORA2, Rect2(16, 208, 48, 24), 40, FLOOR, "Grass")
+	_sh(behind, FLORA2, Rect2(112, 208, 48, 24), 880, FLOOR, "WhiteFlowers")
+	_prop(behind, Rect2(2, 91, 77, 28), 360, DIP, "Bier")
+	_prop(behind, Rect2(41, 46, 46, 21), 700, FLOOR, "Bones")
+	_breakable(bag, POT, 800.0, FLOOR, CLAY)
+	_breakable(bag, POT_BIG, 820.0, FLOOR, CLAY)
+	# Something left on the ledges.
+	_breakable(bag, POT_SMALL, 80.0, 256.0, CLAY)
+	_breakable(bag, POT_SMALL, 368.0, 352.0, CLAY)
+	# Ivy and roots hanging from the galleries' undersides.
+	for r in [[Rect2(88, 112, 24, 64), 90.0], [Rect2(184, 112, 16, 32), 230.0], [Rect2(48, 112, 16, 32), 300.0],
+			[Rect2(224, 112, 20, 64), 400.0], [Rect2(88, 112, 24, 64), 560.0], [Rect2(184, 112, 16, 32), 650.0],
+			[Rect2(48, 112, 16, 32), 860.0]]:
+		_sprite(behind, FLORA2, r[0], Vector2(r[1], 11 * TILE - 2)).name = "Hanging"
 
 
 func _build_air(front: Node) -> void:

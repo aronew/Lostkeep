@@ -464,11 +464,11 @@ She steps forward with every hit.
   it with OC is the obvious next step if the creative lead likes IB-05.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
-    `docs/rooms/ironbark_05/layout_vs_mockup.png`. Its look does not yet: the OC
-    kit was made after mockups O to Q. **Book 1 now has SH1 to SH8** (mockup X
-    in `lostkeep-attach/`): the thick blue-grey masonry rim and corners, the
-    shrine island, the arch island, plates and ledges, crystals, doorways,
-    colonnades. When they arrive, swap them in over the same collision.
+    `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative
+    lead's SH1 to SH8** (`art/source/ironbark/shrine_hall/`, brought in by
+    `tools/make_crypt_sh.py` to `sh_*.png` and `terrain/sh_*`; material
+    `terrain_sh.tres` made in `build_ib05.gd`). The OC kit is no longer used
+    in IB-05 except OC7's foreground and OC8's bier and bones.
   - **Small ledges stand beside what they lead to, never over it:** a one-tile
     ledge above an island or floor she jumps from bumps her head (found in
     IB-05's first layout).
