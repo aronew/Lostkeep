@@ -978,7 +978,7 @@ func _click() -> void:
 
 ## Layers left out of the map: the parallax planes, the foreground silhouettes
 ## (they belong to the camera, not the room), the screen effects and Kleo.
-const MAP_HIDDEN := ["Sky", "Far", "FogFar", "Mid", "FogMid", "Ruins", "Foreground", "Screen", "Kleo"]
+const MAP_HIDDEN := ["Sky", "Far", "FogFar", "MidFar", "Mid", "FogMid", "Ruins", "Mood", "Foreground", "ForegroundNear", "Screen", "Kleo"]
 
 
 func _map_hide() -> void:

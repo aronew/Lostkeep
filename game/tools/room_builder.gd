@@ -86,24 +86,114 @@ func _use_shrine_stone() -> void:
 	_stone = m
 
 
-## SH8: the distant hall in mist, behind everything (scroll 0.2). Graded toward
-## the mockup's dark slate (about #373A55 on screen): SH8 as painted is bluer
-## and brighter (the creative lead: "so much bluer than the mockup").
-const SHRINE_FAR_TINT := Color(0.94, 0.82, 0.8)
+## The crypts' depth (the creative lead: "more moody colors like in this
+## reference" and "more parallaxed layers ... right now the game is looking
+## sort of flat"). Back to front, behind the playfield:
+##   Far      SH8, the distant hall (scroll 0.12)
+##   FogFar   teal mist (0.22)
+##   MidFar   OC6's arcades, faint and far (0.32)
+##   FogMid   mist (0.45)
+##   Mid      OC6's arcades again, nearer and darker (0.58)
+##   Ruins    SH7's arches and pillars as dark silhouettes (0.78)
+##   Mood     a multiply grade over all of them, in the world: dusky purple
+##            high in the room, deep teal low, as in the reference
+## The grade only touches the background; the playfield keeps its own colour.
+const SHRINE_FAR_TINT := Color(0.74, 1.0, 0.8)
+const MOOD_TOP := Color(1.0, 0.52, 1.0)
+const MOOD_BOTTOM := Color(0.48, 1.0, 0.92)
+
+
+func _depth_layer(layer_name: String, scroll: Vector2, repeat: float) -> Parallax2D:
+	var p := _node(Parallax2D.new(), layer_name, _root) as Parallax2D
+	p.scroll_scale = scroll
+	p.repeat_size = Vector2(repeat, 0)
+	p.repeat_times = 4
+	p.z_index = -10
+	return p
+
+
 func _shrine_far() -> void:
-	var far := _node(Parallax2D.new(), "Far", _root) as Parallax2D
-	far.scroll_scale = Vector2(0.2, 0.2)
-	far.repeat_size = Vector2(768, 0)
-	far.repeat_times = 3
-	far.z_index = -10
+	var h := float(room.size.y * TILE)
+	var far := _depth_layer("Far", Vector2(0.12, 0.15), 768)
 	for row in 2:
 		var art := _sprite(far, ENV + "sh_far.png", Rect2(0, 0, 768, 360), Vector2(0, -40 + row * 358))
 		art.name = "Art"
 		art.modulate = SHRINE_FAR_TINT
-	var fog := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
-	fog.scroll_scale = Vector2(0.55, 0.6)
-	fog.z_index = -10
-	_fog(fog, Rect2(-200, 200, 2400, 320), Color("#5e5c7a"), 0.14, Vector2(0.005, 0.0))
+	var fog_far := _node(Parallax2D.new(), "FogFar", _root) as Parallax2D
+	fog_far.scroll_scale = Vector2(0.22, 0.25)
+	fog_far.z_index = -10
+	_fog(fog_far, Rect2(-300, h * 0.3, 2600, h * 0.6), Color("#3f9a86"), 0.34, Vector2(0.004, 0.0))
+	var mid_far := _depth_layer("MidFar", Vector2(0.32, 0.35), 768)
+	var a1 := _sprite(mid_far, ENV + "oc_mid_arcades.png", Rect2(0, 0, 768, 360), Vector2(-200, h * 0.18))
+	a1.name = "Art"
+	a1.modulate = Color(0.5, 0.68, 0.64, 0.55)
+	var fog_mid := _node(Parallax2D.new(), "FogMid", _root) as Parallax2D
+	fog_mid.scroll_scale = Vector2(0.45, 0.5)
+	fog_mid.z_index = -10
+	_fog(fog_mid, Rect2(-300, h * 0.45, 2800, h * 0.45), Color("#5e6a86"), 0.16, Vector2(0.006, 0.0))
+	var mid := _depth_layer("Mid", Vector2(0.58, 0.62), 768)
+	var a2 := _sprite(mid, ENV + "oc_mid_arcades.png", Rect2(0, 0, 768, 360), Vector2(150, h * 0.42))
+	a2.name = "Art"
+	a2.modulate = Color(0.3, 0.46, 0.44, 0.9)
+	# The nearest ruins: arches and pillars standing at the bottom of the view, dark.
+	var ruins := _depth_layer("Ruins", Vector2(0.78, 0.82), 900)
+	var arc := ENV + "sh_arcades.png"
+	for r in [[Rect2(4, 32, 128, 80), 40.0], [Rect2(272, 32, 20, 80), 300.0], [Rect2(144, 32, 64, 80), 470.0],
+			[Rect2(248, 56, 16, 56), 640.0], [Rect2(272, 32, 20, 80), 760.0]]:
+		var reg: Rect2 = r[0]
+		var sil := _sprite(ruins, arc, reg, Vector2(r[1], h - reg.size.y * 2.0 - 8.0))
+		sil.name = "Ruin"
+		sil.scale = Vector2(2, 2)
+		sil.modulate = Color(0.12, 0.17, 0.19)
+	# The mood: a multiply grade over the whole background, purple above, teal below.
+	var mood := _node(Polygon2D.new(), "Mood", _root) as Polygon2D
+	mood.z_index = -9
+	var w := float(room.size.x * TILE)
+	mood.polygon = PackedVector2Array([Vector2(-400, -200), Vector2(w + 400, -200), Vector2(w + 400, h + 200), Vector2(-400, h + 200)])
+	mood.vertex_colors = PackedColorArray([MOOD_TOP, MOOD_TOP, MOOD_BOTTOM, MOOD_BOTTOM])
+	var mm := CanvasItemMaterial.new()
+	mm.blend_mode = CanvasItemMaterial.BLEND_MODE_MUL
+	mm.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	mood.material = mm
+
+
+## In front of everything: OC7's dark rock along the top and bottom of the view,
+## and, nearer still, a few great pillars and roots in silhouette (the reference's
+## dark frame). Scrolls faster than the playfield; stays put vertically.
+func _crypt_foreground() -> void:
+	var h := float(room.size.y * TILE)
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
+	p.scroll_scale = Vector2(1.15, 1.0)
+	p.repeat_size = Vector2(768, 0)
+	p.repeat_times = 4
+	p.z_index = 30
+	var top := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 0, 768, 96), Vector2(0, -6))
+	top.name = "Top"
+	top.material = unlit
+	var bottom := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 250, 768, 110), Vector2(0, h - 96))
+	bottom.name = "Bottom"
+	bottom.material = unlit
+	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
+	near.scroll_scale = Vector2(1.35, 1.0)
+	near.repeat_size = Vector2(1100, 0)
+	near.repeat_times = 4
+	near.z_index = 31
+	var dark := Color(0.07, 0.05, 0.1)
+	for c in [[Rect2(272, 32, 20, 80), 80.0], [Rect2(272, 32, 20, 80), 640.0]]:
+		var reg: Rect2 = c[0]
+		var pil := _sprite(near, ENV + "sh_arcades.png", reg, Vector2(c[1], h - reg.size.y * 1.6 + 6))
+		pil.name = "Pillar"
+		pil.scale = Vector2(1.6, 1.6)
+		pil.modulate = dark
+		pil.material = unlit
+	for c in [[Rect2(224, 112, 20, 64), 300.0], [Rect2(88, 112, 24, 64), 900.0]]:
+		var root := _sprite(near, ENV + "sh_flora.png", c[0], Vector2(c[1], -4))
+		root.name = "Roots"
+		root.scale = Vector2(2, 2)
+		root.modulate = Color(0.16, 0.07, 0.12)
+		root.material = unlit
 
 
 ## The room's root node.

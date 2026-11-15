@@ -152,6 +152,28 @@ func _build_foreground() -> void:
 	ferns.name = "Ferns"
 	ferns.material = _unlit
 	ferns.modulate = Color(0.5, 0.5, 0.58)
+	# Nearer still (the creative lead: "no parallaxed foreground creating depth"):
+	# P5's fern clumps and a branch, enlarged and dark as silhouettes, scrolling
+	# faster than anything else, sparse so they frame the view without hiding
+	# her for long.
+	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
+	near.scroll_scale = Vector2(1.45, 1.0)
+	near.repeat_size = Vector2(1500, 0)
+	near.repeat_times = 4
+	near.z_index = 31
+	var shade := Color(0.04, 0.05, 0.07)
+	for c in [[Rect2(0, 186, 210, 70), 60.0], [Rect2(330, 180, 240, 76), 820.0]]:
+		var reg: Rect2 = c[0]
+		var fern := _sprite(near, PARALLAX + "fg.png", reg, Vector2(c[1], room.size.y * TILE - reg.size.y * 1.7 + 30))
+		fern.name = "Ferns"
+		fern.scale = Vector2(1.7, 1.7)
+		fern.modulate = shade
+		fern.material = _unlit
+	var branch := _sprite(near, PARALLAX + "fg.png", Rect2(40, 0, 400, 130), Vector2(380, -60))
+	branch.name = "Branch"
+	branch.scale = Vector2(1.7, 1.7)
+	branch.modulate = shade
+	branch.material = _unlit
 	# Ruin silhouettes in the room's bottom corners, nearest the camera.
 	var front := _root.get_node("Front")
 	var h := float(room.size.y * TILE)

@@ -246,15 +246,4 @@ func _build_air(front: Node) -> void:
 	dust.scale_amount_max = 1.0
 	dust.material = _add_mat
 	dust.z_index = 14
-	# OC7: dark stone and roots nearest the camera, along the room's top and bottom.
-	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
-	p.scroll_scale = Vector2(1.15, 1.0)
-	p.repeat_size = Vector2(768, 0)
-	p.repeat_times = 3
-	p.z_index = 30
-	var top := _sprite(p, OC + "foreground.png", Rect2(0, 0, 768, 96), Vector2(0, -6))
-	top.name = "Top"
-	top.material = _unlit
-	var bottom := _sprite(p, OC + "foreground.png", Rect2(0, 250, 768, 110), Vector2(0, 34 * TILE - 96))
-	bottom.name = "Bottom"
-	bottom.material = _unlit
+	_crypt_foreground()

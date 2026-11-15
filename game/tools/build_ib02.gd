@@ -92,6 +92,7 @@ func _initialize() -> void:
 	_build_west(t["behind"])
 	_build_machines()
 	_build_atmosphere()
+	_crypt_foreground()
 	_edge_shades()
 	# The East door: back up to the Lantern Clearing's hall (IB-01).
 	_door("East", Rect2i(104, 5, 8, 5), 1, IB05, "West")

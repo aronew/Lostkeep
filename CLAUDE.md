@@ -465,7 +465,16 @@ She steps forward with every hit.
   root cave stays earth. **Colour:** the backdrop is graded toward the mockup's
   dark slate (`SHRINE_FAR_TINT`), not SH8's brighter blue: the creative lead
   found it "so much bluer than the mockup". Compare against the mockup's
-  measured background (about #373A55) before changing it.
+  measured background (about #373A55) before changing it. **Then the creative
+  lead asked for moodier colour and more depth** (after a reference of a ruin
+  hall in purple above and deep teal below, `docs/rooms/ironbark_05/depth_before_after.png`):
+  `_shrine_far()` now builds six layers behind the playfield (SH8 far hall,
+  teal mist, OC6 arcades twice at 0.32 and 0.58, mist, SH7 ruins in dark
+  silhouette at 0.78) under a multiply grade (`Mood`, purple at the room's top,
+  teal at its bottom: `MOOD_TOP`, `MOOD_BOTTOM`); `_crypt_foreground()` adds
+  OC7's dark rock and a nearer layer of dark pillars and roots (1.35). The
+  surface rooms got the same idea: `ForegroundNear` in `surface_builder.gd`,
+  P5's ferns and a branch enlarged as silhouettes at 1.45.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative
