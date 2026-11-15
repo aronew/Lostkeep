@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04|ib05]
+Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04|ib05|ib06|ib07]
 """
 import json
 import sys
@@ -84,6 +84,26 @@ ROOMS = {
                   (29, 31, 4, 1)],
         "exits": {"east upper (to the Lantern Clearing)": (57, 6), "west upper (to the Old Crypt)": (0, 7),
                   "west lower (to the Old Crypt's long gallery)": (0, 25), "east lower (to the Undercroft)": (57, 25)},
+    },
+    "ib06": {
+        "cells": "game/tests/out/ib06/map/cells.json",
+        "spawn": (8, 15),
+        # The cellar lift: F1 (row 15) and F3 (row 36), both ways once freed.
+        "lift": [((x, 15), (x, 36)) for x in range(2, 6)],
+        "water": (57, 37, 4, 3),
+        "gated": {"the passage high in the chamber's east wall (Barkgrip)": (76, 4, 20, 5)},
+        "seals": [],
+        "exits": {"west (to the Shrine Hall)": (0, 15), "west lower (to the pit shaft)": (0, 36),
+                  "east lower (toward the Lost Keep)": (95, 36)},
+    },
+    "ib07": {
+        "cells": "game/tests/out/ib07/map/cells.json",
+        "spawn": (40, 12),
+        "lift": [],
+        "water": (0, 0, 0, 0),
+        "gated": {},
+        "seals": [],
+        "exits": {"east (to the Undercroft)": (43, 12)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

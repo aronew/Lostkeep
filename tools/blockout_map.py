@@ -33,6 +33,24 @@ ROOMS = {
         "labels": [(1, 13.4, "IN < IB-03"), (30, 13.6, "GREAT ISLAND"), (80, 15.4, "HIGH PATH: islands at different heights"), (84, 33.2, "LOW PATH: six small islands"), (116, 38.2, "EXIT > IB-01"), (112, 11.4, "Wing-Cloak lock")],
         "legend": [(AMBER, "low path (walked in engine)"), (TEAL, "high path, way back (walked)")],
     },
+    "ib06": {
+        "seals": [(2, 16, 4, 0.5)],
+        "water": [(57, 37, 4, 3)],
+        "routes": [("tour", AMBER), ("upper", TEAL)],
+        "labels": [(0.5, 9.6, "IN < IB-05"), (16, 9.6, "F1  storeroom gallery  >"), (50, 5.0, "ROOT CHAMBER"),
+                   (77, 9.6, "Barkgrip lock"), (14, 19.6, "<  F2  root passage"), (8.5, 28.2, "collapse"),
+                   (20, 30.6, "F3  cistern walk  >"), (55, 33.2, "sump (Breath)"), (82, 30.6, "EXIT > the Keep"),
+                   (0.5, 30.6, "< pit shaft"), (6.2, 22.0, "LIFT\n(shortcut)")],
+        "legend": [(AMBER, "main line (walked in engine)"), (TEAL, "ways back up (walked)")],
+    },
+    "ib07": {
+        "seals": [(15, 0, 4, 0.6)],
+        "water": [],
+        "routes": [("tour", AMBER), ("upper", TEAL)],
+        "labels": [(13, 1.2, "the plate from below (Ward)"), (30, 6.0, "IN < IB-06"), (2.5, 15.2, "west pocket"),
+                   (26, 24.2, "east pocket"), (22, 32.4, "THE DEEP"), (20.5, 20.0, "the shaft:\nledges taking turns")],
+        "legend": [(AMBER, "down and the climb back (walked)"), (TEAL, "up under the plate (walked)")],
+    },
 }
 
 

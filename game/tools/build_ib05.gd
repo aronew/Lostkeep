@@ -24,6 +24,7 @@ extends "res://tools/surface_builder.gd"
 const ROOM_PATH := "res://scenes/rooms/ironbark_05_shrine_hall.tscn"
 const IB01 := "res://scenes/rooms/ironbark_test_room.tscn"
 const IB02 := "res://scenes/rooms/ironbark_02_old_crypt.tscn"
+const IB06 := "res://scenes/rooms/ironbark_06_undercroft.tscn"
 
 const ROOM := Rect2i(0, 0, 58, 34)
 const ROCK := [[0, 0, 58, 34, 1]]
@@ -113,8 +114,8 @@ func _initialize() -> void:
 	_door("East", Rect2i(50, 2, 8, 5), 1, IB01, "WestLower")
 	_door("West", Rect2i(0, 3, 8, 5), -1, IB02, "East")
 	_door("WestLower", Rect2i(0, 21, 8, 5), -1, IB02, "EastLower")
-	# The lower East door leads on under the clearing (the Undercroft, not built).
-	_door("EastLower", Rect2i(50, 22, 8, 4), 1, "", "")
+	# The lower East door leads on under the clearing, into the Undercroft (IB-06).
+	_door("EastLower", Rect2i(50, 22, 8, 4), 1, IB06, "West")
 	_finish()
 	quit()
 

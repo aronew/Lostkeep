@@ -105,6 +105,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | B1 | Ironbark | The keep's tall well-shaft, a lip visible above jump height | Hard | ✔ | The keep's battlements: a lore room and a wing upgrade hint |
 | B1b | Ironbark **IB-02** | The Old Crypt: the Root Well's mouth, far above any jump, moonlight coming down it. Also the cave's wall up to the west gallery | Hard | ✔ | The Guard Post from below; a way back up the loop |
+| B1c | Ironbark **IB-06** | The Undercroft: a passage high in the root chamber's east wall, 17 tiles of sheer wall below it | Hard | ✔ | A way on under the moat toward the Keep's walls |
 | B2 | Dusk-Drifter | The ash chimneys | Hard | ✔ | A secret forge and a charm |
 | B3 | Hearth-Plains | The silo tower beside the Silk Mother arena | Hard | ✔ | A bypass shortcut |
 | B4 | Refuge | The camp's chimney under the well | Hard | (it's the sandbox) | — |
@@ -124,6 +125,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | D1 | Ironbark **IB-01** | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
 | D1b | Ironbark **IB-02** | The Old Crypt: the cistern and its flooded gallery, a glint deep inside | Hard | ✔ | A drowned burial: a relic |
+| D1c | Ironbark **IB-06** | The Undercroft: the sump in the cistern walk's floor, dark water going on down, a glint in it | Hard | ✔ | A flooded way down under the clearing |
 | D2 | Refuge | The flooded undercroft under the camp | Hard | ✔ | The undercroft shortcut to the Vats |
 | D3 | Fen-Stalker | Deep fen pools | Hard | ✔ | Mire-Kin rescues |
 | D4 | Tide-Weaver | The whole region | Hard | — | Return region |
