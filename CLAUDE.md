@@ -350,7 +350,7 @@ She steps forward with every hit.
 ### Art pipeline
 1. **Prompt books:** prompts live in `docs/art-production/*-prompt-book.html`
    (layout copied from the user's MetroidVania repo). Reference images are in
-   `docs/art-production/lostkeep-attach/` (A–N).
+   `docs/art-production/lostkeep-attach/` (A to Z).
 2. **The user generates sheets.** Unchanged originals go in
    `art/source/<region>/`.
 3. **Processing:** `python3 tools/process_art.py <src> <out>` reduces each
@@ -472,9 +472,82 @@ She steps forward with every hit.
   teal mist, OC6 arcades twice at 0.32 and 0.58, mist, SH7 ruins in dark
   silhouette at 0.78) under a multiply grade (`Mood`, purple at the room's top,
   teal at its bottom: `MOOD_TOP`, `MOOD_BOTTOM`); `_crypt_foreground()` adds
-  OC7's dark rock and a nearer layer of dark pillars and roots (1.35). The
+  OC7's dark rock (the nearer pillars and roots, blown up from SH and P5 art,
+  read as holes and were taken out until FG1 and FG2 arrive). The
   surface rooms got the same idea: `ForegroundNear` in `surface_builder.gd`,
   P5's ferns and a branch enlarged as silhouettes at 1.45.
+  **The SH stone's inside is masonry, not void** (the creative lead: tiles
+  "don't connect correctly" at the joins): `tools/make_crypt_sh.py` cuts the
+  void off SH1 and SH2's bands along their blocks (pixels darker than 40 go
+  clear) and makes `sh_fill.png` from SH1's lit blocks; the material fades it
+  over 4 tiles. Thin slabs are solid stone and joins have no black notches;
+  deep rock still goes dark. This departs from the earth's shadow rule on
+  purpose: the crypt mockup fills its masses with blocks.
+  **No straight seams inside a slab** (the creative lead: "a hard cut line, not
+  blending into the shadow"): the floor band's lit bricks are broken off below,
+  and the ceiling band's above, block by block (`ragged_top`/`ragged_bottom` in
+  `make_crypt_sh.py`, shaded at the break); `sh_fill` is cut only from SH1's
+  evenly lit courses (rows 13 to 28), never its cap row or darker tail; and the
+  fill shader nudges each fade step per 8 x 4 block so steps follow the
+  masonry. Check thin slabs (4 tiles) after any change to the stone.
+  **Stone colour:** graded toward reference Y (the creative lead: "too bright";
+  Y's stone "goes into the black ... at a slight darker color"):
+  `STONE_GRADE` (0.82, 0.76, 0.74) multiplies the terrain, placed islands and
+  props in both crypt rooms (`_grade_stone()`), so lit faces measure about
+  (72, 70, 87) as in Y; `sh_fill` is darkened to Y's plum-grey masonry (about
+  #2F283D) and fades over 5 tiles. Comparison: `docs/rooms/ironbark_05/stone_vs_reference_y.png`.
+  **The crypt terrain is now the CY stone** (the creative lead's chunky brick
+  after reference Y, about 11 x 5 px; they tried the finer brick in a scene and
+  rejected it): CY1 (floor and ceiling), CY2 (wall, outer floor corner) and
+  CY2b (outer ceiling corner), clean 8x exports in `art/source/ironbark/crypt_y/`,
+  cut by `tools/make_crypt_cy.py` into `terrain/cy_*` (material `terrain_cy.tres`,
+  `_use_crypt_y_stone()` in `room_builder.gd`, used by IB-02 and IB-05). The
+  SH paragraphs above describe the stone it replaced; the SH islands, shrine
+  and props stay. Its bands fade into the dark brick by brick themselves, so
+  the inside of a mass is the void (fade 0, no masonry fill) and the terrain
+  is not graded (`_grade_stone()` skips it; islands and props still are).
+  **Thin slabs** (under 5 tiles): the wall band's and the corners' inward
+  fades would paint dark alcoves over the bands' lit bricks, so a material's
+  `thin_wall_depth` (12 for CY: the quoin column) limits walls and corners
+  there to their face stones, and each corner to its band's share of the
+  slab. Materials without it (earth, SH) draw as before.
+  **Inner corners** (the creative lead: "these corners look weird", where a
+  slab's ceiling met a wall below it and the wall's quoins ran on up into the
+  slab): a material can carry painted `inner_under` (a ceiling running into a
+  wall) and `inner_top` (a floor running into a wall rising from it), each
+  painted with its wall on the left of the notch and mirrored for the other
+  side. With them, walls stop at the line instead of running past it. CY's come
+  from CY2b's and CY2's right cells, cut across the whole stone side so their
+  own fades reach the dark (anchors (59, 48) and (64, 48)). They are placed
+  only where the wall runs at least 3 tiles (`INNER_WALL`): on a one-tile step
+  the inner floor corner's wall stood up into the air (the creative lead: "this
+  looks a bit odd"), so steps keep the outer corner, wall foot and head.
+  **Light along the edges, dark inside** (the creative lead circled a step and
+  a pillar that "looks weird"): CY2's corners and wall fade into the dark
+  faster than CY1's bands, and walls are drawn over floors, so with a
+  `thin_wall_depth` material (CY) the skin draws only the face stones (a) for
+  outer corners, always (their turn of quoins); (b) for walls within 3 tiles of
+  a floor or ceiling line; (c) for short faces (steps under 3 tiles). The
+  bands' lit bricks show there, and the wall's fade only below them. Beside a
+  step down of one or two tiles, the lower floor's band runs on under the first
+  3 tiles of the upper one (`_step_drop`), so both fade out at one depth.
+  **CY4 and CY5** are kept in `art/source/ironbark/crypt_y/` but not used:
+  CY5's ledges were tried in IB-05 and rejected ("just the ledges don't look
+  good"; IB-05's plates, ledges and wall ledges stay SH4's), CY4's arcade and
+  pier too ("look bad"). Kept for later: CY4's stairs and CY5's broken slab
+  ends. Book 1 asks again: CY4b (the arcade and pier after Y's) and CY5's
+  ledges (wedges of broken masonry, not flat bars).
+  **Next for the crypts' look:** foreground
+  depth in value steps, as in Y and Hollow Knight: the playfield (1.0), near
+  rubble at about 70 % value (1.12), nearer rubble at about 45 % (1.25), then
+  the black silhouette (1.4). FG5 is the rubble, painted at full value so the
+  game darkens copies to each step; FG1 and FG2 are the silhouettes.
+  **The fade rule** (the creative lead, pointing at broken slabs in a generated
+  CY set): stone fades into the dark gradually, brick by brick, lavender grey
+  to dusky plum to near-black plum to void, loose bricks at the edge; never a
+  straight light/dark line, a flat black slab or a hard cut. It is `FADE_RULE`
+  in Book 1 (in every CY card) and CY6 is a set of big masses built on it.
+  Judge every new terrain sheet by it.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative

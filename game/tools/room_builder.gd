@@ -77,13 +77,53 @@ func _shared() -> TileSet:
 ## blocks, made for the Shrine Hall). A room calls this after _shared() to use
 ## it as its stone in place of the plum crypt kit.
 func _use_shrine_stone() -> void:
-	var m := _material("sh", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
+	# A masonry fill that darkens with depth (5 tiles): thin slabs are solid
+	# stone, as in the mockup, and only deep rock goes to the void.
+	var m := _material("sh", 8, 48, 37, 5.0, Color(0, 0, 0, 0))
 	m.corner_top = load(TERRAIN + "sh_corner_top.png")
 	m.corner_top_anchor = Vector2(36, 29)
 	m.corner_under = load(TERRAIN + "sh_corner_under.png")
 	m.corner_under_anchor = Vector2(42, 42)
 	ResourceSaver.save(m, m.resource_path)
 	_stone = m
+
+
+## The crypt stone after reference Y (CY1, CY2, CY2b: the creative lead's pick,
+## the chunky brick). Its bands fade into the dark brick by brick themselves, so
+## the inside of every mass is the void (fade 0). Cut by tools/make_crypt_cy.py.
+var _cy_stone := false
+
+
+func _use_crypt_y_stone() -> void:
+	var m := _material("cy", 8, 48, 55, 0.0, Color(0, 0, 0, 0))
+	m.corner_top = load(TERRAIN + "cy_corner_top.png")
+	m.corner_top_anchor = Vector2(64, 8)
+	m.corner_under = load(TERRAIN + "cy_corner_under.png")
+	m.corner_under_anchor = Vector2(65, 65)
+	m.thin_wall_depth = 12  # the quoin column
+	m.inner_under = load(TERRAIN + "cy_inner_under.png")
+	m.inner_under_anchor = Vector2(59, 48)
+	m.inner_top = load(TERRAIN + "cy_inner_top.png")
+	m.inner_top_anchor = Vector2(64, 48)
+	ResourceSaver.save(m, m.resource_path)
+	_stone = m
+	_cy_stone = true
+
+
+## The crypt stone's grade (the creative lead: "too bright"; reference Y's stone):
+## SH1 to SH4 as painted are bluer and brighter than Y's grey-lavender, so the
+## terrain, the placed islands and the props behind are all multiplied by this.
+## Lit faces then measure about (72, 70, 87) on screen, as in Y.
+const STONE_GRADE := Color(0.82, 0.76, 0.74)
+
+
+func _grade_stone() -> void:
+	for n in ["TerrainSkin", "PlacedArt", "Behind"]:
+		if n == "TerrainSkin" and _cy_stone:
+			continue  # the CY stone is painted in Y's colours already
+		var node := _root.get_node_or_null(n) as CanvasItem
+		if node:
+			node.modulate = STONE_GRADE
 
 
 ## The crypts' depth (the creative lead: "more moody colors like in this
@@ -157,9 +197,8 @@ func _shrine_far() -> void:
 	mood.material = mm
 
 
-## In front of everything: OC7's dark rock along the top and bottom of the view,
-## and, nearer still, a few great pillars and roots in silhouette (the reference's
-## dark frame). Scrolls faster than the playfield; stays put vertically.
+## In front of everything: OC7's dark rock along the top and bottom of the view.
+## Scrolls faster than the playfield; stays put vertically.
 func _crypt_foreground() -> void:
 	var h := float(room.size.y * TILE)
 	var unlit := CanvasItemMaterial.new()
@@ -175,25 +214,8 @@ func _crypt_foreground() -> void:
 	var bottom := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 250, 768, 110), Vector2(0, h - 96))
 	bottom.name = "Bottom"
 	bottom.material = unlit
-	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
-	near.scroll_scale = Vector2(1.35, 1.0)
-	near.repeat_size = Vector2(1100, 0)
-	near.repeat_times = 4
-	near.z_index = 31
-	var dark := Color(0.07, 0.05, 0.1)
-	for c in [[Rect2(272, 32, 20, 80), 80.0], [Rect2(272, 32, 20, 80), 640.0]]:
-		var reg: Rect2 = c[0]
-		var pil := _sprite(near, ENV + "sh_arcades.png", reg, Vector2(c[1], h - reg.size.y * 1.6 + 6))
-		pil.name = "Pillar"
-		pil.scale = Vector2(1.6, 1.6)
-		pil.modulate = dark
-		pil.material = unlit
-	for c in [[Rect2(224, 112, 20, 64), 300.0], [Rect2(88, 112, 24, 64), 900.0]]:
-		var root := _sprite(near, ENV + "sh_flora.png", c[0], Vector2(c[1], -4))
-		root.name = "Roots"
-		root.scale = Vector2(2, 2)
-		root.modulate = Color(0.16, 0.07, 0.12)
-		root.material = unlit
+	# (A nearer layer of pillars and roots goes here when FG1 and FG2 arrive: the
+	# first try, P5 and SH pieces blown up into black shapes, read as holes.)
 
 
 ## The room's root node.

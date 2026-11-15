@@ -78,7 +78,7 @@ func _initialize() -> void:
 	room_path = ROOM_PATH
 	var tileset := _shared()
 	# The same stone as the Shrine Hall next door (the creative lead's SH kit).
-	_use_shrine_stone()
+	_use_crypt_y_stone()
 	_begin("IronbarkOldCrypt")
 	_shrine_far()
 	_back_walls()
@@ -88,6 +88,7 @@ func _initialize() -> void:
 	_root.get_node("EarthBackWalls").set("brightness", 0.85)
 	var t := _terrain(tileset)
 	_build_well(t["behind"], t["placed"])
+	_grade_stone()
 	_build_galleries(t["behind"])
 	_build_west(t["behind"])
 	_build_machines()

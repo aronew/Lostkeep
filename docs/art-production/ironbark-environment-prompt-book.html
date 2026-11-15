@@ -196,6 +196,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <a href="#surface">Ironbark surface</a>
       <a href="#shrinehall">The Shrine Hall (IB-05)</a>
       <a href="#oldcrypt">The Old Crypt (IB-02)</a>
+      <a href="#cryptstone">Crypt stone after Y</a>
+      <a href="#foreground">Foreground depth</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
       <a href="#props">Lived-in dressing</a>
@@ -324,6 +326,20 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p>The guard's burial galleries beside a root-choked well, after mockups O, P and Q. One set, made in order (OC1 first): every card attaches the ones before it. Terrain follows the shadow rule: lit at the open edge, black at the heart.</p>
       <div class="cards" id="cards-oldcrypt"></div>
     </section>
+    <section id="cryptstone" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Crypt stone after reference Y (the tile set)</h2>
+      <p>The creative lead's pick for the crypts' stone: the fine grey-lavender brick of reference Y, with its pale cap row and its masses stepping down into darker plum masonry before the black. It replaces SH1 and SH2 (the chunky blue-grey blocks) as the terrain of IB-02 and IB-05; the SH islands, shrine and props stay unless they clash. Make CY1 first; every later card attaches it. These are terrain pieces painted onto black-box collision: walking lines perfectly straight, every piece joining its neighbours, sizes in the room's grid (one tile = 16 px in game = 128 px at x8).</p>
+      <p><strong>Every piece fades into the dark gradually.</strong> The creative lead's pick from a generated CY set: broken slabs whose stone runs on under the walking line and steps down brick by brick, lavender grey to dusky plum to near-black, loose bricks crumbling at the edge, then black. That rule (FADE in every card) is what makes a mass read as solid and deep; a straight line between light and dark, a flat black slab or a hard cut is a fail. CY6 is a set of big masses built around it.</p>
+      <div class="cards" id="cards-cryptstone"></div>
+    </section>
+    <section id="foreground" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>Foreground depth (the nearest layers)</h2>
+      <p>The layers in front of Kleo, nearest the camera, that give a room its depth: they scroll faster than the playfield (1.3 to 1.5) and frame the view like the dark roots and pillars at the edges of mockup Y. Today they are placeholders (the crypt's OC7 strip, and P5's ferns blown up into flat black shapes). These are near-black silhouettes, but painted ones: lit faintly at their rims by the room's own light, never flat black cut-outs. They must be sparse: big shapes with wide gaps, so Kleo is behind them only for a moment. FG1 and FG2 are for the crypts (IB-02, IB-05), FG3 and FG4 for the surface (IB-03, IB-04).</p>
+      <p><strong>Depth in value steps (the creative lead, after Y and Hollow Knight):</strong> between the ground Kleo stands on and the black silhouette there are one or two nearer layers of rubble and stone, each a step darker and scrolling a little faster: the playfield (full value, 1.0), near rubble (about 70 % value, 1.12), nearer rubble (about 45 %, 1.25), then the black silhouette (1.4). FG5 is painted for those middle steps: lit like the playfield, so the game can darken each copy to its step without it going muddy.</p>
+      <div class="cards" id="cards-foreground"></div>
+    </section>
     <section id="parallax" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Parallax layers</h2>
@@ -428,6 +444,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
+    ["Crypt stone after Y: bands, walls and corners, inside fill, stairs, supports, ledges, masses fading into the dark", "SH1 and SH2 graded toward Y", "need", "CY1 to CY6"],
+    ["Foreground depth: crypt and surface silhouettes, side frames, rubble for the value steps", "Placeholders (OC7, P5 blown up)", "need", "FG1 to FG5"],
     ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
@@ -466,6 +484,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["P", "P-crypt-cistern.jpg", "Crypt cistern", "IB-02: the flooded lower gallery, waterfall into the cistern, pillar stumps in the water."],
     ["Q", "Q-crypt-shrine.jpg", "Crypt shrine", "IB-02: a hooded statue shrine on a floating ruin, ruined arcades, rubble and purple flora."],
     ["X", "X-crypt-shrine-hall.jpg", "Shrine Hall (the Old Crypt's first section)", "The creative lead's target for IB-05: pale blue-grey block masonry with thick rims, the hooded statue's carved island, crystal blocks, lit doorways, small stone plates. Attach to every SH card."],
+    ["Y", "Y-crypt-mood-depth.jpg", "Crypt mood and depth", "The creative lead's reference for the crypts' mood and depth: purple above, deep teal below, many receding layers, dark roots and pillars framing the edges. Attach to the FG cards."],
+    ["Z", "Z-moonlit-forest-islands.jpg", "Moonlit forest and islands", "The surface rooms' target (IB-03, IB-04): plum boulder terrain, large floating islands, purple sky, teal forest. Attach to the surface FG cards."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
     ["S", "S-surface-aqueduct-garden.jpg", "Surface: aqueduct garden", "Terraced earth, waterfalls, a far aqueduct, ruined arches, fenced chapel. Style target for the SF cards."],
     ["T", "T-surface-chapel-gully.jpg", "Surface: chapel gully", "The chapel over a gully, floating islands, stone terraces, a sunken arch. Style target for the SF cards."],
@@ -519,6 +539,10 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   // Canvas sizes
   var WIDE = "3072×1024 px (art 384 × 128 px at x8)";
   var SH_STYLE = "STYLE: match attached mockup X exactly in palette and finish: pale blue-grey block masonry (#8C93AA, #6E7590, #4E5470, dark mortar #2A2C40), chunky square blocks with a carved light cap row on walking edges, moss and ivy, pink-violet crystal blocks, purple flowers, amber flames only as flame. Crisp pixel art, four tones per material, thin dark outlines on silhouettes only. Do not copy X's layout or its character. Never plum or purple stone.";
+  var FADE_RULE = "FADE INTO THE DARK (the creative lead's rule for every mass): below a walking line, behind a wall face, above a ceiling, the stone fades GRADUALLY into the void, brick by brick: the lit cap row, then two or three courses of lit brick, then each course a step darker (lavender grey to dusky plum #4A3A5E, to deep plum #2E2438, to near-black plum #1A1424), the bricks still faintly visible in the dark ones, then void #0B0812. The fade boundary follows the bricks: some bricks stay lit longer, some drop out early, loose single bricks scattered at the edge of the dark. Never a straight line between light and dark, never a flat black slab, never a hard cut.";
+  var CY_STYLE = "STYLE: match attached reference Y's masonry exactly in palette, brick size and finish: fine grey-lavender bricks in staggered courses, a pale worn cap row on every walking edge, moss in the joints, thin dull brick-red roots (never the Blight's crimson), lit faces #6E6C80 to #85839A, darker plum masonry #3A3248 to #2A2438 behind them, void #0B0812 at the heart. Crisp pixel art, four tones per material, thin dark outlines only on silhouettes. Strict side view, no perspective. Do not copy Y's layout or its character. " + FADE_RULE;
+  var CLEAN_GRID = "CLEAN 8x PIXEL GRID (required: the first CY1 and CY2 drafts were resized and cannot be used): draw on a strict grid where every art pixel is a solid 8 x 8 square of a single colour, aligned to the canvas's top-left corner. No anti-aliasing, no blur, no soft or feathered edges, no smoothing, no gradients inside a pixel, no half-transparent pixels: every pixel is fully opaque or fully transparent. Export at exactly the canvas size given, never resized or upscaled afterward. Attached CY2b is drawn this way: match its pixel grid, brick size, colours and finish exactly.";
+  var FG_STYLE = "STYLE: the nearest layer in front of the playfield, as in attached mockup Y's dark edges: near-black silhouettes (#0B0812 to #1A1424 for crypt stone, #14101C to #241A2A for wood and roots), painted, not flat: a faint rim light (one or two pixels, dull violet #4A3A5E or teal #2E5A5C) along the edges that face the room, and soft internal shapes one value step apart so the forms read. No bright colours except where stated. Large, readable shapes with wide transparent gaps between pieces. Crisp pixel art, thin dark outlines only where a shape needs separating, no blur.";
   var SH_SHADOW = "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 192 px of lit blocks with no gaps, then 96 px stepping down into void #0B0812 along the blocks' own outlines, never a straight line. Only walking lines are perfectly straight.";
   var BG = "3072×1440 px (art 768 × 360 px at x4)";
 
@@ -617,12 +641,13 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Outside the mass (past the open edge) is fully transparent.",
         "",
         "1. A wall face band on the left, from the top edge to the bottom edge, joining a copy of itself top to bottom. The face points RIGHT, its wall line at x = 320: packed earth #3E2E4A and #241A2E with embedded boulders and cut roots #3A2420 at the face, then the shadow inward (to the left), void from x = 128 leftward. No ferns or mushrooms growing out of it.",
-        "2. Four corners, each in its own 512 × 512 cell, separated by transparent space. In each, the two edges meet at the cell's centre (256, 256) and the shadow follows both edges, so the lit material is an L along them with the void inside the L:",
-        "   a. Outer top corner: a walkable top (IB2's grass and moss, its walking line at y = 256) turns down into a wall facing right at x = 256. The corner is worn round; moss rolls over it and hangs down the wall.",
-        "   b. Outer ceiling corner: a ceiling (IB2's underside, its line at y = 256) turns up into a wall facing right at x = 256, with roots hanging from the rounded corner.",
-        "   c. Inner floor corner: a walkable floor (line at y = 256, running right) meets a wall rising on its left (face at x = 256, facing right).",
-        "   d. Inner ceiling corner: a ceiling (line at y = 256, running right) meets a wall that drops below it on its left (face at x = 256, facing right).",
-        "3. A pillar top, in a 512 × 512 cell: the top of a column of earth 384 px wide (x 64 to 448) with a walkable top at y = 192 and walls on both sides. Grass rolls over both rounded edges; each face goes into shadow toward the middle, so the column's core is plain void from about y = 400 down."
+        "2. Four corners, each in its own 512 × 512 cell with the two edges meeting exactly at the cell's centre (256, 256). The stone is a solid mass that fills its part of the cell out to the cell's edges, not a thin L-shaped strip of brick:",
+        "   a. Outer floor corner: the mass fills the lower-left quarter; CY1's floor and cap row run along its top and turn down into a wall facing right, the cap row wrapping the corner as quoins.",
+        "   b. Outer ceiling corner: the mass fills the upper-left quarter; CY1's ceiling runs along its underside and turns up into a wall facing right.",
+        "   c. Inner floor corner: the mass fills everything except the upper-right quarter (open air); the floor runs along the bottom-right, the wall rises on the left, the cap row runs into the wall.",
+        "   d. Inner ceiling corner: the mass fills everything except the lower-right quarter; the ceiling runs along the top-right, the wall hangs on the left.",
+        "   Each corner's edges continue CY1's and the wall band's bricks so they join with no seam.",
+        "3. EVERY CORNER FADES, exactly as the wall and CY1 do (the first draft's corners were lit brick right through, and that is wrong): only about 48 px of lit brick follows each open edge. Away from the open edges, into the mass, each brick steps darker (dusky plum #4A3A5E, deep plum #2E2438, near-black plum #1A1424) to void #0B0812 about 200 px in. On an outer corner the dark gathers toward the far inside of the mass (the cell's lower-left or upper-left corner), meeting the two edges' fades in a ragged diagonal. On an inner corner the lit stone runs along both faces of the notch and the whole bulk of the mass behind them is dark plum, then void. The fade follows the bricks, with loose lit bricks inside the dark. NOT: an L of evenly lit brick, a lit band ending on a straight line, transparent space where the mass should be dark."
       ] },
     // ------------------------------------------------------------- keep
     { id: "K1", group: "keep", file: "keep_stone_fill", title: "Keep masonry fill",
@@ -1108,6 +1133,189 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "- Tier upon tier of ruined arcades, stairs and tall pillars, two far hooded statues in niches, all in soft blue mist #2A3150 to #4A5478, very low contrast, flat values, no ledge that could read as walkable.",
         "- A paler haze in the middle, darker toward the top and bottom. Two or three tiny far-off flames #F2B04A, no other warm colour."
+      ] },
+    { id: "FG5", group: "foreground", file: "crypt_fg_rubble", title: "Foreground rubble for the value steps (crypt)", scale: 4,
+      about: "Y's 'little extra slightly darker stone' in front of the floor: heaps of rubble, fallen bricks and broken blocks along the bottom of the view, used twice (about 70 % and 45 % value) between the playfield and the black silhouettes.",
+      canvas: BG, game: "Pieces cut apart, placed along the bottom of the view", attach: ["Y", "Your approved CY1"],
+      text: [
+        "TASK: rubble pieces for the foreground on a transparent canvas, each separated by transparent space, each sitting on the canvas's bottom edge.",
+        "",
+        "STYLE: the same masonry, palette and finish as the approved CY1 (Y's fine grey-lavender brick), painted at FULL value, lit from above like the playfield: the game darkens copies of these pieces in steps. Crisp pixel art, four tones, thin dark outlines only on silhouettes. Strict side view.",
+        "",
+        "- Five rubble heaps, 300 to 900 px wide and 120 to 320 px tall: fallen bricks, broken cap stones, a toppled column drum, a cracked block, moss and a few dark leaves in the gaps, lumpy irregular tops (never a straight top: they must not read as something to stand on).",
+        "- Two low broken wall stubs, 400 and 600 px wide, 200 to 360 px tall, bricks missing from their tops.",
+        "- One fallen arch fragment lying on its side, 500 px wide.",
+        "- Wide transparent gaps between pieces."
+      ] },
+    // ------------------------------------------------------------- crypt stone after Y
+    { id: "CY1", group: "cryptstone", file: "crypt_y_bands", title: "Crypt stone after Y: floor and ceiling bands",
+      about: "Every floor and ceiling edge in the crypts, in Y's stone: a pale cap row on the walking line, fine bricks below it, lit for a short depth, then stepping down brick by brick into darker plum masonry and the void. The first draft had the right look but was not on whole pixels; this asks for the same bands on a clean 8x grid.",
+      canvas: WIDE, game: "2 bands, 384 wide, repeating left to right", attach: ["Y", "Your CY2b ceiling corners (the brick size, pixel grid and finish to match)", "Your clean CY1 draft (the fade to keep; its bricks are too small)"],
+      text: [
+        "TASK: two long horizontal bands of the masonry in attached reference Y on one transparent canvas, each joining a copy of itself left to right. Keep the look of the attached first CY1 draft; redraw it on a clean grid matching CY2b.",
+        "",
+        CLEAN_GRID,
+        "",
+        CY_STYLE,
+        "",
+        "BAND 1, a floor, y = 0 to 448: a perfectly straight walking line at y = 64. On it a cap row of pale worn stones (#9A98A6 to #B8B6C0) one brick tall, a few tufts of moss and one or two small rubble stones above it. Below it the face: bricks the size of CY2b's, about 88 x 40 px each (11 x 5 art pixels), in staggered courses (NOT the small 4 x 3 bricks of the earlier drafts), lit grey-lavender (#6E6C80 to #85839A) for about 96 px, then course by course darker (dusky plum #4A3A5E, deep plum #2E2438, near-black plum #1A1424) along a ragged edge that follows the bricks, reaching void #0B0812 by about y = 400. Rows y = 400 to 448 are void or transparent.",
+        "BAND 2, a ceiling, y = 576 to 1024, its ceiling line a straight guide at y = 960 (not drawn): the same band upside down, matching CY2b's ceilings: a pale cap row along the line, lit bricks above it, darkening upward brick by brick into void by about y = 624; a few loose bricks, short moss and one or two thin dull red roots hanging up to 56 px below the line.",
+        "The right end of each band must continue into its left end with no seam (the game repeats it)."
+      ] },
+    { id: "CY2", group: "cryptstone", file: "crypt_y_walls_corners", title: "Crypt stone after Y: the wall and the two floor corners",
+      about: "The side of every mass and the two corners where a floor meets a wall. The second draft had the right fade but was not on whole pixels; this asks for the same pieces on a clean 8x grid, laid out like CY2b so the four corners match. (The two ceiling corners are CY2b, already done.)",
+      canvas: WIDE, game: "1 wall band 64 × 128 and 2 corners, cut apart", attach: ["Y", "Your CY2b ceiling corners (the pixel grid, finish and layout to match)", "Your new CY1", "Your CY2 second draft (the look to keep)", "Your clean CY2 draft (the fade to keep; its bricks are too small)"],
+      text: [
+        "TASK: three pieces on one transparent canvas, matching CY2b and the new CY1 exactly in pixel grid, brick size, quoins, colour and the way they fade. Keep the look of the attached CY2 second draft; redraw it on a clean grid.",
+        "",
+        CLEAN_GRID,
+        "",
+        CY_STYLE,
+        "",
+        "BRICK SIZE: exactly CY2b's, about 88 x 40 px each (11 x 5 art pixels), quoins as big as CY2b's. NOT the tiny bricks of the earlier clean draft.",
+        "",
+        "THE WALL FADES SIDEWAYS: CY1's floor fades from its cap row DOWN into the dark; this wall is the same fade turned on its side, from its face INWARD into the dark. Light only ever comes from the open side.",
+        "",
+        "1. WALL BAND, x = 0 to 512, the full height y = 0 to 1024, joining a copy of itself top to bottom with no seam. Its face points RIGHT along a straight guide at x = 448 (not drawn): a column of pale quoin stones, long and short, some missing, the brightest thing on the wall, ending exactly at the guide. Inward (to the left): about 96 px of lit brick, then each brick column a step darker (dusky plum #4A3A5E, deep plum #2E2438, near-black plum #1A1424), bricks faintly visible, reaching void #0B0812 by about x = 160. Left of that, void. The edge between lit and dark is ragged and follows the bricks, a few loose lit bricks inside the dark. NOT: a wall lit evenly across its width, a straight vertical line where the bricks stop.",
+        "2. OUTER FLOOR CORNER, the cell x = 1024 to 2048: the stone mass fills ONLY the LOWER-LEFT quarter of the cell; the rest is transparent air. Its top is CY1's floor (cap row on a straight walking line at y = 512) and its right side is the wall face (quoins on a straight line at x = 1536); the cap row wraps the corner as a quoin. It is CY2b's outer ceiling corner turned upside down: moss sits on top, roots run down.",
+        "3. INNER FLOOR CORNER, the cell x = 2048 to 3072: the stone fills everything EXCEPT the UPPER-RIGHT quarter, which is open air. A floor runs along the bottom of the open quarter (walking line at y = 512) and a wall rises along its left side (quoins on a line at x = 2560); the cap row runs into the wall. It is CY2b's inner ceiling corner turned upside down.",
+        "4. Both corners fade exactly as CY2b's do: lit brick only along the open edges, then stepping darker into the mass, void at the far inside, along a ragged brick-by-brick diagonal. The stone reaches the edges of its cell (dark there) so the game can join it to the fill."
+      ] },
+    { id: "CY2b", group: "cryptstone", file: "crypt_y_ceiling_corners", title: "Crypt stone after Y: the two ceiling corners",
+      about: "CY2's second draft got the wall and both floor corners right. This asks only for what it missed: the two corners where a ceiling meets a wall.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "2 corners, cut apart", attach: ["Y", "Your CY2 second draft (its wall and floor corners are the look to match)", "Your CY1 (its ceiling band)"],
+      text: [
+        "TASK: two corner pieces side by side on one transparent canvas, each in its own 1024 × 1024 cell, the two edges meeting exactly at the cell's centre (512, 512). Match the attached CY2 draft's wall and floor corners exactly in brick, quoins, colour and fade, and CY1's ceiling band.",
+        "",
+        CY_STYLE,
+        "",
+        "1. OUTER CEILING CORNER (left cell): the stone mass fills ONLY the UPPER-LEFT quarter; the other three quarters are empty transparent air. The mass's underside is a ceiling (CY1's ceiling band, its pale cap row along the bottom edge, facing down) and its right side is a wall face (quoins facing right). The two meet at the centre, the cap row wrapping the corner as a quoin. It is the CY2 draft's outer floor corner turned upside down: moss and roots hang DOWN from the ceiling.",
+        "2. INNER CEILING CORNER (right cell): the stone fills everything EXCEPT the LOWER-RIGHT quarter, which is open air. A ceiling runs along the top of the open quarter (cap row facing down) and a wall runs down its left side (quoins facing right); they meet in the notch at the centre. It is the CY2 draft's inner floor corner turned upside down. NOT a wall with a ledge sticking out of it, NOT a pillar.",
+        "3. Both fade into the dark exactly as the CY2 draft's corners do: lit brick only along the open edges, then stepping darker into the mass, void at the far inside, along a ragged brick-by-brick diagonal."
+      ] },
+    { id: "CY3", group: "cryptstone", file: "crypt_y_fill", title: "Crypt stone after Y: the inside of the masses",
+      about: "What fills a mass behind its lit edges, as in Y under its floors: darker plum masonry with the bricks still faintly visible. The game fades it to black deeper in.",
+      canvas: "1024×1024 px (art 128 × 128 px at x8)", game: "One square tile, repeating in both directions", attach: ["Y", "Your approved CY1"],
+      background: "Opaque: the tile fills the whole canvas.",
+      text: [
+        "TASK: one square tile of dark masonry, opaque edge to edge, that repeats seamlessly left to right and top to bottom.",
+        "",
+        CY_STYLE,
+        "",
+        "- The same fine bricks as CY1 in staggered courses, but in shadow: plum-grey #2E2838 to #3C344A, mortar #1E1A28, very low contrast, a few bricks missing or cracked, no moss, no light source, no highlights.",
+        "- Even in value across the tile: no gradient, no vignette (the game darkens it with depth)."
+      ] },
+    { id: "CY4", group: "cryptstone", file: "crypt_y_stairs_supports", title: "Crypt stone after Y: stairs and arch supports",
+      about: "Y's stepped masonry stairs and the arches that carry its floors, in the chunky brick of the CY set now in the game: a flight of steps rising three tiles, and an arcade of round arches on piers that stands under a slab.",
+      canvas: WIDE, game: "Pieces cut apart", attach: ["Y", "Your large-brick CY1 (the brick size, cap row, colours and fade to match)", "Your large-brick CY2 and CY2b (the quoins and corners to match)"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the attached large-brick CY1, CY2 and CY2b exactly, so they sit in the game beside them with no change of brick, colour or finish.",
+        "",
+        CLEAN_GRID,
+        "",
+        "BRICK SIZE (the creative lead's pick, the chunky brick): exactly the large-brick CY1's, about 88 x 40 px each (11 x 5 art pixels), quoins and cap stones as big as CY2b's. NOT small or fine bricks.",
+        "",
+        CY_STYLE,
+        "",
+        "1. A flight of stairs, 512 px wide, rising 384 px from its foot (left) to its head (right): six steps, each 64 px high and about 85 px deep, each tread a pale cap stone like CY1's cap row. The side under the steps is CY1's brick, lit near the treads and fading brick by brick into the dark toward the bottom-right, as CY1 fades below its floor. Its foot and head are straight lines level with the floors they join.",
+        "2. An arcade: three round arches on four square brick piers, 1024 px wide, 640 px tall, the piers standing on a straight bottom line. Each arch's ring is a course of pale wedge-shaped voussoir stones the size of CY2b's quoins; the piers have CY2's quoins on both faces. The space inside each arch is dark plum masonry fading to void at its back; a lantern hangs in one arch (flame only, no glow).",
+        "3. A single pier with a cap stone, 128 px wide, 640 px tall, quoins on both faces, its middle a step darker than its faces."
+      ] },
+    { id: "CY4b", group: "cryptstone", file: "crypt_y_arcade_pier", title: "Crypt stone after Y: the arcade and a pier, again",
+      about: "CY4's stairs are kept; its arcade and pier were rejected (the creative lead: they \"look bad\"): flat, even, symmetrical, every stone the same, the pier a plain stripe. This asks for the arcades and columns of reference Y: built, worn, broken and lived in.",
+      canvas: WIDE, game: "Pieces cut apart", attach: ["Y", "Your large-brick CY1 (the brick size, cap row, colours and fade to match)", "Your large-brick CY2 and CY2b (the quoins to match)"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the attached large-brick CY1, CY2 and CY2b exactly in brick size, colour and finish, and the arcades and columns of reference Y in their shapes and wear.",
+        "",
+        CLEAN_GRID,
+        "",
+        "BRICK SIZE (the creative lead's pick, the chunky brick): exactly the large-brick CY1's, about 88 x 40 px each (11 x 5 art pixels).",
+        "",
+        CY_STYLE,
+        "",
+        "1. AN ARCADE, about 1280 px wide and 640 px tall, standing on a straight bottom line, as in reference Y's lower right: three round arches of DIFFERENT widths, on columns, not on flat brick slabs. Each column is a real column: a stepped base two stones high, a shaft of stacked drums (round stones, shaded round, not flat bricks), and a carved capital that flares out to carry the arch. Each arch ring is a course of wedge-shaped voussoirs fanning around the curve, with a larger keystone at the top; the stones vary in tone and size, several are chipped, one has fallen out leaving a dark gap. Above the arches, CY1's brick wall with its cap row, broken at one end with loose bricks. Moss in the joints, ivy hanging from one arch, a thin dull red root down one column. Inside each arch: deep plum masonry fading to void at its back, with one dim lantern hanging on a chain in one arch (flame only, no glow). Weathering is uneven: one end more ruined than the other. NOT symmetrical, NOT every stone the same, NOT flat slabs for columns.",
+        "2. A FREE-STANDING PIER, 128 px wide, 640 px tall: a square brick pier with CY2's quoins on both edges (long and short stones alternating), a moulded cap stone at the top and a stepped plinth at the bottom; its middle a step darker than its edges, a few bricks missing, moss on its ledges. NOT a plain vertical stripe.",
+        "3. A BROKEN COLUMN, 128 px wide, about 400 px tall: the same column as the arcade's, snapped off partway, its top jagged, a fallen drum lying at its foot."
+      ] },
+    { id: "CY5", group: "cryptstone", file: "crypt_y_ledges", title: "Crypt stone after Y: small ledges and broken ends",
+      about: "Y's small stone ledges standing out from walls and floating, and the broken ends of slabs, in the chunky brick of the CY set now in the game. The first set's broken ends are good and kept; its ledges were rejected (\"just the ledges don't look good\"), so this asks for the ledges again.",
+      canvas: "2048×1024 px (art 256 × 128 px at x8)", game: "Pieces cut apart", attach: ["Y", "Your large-brick CY1 (the brick size, cap row, colours and fade to match)", "Your large-brick CY2 and CY2b (the quoins and corners to match)"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the attached large-brick CY1, CY2 and CY2b exactly. Every walking top is a perfectly straight horizontal line with CY1's pale cap row.",
+        "",
+        CLEAN_GRID,
+        "",
+        "BRICK SIZE (the creative lead's pick, the chunky brick): exactly the large-brick CY1's, about 88 x 40 px each (11 x 5 art pixels), cap stones as big as CY1's. NOT small or fine bricks: a ledge two bricks thick is about 80 px thick.",
+        "",
+        CY_STYLE,
+        "",
+        "1. THREE SMALL FLOATING LEDGES, as in reference Y's small stone platforms (the creative lead rejected the first ones: flat pale bars, one course thick, with a straight bottom, they looked pasted on). Tops 256 px long (two tiles), each a real chunk of broken masonry: the pale cap row, then two or three courses of brick below it that narrow toward the bottom like a hanging wedge, the lowest bricks stepping darker (dusky plum to near-black plum) and breaking off ragged, a loose brick or two hanging under it. Each different: one with moss over its edge and ivy trailing down, one with a cracked cap stone, one with a dull red root hanging from it. About 160 to 200 px tall in all, most of it below the walking line. NOT a flat bar, NOT one course thick, NOT a straight bottom.",
+        "2. TWO WALL LEDGES, tops 256 and 384 px long, jutting from a wall on their LEFT end (the wall a column of CY2's quoins, cut off straight at the piece's left edge so it joins the game's wall). Under the top, a deep corbel: three or four courses stepping back toward the wall, each a step darker, its free end ragged with a broken brick or two, moss in the joints, one with a few small pots' worth of space on top. As deep below the line as it is long, so it looks carried by the wall, not stuck on.",
+        "3. Two broken slab ends, 384 px wide, 384 px tall: CY1's floor (cap row on a straight walking line at y = 64, lit courses below, then fading into the dark exactly as CY1 does) ending in a ragged break, loose bricks falling away, the dark reaching into the break brick by brick. One facing right and one facing left (not mirrored copies). The far side of each is cut off straight so it joins CY1's band in the game."
+      ] },
+    { id: "CY6", group: "cryptstone", file: "crypt_y_masses", title: "Crypt stone after Y: big masses fading into the dark",
+      about: "The creative lead's favourite piece of the CY set: broken slabs whose stone runs on below the walking line and fades, brick by brick, through darker and darker plum into black, with loose bricks crumbling off the edge. Large chunks for the ends of floors, the bases of walls and the rock under islands.",
+      canvas: "3072×1536 px (art 384 × 192 px at x8)", game: "Pieces cut apart", attach: ["Y", "Your approved CY1"],
+      text: [
+        "TASK: on a transparent canvas, pieces separated by transparent space, matching the approved CY1 brick. Each walking top is a perfectly straight line with CY1's pale cap row and a little moss and hanging ivy.",
+        "",
+        CY_STYLE,
+        "",
+        "1. Two broken slab ends, each 1024 px wide: a straight walking top 256 px thick of lit brick, then the mass below it 768 px deep, tapering down to a ragged point on its open side (one opening to the right, one to the left; not mirrored copies). The whole underside fades gradually into the dark exactly as the FADE rule says, single loose bricks dropping off the slope, a few thin dull red roots hanging through.",
+        "2. Two wall bases, 512 px wide, 1024 px tall: a wall face (facing right on one, left on the other) with brick running up, its foot spreading into a heap of fallen bricks that fades into the dark.",
+        "3. One big floating mass, 1536 px wide, 1024 px tall: a straight lit top, the bulk below fading through every step of plum into void, its outline stepping in brick by brick to a point.",
+        "4. Two small chunks, 384 and 512 px wide, the same fade compressed into a shorter depth."
+      ] },
+    // ------------------------------------------------------------- foreground depth
+    { id: "FG1", group: "foreground", file: "crypt_fg_near", title: "Crypt foreground: pillars, roots and chains", scale: 4,
+      about: "The nearest crypt layer (scroll 1.35): pieces that pass in front of Kleo: a broken column, thick twisted roots, hanging chains, rubble. Placed one by one, sparse.",
+      canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Y", "X", "Your approved SH1"],
+      text: [
+        "TASK: foreground silhouettes for the crypt, on a transparent canvas, each piece separated by transparent space.",
+        "",
+        FG_STYLE,
+        "",
+        "- Two broken stone columns of the SH1 masonry, 160 and 240 px wide, 900 and 1300 px tall, standing on the canvas's bottom edge (they will rise from the bottom of the screen).",
+        "- Three masses of thick twisted roots hanging from the canvas's top edge, 300 to 600 px wide, 500 to 900 px long, dull plum-brown, one with a few ivy strands.",
+        "- Two hanging chains, 1000 px long, one with a broken lantern cage at its end (dark, no flame).",
+        "- Two heaps of rubble and fallen blocks, 500 and 800 px wide, sitting on the bottom edge, a few dark leaves and one cluster of tiny teal glowing mushrooms (the only light colour, as in Y)."
+      ] },
+    { id: "FG2", group: "foreground", file: "crypt_fg_frames", title: "Crypt side frames (left and right edges)", scale: 4,
+      about: "Y's frame: massive dark roots wrapped round a pillar at the left and right edges of the view. Placed at a room's two ends, at scroll 1.3, so a room opens and closes like a stage.",
+      canvas: BG, game: "Two frames, left and right", attach: ["Y", "X"],
+      text: [
+        "TASK: two edge frames on one transparent canvas: the LEFT frame against the canvas's left edge (x 0 to 900), the RIGHT frame against its right edge (x 2172 to 3072), transparent between.",
+        "",
+        FG_STYLE,
+        "",
+        "- Each: a thick ancient pillar of dark masonry, partly crumbled, wrapped and split by huge twisted roots that also reach up off the top and down off the bottom of the canvas; a few hanging vines; at its foot, roots and rubble and one tiny cluster of teal glowing mushrooms.",
+        "- Full canvas height (1440 px). The inner side (toward the middle of the canvas) is ragged and open, never a straight line; the outer side is solid to the canvas edge.",
+        "- Different from each other, not mirrored."
+      ] },
+    { id: "FG3", group: "foreground", file: "surface_fg_near", title: "Surface foreground: ferns, leaves, branches, trunks", scale: 4,
+      about: "The nearest surface layer (scroll 1.45) for IB-03 and IB-04: big fern clumps and leaves rising from the bottom, a branch and leaves hanging from the top, one trunk. Replaces P5's ferns blown up into black shapes.",
+      canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Z", "A", "B"],
+      text: [
+        "TASK: foreground silhouettes for the Ironbark forest at dusk, on a transparent canvas, each piece separated by transparent space.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        "- Three clumps of big ferns and broad leaves rising from the canvas's bottom edge, 400, 600 and 800 px wide, 300 to 500 px tall, very dark teal-green with plum shadows, a faint moonlit rim on their tops.",
+        "- Two leafy branches hanging from the top edge, 900 and 1300 px wide, 300 to 450 px deep, with trailing vines, dark plum bark and dark teal leaves.",
+        "- One tree trunk, 300 px wide, full canvas height, gnarled ironbark with roots at its foot, nearly black, a thin purple rim from the sky.",
+        "- One stone grave marker and a broken fence section half hidden in ferns, standing on the bottom edge, dark."
+      ] },
+    { id: "FG4", group: "foreground", file: "surface_fg_frames", title: "Surface side frames (left and right edges)", scale: 4,
+      about: "Great dark trees and undergrowth framing the surface rooms' two ends, at scroll 1.3.",
+      canvas: BG, game: "Two frames, left and right", attach: ["Z", "A"],
+      text: [
+        "TASK: two edge frames on one transparent canvas: the LEFT frame against the canvas's left edge (x 0 to 900), the RIGHT frame against its right edge (x 2172 to 3072), transparent between.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        "- Each: the trunk of a great ironbark tree with spreading roots, its lower branches and leaves reaching in from the top, dense ferns and broad leaves at its foot.",
+        "- Full canvas height. The inner side is ragged and open, never a straight line. Different from each other, not mirrored.",
+        "- Nearly black, plum and teal in the shadows, a faint purple moonlit rim on the edges facing the sky."
       ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
