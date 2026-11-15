@@ -8,39 +8,59 @@ extends "res://tools/room_builder.gd"
 ## Spec and validation: design/rooms/ironbark_06_undercroft.md.
 ## In the world grid its origin is IB-01's (0, 40): it lies under the Lantern
 ## Clearing. Its West door (rows 12 to 15) is IB-05's lower East door (rows 22
-## to 25); its lower West door (rows 32 to 36) leads to the pit shaft under
-## IB-05 (IB-07); its lower East door leads on toward the Lost Keep.
+## to 25); its lower West door (rows 60 to 64), behind a bark plate (the Ward),
+## is the Pit Shaft's East door (IB-07, rows 36 to 40); its lower East door
+## leads on toward the Keep's foundations.
 
 const ROOM_PATH := "res://scenes/rooms/ironbark_06_undercroft.tscn"
 const IB05 := "res://scenes/rooms/ironbark_05_shrine_hall.tscn"
 const IB07 := "res://scenes/rooms/ironbark_07_pit_shaft.tscn"
 
 # --- The room plan (tiles) ---------------------------------------------------------
-## "The guard's cellars under the clearing, broken open by the Great Ironbark's
-##  roots: three floors stacked like a ploughed field (east, back west, east
-##  again), a tall root chamber at the turn, a lift that folds the bottom back
-##  to the door you came in by."
-const ROOM := Rect2i(0, 0, 96, 40)
-const ROCK := [[0, 0, 96, 40, 1]]
+## After the creative lead's middle vertical-level mockup
+## (docs/mockups/undercroft/vertical_levels.webp): the guard's cellar rooms
+## stacked down both sides of a tall void under the clearing, a broken root arch
+## across it halfway down, a basin at the bottom. The way down crosses the void
+## from side to side, room by room; a lift beside the east stack folds the
+## bottom back to the top.
+const ROOM := Rect2i(0, 0, 44, 72)
+const ROCK := [[0, 0, 44, 72, 1]]
 const SPACES := [
-	[0, 11, 46, 5],     # F1, the storeroom gallery: in from the Shrine Hall, east (floor row 16)
-	[46, 4, 30, 22],    # the root chamber: the turn, its floor row 26
-	[76, 4, 20, 5],     # high in the chamber's east wall: a passage on (Barkgrip, far above any jump)
-	[10, 21, 36, 5],    # F2, the root passage: back west under F1 (floor row 26)
-	[10, 26, 4, 6],     # F2 ends in a collapse, down into F3
-	[0, 32, 96, 5],     # F3, the cistern walk: east again (floor row 37)
-	[2, 16, 4, 16],     # the lift's shaft: F3 up to F1, beside the door (a shortcut)
-	[57, 37, 4, 3],     # the sump in F3's floor: dark water, going on down (Deep-Glow Breath)
+	[13, 0, 9, 68],     # the void, from the dark far above (toward the clearing's crypt) to the basin
+	[0, 8, 13, 8],      # L1, the storeroom: in from the Shrine Hall (floor row 16)
+	[22, 1, 6, 4],      # an alcove high in the void's east wall (Barkgrip; floor row 5)
+	[22, 7, 20, 11],    # R1, the arcade (floor row 18), the lift's head at its east end
+	[7, 19, 6, 6],      # L2, a lantern room (floor row 25)
+	[22, 21, 15, 7],    # R2, a lantern room (floor row 28)
+	[0, 30, 13, 9],     # L3, the long arcade (floor row 39)
+	[22, 31, 15, 8],    # R3, the arcade across from it (floor row 39)
+	[6, 43, 7, 10],     # L4, a lantern room (floor row 53), open to the arch's west end
+	[22, 41, 15, 12],   # R4, a cellar under the arch's east end (floor row 53)
+	[3, 57, 10, 8],     # L5, the bottom-left room (floor row 65): the plated door west
+	[0, 60, 3, 5],      # its plated door (Ironbark Ward) into the Pit Shaft
+	[22, 57, 20, 8],    # R5, the bottom-right room (floor row 65): the lift's foot, the way on east
+	[42, 60, 2, 5],     # on east toward the Keep's foundations
+	[13, 65, 11, 3],    # the basin (floor row 68)
+	[13, 68, 3, 3],     # the sump in its floor: dark water going on down (Deep-Glow Breath)
+	[38, 18, 4, 47],    # the lift's shaft, R5 up to R1
 ]
-## The chamber's two root masses: the climb back up from its floor to F1,
-## each beside the next, never over it (floor 26 -> 22 -> 19 -> F1's 16).
+## Each room's floor runs out into the void as a lip, so the rooms across from
+## each other are a short jump apart, a little lower each time. Every gap she
+## is meant to drop through is 2 tiles wide: she runs straight over a 1-tile gap.
 const MASSES := [
-	[62, 22, 8, 2, 1],
-	[50, 19, 8, 2, 1],
+	[13, 16, 3, 2, 1],   # L1's lip (row 16): a short drop across to R1's
+	[18, 18, 4, 2, 1],   # R1's lip (row 18): off its west end, down onto the step
+	[16, 28, 2, 2, 1],   # a step in the void (row 28): up to L2, across to R2
+	[13, 25, 3, 2, 1],   # L2's lip (row 25)
+	[20, 28, 2, 2, 1],   # R2's lip (row 28): off its west end, down onto R3's
+	[18, 39, 4, 2, 1],   # R3's lip (row 39): across to L3's, or off it onto the arch
+	[13, 39, 3, 2, 1],   # L3's lip (row 39)
+	[13, 46, 14, 2, 1],  # the root arch across the void (row 46): west into L4, east into R4
+	[13, 53, 4, 2, 1],   # L4's lip (row 53): off it down to the basin
 ]
-const STONE := [[0, 0, 96, 40]]
+const STONE := [[0, 0, 44, 72]]
 const SKIP := []
-const SPAWN := Vector2(8 * 16, 16 * 16)
+const SPAWN := Vector2(6 * 16, 16 * 16)
 const LAMP := Color(1.0, 0.72, 0.4)
 
 
@@ -64,25 +84,35 @@ func _initialize() -> void:
 	_crypt_foreground()
 	_edge_shades()
 	_door("West", Rect2i(0, 12, 8, 4), -1, IB05, "EastLower")
-	_door("WestLower", Rect2i(0, 32, 8, 5), -1, IB07, "East")
-	# High in the chamber's east wall (Barkgrip), and the lower East door on
-	# toward the Lost Keep: neither room is built.
-	_door("EastHigh", Rect2i(88, 4, 8, 5), 1, "", "")
-	_door("EastLower", Rect2i(88, 32, 8, 5), 1, "", "")
+	_door("WestLower", Rect2i(0, 60, 8, 5), -1, IB07, "East")
+	# On east toward the Keep's foundations (not built).
+	_door("EastLower", Rect2i(36, 60, 8, 5), 1, "", "")
 	_finish()
 	quit()
 
 
 func _build_machines() -> void:
-	# The cellar lift: jammed at the top (its deck plugs F1's floor beside the
-	# door); from F3, the winch frees it, and it carries her back up to F1.
-	_lift("CellarLift", Vector2(4 * TILE, 16 * TILE), 21.0 * TILE, 4.0 * TILE, "ib06_lift")
+	# The cellar lift: jammed at the top (its deck plugs R1's floor at its east
+	# end); from R5 at the bottom, the winch frees it, and it folds the whole
+	# descent back to the top, a short jump from the Shrine Hall's door.
+	_lift("CellarLift", Vector2(40 * TILE, 18 * TILE), 47.0 * TILE, -4.0 * TILE, "ib06_lift")
 	# The sump: dark water she can't swim yet, a glint going on down.
-	_water("Sump", Vector2(57 * TILE, 37 * TILE + 4), Vector2(4 * TILE, 3 * TILE - 4), Vector2(59.0 * TILE, 39 * TILE))
+	_water("Sump", Vector2(13 * TILE, 68 * TILE + 4), Vector2(3 * TILE, 3 * TILE - 4), Vector2(14.5 * TILE, 70 * TILE))
+	# The plated door into the Pit Shaft (Ironbark Ward): shut until the slam.
+	var plate := _node(StaticBody2D.new(), "BarkPlateW1c", _root) as StaticBody2D
+	plate.position = Vector2(0, 60 * TILE)
+	plate.z_index = 8
+	var pc := CollisionShape2D.new()
+	var pr := RectangleShape2D.new()
+	pr.size = Vector2(2 * TILE, 5 * TILE)
+	pc.shape = pr
+	pc.position = Vector2(TILE, 2.5 * TILE)
+	_node(pc, "Shape", plate)
+	_sprite(plate, ENV + "gate_bark_plate.png", Rect2(77, 2, 41, 82), Vector2(-6, -2)).name = "Art"
 
 
 ## Blockout light only: enough to read the spaces in the review shots.
 func _build_lights(behind: Node) -> void:
-	for p in [Vector2(20, 13), Vector2(38, 13), Vector2(60, 15), Vector2(30, 23), Vector2(16, 34),
-			Vector2(44, 34), Vector2(76, 34), Vector2(90, 6)]:
+	for p in [Vector2(6, 12), Vector2(30, 12), Vector2(10, 22), Vector2(30, 24), Vector2(6, 34), Vector2(30, 35),
+			Vector2(9, 49), Vector2(30, 47), Vector2(7, 61), Vector2(32, 61), Vector2(17, 60), Vector2(17, 30)]:
 		_light(behind, Vector2(p.x * TILE, p.y * TILE), LAMP, 0.9, 1.4, "BlockoutLight")

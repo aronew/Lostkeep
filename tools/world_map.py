@@ -9,7 +9,7 @@ from PIL import Image, ImageDraw, ImageFont
 
 T = 4                      # px per tile on the sector map
 X0, Y0 = -250, -24         # world tile at the sector map's top-left
-W, H = 470, 136            # sector map size in tiles
+W, H = 470, 156            # sector map size in tiles
 FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"
 BOLD = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
 AMBER, TEAL, PALE, DIM = (242, 176, 74), (63, 224, 200), (230, 226, 240), (150, 144, 170)
@@ -21,12 +21,12 @@ ROOMS = [
     ("IB-01", "The Lantern Clearing", (0, 0), (138, 40), "game/tests/out/map/room_art.png"),
     ("IB-05", "The Shrine Hall", (-58, 30), (58, 34), "game/tests/out/ib05/map/room_art.png"),
     ("IB-02", "The Old Crypt", (-170, 28), (112, 40), "game/tests/out/ib02/map/room_art.png"),
-    ("IB-06", "The Undercroft (blockout)", (0, 40), (96, 40), "game/tests/out/ib06/map/room_art.png"),
-    ("IB-07", "The Pit Shaft (blockout)", (-44, 64), (44, 41), "game/tests/out/ib07/map/room_art.png"),
+    ("IB-06", "The Undercroft (blockout)", (0, 40), (44, 72), "game/tests/out/ib06/map/room_art.png"),
+    ("IB-07", "The Pit Shaft (blockout)", (-44, 64), (44, 64), "game/tests/out/ib07/map/room_art.png"),
 ]
 # Not built yet: label, origin, size, what opens it
 PLANNED = [
-    ("The Keep's foundations", "next on the main line", (98, 62), (60, 30)),
+    ("The Keep's foundations", "next on the main line", (46, 92), (60, 24)),
     ("The Refuge road", "behind the plated door: Ironbark Ward", (-246, 32), (74, 30)),
     ("The Lost Keep", "across the broken bridge: Wing-Cloak", (140, 0), (90, 44)),
 ]
@@ -81,12 +81,12 @@ def sector():
     # The main line: start in IB-03, east through IB-04, into IB-01, down its
     # hall door into IB-05, out its lower East door to the Undercroft.
     path = [(-205, 6), (-120, 2), (-60, 12), (-8, 21), (40, 26), (8, 34), (-30, 36), (-40, 53), (8, 55), (45, 55),
-            (56, 65), (14, 65), (12, 76), (60, 76), (104, 76)]
+            (16, 56), (19, 67), (17, 79), (6, 79), (20, 85), (30, 93), (17, 107), (40, 104), (52, 104)]
     arrow(d, [(wx(x), wy(y)) for x, y in path], AMBER, 5)
     # Side trips (teal): IB-05's west doors into IB-02 and back; the Lost Keep.
     arrow(d, [(wx(-56), wy(36)), (wx(-90), wy(36)), (wx(-120), wy(46))], TEAL, 3)
     arrow(d, [(wx(110), wy(25)), (wx(150), wy(20))], TEAL, 3)
-    arrow(d, [(wx(4), wy(76)), (wx(-14), wy(76)), (wx(-26), wy(96))], TEAL, 3)
+    arrow(d, [(wx(4), wy(104)), (wx(-12), wy(104)), (wx(-24), wy(110))], TEAL, 3)
     # Labels on the built rooms.
     for i, (name, label, (ox, oy), (w, h), _) in enumerate(ROOMS):
         tx, ty = wx(ox) + 8, wy(oy) + 6

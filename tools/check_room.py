@@ -87,23 +87,28 @@ ROOMS = {
     },
     "ib06": {
         "cells": "game/tests/out/ib06/map/cells.json",
-        "spawn": (8, 15),
-        # The cellar lift: F1 (row 15) and F3 (row 36), both ways once freed.
-        "lift": [((x, 15), (x, 36)) for x in range(2, 6)],
-        "water": (57, 37, 4, 3),
-        "gated": {"the passage high in the chamber's east wall (Barkgrip)": (76, 4, 20, 5)},
-        "seals": [],
-        "exits": {"west (to the Shrine Hall)": (0, 15), "west lower (to the pit shaft)": (0, 36),
-                  "east lower (toward the Lost Keep)": (95, 36)},
+        "spawn": (6, 15),
+        # The cellar lift: R1 (row 17) and R5 (row 64), both ways once freed.
+        "lift": [((x, 17), (x, 64)) for x in range(38, 42)],
+        "water": (13, 68, 3, 3),
+        "gated": {"the alcove high in the void (Barkgrip)": (22, 1, 6, 4)},
+        # The bark plate; the lift's deck, jammed in R1's floor at the top.
+        "seals": [(0, 60, 2, 5), (38, 18, 4, 1)],
+        "exits": {"west (to the Shrine Hall)": (0, 15), "east lower (toward the Keep's foundations)": (43, 64)},
     },
     "ib07": {
         "cells": "game/tests/out/ib07/map/cells.json",
-        "spawn": (40, 12),
+        "spawn": (40, 40),
         "lift": [],
         "water": (0, 0, 0, 0),
-        "gated": {},
+        # Reached only by dropping through the plate from the Shrine Hall (the
+        # Ward): the top, and the west half (the chasm, the landing, the
+        # arched-door room, the west cave's ledges).
+        "gated": {"the walkway and the top (from the plate)": (1, 3, 38, 10),
+                  "the chasm and the landing (from the plate)": (15, 13, 9, 16),
+                  "the arched-door room and the west cave (from the plate)": (0, 13, 17, 43)},
         "seals": [],
-        "exits": {"east (to the Undercroft)": (43, 12)},
+        "exits": {"east (to the Undercroft's plated door)": (43, 40), "east lower (on to the deep)": (43, 59)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

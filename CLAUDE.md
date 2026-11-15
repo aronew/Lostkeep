@@ -446,23 +446,25 @@ She steps forward with every hit.
   Those mockups guide the large shape of a sector (a well, strata, loops,
   pockets); where they show ladders or rows of small platforms, the principles
   win: drops, islands, and a machine for the long climb.
-- **Two blockouts await the creative lead's review:** **IB-06, the
-  Undercroft** (`design/rooms/ironbark_06_undercroft.md`, `build_ib06.gd`,
-  origin (0, 40), under the clearing): three switchback floors, a root chamber
-  at the turn, a cellar lift folding the bottom back to IB-05's lower East
-  door, Barkgrip and Breath locks; and **IB-07, the Pit Shaft**
-  (`ironbark_07_pit_shaft.md`, `build_ib07.gd`, origin (-44, 64), under IB-05):
-  the shaft below IB-05's cracked plate W1b, eight 2-wide ledges taking turns
-  across it every 4 or 5 rows (each beside the one below, never over it),
-  pockets off alternating sides, the deep chamber at the bottom; its East door
-  is IB-06's lower West door. After the creative lead's shaft reference
-  (`docs/mockups/undercroft/shaft_reference.webp`: steps like these in a shaft
-  "don't read as weird") and vertical-level mockups
-  (`docs/mockups/undercroft/vertical_levels.webp`, "especially the one on the
-  far left": use them for any thin vertical level). Both: `room=ib06` /
-  `room=ib07` with `mode=tour`, `upper`, `shots`, `map` (IB-06 also `doors`);
-  `check_room.py` and `blockout_map.py` take their names. `tools/world_map.py`
-  draws every room on the world grid (`docs/maps/where_we_are.png`).
+- **Two blockouts await the creative lead's review (second pass):** the first
+  pass of both was rejected ("the undercroft room is poorly designed"; "make
+  the vertical shaft one look just like my far left mockup"; "I shouldn't be
+  able to get into that room until I get that slam"). Both now follow the
+  creative lead's vertical-level mockups (`docs/mockups/undercroft/vertical_levels.webp`):
+  **IB-06, the Undercroft** (`design/rooms/ironbark_06_undercroft.md`, origin
+  (0, 40), 44 x 72), after the middle one: cellar rooms stacked down both sides
+  of a tall void, crossed side to side on the way down, a root arch, a basin,
+  a lift from the bottom-right room back to the top; and **IB-07, the Pit
+  Shaft** (`ironbark_07_pit_shaft.md`, origin (-44, 64), 44 x 64), after the
+  far-left one, mass by mass, entered only with the Ward: the cracked plate
+  above (W1b) or the bark plate in the Undercroft's bottom-left room (W1c).
+  **Every gap meant for dropping through is 2 tiles wide:** Kleo runs straight
+  over a 1-tile gap (the checker thinks she can drop through one; she can't).
+  Both: `room=ib06` / `room=ib07` with `mode=tour`, `upper`, `shots`, `map`
+  (IB-06 also `doors`); `check_room.py` and `blockout_map.py` take their names.
+  A tall shaft fails the checker's floor-run and small-step rules by design.
+  `tools/world_map.py` draws every room on the world grid
+  (`docs/maps/where_we_are.png`).
 - **Rooms not built yet:** the Keep's foundations (east of the Undercroft's
   lower East door: next on the main line), the Refuge road (west of IB-02,
   behind the plated door: needs the Ward), the Guard Post above IB-02's well

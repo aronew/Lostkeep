@@ -88,6 +88,7 @@ rescue or a truth).
 | W2 | Ironbark **IB-02** | The Old Crypt: a plated door across the west gallery (upper line) | Hard | ✔ | The Refuge road, a health shard and a warden's journal |
 | W3 | Ironbark | The keep wall beside the bridge (lower route) | Hard | ✔ | The route to the armory, where the key is |
 | W1b | Ironbark **IB-05** | The Shrine Hall: the pit in the lower floor has a cracked bark-plate floor, motes rising through the cracks and a faint light below | Hard | ✔ | A shaft down into the Undercroft, stepping down on wall ledges that take turns on each wall: a shortcut into its depths, and the way back up |
+| W1c | Ironbark **IB-06** | The Undercroft: a bark plate across the bottom-left room's west door | Hard | ✔ | The Pit Shaft (IB-07), the other way in |
 | W4 | Refuge | A plated hatch under the camp | Hard | — | The Refuge cellar: the map-maker rescue |
 | W5 | Dusk-Drifter | Carapax-plated shutters | Hard | — | The critical path into the forge |
 
@@ -105,7 +106,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | B1 | Ironbark | The keep's tall well-shaft, a lip visible above jump height | Hard | ✔ | The keep's battlements: a lore room and a wing upgrade hint |
 | B1b | Ironbark **IB-02** | The Old Crypt: the Root Well's mouth, far above any jump, moonlight coming down it. Also the cave's wall up to the west gallery | Hard | ✔ | The Guard Post from below; a way back up the loop |
-| B1c | Ironbark **IB-06** | The Undercroft: a passage high in the root chamber's east wall, 17 tiles of sheer wall below it | Hard | ✔ | A way on under the moat toward the Keep's walls |
+| B1c | Ironbark **IB-06** | The Undercroft: an alcove high in the void's east wall, far above the arcade | Hard | ✔ | A cache in the alcove |
 | B2 | Dusk-Drifter | The ash chimneys | Hard | ✔ | A secret forge and a charm |
 | B3 | Hearth-Plains | The silo tower beside the Silk Mother arena | Hard | ✔ | A bypass shortcut |
 | B4 | Refuge | The camp's chimney under the well | Hard | (it's the sandbox) | — |
@@ -125,7 +126,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | D1 | Ironbark **IB-01** | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
 | D1b | Ironbark **IB-02** | The Old Crypt: the cistern and its flooded gallery, a glint deep inside | Hard | ✔ | A drowned burial: a relic |
-| D1c | Ironbark **IB-06** | The Undercroft: the sump in the cistern walk's floor, dark water going on down, a glint in it | Hard | ✔ | A flooded way down under the clearing |
+| D1c | Ironbark **IB-06** | The Undercroft: the sump in the basin at the bottom of the void, dark water going on down, a glint in it | Hard | ✔ | A flooded way down under the clearing |
 | D2 | Refuge | The flooded undercroft under the camp | Hard | ✔ | The undercroft shortcut to the Vats |
 | D3 | Fen-Stalker | Deep fen pools | Hard | ✔ | Mire-Kin rescues |
 | D4 | Tide-Weaver | The whole region | Hard | — | Return region |
