@@ -39,7 +39,7 @@ const SPACES := [
 	[54, 22, 4, 4],     # the lower East door, under the shelf
 	[15, 26, 10, 1],    # the dip in the lower floor (row 27)
 	[29, 26, 4, 5],     # the pit
-	[29, 31, 4, 3],     # under the pit's cracked plate (Ironbark Ward, W4): the shaft down to the Undercroft
+	[29, 31, 4, 3],     # under the pit's cracked plate (Ironbark Ward, W1b): the shaft down to the Undercroft
 ]
 ## Islands, plates and ledges: one tile of collision under each painting's
 ## walking line. Each ledge stands beside what it leads to, never over it.
@@ -252,13 +252,13 @@ func _build_air(front: Node) -> void:
 	_crypt_foreground()
 
 
-## W4: the pit's floor is a cracked bark plate (Ironbark Ward lock), the
+## W1b: the pit's floor is a cracked bark plate (Ironbark Ward lock), the
 ## horizontal plate from the plate sheet; under it the shaft drops on into the
 ## Undercroft, where wall ledges taking turns on each wall step down (the
 ## creative lead's reference: docs/mockups/undercroft/shaft_reference.webp).
 ## Its tells: motes rising through the cracks, a faint cool light from below.
 func _build_pit_plate(behind: Node) -> void:
-	var plate := _node(StaticBody2D.new(), "BarkPlateW4", _root) as StaticBody2D
+	var plate := _node(StaticBody2D.new(), "BarkPlateW1b", _root) as StaticBody2D
 	plate.position = Vector2(29 * TILE, 31 * TILE)
 	plate.z_index = 8
 	var pc := CollisionShape2D.new()

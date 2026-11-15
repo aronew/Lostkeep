@@ -76,9 +76,9 @@ ROOMS = {
         "spawn": (55, 6),
         "lift": [],
         "water": (0, 0, 0, 0),
-        "gated": {"the shaft under the pit (Ironbark Ward, W4)": (29, 32, 4, 2)},
+        "gated": {"the shaft under the pit (Ironbark Ward, W1b)": (29, 32, 4, 2)},
         # The painted islands', plates' and ledges' single tile of collision,
-        # and the pit's cracked plate (W4).
+        # and the pit's cracked plate (W1b).
         "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 4, 1), (22, 22, 2, 1), (29, 22, 2, 1),
                   (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (50, 21, 4, 1),
                   (29, 31, 4, 1)],

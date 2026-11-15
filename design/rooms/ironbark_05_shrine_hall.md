@@ -29,7 +29,7 @@ islands. Now it follows the mockup piece by piece (`docs/rooms/ironbark_05/layou
 | Three small stone plates rising toward the right island | Three plates (rows 18, 17, 16) |
 | The arch island on the right | The arch island (6 wide, row 18) |
 | Ledges up the east wall, a shelf over the lower right door | A ledge under the east gap (row 13, the way back up) and the shelf (row 21) over the lower East door |
-| A lower floor that dips, a pit in the middle | The dip (row 27) and the pit (to row 31). The pit's floor is a cracked bark plate (W4, the Ironbark Ward), the plate sheet's horizontal plate; under it the shaft runs on down out of the room into the Undercroft (the creative lead: it "looks like it should" go down; their reference for the shaft: `docs/mockups/undercroft/shaft_reference.webp`) |
+| A lower floor that dips, a pit in the middle | The dip (row 27) and the pit (to row 31). The pit's floor is a cracked bark plate (W1b, the Ironbark Ward), the plate sheet's horizontal plate; under it the shaft runs on down out of the room into the Undercroft (the creative lead: it "looks like it should" go down; their reference for the shaft: `docs/mockups/undercroft/shaft_reference.webp`) |
 | Doors in all four corners | The East door at the landing, the West door in the west gallery, both lower doors |
 
 ## Spec

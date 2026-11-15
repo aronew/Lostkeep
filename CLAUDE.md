@@ -448,7 +448,7 @@ She steps forward with every hit.
 - **Rooms not built yet:** the Undercroft
   (under the clearing, through IB-05's lower East door: the next room on the
   main line; it also takes the shaft under IB-05's pit, behind the cracked
-  bark plate W4 (Ironbark Ward): build that shaft as in the creative lead's
+  bark plate W1b (Ironbark Ward): build that shaft as in the creative lead's
   reference `docs/mockups/undercroft/shaft_reference.webp`, a narrow masonry
   shaft with small wall ledges taking turns on each wall, spaced so she can
   climb back up (each about 3 tiles above the last, never over the one below).
