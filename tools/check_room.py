@@ -3,7 +3,7 @@
 Reads the collision cells exported by `playtest mode=map` (cells.json) and the
 room's annotations below. Prints the rules met or broken. Numbers are tiles.
 
-Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04]
+Usage: python3 tools/check_room.py [ib01|ib02|ib03|ib04|ib05]
 """
 import json
 import sys
@@ -45,7 +45,7 @@ ROOMS = {
         "gated": {"west gallery past the plated door (Ironbark Ward, W2)": (0, 11, 16, 5)},
         # The plated door, and the hoist's deck jammed at its head.
         "seals": [(16, 11, 2, 5), (96, 10, 4, 1)],
-        "exits": {"east upper (to the Lantern Clearing)": (111, 9), "east lower (to the Undercroft)": (111, 27)},
+        "exits": {"east upper (to the Shrine Hall)": (111, 9), "east lower (to the Shrine Hall)": (111, 27)},
     },
     "ib03": {
         "cells": "game/tests/out/ib03/map/cells.json",
@@ -70,6 +70,17 @@ ROOMS = {
                   (114, 23, 5, 1), (122, 14, 3, 1),
                   (82, 36, 2, 1), (88, 35, 3, 1), (95, 36, 2, 1), (101, 36, 3, 1), (108, 35, 2, 1), (114, 36, 3, 1)],
         "exits": {"east (to the Lantern Clearing)": (127, 36), "west (to the Ruin Gardens)": (0, 15)},
+    },
+    "ib05": {
+        "cells": "game/tests/out/ib05/map/cells.json",
+        "spawn": (52, 9),
+        "lift": [],
+        "water": (0, 0, 0, 0),
+        "gated": {},
+        # The painted islands' and ledges' single tile of collision.
+        "seals": [(6, 20, 15, 1), (36, 22, 6, 1), (43, 19, 5, 1), (49, 16, 4, 1), (22, 15, 2, 1), (4, 24, 2, 1), (32, 25, 2, 1)],
+        "exits": {"east upper (to the Lantern Clearing)": (55, 9), "west upper (to the Old Crypt)": (0, 9),
+                  "west lower (to the Old Crypt's long gallery)": (0, 27), "east lower (to the Undercroft)": (55, 27)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

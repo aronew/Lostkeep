@@ -221,7 +221,8 @@ She steps forward with every hit.
 ### The Godot project (`game/`)
 - **Run it:** open `game/project.godot` in Godot 4.7.2 (the main scene is
   IB-03, the Ruin Gardens; then IB-04, the Gate Road; then IB-01, the Lantern
-  Clearing, whose hall door leads into IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
+  Clearing, whose hall door leads into IB-05, the Shrine Hall, and on into
+  IB-02, the Old Crypt). Renderer: GL Compatibility. `godot` is on the path in
   cloud sessions (the environment's setup script installs it to `/opt/godot/`).
 - **Controls:** move A/D or arrows; jump Space/Z/K; attack **left click** or X/J;
   interact E/C or up; gamepad too. **Right click** (or V/L, gamepad B) is the
@@ -244,7 +245,8 @@ She steps forward with every hit.
   `_water`, `_breakable`, `_light`, `_fog`, `_edge_shades`); each room has its
   own builder on top of it, holding its plan and its dressing:
   `build_test_room.gd` (IB-01), `build_ib02.gd` (IB-02), and `build_ib03.gd`
-  and `build_ib04.gd` (the surface rooms, on `surface_builder.gd`). Each saves an
+  and `build_ib04.gd` (the surface rooms, on `surface_builder.gd`), and
+  `build_ib05.gd` (the Shrine Hall). Each saves an
   ordinary scene:
   `godot --headless --path game --script res://tools/build_ib02.gd`.
   Re-running it overwrites the scene, so make lasting changes in the plan, or
@@ -443,22 +445,26 @@ She steps forward with every hit.
   Those mockups guide the large shape of a sector (a well, strata, loops,
   pockets); where they show ladders or rows of small platforms, the principles
   win: drops, islands, and a machine for the long climb.
-- **Rooms not built yet,** which IB-02's doors already face: the Undercroft
-  (under the clearing, through IB-02's lower East door: the next room on the
-  main line), the Refuge road (west, behind the plated door: needs the Ward),
-  the Guard Post above the well (not built; the surface rooms IB-03 and IB-04
-  lie over the crypt instead). All three end in darkness today.
-- **The Old Crypt's look is set by the creative lead's mockup**
+- **Rooms not built yet:** the Undercroft
+  (under the clearing, through IB-05's lower East door: the next room on the
+  main line), the Refuge road (west of IB-02, behind the plated door: needs
+  the Ward), the Guard Post above IB-02's well (the surface rooms lie over the
+  crypt instead). All three end in darkness today.
+- **The Old Crypt's first section is built as IB-05, the Shrine Hall, and
+  awaits review** (`design/rooms/ironbark_05_shrine_hall.md`, images in
+  `docs/rooms/ironbark_05/`), after the creative lead's mockup
   `docs/mockups/old_crypt/old-crypt-first-section.jpg` ("exactly how I want
-  that first section of the Old Crypt to look"): a tall open cavern of
-  blue-grey masonry with carved cap stones and rubble undersides, an upper
-  gallery, a floating shrine island with a hooded statue, a second island, a
-  lower floor with a pit, wall torches, purple crystals and flowers, misty far
-  ruins. It supersedes mockups O to Q and the plum crypt kit for that section.
-  **No art for it has arrived yet** (the creative lead mentioned new assets
-  "for down below"; only the mockup reached the session). Don't rebuild the
-  section from stand-ins: wait for the pieces, then size the collision to them
-  (as with the surface islands).
+  that first section of the Old Crypt to look") and their kit OC1 to OC8
+  (`art/source/ironbark/crypt_oc/`, reduced 8:1 / 4:1 with nothing else done
+  by `tools/make_crypt_oc.py` to `game/assets/environment/ironbark/oc_*.png`
+  and the `terrain/oc_*` bands). It sits between IB-01's hall door and IB-02,
+  whose origin moved to IB-01's (-168, 27). Its pale masonry is a third terrain
+  material (`terrain_oc.tres`, made in `build_ib05.gd`), so a room can use it
+  in place of the plum crypt stone. IB-02 still uses the plum kit; reskinning
+  it with OC is the obvious next step if the creative lead likes IB-05.
+  - **Small ledges stand beside what they lead to, never over it:** a one-tile
+    ledge above an island or floor she jumps from bumps her head (found in
+    IB-05's first layout).
 - **Art the Old Crypt wants** (older list) is in Book 1 as OC1 to OC8 (floor and ceiling,
   walls and corners, islands, ledges, far and mid backdrops, foreground, props),
   styled on mockups O, P and Q in `lostkeep-attach/`.

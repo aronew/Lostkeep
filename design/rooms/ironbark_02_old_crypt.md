@@ -24,8 +24,8 @@ mockups and the principles pull apart:
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-02. East upper: IB-01's hall door. East lower: the Undercroft, under the clearing (not built). West: the Refuge road (behind the plated door). Above: the Guard Post's well (out of reach) |
-| **World grid** | West of IB-01 and 27 tiles lower: its origin is at IB-01's (-112, 27). Its East door (rows 5 to 9) is IB-01's hall door (rows 32 to 36) |
+| **Identity** | Ironbark Guard, IB-02. East upper and lower: IB-05, the Shrine Hall (the Old Crypt's first section). West: the Refuge road (behind the plated door). Above: the Guard Post's well (out of reach) |
+| **World grid** | West of IB-05 (the Shrine Hall): its origin is at IB-01's (-168, 27). Its East doors (rows 5 to 9, 23 to 27) are IB-05's West doors |
 | **Idea** | The guard's burial galleries, stacked beside a root-choked well that has broken through them; the way on is down, and the hoist brings you back |
 | **Purpose** | The first labyrinth: reading a tall space, committing to drops, a loop that crosses itself. Establishes a landmark (the moonlit well). Shows four locks before their keys. Hides the game's first secret and teaches its tell. Folds a shortcut back to the door. Tells part of the story (a hideout, a cocoon hung out of reach) |
 | **Size** | 112 × 40 tiles (1792 × 640 px): 2.8 screens wide, 1.8 tall |

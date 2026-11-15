@@ -10,7 +10,7 @@ extends "res://tools/room_builder.gd"
 ## door (rows 5 to 9) is IB-01's hall door (rows 32 to 36).
 
 const ROOM_PATH := "res://scenes/rooms/ironbark_02_old_crypt.tscn"
-const IB01 := "res://scenes/rooms/ironbark_test_room.tscn"
+const IB05 := "res://scenes/rooms/ironbark_05_shrine_hall.tscn"
 
 # --- The room plan (tiles) ---------------------------------------------------------
 ## "The guard's burial galleries, stacked beside a root-choked well that has
@@ -86,10 +86,10 @@ func _initialize() -> void:
 	_build_atmosphere()
 	_edge_shades()
 	# The East door: back up to the Lantern Clearing's hall (IB-01).
-	_door("East", Rect2i(104, 5, 8, 5), 1, IB01, "WestLower")
+	_door("East", Rect2i(104, 5, 8, 5), 1, IB05, "West")
 	# The lower East door leads on under the clearing (the Undercroft, not built
 	# yet), so it has a marker to arrive at but no way through.
-	_door("EastLower", Rect2i(104, 23, 8, 5), 1, "", "")
+	_door("EastLower", Rect2i(104, 23, 8, 5), 1, IB05, "WestLower")
 	_finish()
 	quit()
 

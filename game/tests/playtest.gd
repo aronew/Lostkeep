@@ -29,6 +29,7 @@ const ROOMS := {
 	"ib02": "res://scenes/rooms/ironbark_02_old_crypt.tscn",
 	"ib03": "res://scenes/rooms/ironbark_03_ruin_gardens.tscn",
 	"ib04": "res://scenes/rooms/ironbark_04_gate_road.tscn",
+	"ib05": "res://scenes/rooms/ironbark_05_shrine_hall.tscn",
 }
 const TILE := 16.0
 
@@ -54,6 +55,20 @@ func _ready() -> void:
 	Game.room_host = _swap_room  # doors swap the room under this harness
 	await _swap_room(ROOMS[room_id])
 	await _frames(2)
+	if room_id == "ib05":
+		match mode:
+			"shots":
+				await _shots()
+			"map":
+				await _map()
+			"tour":
+				await _tour_ib05()
+			"upper":
+				await _lower_ib05()
+			"doors":
+				await _doors_ib05()
+		get_tree().quit()
+		return
 	if room_id == "ib03" or room_id == "ib04":
 		match mode:
 			"shots":
@@ -197,6 +212,8 @@ func _shots() -> void:
 		places = SHOTS_IB03
 	if room_id == "ib04":
 		places = SHOTS_IB04
+	if room_id == "ib05":
+		places = SHOTS_IB05
 	for p in places:
 		_place(p[1], p[2], p[3])
 		await _frames(40)
@@ -448,7 +465,158 @@ func _west_ib02() -> void:
 	_report(lines, "west")
 
 
-## IB-01's hall door into IB-02 and straight back.
+# --- Room IB-05, the Shrine Hall (the Old Crypt's first section) -------------------------------------
+
+const SHOTS_IB05 := [
+	["01_east_door_gallery", 50.0, 10, -1],
+	["02_gallery_break", 26.0, 10, -1],
+	["03_shrine_island", 10.0, 20, 1],
+	["04_lower_floor_west", 12.0, 28, 1],
+	["05_pit", 24.0, 28, 1],
+	["06_arch_island", 38.0, 22, 1],
+	["07_balcony", 51.0, 16, -1],
+	["08_lower_floor_east", 44.0, 28, 1],
+]
+
+
+## The main line: in by the East door, west along the gallery, over its break
+## by a jump, and out the West door into the rest of the Old Crypt.
+func _tour_ib05() -> void:
+	var lines := []
+	_start_tour()
+	await _wait(30)
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 24.5 * TILE, 600)
+	await _hold_until(["move_left", "jump"], func(): return _floor_at(10) and kleo.global_position.x < 19 * TILE, 200)
+	lines.append("jumped the break in the gallery: %s (x %.0f)" % [_floor_at(10) and kleo.global_position.x < 19 * TILE, kleo.global_position.x])
+	await _hold_until(["move_left"], func(): return room.name != "IronbarkShrineHall", 500)
+	await _wait(50)
+	lines.append("out the West door into: %s, standing at x %.0f, y %.0f, on the floor: %s" % [room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])
+	_release_all()
+	_report(lines, "tour")
+
+
+## Jump from where she stands to a floor in [x0, x1] on `row`: run-up toward
+## it from `from_x`, jump, steer while in the air so she comes down over it, and
+## climb if she catches its edge.
+func _jump_to(from_x: float, x0: float, x1: float, row: int) -> bool:
+	var dir := 1 if x0 > kleo.global_position.x else -1
+	# Walk to the take-off point first, from whichever side.
+	if kleo.global_position.x > from_x:
+		await _hold_until(["move_left"], func(): return kleo.global_position.x <= from_x, 300)
+	else:
+		await _hold_until(["move_right"], func(): return kleo.global_position.x >= from_x, 300)
+	await _wait(6)
+	var mid := (x0 + x1) * 0.5
+	var key := "move_right" if dir > 0 else "move_left"
+	_press(key)
+	await _wait(4)
+	_press("jump")
+	for i in 150:
+		await _step()
+		if dir * (kleo.global_position.x - mid) > -8.0:
+			_release(key)
+		if kleo.state == Kleo.State.LEDGE_HANG:
+			_press(key)
+		if kleo.is_on_floor() and i > 4 and kleo.state == Kleo.State.NORMAL:
+			break
+	_release_all()
+	await _wait(8)
+	var ok := _floor_at(row) and kleo.global_position.x >= x0 - 6.0 and kleo.global_position.x <= x1 + 6.0
+	if not ok:
+		print("  jump to row %d [%.0f, %.0f] from %.0f missed: at x %.0f, y %.0f" % [row, x0, x1, from_x, kleo.global_position.x, kleo.global_position.y])
+	return ok
+
+
+## The cavern: down through the gallery's break onto the shrine island, down to
+## the lower floor, the pit and back out of it, up the ledge by the pit, the arch
+## island, the niche island and the balcony; then back to the gallery by the
+## west ledge, the shrine island and the ledge under the break; and out the
+## lower West door.
+func _lower_ib05() -> void:
+	var lines := []
+	_place(26.0, 10, -1)
+	await _frames(10)
+	_start_tour()
+	await _hold_until(["move_left"], func(): return _floor_at(20), 300)
+	lines.append("dropped through the gallery's break onto the shrine island: %s (x %.0f)" % [_floor_at(20), kleo.global_position.x])
+	await _wait(30)
+	await _hold_until(["move_right"], func(): return _floor_at(28), 300)
+	lines.append("off the shrine island down to the lower floor: %s (x %.0f)" % [_floor_at(28), kleo.global_position.x])
+	# Off the edge into the pit: at a run she catches its far lip on the way down.
+	await _hold_until(["move_right"], func(): return _floor_at(33) or (_floor_at(28) and kleo.global_position.x > 30.5 * TILE), 300)
+	var in_pit := _floor_at(33)
+	if in_pit:
+		await _wait(20)
+		await _hold_until(["move_right", "jump"], func(): return _floor_at(28) and kleo.global_position.x > 30 * TILE, 300)
+	lines.append("over the pit (%s): out on its far side: %s (x %.0f)" % ["fell in and climbed out" if in_pit else "caught its far lip", _floor_at(28), kleo.global_position.x])
+	await _wait(10)
+	var a := await _jump_to(490.0, 512.0, 544.0, 25)
+	var b := await _jump_to(536.0, 576.0, 672.0, 22)
+	var c := await _jump_to(664.0, 688.0, 768.0, 19)
+	var d := await _jump_to(760.0, 784.0, 848.0, 16)
+	lines.append("ledge by the pit, arch island, niche island, balcony: %s, %s, %s, %s" % [a, b, c, d])
+	await _wait(20)
+	# Back to the gallery from the lower floor.
+	_place(12.0, 28, -1)
+	await _wait(10)
+	var e := await _jump_to(140.0, 64.0, 96.0, 24)
+	var f := await _jump_to(72.0, 96.0, 336.0, 20)
+	var g := await _jump_to(310.0, 352.0, 384.0, 15)
+	# Up through the break: jump straight up from the ledge, push right at the
+	# top and catch the gallery's lip.
+	await _hold_until(["move_left"], func(): return kleo.global_position.x <= 366.0, 100)
+	await _wait(6)
+	_press("jump")
+	for i in 120:
+		await _step()
+		if i == 16:
+			_press("move_right")
+		if kleo.state == Kleo.State.NORMAL and kleo.is_on_floor() and i > 20:
+			break
+	_release_all()
+	await _wait(8)
+	var h := _floor_at(10)
+	lines.append("back up to the gallery (west ledge, shrine island, the ledge under the break, the gallery): %s, %s, %s, %s" % [e, f, g, h])
+	# And out the lower West door.
+	_place(8.0, 28, -1)
+	await _wait(10)
+	await _hold_until(["move_left"], func(): return room.name != "IronbarkShrineHall", 300)
+	await _wait(50)
+	lines.append("out the lower West door into: %s, standing at x %.0f, y %.0f, on the floor: %s" % [room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])
+	_release_all()
+	_report(lines, "upper")
+
+
+## IB-01's hall door into IB-05 and back; IB-02's two East doors into IB-05.
+func _doors_ib05() -> void:
+	var lines := []
+	await _swap_room(ROOMS["ib01"])
+	await _frames(2)
+	_place(6.0, 37, -1)
+	await _frames(10)
+	_start_tour()
+	await _hold_until(["move_left"], func(): return room.name == "IronbarkShrineHall", 300)
+	await _wait(40)
+	lines.append("IB-01 hall door leads to: %s; she stands at x %.0f, y %.0f, facing %d, on the floor: %s" %
+		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.facing, kleo.is_on_floor()])
+	await _hold_until(["move_right"], func(): return room.name == "IronbarkTestRoom", 300)
+	await _wait(40)
+	lines.append("and back to: %s; she stands at x %.0f, y %.0f, facing %d, on the floor: %s" %
+		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.facing, kleo.is_on_floor()])
+	for d in [[108.0, 10, "upper"], [108.0, 28, "lower"]]:
+		await _swap_room(ROOMS["ib02"])
+		await _frames(2)
+		_place(d[0], d[1], 1)
+		await _wait(10)
+		await _hold_until(["move_right"], func(): return room.name == "IronbarkShrineHall", 300)
+		await _wait(40)
+		lines.append("IB-02's %s East door leads to: %s; she stands at x %.0f, y %.0f, on the floor: %s" %
+			[d[2], room.name, kleo.global_position.x, kleo.global_position.y, kleo.is_on_floor()])
+	_release_all()
+	_report(lines, "doors")
+
+
+## IB-01's hall door into the crypt (IB-05, then IB-02) and straight back.
 func _doors() -> void:
 	var lines := []
 	await _swap_room(ROOMS["ib01"])
@@ -456,7 +624,7 @@ func _doors() -> void:
 	_place(6.0, 37, -1)
 	await _frames(10)
 	_start_tour()
-	await _hold_until(["move_left"], func(): return room.name == "IronbarkOldCrypt", 300)
+	await _hold_until(["move_left"], func(): return room.name == "IronbarkShrineHall", 300)
 	await _wait(40)
 	lines.append("IB-01 hall door leads to: %s; she stands at x %.0f, y %.0f, facing %d, on the floor: %s" %
 		[room.name, kleo.global_position.x, kleo.global_position.y, kleo.facing, kleo.is_on_floor()])

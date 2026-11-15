@@ -8,7 +8,7 @@
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-01. West upper: the Gate Road, IB-04 (the way she came from the opening room, IB-03; the door works). West lower: the Old Crypt, IB-02 (the main way on; the door works). East: the Lost Keep's gate (gated) |
+| **Identity** | Ironbark Guard, IB-01. West upper: the Gate Road, IB-04 (the way she came from the opening room, IB-03; the door works). West lower: the Shrine Hall, IB-05, the Old Crypt's first section (the main way on; the door works). East: the Lost Keep's gate (gated) |
 | **Idea** | Under the Great Ironbark, a mossy clearing runs east to the broken bridge, with the guard's crypt beneath it |
 | **Purpose** | Establishes a landmark (the Great Ironbark, the save shrine); introduces running, jumping, the ledge catch and the combo (a training yard); shows five locks before their keys; folds a shortcut back to the save; gives breath |
 | **Size** | 138 × 40 tiles (2208 × 640 px): 3.5 screens wide, 1.8 tall |
