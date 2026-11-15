@@ -358,8 +358,13 @@ func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> 
 			break
 	var off := (n * 97) % maxi(1, int(st[2]) - w)
 	var region := Rect2(st[0] + off, st[1], mini(w, int(st[2])), st[3])
+	if ceiling:
+		# Only the cap and the masonry under it, upside down: the cap row is the
+		# ceiling's clean edge and the ragged underside rises into the dark. What
+		# grows on the strip's top (crystals, tufts) would dangle, so it is left off.
+		region = Rect2(region.position.x, st[1] + st[4], region.size.x, st[3] - st[4])
 	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE - 2, y - st[4]))
 	sp.name = "CeilingStrip" if ceiling else "FloorStrip"
 	if ceiling:
 		sp.flip_v = true
-		sp.position.y = y - (st[3] - st[4])
+		sp.position.y = y - region.size.y

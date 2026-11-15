@@ -102,7 +102,9 @@ The skin draws straight bands; the mockup's galleries are ragged slabs whose
 undersides hang into the hall, under a lumpy cobble ceiling, with a brick wall
 behind. `_galleries()` in `build_ib05.gd`: CH7's cave strips (`ch_cave.png`)
 over every gallery floor run with their cap on the walking line, and upside
-down along every ceiling run; the skin skips the galleries' slabs and ceilings
+down along every ceiling run (only the cap and the masonry under it: the creative
+lead found the whole strip upside down "a little wild", its crystals and
+tufts dangling); the skin skips the galleries' slabs and ceilings
 (`GALLERY_SKIP`) so the strips are their only edge; a brick back wall
 (`sh_fill`, `GalleryBackWall`) stands behind them. Only stretches of the strips
 clear of their roots are used (`STRIPS`). Collision unchanged; tours, checker
