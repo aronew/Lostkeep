@@ -472,9 +472,17 @@ She steps forward with every hit.
   teal mist, OC6 arcades twice at 0.32 and 0.58, mist, SH7 ruins in dark
   silhouette at 0.78) under a multiply grade (`Mood`, purple at the room's top,
   teal at its bottom: `MOOD_TOP`, `MOOD_BOTTOM`); `_crypt_foreground()` adds
-  OC7's dark rock and a nearer layer of dark pillars and roots (1.35). The
+  OC7's dark rock (the nearer pillars and roots, blown up from SH and P5 art,
+  read as holes and were taken out until FG1 and FG2 arrive). The
   surface rooms got the same idea: `ForegroundNear` in `surface_builder.gd`,
   P5's ferns and a branch enlarged as silhouettes at 1.45.
+  **The SH stone's inside is masonry, not void** (the creative lead: tiles
+  "don't connect correctly" at the joins): `tools/make_crypt_sh.py` cuts the
+  void off SH1 and SH2's bands along their blocks (pixels darker than 40 go
+  clear) and makes `sh_fill.png` from SH1's lit blocks; the material fades it
+  over 4 tiles. Thin slabs are solid stone and joins have no black notches;
+  deep rock still goes dark. This departs from the earth's shadow rule on
+  purpose: the crypt mockup fills its masses with blocks.
   - **Its layout follows the mockup piece by piece** (second layout, after the
     creative lead said the first "looks very different from the mockup"):
     `docs/rooms/ironbark_05/layout_vs_mockup.png`. **It now wears the creative

@@ -77,7 +77,9 @@ func _shared() -> TileSet:
 ## blocks, made for the Shrine Hall). A room calls this after _shared() to use
 ## it as its stone in place of the plum crypt kit.
 func _use_shrine_stone() -> void:
-	var m := _material("sh", 8, 48, 37, 0.0, Color(0, 0, 0, 0))
+	# A masonry fill that darkens with depth (4 tiles): thin slabs are solid
+	# stone, as in the mockup, and only deep rock goes to the void.
+	var m := _material("sh", 8, 48, 37, 4.0, Color(0, 0, 0, 0))
 	m.corner_top = load(TERRAIN + "sh_corner_top.png")
 	m.corner_top_anchor = Vector2(36, 29)
 	m.corner_under = load(TERRAIN + "sh_corner_under.png")
@@ -157,9 +159,8 @@ func _shrine_far() -> void:
 	mood.material = mm
 
 
-## In front of everything: OC7's dark rock along the top and bottom of the view,
-## and, nearer still, a few great pillars and roots in silhouette (the reference's
-## dark frame). Scrolls faster than the playfield; stays put vertically.
+## In front of everything: OC7's dark rock along the top and bottom of the view.
+## Scrolls faster than the playfield; stays put vertically.
 func _crypt_foreground() -> void:
 	var h := float(room.size.y * TILE)
 	var unlit := CanvasItemMaterial.new()
@@ -175,25 +176,8 @@ func _crypt_foreground() -> void:
 	var bottom := _sprite(p, ENV + "oc_foreground.png", Rect2(0, 250, 768, 110), Vector2(0, h - 96))
 	bottom.name = "Bottom"
 	bottom.material = unlit
-	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
-	near.scroll_scale = Vector2(1.35, 1.0)
-	near.repeat_size = Vector2(1100, 0)
-	near.repeat_times = 4
-	near.z_index = 31
-	var dark := Color(0.07, 0.05, 0.1)
-	for c in [[Rect2(272, 32, 20, 80), 80.0], [Rect2(272, 32, 20, 80), 640.0]]:
-		var reg: Rect2 = c[0]
-		var pil := _sprite(near, ENV + "sh_arcades.png", reg, Vector2(c[1], h - reg.size.y * 1.6 + 6))
-		pil.name = "Pillar"
-		pil.scale = Vector2(1.6, 1.6)
-		pil.modulate = dark
-		pil.material = unlit
-	for c in [[Rect2(224, 112, 20, 64), 300.0], [Rect2(88, 112, 24, 64), 900.0]]:
-		var root := _sprite(near, ENV + "sh_flora.png", c[0], Vector2(c[1], -4))
-		root.name = "Roots"
-		root.scale = Vector2(2, 2)
-		root.modulate = Color(0.16, 0.07, 0.12)
-		root.material = unlit
+	# (A nearer layer of pillars and roots goes here when FG1 and FG2 arrive: the
+	# first try, P5 and SH pieces blown up into black shapes, read as holes.)
 
 
 ## The room's root node.

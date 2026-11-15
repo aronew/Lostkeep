@@ -23,6 +23,20 @@ SHEETS = {
 }
 
 
+DARK = 40
+
+
+def clear_void(path):
+    im = Image.open(path).convert("RGBA")
+    px = im.load()
+    for y in range(im.size[1]):
+        for x in range(im.size[0]):
+            r, g, b, a = px[x, y]
+            if a and (r + g + b) / 3 < DARK:
+                px[x, y] = (0, 0, 0, 0)
+    im.save(path)
+
+
 def main():
     small = {}
     for name, (out, scale) in SHEETS.items():
@@ -38,7 +52,25 @@ def main():
     walls.crop((0, 0, 46, 256)).save(ENV + "terrain/sh_wall.png")     # faces right, face column 37
     walls.crop((88, 32, 152, 96)).save(ENV + "terrain/sh_corner_top.png")      # anchor (36, 29)
     walls.crop((176, 32, 240, 96)).save(ENV + "terrain/sh_corner_under.png")   # anchor (42, 42)
-    Image.new("RGBA", (16, 16), (11, 8, 18, 255)).save(ENV + "terrain/sh_fill.png")
+    # The bands were painted ending in the void. In the crypts the creative lead's
+    # mockup fills each mass with masonry instead, so the void is cut away along
+    # the blocks' own outlines (every pixel darker than DARK becomes clear) and
+    # the fill below shows through.
+    for name in ("sh_top", "sh_under", "sh_wall"):
+        clear_void(ENV + "terrain/" + name + ".png")
+    # The fill: SH1's lit blocks (floor band rows 11 to 34), stacked with a
+    # half-width offset so the courses don't line up, a step darker.
+    blocks = bands.crop((0, 11, 384, 35))
+    fill = Image.new("RGBA", (384, 48))
+    fill.paste(blocks, (0, 0))
+    fill.paste(blocks.crop((192, 0, 384, 24)), (0, 24))
+    fill.paste(blocks.crop((0, 0, 192, 24)), (192, 24))
+    px = fill.load()
+    for y in range(48):
+        for x in range(384):
+            r, g, b, a = px[x, y]
+            px[x, y] = (int(r * 0.62), int(g * 0.62), int(b * 0.66), 255)
+    fill.save(ENV + "terrain/sh_fill.png")
     print("terrain: sh_top (line 8), sh_under (line 48), sh_wall (face 37), corners, sh_fill")
 
 
