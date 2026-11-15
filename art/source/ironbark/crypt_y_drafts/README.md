@@ -39,3 +39,13 @@ should not include.
 
 Before the set goes in, CY1 and CY2's wall band need the same clean 8x grid
 (their drafts are resampled, not on whole pixels).
+
+## CY1 and CY2 on a clean 8x grid (`CY1_clean8x.png`, `CY2_clean8x.png`)
+
+Both are true 8x pixel art (CY1's canvas is 2172 x 724, 271 x 90 art pixels
+plus a 4 px margin, not the 3072 x 1024 asked). They fade. But the three
+sheets use three brick sizes, compared at game scale beside Kleo in
+`docs/rooms/ironbark_05/cy_brick_sizes.png`: CY1 about 6 x 3 px, CY2 about
+4 x 2 px, CY2b about 11 x 5 px. They cannot join until one size is chosen.
+CY2's inner floor corner also ends its fade in a flat black block with
+straight edges.
