@@ -95,3 +95,15 @@ galleries have "more character" than our straight corridor.
   the gap onto the west gallery's step) and `mode=upper` pass.
 - Image: `docs/rooms/ironbark_05/moody_vs_mockup.png` (the mockup above, the
   room below).
+
+### The galleries wear CH7 (the creative lead: the top hallway "still doesn't match the mockup look")
+
+The skin draws straight bands; the mockup's galleries are ragged slabs whose
+undersides hang into the hall, under a lumpy cobble ceiling, with a brick wall
+behind. `_galleries()` in `build_ib05.gd`: CH7's cave strips (`ch_cave.png`)
+over every gallery floor run with their cap on the walking line, and upside
+down along every ceiling run; the skin skips the galleries' slabs and ceilings
+(`GALLERY_SKIP`) so the strips are their only edge; a brick back wall
+(`sh_fill`, `GalleryBackWall`) stands behind them. Only stretches of the strips
+clear of their roots are used (`STRIPS`). Collision unchanged; tours, checker
+as before.

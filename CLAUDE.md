@@ -646,6 +646,15 @@ She steps forward with every hit.
   sets `_mood = true` and `_finish()` calls `_moody()` in `room_builder.gd`
   (`MOOD_*` constants). Other rooms can switch it on once IB-05 is approved.
   Don't run `mood_test.gd` on IB-05: it would double the fog.
+- **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
+  grid-aligned: resampled from their drafts onto the grid by another tool, so
+  03 stairs and 06 alcoves show a crosshatch shimmer; the others are clean).
+  Originals in `art/source/ironbark/crypt_ch/`; `tools/make_crypt_ch.py`
+  reduces them by their cell size to `ch_*.png` and lists each sheet's pieces
+  (rect, walking line) in `ch_pieces.json`. First use: IB-05's galleries wear
+  CH7's strips (`_galleries()`). Don't use the CH1 slab with the icy-blue
+  crystal (the Prism's colour). New PNGs need `godot --headless --import`
+  before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's
