@@ -1173,7 +1173,7 @@ func _light(parent: Node, pos: Vector2, color: Color, energy: float, scale: floa
 const MOOD_MURK := Color(0.36, 0.46, 0.52)         # the CanvasModulate: low key, teal
 const MOOD_HAZE := Color(0.04, 0.11, 0.13, 0.24)   # washes the backdrops into the murk
 const MOOD_FOG := Color(0.32, 0.48, 0.52)          # the fog's own colour
-const MOOD_FAR := Color(0.7, 0.88, 0.9)            # the backdrops, greyed toward teal
+const MOOD_FAR := Color(0.55, 1.3, 0.98)           # the backdrops, lifted toward the mockup's dark teal
 
 
 ## After the creative lead's moody references (docs/mockups/mood/): the room
