@@ -129,3 +129,39 @@ step pieces in"): its face and upper floor only, on the upper walking line,
 mirrored for steps down and upside down for the ceiling's steps (x 8, 13, 26,
 29, 38). The two-tile ceiling step over the East door's gap keeps the skin.
 Image: `docs/rooms/ironbark_05/ch9_steps.png`.
+
+## Step 1: the CH pieces through the rest of the room
+
+- **Slabs and corbels:** the seven small plates and ledges (west island, nook,
+  pit ledge, the three plates, the ledge under the east gap) are CH1's small
+  slab (38 px, walking line on its row 8), alternately mirrored. The two wall
+  ledges are CH2's corbel, its pier in the wall: the west ledge is now 3 tiles
+  (x 3 to 5) and the east shelf 3 tiles (x 51 to 53), to match the art. The
+  shrine island, the arch island and the pedestal keep their SH art.
+- **The detail pass in CH pieces** (`_ch_detail = true`; `_ch_room_detail()` in
+  `room_builder.gd`): CH4's moss, roots, chains and stone drips under ceilings,
+  each only where it leaves about 40 px of headroom; CH4's small moss over
+  floor ends; CH5's crystals, tufts and rubble on floors; CH8's mounds, drums
+  and grass darkened in front of floors (the mid step); CH8's thin root arches
+  in black, sparse and only on the room's lower floors (the near step: grass
+  and ferns in black read as blobs, and in a gallery they stood in the way).
+  `detail_skip = SKIP` so the CH9 bands' skip regions don't keep it off the
+  galleries and the hall's ceiling.
+- **The shrine lit** (the creative lead: "add lights to the shrine on the
+  island like in the mockup"): warm light at both painted braziers and a small
+  glow at the statue's orb, kept low (the mood pass boosts warm lights).
+  Image: `docs/rooms/ironbark_05/shrine_lit.png`.
+- Validation: `check_room.py ib05` as before (coverage 100 %, no traps, all
+  exits); `mode=tour` and `mode=upper` pass.
+
+## Rim light and warm glow (after the moody mockup)
+
+The creative lead: "a little bit of light effect to the tops of the platforms
+like in the mock up" and "a warmer glow to the lights". `_rim = true`:
+- `_rim_light()`: along every walking edge of two tiles or more, a faint warm
+  line 3 px deep fading down (additive), and a brighter one drawn only where
+  lights reach (light-only), so the rims glow near the flames.
+- `_warm_glow()`: every warm light turns toward amber (`GLOW_LIGHT`) and gets a
+  halo in the air round it, an additive disc in four stepped rings sized to
+  the light (its own sprite, never baked into tiles).
+Image: `docs/rooms/ironbark_05/warm_glow.png`.

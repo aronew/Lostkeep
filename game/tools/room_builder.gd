@@ -102,6 +102,23 @@ var _detail_kind := ""
 ## docs/mockups/mood/): set by a room before _finish(), which sinks it into
 ## a teal murk with fog along its floors. See _moody().
 var _mood := false
+## The detail pass in the creative lead's CH pieces (Book 1, CH4 hangings, CH5
+## ledge dressing, CH8 floor front) instead of the SH flora. Set by a room
+## before _finish(); IB-05 first, for approval.
+var _ch_detail := false
+## Where the detail pass stays away from, if not the skin's skip regions (a
+## room whose painted bands are in `skip` still wants hangings under them).
+var detail_skip = null
+## Warm light along every walking edge, as in the moody mockup (the creative
+## lead: "a little bit of light effect to the tops of the platforms"). See
+## _rim_light(). IB-05 first, for approval.
+var _rim := false
+## The murk `_moody()` sinks the room into; a room can set a darker one (the
+## outpost's interior: "spooky feeling in a way, not all bright").
+var mood_murk := Color(0.36, 0.46, 0.52)
+## Whether the CH detail pass lays black root arches nearest the camera (an
+## interior leaves them out: in a small room they cover the floor).
+var detail_near := true
 
 
 func _use_crypt_y_stone() -> void:
@@ -296,7 +313,7 @@ func _room_detail(surface: bool) -> void:
 		solid[c] = true
 	var is_solid := func(c: Vector2i) -> bool: return solid.has(c) or not room.has_point(c)
 	var skipped := func(c: Vector2i) -> bool:
-		for r in skip:
+		for r in (skip if detail_skip == null else detail_skip):
 			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
 				return true
 		for r in _secret_rects:
@@ -309,6 +326,9 @@ func _room_detail(surface: bool) -> void:
 	hang_node.z_index = 3  # under the skin's bands: each tucks up under its ceiling
 	var mid_node := _node(Node2D.new(), "FloorMid", _root) as Node2D
 	mid_node.z_index = 26  # in front of Kleo
+	if _ch_detail:
+		_ch_room_detail(is_solid, skipped, hang_node, mid_node, unlit)
+		return
 	var flora := ENV + "sh_flora.png"
 	var hangs := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
 		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
@@ -420,6 +440,9 @@ func _finish() -> void:
 		_room_detail(_detail_kind == "surface")
 	if _mood:
 		_moody()
+	if _rim:
+		_rim_light()
+		_warm_glow()
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
 	_node(kleo, "Kleo", _root, false)
@@ -482,6 +505,31 @@ func _door(door_name: String, rect: Rect2i, side: int, target_scene: String, tar
 	cs.shape = shape
 	cs.position = Vector2(edge_x - side * 7.0, floor_y - rect.size.y * TILE * 0.5)
 	_node(cs, "Shape", exit)
+
+
+## A doorway in the middle of the room (a building's door): interact to go to
+## `target_door` in `target_scene`; `door_name` is the marker where Kleo comes
+## back out, standing at `pos` (her feet), facing `facing`.
+func _entry(door_name: String, pos: Vector2, size: Vector2, target_scene: String, target_door: String, facing := 1) -> Area2D:
+	var doors := _root.get_node_or_null("Doors")
+	if doors == null:
+		doors = _node(Node2D.new(), "Doors", _root)
+	var mark := _node(Marker2D.new(), door_name, doors) as Marker2D
+	mark.position = pos
+	mark.set_meta("facing", facing)
+	var e := _node(Area2D.new(), door_name + "Entry", _root) as Area2D
+	e.set_script(load("res://scripts/world/entry_door.gd"))
+	e.position = pos
+	e.set("target_scene", target_scene)
+	e.set("target_door", target_door)
+	e.set("prompt_offset", Vector2(0, -size.y - 8))
+	var cs := CollisionShape2D.new()
+	var r := RectangleShape2D.new()
+	r.size = size
+	cs.shape = r
+	cs.position = Vector2(0, -size.y * 0.5)
+	_node(cs, "Shape", e)
+	return e
 
 
 # --- Resources --------------------------------------------------------------------------
@@ -843,6 +891,15 @@ const SH4_PLATE_C := [Rect2(272, 24, 32, 32), 5, 2, 30]
 const SH4_BROKEN_LEDGE := [Rect2(208, 128, 32, 32), 3, 0, 31]
 const SH4_WALL_LEDGE := [Rect2(104, 120, 64, 56), 16, 0, 63]  # its wall on the left; flip for a wall on the right
 const SH4_ARCH_ISLAND := [Rect2(8, 8, 96, 88), 50, 0, 95]
+## CH1's small slab (ch_platforms.png), in the same form: region, walking
+## line, walking extent, and its sheet. Replaces SH4's plates (the creative
+## lead: "the platforms ... just look weird").
+const CH1_SLAB_SPEC := [Rect2(228, 21, 38, 30), 8, 0, 37, ENV + "ch_platforms.png"]
+## CH2's large corbel (ch_supports.png): a pier 8 px wide going into the wall
+## on its left, then a ledge 47 px long, its walking line on row 10.
+const CH2_CORBEL_REGION := Rect2(104, 54, 55, 44)
+const CH2_CORBEL_LINE_ROW := 10
+const CH2_CORBEL_PIER := 8
 
 
 ## One of SH4's pieces on its mass [tile_x, row, tiles]: its walking line on the
@@ -857,9 +914,21 @@ func _platform(parent: Node, spec: Array, tile_x: int, row: int, tiles: int, fli
 		x0 = w - x1
 		x1 = w - t
 	var x: float = tile_x * TILE + (tiles * TILE - float(x1 - x0 + 1)) * 0.5 - x0
-	var sp := _sprite(parent, ENV + "sh_platforms.png", region, Vector2(x, row * TILE - int(spec[1])))
+	var sheet: String = spec[4] if spec.size() > 4 else ENV + "sh_platforms.png"
+	var sp := _sprite(parent, sheet, region, Vector2(x, row * TILE - int(spec[1])))
 	sp.name = "Platform"
 	sp.flip_h = flip
+	return sp
+
+
+## CH2's corbel on its mass [tile_x, row, tiles]: its pier in the wall beside
+## the mass (on the right with `wall_right`), its ledge over the mass.
+func _corbel(parent: Node, tile_x: int, row: int, tiles: int, wall_right: bool) -> Sprite2D:
+	var r := CH2_CORBEL_REGION
+	var x: float = (tile_x + tiles) * TILE + CH2_CORBEL_PIER - r.size.x if wall_right else tile_x * TILE - CH2_CORBEL_PIER
+	var sp := _sprite(parent, ENV + "ch_supports.png", r, Vector2(x, row * TILE - CH2_CORBEL_LINE_ROW))
+	sp.flip_h = wall_right
+	sp.name = "Corbel"
 	return sp
 
 
@@ -1156,7 +1225,7 @@ func _light(parent: Node, pos: Vector2, color: Color, energy: float, scale: floa
 const MOOD_MURK := Color(0.36, 0.46, 0.52)         # the CanvasModulate: low key, teal
 const MOOD_HAZE := Color(0.04, 0.11, 0.13, 0.24)   # washes the backdrops into the murk
 const MOOD_FOG := Color(0.32, 0.48, 0.52)          # the fog's own colour
-const MOOD_FAR := Color(0.7, 0.88, 0.9)            # the backdrops, greyed toward teal
+const MOOD_FAR := Color(0.55, 1.3, 0.98)           # the backdrops, lifted toward the mockup's dark teal
 
 
 ## After the creative lead's moody references (docs/mockups/mood/): the room
@@ -1167,7 +1236,7 @@ const MOOD_FAR := Color(0.7, 0.88, 0.9)            # the backdrops, greyed towar
 func _moody() -> void:
 	var dark := _root.get_node_or_null("Darkness") as CanvasModulate
 	if dark:
-		dark.color = MOOD_MURK
+		dark.color = mood_murk
 	for c in _root.get_children():
 		if c is Parallax2D and (c as Parallax2D).z_index < 0:
 			(c as Parallax2D).modulate = MOOD_FAR
@@ -1253,3 +1322,200 @@ func _mood_fog(parent: Node, fog_name: String, rect: Rect2, density: float, z: i
 	r.z_index = z
 	r.material.set_shader_parameter("scale", Vector2(rect.size.x / 640.0, rect.size.y / 90.0))
 	return r
+
+
+# --- The detail pass in the CH pieces ---------------------------------------------------------
+
+const CH_PIECES := ENV + "ch_pieces.json"
+## CH4 (ch_hangings.png): moss curtains, roots and chains by length; the stone
+## drips for low ceilings. Indices into ch_pieces.json's "ch_hangings".
+## (CH4's roots, 6 to 9, are left out: their maroon reads as the Blight's
+## crimson in warm light, and red is the Blight's alone.)
+const CH_HANG_LONG := [0, 2, 10, 11]
+const CH_HANG_MID := [1, 3, 4, 17]
+const CH_HANG_SHORT := [5, 13, 14, 15, 16]
+## CH5 (ch_props.png): crystals, tufts and rubble standing on floors.
+const CH_TOPS := [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 14, 15, 16]
+## CH8 (ch_foreground.png): mounds, drums, grass for the mid step; thin root
+## arches and grass in black for the near step.
+const CH_FLOOR_MID := [0, 1, 2, 3, 4, 5, 9, 11, 12, 16]
+## Only the thin root arches: grass and ferns in black read as blobs.
+const CH_FLOOR_NEAR := [6, 7, 8]
+const CH_NEAR_TINT := Color(0.04, 0.03, 0.06)
+
+
+func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, mid_node: Node2D, unlit: Material) -> void:
+	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CH_PIECES))
+	var rect_of := func(sheet: String, i: int) -> Rect2:
+		var r: Array = table[sheet][i]["rect"]
+		return Rect2(r[0], r[1], r[2], r[3])
+	var tops_node := _node(Node2D.new(), "Tops", _root) as Node2D
+	tops_node.z_index = 3
+	var near_node := _node(Node2D.new(), "FloorNear", _root) as Node2D
+	near_node.z_index = 27
+	var mid_tint := Color(0.5, 0.48, 0.6)
+	for y in range(room.position.y, room.end.y):
+		for x in range(room.position.x, room.end.x):
+			var c := Vector2i(x, y)
+			if is_solid.call(c) or skipped.call(c):
+				continue
+			# Under a ceiling: a hanging that leaves her room to pass (about 40 px).
+			if is_solid.call(c + Vector2i.UP) and room.has_point(c + Vector2i.UP) and _cellhash(c, 1) < 300:
+				var open := 0
+				while open < 12 and not is_solid.call(c + Vector2i(0, open + 1)):
+					open += 1
+				var room_px := (open + 1) * TILE - 40
+				var pool: Array = CH_HANG_LONG + CH_HANG_MID if open >= 8 else (CH_HANG_MID + CH_HANG_SHORT if open >= 5 else CH_HANG_SHORT)
+				var pick: int = pool[_cellhash(c, 2) % pool.size()]
+				var reg: Rect2 = rect_of.call("ch_hangings", pick)
+				if reg.size.y <= room_px:
+					var sp := _sprite(hang_node, ENV + "ch_hangings.png", reg, Vector2(x * TILE + (_cellhash(c, 3) % 8) - reg.size.x * 0.5 + 8, y * TILE - 3))
+					sp.name = "Hang"
+			if not (is_solid.call(c + Vector2i.DOWN) and room.has_point(c + Vector2i.DOWN)):
+				continue
+			var floor_y := float((y + 1) * TILE)
+			# Its end over open air: moss over the corner, under the slab.
+			for side in [-1, 1]:
+				var n := c + Vector2i(side, 0)
+				if not is_solid.call(n) and not is_solid.call(n + Vector2i.DOWN) and _cellhash(c, 4) < 600:
+					var depth := 0
+					while depth < 8 and is_solid.call(c + Vector2i(0, 1 + depth)):
+						depth += 1
+					if depth < 8:
+						var reg2: Rect2 = rect_of.call("ch_hangings", [5, 3, 1][_cellhash(c, 5) % 3])
+						var ivy := _sprite(hang_node, ENV + "ch_hangings.png", reg2,
+							Vector2(x * TILE + (0 if side < 0 else 16 - reg2.size.x), (y + 1 + depth) * TILE - 3))
+						ivy.name = "CornerMoss"
+			# On the floor: crystals, tufts, rubble, behind her.
+			if _cellhash(c, 8) < 140:
+				var reg3: Rect2 = rect_of.call("ch_props", CH_TOPS[_cellhash(c, 9) % CH_TOPS.size()])
+				var top := _sprite(tops_node, ENV + "ch_props.png", reg3, Vector2(x * TILE + 8 - reg3.size.x * 0.5, floor_y - reg3.size.y + 1))
+				top.name = "Top"
+				top.flip_h = _cellhash(c, 10) % 2 == 0
+			# In front of the floor, the mid step: darkened mounds, drums, grass.
+			if _cellhash(c, 6) < 45:
+				var reg4: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_MID[_cellhash(c, 7) % CH_FLOOR_MID.size()])
+				var m := _sprite(mid_node, ENV + "ch_foreground.png", reg4, Vector2(x * TILE + 8 - reg4.size.x * 0.5, floor_y - reg4.size.y * 0.55))
+				m.name = "FloorMid"
+				m.modulate = mid_tint
+				m.material = unlit
+				m.flip_h = _cellhash(c, 11) % 2 == 0
+			# Nearest the camera: thin root arches in black, sparse, low, and only on
+			# the room's lower floors (in a gallery they stood in the way).
+			elif detail_near and _cellhash(c, 12) < 30 and y >= room.position.y + room.size.y * 0.6:
+				var reg5: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_NEAR[_cellhash(c, 13) % CH_FLOOR_NEAR.size()])
+				var nr := _sprite(near_node, ENV + "ch_foreground.png", reg5, Vector2(x * TILE + 8 - reg5.size.x * 0.5, floor_y - reg5.size.y * 0.35))
+				nr.name = "FloorNear"
+				nr.modulate = CH_NEAR_TINT
+				nr.material = unlit
+				nr.flip_h = _cellhash(c, 14) % 2 == 0
+
+
+# --- Rim light along the walking edges --------------------------------------------------------
+
+const RIM_BASE := Color(1.0, 0.72, 0.42)   # the faint warm line on every top
+const RIM_LIT := Color(1.0, 0.84, 0.58)    # brighter where a light reaches
+
+
+## Along every walking edge (a solid cell with open air over it, runs of two
+## tiles or more): a faint warm line, 3 px deep and fading down, added over the
+## stone; and a brighter one drawn only where lights reach it, so the rims glow
+## near the torches and braziers, as the mockup's do.
+func _rim_light() -> void:
+	var cells := {}
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm:
+			for c in tm.get_used_cells():
+				cells[c] = true
+	var rows := {}
+	for c in cells:
+		if not cells.has(c + Vector2i(0, -1)) and room.has_point(c + Vector2i(0, -1)):
+			if not rows.has(c.y):
+				rows[c.y] = []
+			rows[c.y].append(c.x)
+	var node := _node(Node2D.new(), "RimLight", _root) as Node2D
+	node.z_index = 6
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var lit := CanvasItemMaterial.new()
+	lit.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	lit.light_mode = CanvasItemMaterial.LIGHT_MODE_LIGHT_ONLY
+	var keys := rows.keys()
+	keys.sort()
+	for y in keys:
+		var xs: Array = rows[y]
+		xs.sort()
+		var start: int = xs[0]
+		var prev: int = xs[0]
+		for i in range(1, xs.size() + 1):
+			if i < xs.size() and xs[i] == prev + 1:
+				prev = xs[i]
+				continue
+			if prev - start + 1 >= 2:
+				var x0 := float(start * TILE)
+				var w := float((prev - start + 1) * TILE)
+				for k in 3:
+					var base := _node(ColorRect.new(), "Rim", node) as ColorRect
+					base.position = Vector2(x0, y * TILE + k)
+					base.size = Vector2(w, 1)
+					base.color = Color(RIM_BASE.r, RIM_BASE.g, RIM_BASE.b, [0.16, 0.08, 0.03][k])
+					base.material = add
+					base.mouse_filter = Control.MOUSE_FILTER_IGNORE
+					var glow := _node(ColorRect.new(), "RimLit", node) as ColorRect
+					glow.position = Vector2(x0, y * TILE + k)
+					glow.size = Vector2(w, 1)
+					glow.color = Color(RIM_LIT.r, RIM_LIT.g, RIM_LIT.b, [0.75, 0.4, 0.15][k])
+					glow.material = lit
+					glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			if i < xs.size():
+				start = xs[i]
+				prev = xs[i]
+
+
+# --- Warm glow round the flames --------------------------------------------------------------
+
+const GLOW_LIGHT := Color(1.0, 0.6, 0.27)   # the flames' light, toward amber
+const GLOW_HALO := Color(0.95, 0.55, 0.22)  # the halo in the air round a flame
+
+
+## The mockup's warm glow (the creative lead: "a warmer glow to the lights"):
+## every warm light turns toward amber, and gets a halo in the air round it, a
+## soft additive disc in four stepped rings (pixel art, not a smooth blur),
+## sized to the light. Glows stay off the tiles: the halo is its own sprite.
+func _warm_glow() -> void:
+	var tex := _halo_texture()
+	var node := _node(Node2D.new(), "WarmGlow", _root) as Node2D
+	node.z_index = 7
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	for l in _root.find_children("*", "PointLight2D", true, false):
+		var pl := l as PointLight2D
+		if pl.color.r <= pl.color.b:
+			continue
+		pl.color = GLOW_LIGHT
+		var halo := _node(Sprite2D.new(), "Halo", node) as Sprite2D
+		halo.texture = tex
+		halo.global_position = pl.global_position
+		# Kept small and faint: a big lantern's halo read as a ringed disc.
+		var size := clampf(pl.texture_scale * 48.0, 24.0, 56.0)
+		halo.scale = Vector2.ONE * (size / 64.0)
+		halo.modulate = Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, 0.45)
+		halo.material = add
+
+
+func _halo_texture() -> GradientTexture2D:
+	var g := Gradient.new()
+	g.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
+	g.offsets = PackedFloat32Array([0.0, 0.22, 0.45, 0.7, 0.95])
+	g.colors = PackedColorArray([Color(1, 1, 1, 0.55), Color(1, 1, 1, 0.32), Color(1, 1, 1, 0.16), Color(1, 1, 1, 0.06), Color(1, 1, 1, 0.0)])
+	var t := GradientTexture2D.new()
+	t.gradient = g
+	t.fill = GradientTexture2D.FILL_RADIAL
+	t.fill_from = Vector2(0.5, 0.5)
+	t.fill_to = Vector2(1.0, 0.5)
+	t.width = 64
+	t.height = 64
+	return t

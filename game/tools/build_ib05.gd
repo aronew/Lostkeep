@@ -57,7 +57,7 @@ const MASSES := [
 	[13, 17, 15, 1, 1],   # the shrine island: the hooded statue
 	[7, 20, 2, 1, 1],     # the small island west of the shrine
 	[10, 22, 2, 1, 1],    # the pedestal on its column
-	[3, 16, 4, 1, 1],     # the ledge on the west wall
+	[3, 16, 3, 1, 1],     # the ledge on the west wall (CH2's corbel)
 	[22, 22, 2, 1, 1],    # the nook under the shrine
 	[29, 22, 2, 1, 1],    # the ledge over the pit
 	[31, 18, 2, 1, 1],    # three small stone plates, rising east
@@ -65,10 +65,10 @@ const MASSES := [
 	[37, 16, 2, 1, 1],
 	[41, 18, 6, 1, 1],    # the arch island
 	[47, 13, 2, 1, 1],    # the ledge under the east gap (the way back up)
-	[50, 21, 4, 1, 1],    # the shelf on the east wall, over the lower East door
+	[51, 21, 3, 1, 1],    # the shelf on the east wall, over the lower East door (CH2's corbel)
 ]
-const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 4, 1], [22, 22, 2, 1], [29, 22, 2, 1],
-	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [50, 21, 4, 1]]
+const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 3, 1], [22, 22, 2, 1], [29, 22, 2, 1],
+	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [51, 21, 3, 1]]
 const STONE := [[0, 0, 58, 34]]
 const SPAWN := Vector2(58 * 16 - 40, 7 * 16)
 
@@ -97,6 +97,7 @@ func _initialize() -> void:
 	masses = MASSES
 	stone = STONE
 	skip = SKIP + (CH9_SKIP if USE_CH9 else [])
+	detail_skip = SKIP
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	_unlit = CanvasItemMaterial.new()
@@ -160,16 +161,36 @@ func _piece_on(parent: Node, tex: String, spec: Array, m: Array, flip := false) 
 
 func _build_islands(placed: Node) -> void:
 	_piece_on(placed, SH + "shrine_island.png", SHRINE_ISLAND, MASSES[0]).name = "ShrineIsland"
-	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[1]).name = "WestIsland"
 	_piece_on(placed, PLAT, PEDESTAL, MASSES[2]).name = "Pedestal"
-	_piece_on(placed, PLAT, WALL_LEDGE_FLOWERS, MASSES[3]).name = "WestWallLedge"
-	_piece_on(placed, PLAT, BROKEN_LEDGE, MASSES[4], true).name = "Nook"
-	_piece_on(placed, PLAT, PLATES[0], MASSES[5], true).name = "PitLedge"
-	for i in 3:
-		_piece_on(placed, PLAT, PLATES[i], MASSES[6 + i]).name = "Plate"
 	_piece_on(placed, PLAT, ARCH_ISLAND, MASSES[9]).name = "ArchIsland"
-	_piece_on(placed, PLAT, PLATES[1], MASSES[10], true).name = "GapLedge"
-	_piece_on(placed, PLAT, WALL_LEDGE_POTS, MASSES[11], true).name = "EastShelf"
+	# The small plates and ledges are CH1's slab (the creative lead found the SH
+	# plates "just look weird"); the wall ledges are CH2's corbel.
+	var slabs := [[1, "WestIsland"], [4, "Nook"], [5, "PitLedge"], [6, "Plate"], [7, "Plate"], [8, "Plate"], [10, "GapLedge"]]
+	for i in slabs.size():
+		var m: Array = MASSES[slabs[i][0]]
+		var sp := _sprite(placed, CH1_SHEET, CH1_SLAB, Vector2(m[0] * TILE + (m[2] * TILE - CH1_SLAB.size.x) * 0.5, m[1] * TILE - CH1_SLAB_LINE))
+		sp.flip_h = i % 2 == 1
+		sp.name = slabs[i][1]
+	# West wall: the corbel's pier in the hall's west wall (x 48), its ledge east.
+	var west: Array = MASSES[3]
+	_sprite(placed, CH2_SHEET, CH2_CORBEL, Vector2(west[0] * TILE - CH2_PIER, west[1] * TILE - CH2_CORBEL_LINE)).name = "WestWallLedge"
+	# East wall: mirrored, its pier in the east wall (x 864), its ledge west.
+	var east: Array = MASSES[11]
+	var shelf := _sprite(placed, CH2_SHEET, CH2_CORBEL, Vector2((east[0] + east[2]) * TILE + CH2_PIER - CH2_CORBEL.size.x, east[1] * TILE - CH2_CORBEL_LINE))
+	shelf.flip_h = true
+	shelf.name = "EastShelf"
+
+
+## CH1 (ch_platforms.png): the small slab, its walking line on row 8, 38 px wide.
+const CH1_SHEET := ENV + "ch_platforms.png"
+const CH1_SLAB := Rect2(228, 21, 38, 30)
+const CH1_SLAB_LINE := 8
+## CH2 (ch_supports.png): the large corbel, a pier 8 px wide going into the
+## wall, then a ledge 47 px long, its walking line on row 10.
+const CH2_SHEET := ENV + "ch_supports.png"
+const CH2_CORBEL := Rect2(104, 54, 55, 44)
+const CH2_CORBEL_LINE := 10
+const CH2_PIER := 8
 
 
 func _prop(parent: Node, region: Rect2, x: float, floor_y: float, prop_name: String) -> Sprite2D:
@@ -206,6 +227,12 @@ func _doorway(parent: Node, x: float, floor_y: float, flip: bool, ruined := fals
 
 func _dress(behind: Node) -> void:
 	var bag := ENV + "props_guard_belongings.png"
+	# The shrine island's braziers and the statue's orb, lit as in the mockup
+	# (the creative lead: "add lights to the shrine on the island"). The flames
+	# are painted on SH3; these are their light.
+	_light(behind, Vector2(297, 255), FLAME, 0.55, 0.42, "ShrineBrazierLight")
+	_light(behind, Vector2(387, 255), FLAME, 0.55, 0.42, "ShrineBrazierLight2")
+	_light(behind, Vector2(328, 234), Color(1.0, 0.78, 0.45), 0.4, 0.28, "ShrineOrbLight")
 	# The four doorways.
 	_doorway(behind, -18, WEST, false)
 	_doorway(behind, 58 * 16 - 62, LANDING, true)
@@ -251,6 +278,8 @@ func _build_air(front: Node) -> void:
 	var mod := _node(CanvasModulate.new(), "Darkness", _root) as CanvasModulate
 	mod.color = Color(0.9, 0.9, 0.96)
 	_mood = true
+	_ch_detail = true
+	_rim = true
 	_fog(_root, Rect2(48, 350, 800, 70), Color("#66647e"), 0.16, Vector2(0.005, 0.0))
 	var dust := _particles("Dust", load("res://assets/fx/mote.png"), 30, 9.0, Rect2(48, 60, 820, 360))
 	dust.color = Color(0.8, 0.86, 1.0, 0.7)

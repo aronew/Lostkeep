@@ -246,4 +246,13 @@ currency, a stand-in name). Base kit: reward curiosity, never a lock.
 | IB-06 | Behind L2's west wall | Motes | 4 Resin |
 | IB-06 | Behind L4's west wall | Motes | 6 Resin |
 | IB-07 | At the foot of the west wall (behind the plate: needs the Ward) | Motes | 5 Resin |
+| IB-08 | Behind the lower gallery's west wall, under the walkway | Motes | 6 Resin |
 
+
+
+## The outpost (IB-08) and spending Resin
+
+The hooded stranger sells rumours (5 Resin each, five of them) and the map of
+Ironbark (60 Resin: out of reach on a first visit). Every breakable drops
+Resin once. IB-08 also shows the Ward's lock again: a cracked bark plate in
+the lower gallery's floor (W1d) with Resin in the pit beneath.

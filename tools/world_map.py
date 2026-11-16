@@ -23,10 +23,10 @@ ROOMS = [
     ("IB-02", "The Old Crypt", (-170, 28), (112, 40), "game/tests/out/ib02/map/room_art.png"),
     ("IB-06", "The Undercroft (blockout)", (0, 40), (44, 72), "game/tests/out/ib06/map/room_art.png"),
     ("IB-07", "The Pit Shaft (blockout)", (-44, 64), (44, 64), "game/tests/out/ib07/map/room_art.png"),
+    ("IB-08", "The Keep's foundations (blockout)", (44, 88), (64, 28), "game/tests/out/ib08/map/room_art.png"),
 ]
 # Not built yet: label, origin, size, what opens it
 PLANNED = [
-    ("The Keep's foundations", "next on the main line", (46, 92), (60, 24)),
     ("The Refuge road", "behind the plated door: Ironbark Ward", (-246, 32), (74, 30)),
     ("The Lost Keep", "across the broken bridge: Wing-Cloak", (140, 0), (90, 44)),
 ]

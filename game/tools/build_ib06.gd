@@ -15,6 +15,7 @@ extends "res://tools/room_builder.gd"
 const ROOM_PATH := "res://scenes/rooms/ironbark_06_undercroft.tscn"
 const IB05 := "res://scenes/rooms/ironbark_05_shrine_hall.tscn"
 const IB07 := "res://scenes/rooms/ironbark_07_pit_shaft.tscn"
+const IB08 := "res://scenes/rooms/ironbark_08_foundations.tscn"
 
 # --- The room plan (tiles) ---------------------------------------------------------
 ## After the creative lead's middle vertical-level mockup
@@ -81,7 +82,7 @@ func _initialize() -> void:
 	_begin("IronbarkUndercroft")
 	_shrine_far()
 	var t := _terrain(tileset)
-	_platform(t["placed"], SH4_PLATE_B, 16, 28, 2).name = "VoidPlate"
+	_platform(t["placed"], CH1_SLAB_SPEC, 16, 28, 2).name = "VoidPlate"
 	_grade_stone()
 	_build_machines()
 	_dress(t["behind"])
@@ -92,10 +93,12 @@ func _initialize() -> void:
 	_door("West", Rect2i(0, 12, 8, 4), -1, IB05, "EastLower")
 	_door("WestLower", Rect2i(0, 60, 8, 5), -1, IB07, "East")
 	# On east toward the Keep's foundations (not built).
-	_door("EastLower", Rect2i(36, 60, 8, 5), 1, "", "")
+	_door("EastLower", Rect2i(36, 60, 8, 5), 1, IB08, "West")
 	# The moody look, as IB-05's (the creative lead: "I like that look instead of
 	# so bright"): see _moody() in room_builder.gd.
 	_mood = true
+	_ch_detail = true
+	_rim = true
 	_finish()
 	quit()
 

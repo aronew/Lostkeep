@@ -618,6 +618,13 @@ func freeze() -> void:
 	velocity = Vector2.ZERO
 
 
+## Let her go again after `freeze` (a conversation ends), where she stands.
+func release() -> void:
+	state = State.NORMAL
+	velocity = Vector2.ZERO
+	_play("idle", true)
+
+
 ## Reach out and work something: a winch, a lever, a door.
 func use_object() -> void:
 	_lock = 0.4

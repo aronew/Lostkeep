@@ -79,8 +79,8 @@ ROOMS = {
         "gated": {"the shaft under the pit (Ironbark Ward, W1b)": (29, 32, 4, 2)},
         # The painted islands', plates' and ledges' single tile of collision,
         # and the pit's cracked plate (W1b).
-        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 4, 1), (22, 22, 2, 1), (29, 22, 2, 1),
-                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (50, 21, 4, 1),
+        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 3, 1), (22, 22, 2, 1), (29, 22, 2, 1),
+                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (51, 21, 3, 1),
                   (29, 31, 4, 1)],
         "exits": {"east upper (to the Lantern Clearing)": (57, 6), "west upper (to the Old Crypt)": (0, 7),
                   "west lower (to the Old Crypt's long gallery)": (0, 25), "east lower (to the Undercroft)": (57, 25)},
@@ -108,8 +108,18 @@ ROOMS = {
                   "the chasm and the landing (from the plate)": (15, 13, 9, 16),
                   "the arched-door room and the west cave (from the plate)": (0, 13, 17, 43)},
         # SH4's plates and wall ledge: one tile of collision under each painting.
-        "seals": [(10, 36, 4, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
+        "seals": [(11, 36, 3, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
         "exits": {"east (to the Undercroft's plated door)": (43, 40), "east lower (on to the deep)": (43, 59)},
+    },
+    "ib08": {
+        "cells": "game/tests/out/ib08/map/cells.json",
+        "spawn": (4, 16),
+        "lift": [],
+        "water": (0, 0, 0, 0),
+        "gated": {"the pit under the cracked bark plate (Ironbark Ward)": (52, 25, 3, 2)},
+        # CH1's two slabs and the bark plate: non-tile collision.
+        "seals": [(43, 18, 2, 1), (47, 21, 2, 1), (52, 24, 3, 1)],
+        "exits": {"west (to the Undercroft)": (0, 16), "east lower (toward the Keep)": (63, 23)},
     },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]

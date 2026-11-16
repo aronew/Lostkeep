@@ -282,7 +282,8 @@ She steps forward with every hit.
   the counter at the top left (it appears with the first bead). Placed with
   `_pickup(parent, pos, value, flag)` or `_resin_cache(parent, x0, x1, floor_y,
   count, flag)`; each bead's flag keeps it taken. F5 clears the count with the
-  flags. To be spent at the Refuge (not built). 24 beads so far, all in secrets.
+  flags. Spent at the outpost in IB-08 (the hooded stranger) and later the Refuge. 34
+  beads placed so far (secrets and IB-08's pit), plus one from every breakable.
 - **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
@@ -499,8 +500,18 @@ She steps forward with every hit.
   A tall shaft fails the checker's floor-run and small-step rules by design.
   `tools/world_map.py` draws every room on the world grid
   (`docs/maps/where_we_are.png`).
-- **Rooms not built yet:** the Keep's foundations (east of the Undercroft's
-  lower East door: next on the main line), the Refuge road (west of IB-02,
+- **IB-08, the Keep's foundations, is built (blockout, awaiting review)**
+  (`design/rooms/ironbark_08_foundations.md`, origin (44, 88), 64 x 28): the
+  outpost, after the creative lead's mockups (`docs/mockups/outpost/`). The
+  hooded stranger (`scripts/world/stranger.gd`) sells rumours (5 Resin) and the
+  map of Ironbark (60); the save shrine is the clearing's kind; breakables drop
+  Resin once (`resin` in `breakable.gd`); `kleo.release()` ends a conversation.
+  `room=ib08 mode=tour`. The building is OP1 (`tools/make_outpost.py`, 5:1). **The stranger
+  lives inside**: the outpost's doorway is an `_entry()` (`entry_door.gd`) into
+  IB-09, the outpost's interior (`build_ib09.gd`): dim and spooky (`mood_murk`,
+  candles, the stranger's eyes; `detail_near = false`). Light comes out of the
+  doorway, after the creative lead's Hollow Knight reference (`_doorway_glow()`).
+- **Rooms not built yet:** the Refuge road (west of IB-02,
   behind the plated door: needs the Ward), the Guard Post above IB-02's well
   (the surface rooms lie over the crypt instead). All end in darkness today.
 - **The Old Crypt's first section is built as IB-05, the Shrine Hall, and
@@ -647,6 +658,11 @@ She steps forward with every hit.
   (`MOOD_*` constants). **All four crypt rooms wear it now** (IB-02, IB-05,
   IB-06, IB-07; the creative lead asked whether the other areas were moody
   too): `docs/rooms/mood/`. The surface rooms (IB-01, IB-03, IB-04) don't.
+  **The backdrop stays readable** (the creative lead: "what happened to the
+  parallax background"): `MOOD_FAR` lifts the backdrop layers toward the
+  mockup's dark teal (measured about (8, 26, 32); ours (10, 26, 33)), so the
+  far arcades read through the murk. Judge it in a game screenshot
+  (`tests/mood_shot.gd`): `mode=map` leaves the parallax layers out.
   Don't run `mood_test.gd` on IB-05: it would double the fog.
 - **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
   grid-aligned: resampled from their drafts onto the grid by another tool, so
@@ -680,6 +696,18 @@ She steps forward with every hit.
   second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
+- **The crypts are dressed in the CH pieces** (IB-05 approved by the creative
+  lead, "it looks good"; then IB-02, IB-06 and IB-07 the same way: `_ch_detail`
+  and `_rim` on, IB-06's and IB-07's SH4 plates now `CH1_SLAB_SPEC` through
+  `_platform`, IB-07's wall ledge `_corbel()` on [11, 36, 3, 1]; CH4's roots
+  left out, they read as the Blight's crimson in warm light). IB-05 first: CH1 slabs for its small plates,
+  CH2 corbels for its wall ledges, and `_ch_detail` (the detail pass in CH4,
+  CH5 and CH8 pieces; `detail_skip` keeps it on the CH9 galleries). Also `_rim`
+  (in `room_builder.gd`): a warm rim light along every walking edge, brighter
+  where lights reach (`_rim_light()`), and amber halos round every flame
+  (`_warm_glow()`). Next, once
+  approved: the same in IB-06 and IB-07 (whose SH4 plates the creative lead
+  called weird) and IB-02, then the Keep's foundations.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's

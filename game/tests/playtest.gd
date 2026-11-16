@@ -32,6 +32,7 @@ const ROOMS := {
 	"ib05": "res://scenes/rooms/ironbark_05_shrine_hall.tscn",
 	"ib06": "res://scenes/rooms/ironbark_06_undercroft.tscn",
 	"ib07": "res://scenes/rooms/ironbark_07_pit_shaft.tscn",
+	"ib08": "res://scenes/rooms/ironbark_08_foundations.tscn",
 }
 const TILE := 16.0
 
@@ -99,6 +100,16 @@ func _ready() -> void:
 				await _loop_ib06()
 			"doors":
 				await _doors_ib06()
+		get_tree().quit()
+		return
+	if room_id == "ib08":
+		match mode:
+			"shots":
+				await _shots()
+			"map":
+				await _map()
+			"tour":
+				await _tour_ib08()
 		get_tree().quit()
 		return
 	if room_id == "ib03" or room_id == "ib04":
@@ -250,6 +261,8 @@ func _shots() -> void:
 		places = SHOTS_IB06
 	if room_id == "ib07":
 		places = SHOTS_IB07
+	if room_id == "ib08":
+		places = SHOTS_IB08
 	for p in places:
 		_place(p[1], p[2], p[3])
 		await _frames(40)
@@ -755,6 +768,15 @@ func _doors_ib06() -> void:
 
 
 # --- Room IB-07, the Pit Shaft ----------------------------------------------------------------
+
+const SHOTS_IB08 := [
+	["01_west_passage", 4.0, 17, 1],
+	["02_shrine", 13.0, 17, 1],
+	["03_outpost", 28.0, 17, 1],
+	["04_walkway_end", 40.0, 17, 1],
+	["05_lower_gallery", 50.0, 24, 1],
+]
+
 
 const SHOTS_IB07 := [
 	["01_walkway_plate", 15.0, 12, 1],
@@ -1378,3 +1400,64 @@ func _measure() -> void:
 	print(text)
 	var f := FileAccess.open(out_dir + "/measure.txt", FileAccess.WRITE)
 	f.store_string(text + "\n")
+
+
+## IB-08, the Keep's foundations: in from the Undercroft, kneel at the shrine,
+## talk to the stranger and buy a rumour, off the walkway's end into the lower
+## gallery, smash the crate (Resin), back up by the two slabs, then east.
+func _tour_ib08() -> void:
+	var lines := []
+	_start_tour()
+	await _wait(20)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 12.6 * TILE, 300)
+	_tap("interact")
+	await _wait(30)
+	lines.append("knelt at the shrine: %s (state %s)" % [Game.flags.has("ib08_shrine"), kleo.state])
+	_tap("move_right")
+	await _wait(40)
+	# In through the outpost's doorway (IB-09, the stranger's den).
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 22.3 * TILE, 400)
+	_tap("interact")
+	await _hold_until([], func(): return room.name == "IronbarkOutpost", 120)
+	await _wait(40)
+	lines.append("entered the outpost: %s" % (room.name == "IronbarkOutpost"))
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 25.0 * TILE, 400)
+	await _wait(10)
+	Game.add_currency(12)
+	var before := Game.currency
+	_tap("interact")
+	await _wait(10)
+	var opened: bool = room.get_node("Stranger").get("_open")
+	_tap("jump")
+	await _wait(10)
+	var bought := Game.currency == before - 5 and int(Game.flags.get("stranger_rumours", 0)) == 1
+	_tap("move_down")
+	await _wait(4)
+	_tap("move_down")
+	await _wait(4)
+	_tap("jump")
+	await _wait(10)
+	var closed: bool = not room.get_node("Stranger").get("_open") and kleo.state == Kleo.State.NORMAL
+	lines.append("talked to the stranger: opened %s, bought a rumour for 5 %s, said farewell %s" % [opened, bought, closed])
+	await _hold_until(["move_left"], func(): return room.name == "IronbarkFoundations", 500)
+	await _wait(40)
+	lines.append("back out of the doorway onto the walkway: %s (x %.0f, on the floor %s)" % [room.name == "IronbarkFoundations", kleo.global_position.x, kleo.is_on_floor()])
+	await _hold_until(["move_right"], func(): return _floor_at(24), 400)
+	lines.append("off the walkway's end into the lower gallery: %s (x %.0f)" % [_floor_at(24), kleo.global_position.x])
+	var resin := Game.currency
+	await _hold_until(["move_left"], func(): return kleo.global_position.x < 45.6 * TILE, 200)
+	_release_all()
+	for i in 3:
+		_tap("attack")
+		await _wait(18)
+	await _wait(60)
+	lines.append("smashed the crate: Resin %d -> %d" % [resin, Game.currency])
+	var a := await _jump_to(43.5 * TILE, 47.0 * TILE, 49.0 * TILE, 21, 46.0 * TILE)
+	var b := await _jump_to(48.6 * TILE, 43.0 * TILE, 45.0 * TILE, 18, 47.3 * TILE)
+	await _hold_until(["move_left"], func(): return _floor_at(17), 200)
+	lines.append("back up by the slabs to the walkway: %s, %s, %s" % [a, b, _floor_at(17)])
+	await _hold_until(["move_right"], func(): return _floor_at(24), 400)
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 62.5 * TILE, 500)
+	lines.append("to the lower East door (toward the Keep): %s (x %.0f)" % [kleo.global_position.x > 62.5 * TILE, kleo.global_position.x])
+	_release_all()
+	_report(lines, "tour")
