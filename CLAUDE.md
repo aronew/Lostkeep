@@ -647,6 +647,11 @@ She steps forward with every hit.
   (`MOOD_*` constants). **All four crypt rooms wear it now** (IB-02, IB-05,
   IB-06, IB-07; the creative lead asked whether the other areas were moody
   too): `docs/rooms/mood/`. The surface rooms (IB-01, IB-03, IB-04) don't.
+  **The backdrop stays readable** (the creative lead: "what happened to the
+  parallax background"): `MOOD_FAR` lifts the backdrop layers toward the
+  mockup's dark teal (measured about (8, 26, 32); ours (10, 26, 33)), so the
+  far arcades read through the murk. Judge it in a game screenshot
+  (`tests/mood_shot.gd`): `mode=map` leaves the parallax layers out.
   Don't run `mood_test.gd` on IB-05: it would double the fog.
 - **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
   grid-aligned: resampled from their drafts onto the grid by another tool, so
