@@ -110,3 +110,16 @@ after the strips came off: "you had it mostly right before"). The strips start
 8 px from each line (`BAND`), so the skin's straight band keeps the line
 (`GALLERY_FLOORS`, `GALLERY_CEILINGS`, `_galleries()` in `build_ib05.gd`). They
 have no collision. Collision unchanged; tours and checker as before.
+
+### CH9 on the galleries
+
+The creative lead: "the floors ceiling looked better last time, do we just need
+new floor tiles for that hallway?" Yes: Book 1's CH9, the cobble of CH7 with
+perfectly straight lines. The generator's own export is in (a first one,
+rebuilt onto the grid by another tool, read too dark and flat and was dropped).
+`_ch9_galleries()`: a floor band on every gallery floor run, a ceiling band on
+every ceiling run, the underside strip under each slab; the skin skips those
+cells (`CH9_SKIP`). The bands are lifted 1.7x in the game (`CH9_LIFT`): the art
+is painted about half as bright as the CY stone and the room's murk multiplies
+it. Collision unchanged; `mode=tour` and `mode=upper` pass. Image:
+`docs/rooms/ironbark_05/ch9_vs_mockup.png` (mockup, the CH7 version, CH9).

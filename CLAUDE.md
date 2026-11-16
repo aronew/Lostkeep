@@ -660,7 +660,16 @@ She steps forward with every hit.
   that cobble with perfectly straight lines (mockup AC). A first CH9 came rebuilt onto the grid by
   another tool (8 colours, flattened): tried in IB-05 (`USE_CH9` in
   `build_ib05.gd`, `docs/rooms/ironbark_05/ch9_trial.png`) it read too dark
-  and flat, so it is off; the generator's own export is asked for again. Don't use the CH1 slab with the icy-blue
+  and flat, and was dropped. **The generator's own CH9 is in and on**
+  (`art/source/ironbark/crypt_ch/ch9/lost-keep-terrain-bands-raw.png`, 1536 x
+  1024, painted at full resolution, no pixel grid): `tools/make_crypt_ch9.py`
+  reduces it 4:1 (box), hardens the alpha, cuts each band where its ends match
+  best and saves `ch9_floor/ceiling/under/steps.png`. IB-05's galleries wear it
+  (`USE_CH9`, `_ch9_galleries()`): floor bands on the walking lines, ceiling
+  bands on the ceilings, the underside strip under each slab, on the root (not
+  graded) and lifted 1.7x in the game (`CH9_LIFT`), since it is painted about
+  half as bright as the CY bands. Comparison: `docs/rooms/ironbark_05/ch9_vs_mockup.png`.
+  Its step pieces are not used yet. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the

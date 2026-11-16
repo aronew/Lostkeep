@@ -318,15 +318,15 @@ const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50,
 const GALLERY_CEILINGS := [[0, 8, 3], [8, 13, 2], [13, 19, 3], [22, 26, 3], [26, 29, 4], [29, 38, 3], [38, 46, 4], [46, 50, 2], [50, 58, 2]]
 ## The skin's straight band keeps the line; the strip starts this far from it.
 const BAND := 8
-## CH9 (the creative lead's gallery bands, ch_gallery_bands.png): straight
-## floor and ceiling bands in cobble and an underside strip, each 384 wide and
-## repeating. With them on, they paint the galleries' lines in place of the
-## skin and CH7's strips.
-const USE_CH9 := false
-const BANDS := ENV + "ch_gallery_bands.png"
-const CH9_FLOOR := Rect2(0, 0, 384, 64)       # walking line 8 px down
-const CH9_CEILING := Rect2(0, 72, 384, 64)    # underside line 56 px down
-const CH9_UNDER := Rect2(0, 144, 384, 64)
+## CH9 (the creative lead's gallery bands, the generator's own export, brought
+## in by tools/make_crypt_ch9.py): straight floor and ceiling bands in cobble and
+## an underside strip, each repeating. With them on, they paint the galleries'
+## lines in place of the skin and CH7's strips.
+const USE_CH9 := true
+const CH9_FLOOR := ENV + "ch9_floor.png"       # walking line on its first row
+const CH9_CEILING := ENV + "ch9_ceiling.png"   # underside on its last row
+const CH9_UNDER := ENV + "ch9_under.png"       # straight top on its first row
+const CH9_LIFT := Color(1.7, 1.65, 1.6)
 ## The skin leaves the galleries' slabs and ceilings to CH9.
 const CH9_SKIP := [[0, 0, 19, 3], [8, 2, 5, 1], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 3], [26, 3, 3, 1], [38, 3, 8, 1],
 	[22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
@@ -384,17 +384,28 @@ func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> 
 ## CH9's bands along the galleries: a floor band on every floor run, a ceiling
 ## band on every ceiling run, the underside strip under each slab.
 func _ch9_galleries(placed: Node) -> void:
-	var node := _node(Node2D.new(), "GalleryBands", placed) as Node2D
-	node.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	# On the root, not under PlacedArt, so _grade_stone() leaves them as painted.
+	var node := _node(Node2D.new(), "GalleryBands", _root) as Node2D
+	node.z_index = 5
+	# CH9 is painted about half as bright as the CY bands beside it, and the
+	# room's murk multiplies both: lifted here (the art is unchanged) so the
+	# galleries read as the mockup's do.
+	node.modulate = CH9_LIFT
 	for f in GALLERY_FLOORS:
-		_band(node, CH9_FLOOR, f[0], f[1], f[2] * TILE - 8, "FloorBand")
+		_band(node, CH9_FLOOR, f[0], f[1], f[2] * TILE, false, "FloorBand")
 	for c in GALLERY_CEILINGS:
-		_band(node, CH9_CEILING, c[0], c[1], c[2] * TILE - 56, "CeilingBand")
+		_band(node, CH9_CEILING, c[0], c[1], c[2] * TILE, true, "CeilingBand")
+	# Under the slabs: the strip hangs from the hall's ceiling line (row 11),
+	# overlapping the floor band's dark by a few pixels.
 	for u in [[0, 19], [22, 46], [50, 54]]:
-		_band(node, CH9_UNDER, u[0], u[1], 11 * TILE - 10, "Underside")
+		_band(node, CH9_UNDER, u[0], u[1], 11 * TILE - 6, false, "Underside")
 
 
-func _band(parent: Node, src: Rect2, x0: int, x1: int, y: float, band_name: String) -> void:
-	var sp := _sprite(parent, BANDS, Rect2(src.position.x + x0 * TILE, src.position.y, (x1 - x0) * TILE, src.size.y), Vector2(x0 * TILE, y))
+## A band repeated from tile x0 to x1: its first row on the line y, or (ceiling)
+## its last row just above it.
+func _band(parent: Node, tex_path: String, x0: int, x1: int, y: float, ceiling: bool, band_name: String) -> void:
+	var tex: Texture2D = load(tex_path)
+	var h := tex.get_height()
+	var sp := _sprite(parent, tex_path, Rect2(x0 * TILE, 0, (x1 - x0) * TILE, h), Vector2(x0 * TILE, y - h if ceiling else y))
 	sp.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
 	sp.name = band_name
