@@ -336,6 +336,23 @@ She steps forward with every hit.
   up and down), never pinned to the screen. Book 1 is published as an
   artifact: https://claude.ai/artifact/C2whNafxvDzo3XNzmMz3MQ (republish it
   from `docs/art-production/ironbark-environment-prompt-book.html`).
+  **The bands are in** (the creative lead's FG6, FG7, FG9, FG10 and an FG1
+  silhouette sheet, `art/source/ironbark/foreground/`, reduced 3:1 by
+  `tools/make_fg_bands.py` to `fg_<crypt|forest>_<bottom|top>_<a|b>.png`;
+  FG8's lip reads as a ledge and the silhouettes as pieces, so both wait).
+  `_fg_bands(kind, fog_tint)` in `room_builder.gd` draws the bottom and top
+  band at three depths (`FG_DEPTHS`, after the creative lead: "closest to the
+  camera the silhouette to closer to the color as you get to the midground",
+  with fog between, `FG_FOG`): 1.07 / 1.03 near full colour, 1.18 / 1.06 at
+  half, 1.36 / 1.1 a silhouette, each alternating A and B. Anchored to the
+  world: the bottom band fills the screen's bottom when the camera is at its
+  lowest, the top band the top at its highest. They keep the play clear: the
+  bottom band rises at most `FG_FEET` (34 px) over the lowest floor, the top
+  band hangs no lower than `FG_HEAD` (52 px) over the highest. Crypts call it
+  from `_crypt_foreground()`, the surface rooms (IB-03, IB-04) from
+  `_build_foreground()` in place of P5's canopy and ferns; IB-01 keeps its
+  own. Where the bands are, `_moody()` drops the old fog bank pinned to the
+  screen's bottom. Comparison: `docs/rooms/foreground_bands.png`.
   **Lights:** the lanterns no longer light the fog, haze or backdrops (light
   mask 2, `LIGHT_MASK_AIR`): amber on teal fog made a green ringed disc round
   every flame. Their falloff is smooth (`_soft_light_texture()`), and the glow

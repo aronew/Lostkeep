@@ -144,49 +144,21 @@ func _build_atmosphere() -> void:
 ## tinted toward the night, their leaves still showing. The near step: sparse
 ## pure silhouettes in thin shapes (a branch, vines, tall grass), scrolling
 ## fastest; never big blobs, which read as holes.
+## The fog between the surface foreground bands: moonlit violet-teal.
+const SURFACE_FG_FOG := Color(0.4, 0.42, 0.6)
+
+
 func _build_foreground() -> void:
 	_detail_kind = "surface"
+	# The foreground is FG9 and FG10, the continuous undergrowth and canopy
+	# bands, at three depths with fog between (`_fg_bands` in room_builder.gd).
+	# They replace P5's canopy and ferns and the blown-up black branch, vines
+	# and grass, which held their height on screen (the creative lead: the
+	# foreground looked "weirdly attached"; "these little pieces ... look bad").
 	var p := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
-	p.scroll_scale = Vector2(1.2, 0.0)  # frames the screen: sideways faster than the room, height held
-	p.repeat_size = Vector2(720, 0)
-	p.repeat_times = 5
+	p.scroll_scale = Vector2(1.2, 0.0)
 	p.z_index = 30
-	var mid_tint := Color(0.36, 0.38, 0.5)
-	var top := _sprite(p, PARALLAX + "fg.png", Rect2(0, 0, 720, 132), Vector2(0, -8))
-	top.name = "Canopy"
-	top.material = _unlit
-	top.modulate = mid_tint
-	var ferns := _sprite(p, PARALLAX + "fg.png", Rect2(0, 150, 720, 106), Vector2(0, 360 - 106 + 34))
-	ferns.name = "Ferns"
-	ferns.material = _unlit
-	ferns.modulate = mid_tint * Color(1.15, 1.15, 1.1)
-	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
-	near.scroll_scale = Vector2(1.5, 0.0)
-	near.repeat_size = Vector2(1600, 0)
-	near.repeat_times = 4
-	near.z_index = 31
-	var shade := Color(0.03, 0.025, 0.05)
-	# A great branch reaching in from the top, its vines hanging.
-	var branch := _sprite(near, PARALLAX + "fg.png", Rect2(40, 0, 400, 130), Vector2(300, -60))
-	branch.name = "Branch"
-	branch.scale = Vector2(1.6, 1.6)
-	branch.modulate = shade
-	branch.material = _unlit
-	for v in [[Rect2(560, 20, 30, 80), 1180.0], [Rect2(370, 25, 22, 60), 1320.0]]:
-		var reg: Rect2 = v[0]
-		var vine := _sprite(near, PARALLAX + "fg.png", reg, Vector2(v[1], -20))
-		vine.name = "Vine"
-		vine.scale = Vector2(2.2, 2.2)
-		vine.modulate = shade
-		vine.material = _unlit
-	# Tall grass rising from the bottom edge, tips up into the air.
-	for c in [[Rect2(120, 200, 110, 56), 40.0], [Rect2(0, 186, 100, 70), 980.0]]:
-		var reg: Rect2 = c[0]
-		var grass := _sprite(near, PARALLAX + "fg.png", reg, Vector2(c[1], 360 - reg.size.y * 1.9 + 30))
-		grass.name = "Grass"
-		grass.scale = Vector2(1.9, 1.9)
-		grass.modulate = shade
-		grass.material = _unlit
+	_fg_bands("forest", SURFACE_FG_FOG)
 	# Ruin silhouettes in the room's bottom corners, nearest the camera.
 	var front := _root.get_node("Front")
 	var h := float(room.size.y * TILE)

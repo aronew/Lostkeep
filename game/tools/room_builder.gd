@@ -247,6 +247,142 @@ func _crypt_foreground() -> void:
 	mid.repeat_size = Vector2(960, 0)
 	mid.repeat_times = maxi(3, int(w / 960.0) + 3)
 	mid.z_index = 30
+	_fg_bands("crypt", MOOD_FOG)
+
+
+# --- The foreground bands (FG6, FG7, FG9, FG10) ---------------------------------------------
+#
+# The creative lead: "we need all new foreground art, these little pieces here
+# and there just look bad"; then, after GameMaker's parallax guide: "2 or 3
+# foreground layers with closest to the camera the silhouette to closer to the
+# color as you get to the midground ... sometimes even adding fog and light
+# effects between layers". So: one continuous band along the bottom of the room
+# and one along its top, each drawn at three depths. The depth nearest the room
+# keeps its colour and takes the room's own light; each nearer depth is darker,
+# moves a little faster, and sits a little further out at the screen's edge,
+# down to a silhouette; fog lies between them. Each depth alternates the band's
+# two versions (A, B), so nothing repeats within two screen widths.
+#
+# They belong to the world, not the screen: the bottom band is anchored to the
+# room's bottom (it fills the bottom of the view when the camera is at its
+# lowest) and the top band to the room's top, both moving only a little faster
+# than the room, up and down as well as sideways. In a tall room they show on its
+# lowest and highest screens, not in the middle.
+
+## [scroll, tint, shift (px further off the screen's edge), first version, lit by the room's lights]
+const FG_DEPTHS := [
+	[Vector2(1.07, 1.03), Color(1.25, 1.22, 1.32), -16.0, "a", false],
+	[Vector2(1.18, 1.06), Color(0.5, 0.5, 0.62), -4.0, "b", false],
+	[Vector2(1.36, 1.1), Color(0.09, 0.08, 0.12), 14.0, "a", false],
+]
+## Fog laid in front of each depth but the nearest: [density in front of depth 1, of depth 2].
+const FG_FOG := [0.2, 0.1]
+const FG_BAND_W := 724.0
+
+
+## `kind` is "crypt" or "forest" (fg_<kind>_bottom_a.png and so on).
+func _fg_bands(kind: String, fog_tint: Color) -> void:
+	var holder := _node(Node2D.new(), "ForegroundBands", _root) as Node2D
+	var top_px := float(room.position.y * TILE)
+	var bot_px := float(room.end.y * TILE)
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var view_h := 360.0
+	# Keep the play clear. The lowest floor and the highest floor in the room:
+	# the bottom band sinks until no more than FG_FEET of it rises above the
+	# lowest floor's walking line (grass in front of her feet, never a wall in
+	# front of her), and the top band rises until it hangs no lower than
+	# FG_HEAD above the highest floor.
+	var lowest := -INF
+	var highest := INF
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm == null:
+			continue
+		for c in tm.get_used_cells():
+			var up := c + Vector2i.UP
+			if room.has_point(up) and tm.get_cell_source_id(up) == -1 \
+					and not _is_solid_cell(up) and not _is_solid_cell(up + Vector2i.UP):
+				lowest = maxf(lowest, c.y * TILE)
+				highest = minf(highest, c.y * TILE)
+	for i in FG_DEPTHS.size():
+		var d: Array = FG_DEPTHS[i]
+		var sc: Vector2 = d[0]
+		var layer := _node(Parallax2D.new(), "FgDepth%d" % (i + 1), holder) as Parallax2D
+		layer.scroll_scale = sc
+		layer.repeat_size = Vector2(FG_BAND_W * 2.0, 0)
+		layer.repeat_times = maxi(3, int(room.size.x * TILE / (FG_BAND_W * 2.0)) + 3)
+		layer.z_index = 27 + i * 2
+		var flip := i == 2
+		var first: String = d[3]
+		var order := [first, "b" if first == "a" else "a"]
+		if flip:
+			order.reverse()
+		for part in ["bottom", "top"]:
+			var band_h := 0.0
+			for j in 2:
+				var tex: Texture2D = load(ENV + "fg_%s_%s_%s.png" % [kind, part, order[j]])
+				band_h = maxf(band_h, tex.get_height())
+				var sp := Sprite2D.new()
+				sp.texture = tex
+				sp.centered = false
+				sp.flip_h = flip
+				var x := j * FG_BAND_W + i * 241.0
+				var y: float
+				# Where a child at layer y shows: y + camera_top * (1 - scroll).
+				# The bottom band's foot sits on the screen's bottom edge when the
+				# camera is at its lowest; the top band's head on the top edge when
+				# it is at its highest.
+				if part == "bottom":
+					y = view_h + sc.y * (bot_px - view_h) - tex.get_height() + float(d[2]) + _fg_sink(bot_px, lowest, tex.get_height())
+				else:
+					y = sc.y * top_px - float(d[2]) - _fg_lift(top_px, highest, tex.get_height())
+				sp.position = Vector2(x, y).round()
+				sp.modulate = d[1]
+				if not d[4]:
+					sp.material = unlit
+				_node(sp, "Band" + part.capitalize() + order[j].to_upper(), layer)
+			# Fog in front of this depth, between it and the next.
+			if i < FG_FOG.size():
+				var fy: float
+				var fh := band_h + 24.0
+				if part == "bottom":
+					fy = view_h + sc.y * (bot_px - view_h) - fh + float(d[2]) + 8.0 + _fg_sink(bot_px, lowest, band_h)
+				else:
+					fy = sc.y * top_px - float(d[2]) - 8.0 - _fg_lift(top_px, highest, band_h)
+				var f := _fog(layer, Rect2(0, fy, FG_BAND_W * 2.0, fh), fog_tint, FG_FOG[i], Vector2(0.004 * (i + 1), 0.0))
+				f.name = "Fog" + part.capitalize()
+				f.z_index = 1
+				f.material.set_shader_parameter("scale", Vector2(FG_BAND_W * 2.0 / 520.0, fh / 120.0))
+				f.light_mask = LIGHT_MASK_AIR
+
+
+## How much of the bottom band may rise above the lowest floor's walking line.
+const FG_FEET := 34.0
+## How far above the highest floor the top band must stay (her height and a jump's start).
+const FG_HEAD := 52.0
+
+
+## How far to push the bottom band down so it rises no more than FG_FEET over the lowest floor.
+func _fg_sink(bot_px: float, lowest: float, h: float) -> float:
+	if lowest == -INF:
+		return 0.0
+	return maxf(0.0, (lowest - FG_FEET) - (bot_px - h))
+
+
+## How far to lift the top band so it hangs no lower than FG_HEAD above the highest floor.
+func _fg_lift(top_px: float, highest: float, h: float) -> float:
+	if highest == INF:
+		return 0.0
+	return maxf(0.0, (top_px + h) - (highest - FG_HEAD))
+
+
+func _is_solid_cell(c: Vector2i) -> bool:
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm and tm.get_cell_source_id(c) != -1:
+			return true
+	return false
 
 
 ## How much faster than the room the near step slides sideways.
@@ -1304,7 +1440,9 @@ func _moody() -> void:
 	low.material.set_shader_parameter("side_fade", 0.08)
 	_mood_floor_fog()
 	var fg := _root.get_node_or_null("Foreground") as Parallax2D
-	if fg:
+	# Where the foreground bands frame the view, they carry their own fog; a
+	# fog bank pinned across the bottom of the screen would bury them.
+	if fg and not _root.has_node("ForegroundBands"):
 		var w := rect.size.x * 1.3 + 800.0
 		var bank := _mood_fog(fg, "ScreenFog", Rect2(-400, 250, w, 120), 0.45, 0)
 		bank.material.set_shader_parameter("scale", Vector2(w / 600.0, 0.6))
