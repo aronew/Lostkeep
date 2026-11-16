@@ -100,6 +100,9 @@ func _initialize() -> void:
 	# The lower East door leads on under the clearing (the Undercroft, not built
 	# yet), so it has a marker to arrive at but no way through.
 	_door("EastLower", Rect2i(104, 23, 8, 5), 1, IB05, "WestLower")
+	# The moody look, as IB-05's (the creative lead: "I like that look instead of
+	# so bright"): see _moody() in room_builder.gd.
+	_mood = true
 	_finish()
 	quit()
 

@@ -1,0 +1,80 @@
+{
+  "canvas": [
+    3072,
+    2048
+  ],
+  "native": [
+    384,
+    256
+  ],
+  "cell_size": 8,
+  "coordinates": "pixels; x,y,width,height; exclusive right/bottom",
+  "palette": [
+    "#0B0812",
+    "#1A1424",
+    "#2E2438",
+    "#4A3A5E",
+    "#6E6C80",
+    "#85839A",
+    "#4F8A3A",
+    "#8DC24E"
+  ],
+  "pieces": [
+    {
+      "name": "floor-band",
+      "rect": [
+        0,
+        0,
+        3072,
+        512
+      ],
+      "walking_line_y": 64,
+      "repeat_x": true
+    },
+    {
+      "name": "ceiling-band",
+      "rect": [
+        0,
+        576,
+        3072,
+        512
+      ],
+      "underside_line_y": 1024,
+      "repeat_x": true
+    },
+    {
+      "name": "underside-strip",
+      "rect": [
+        0,
+        1152,
+        3072,
+        512
+      ],
+      "repeat_x": true
+    },
+    {
+      "name": "floor-step-up",
+      "rect": [
+        0,
+        1728,
+        512,
+        320
+      ],
+      "left_walking_line_y": 1920,
+      "right_walking_line_y": 1792,
+      "riser_x": 256
+    },
+    {
+      "name": "ceiling-step-down",
+      "rect": [
+        768,
+        1728,
+        512,
+        320
+      ],
+      "left_underside_line_y": 1856,
+      "right_underside_line_y": 1984,
+      "riser_x": 1024
+    }
+  ]
+}

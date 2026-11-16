@@ -93,6 +93,9 @@ func _initialize() -> void:
 	_door("WestLower", Rect2i(0, 60, 8, 5), -1, IB07, "East")
 	# On east toward the Keep's foundations (not built).
 	_door("EastLower", Rect2i(36, 60, 8, 5), 1, "", "")
+	# The moody look, as IB-05's (the creative lead: "I like that look instead of
+	# so bright"): see _moody() in room_builder.gd.
+	_mood = true
 	_finish()
 	quit()
 

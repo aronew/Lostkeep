@@ -101,6 +101,9 @@ func _initialize() -> void:
 	_door("East", Rect2i(36, 36, 8, 5), 1, IB06, "WestLower")
 	# Out of the lantern room, on to the deep under the clearing (not built).
 	_door("EastLower", Rect2i(36, 55, 8, 5), 1, "", "")
+	# The moody look, as IB-05's (the creative lead: "I like that look instead of
+	# so bright"): see _moody() in room_builder.gd.
+	_mood = true
 	_finish()
 	quit()
 

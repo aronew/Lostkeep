@@ -96,16 +96,36 @@ galleries have "more character" than our straight corridor.
 - Image: `docs/rooms/ironbark_05/moody_vs_mockup.png` (the mockup above, the
   room below).
 
-### The galleries wear CH7 (the creative lead: the top hallway "still doesn't match the mockup look")
+### The galleries after the moody mockup
 
-The skin draws straight bands; the mockup's galleries are ragged slabs whose
-undersides hang into the hall, under a lumpy cobble ceiling, with a brick wall
-behind. `_galleries()` in `build_ib05.gd`: CH7's cave strips (`ch_cave.png`)
-over every gallery floor run with their cap on the walking line, and upside
-down along every ceiling run (only the cap and the masonry under it: the creative
-lead found the whole strip upside down "a little wild", its crystals and
-tufts dangling); the skin skips the galleries' slabs and ceilings
-(`GALLERY_SKIP`) so the strips are their only edge; a brick back wall
-(`sh_fill`, `GalleryBackWall`) stands behind them. Only stretches of the strips
-clear of their roots are used (`STRIPS`). Collision unchanged; tours, checker
-as before.
+The creative lead: the top hallway "still doesn't match the mockup look"; then,
+with CH7's strips over the floors and ceilings, "a little wild", and "the top
+hallways in the mockup are straight ... the floor is all uneven too". So: the
+walking lines and ceilings are the skin's straight bands, stepping where the
+plan steps; a brick back wall (`sh_fill`, `GalleryBackWall`) stands behind the
+galleries; and CH7's cave strips, cut just under their cap, fill each slab
+under its walking line (their ragged undersides hanging into the hall) and,
+upside down, rise over each ceiling's band into the dark (the creative lead,
+after the strips came off: "you had it mostly right before"). The strips start
+8 px from each line (`BAND`), so the skin's straight band keeps the line
+(`GALLERY_FLOORS`, `GALLERY_CEILINGS`, `_galleries()` in `build_ib05.gd`). They
+have no collision. Collision unchanged; tours and checker as before.
+
+### CH9 on the galleries
+
+The creative lead: "the floors ceiling looked better last time, do we just need
+new floor tiles for that hallway?" Yes: Book 1's CH9, the cobble of CH7 with
+perfectly straight lines. The generator's own export is in (a first one,
+rebuilt onto the grid by another tool, read too dark and flat and was dropped).
+`_ch9_galleries()`: a floor band on every gallery floor run, a ceiling band on
+every ceiling run, the underside strip under each slab; the skin skips those
+cells (`CH9_SKIP`). The bands are lifted 1.7x in the game (`CH9_LIFT`): the art
+is painted about half as bright as the CY stone and the room's murk multiplies
+it. Collision unchanged; `mode=tour` and `mode=upper` pass. Image:
+`docs/rooms/ironbark_05/ch9_vs_mockup.png` (mockup, the CH7 version, CH9).
+
+CH9's floor step now turns each gallery step (the creative lead: "put those
+step pieces in"): its face and upper floor only, on the upper walking line,
+mirrored for steps down and upside down for the ceiling's steps (x 8, 13, 26,
+29, 38). The two-tile ceiling step over the East door's gap keeps the skin.
+Image: `docs/rooms/ironbark_05/ch9_steps.png`.

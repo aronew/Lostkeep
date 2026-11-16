@@ -644,15 +644,40 @@ She steps forward with every hit.
   **IB-05 now wears it as its own look** (the creative lead: "I like that look
   instead of so bright"; `docs/mockups/mood/shrine_hall_moody.webp`): a room
   sets `_mood = true` and `_finish()` calls `_moody()` in `room_builder.gd`
-  (`MOOD_*` constants). Other rooms can switch it on once IB-05 is approved.
+  (`MOOD_*` constants). **All four crypt rooms wear it now** (IB-02, IB-05,
+  IB-06, IB-07; the creative lead asked whether the other areas were moody
+  too): `docs/rooms/mood/`. The surface rooms (IB-01, IB-03, IB-04) don't.
   Don't run `mood_test.gd` on IB-05: it would double the fog.
 - **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
   grid-aligned: resampled from their drafts onto the grid by another tool, so
   03 stairs and 06 alcoves show a crosshatch shimmer; the others are clean).
   Originals in `art/source/ironbark/crypt_ch/`; `tools/make_crypt_ch.py`
   reduces them by their cell size to `ch_*.png` and lists each sheet's pieces
-  (rect, walking line) in `ch_pieces.json`. First use: IB-05's galleries wear
-  CH7's strips (`_galleries()`). Don't use the CH1 slab with the icy-blue
+  (rect, walking line) in `ch_pieces.json`. First use: CH7's strips fill
+  IB-05's gallery slabs under their walking lines and rise over their ceilings
+  (`_galleries()`), 8 px from each line; never on a walking line or a
+  ceiling's edge (the creative lead: hallways stay straight, the strips' wavy cap
+  made them "all uneven"). The look they liked is CH7's cobble on the
+  hallway's own lines: Book 1's CH9 asks for gallery floor and ceiling bands in
+  that cobble with perfectly straight lines (mockup AC). A first CH9 came rebuilt onto the grid by
+  another tool (8 colours, flattened): tried in IB-05 (`USE_CH9` in
+  `build_ib05.gd`, `docs/rooms/ironbark_05/ch9_trial.png`) it read too dark
+  and flat, and was dropped. **The generator's own CH9 is in and on**
+  (`art/source/ironbark/crypt_ch/ch9/lost-keep-terrain-bands-raw.png`, 1536 x
+  1024, painted at full resolution, no pixel grid): `tools/make_crypt_ch9.py`
+  reduces it 4:1 (box), hardens the alpha, cuts each band where its ends match
+  best and saves `ch9_floor/ceiling/under/steps.png`. IB-05's galleries wear it
+  (`USE_CH9`, `_ch9_galleries()`): floor bands on the walking lines, ceiling
+  bands on the ceilings, the underside strip under each slab, on the root (not
+  graded) and lifted 1.7x in the game (`CH9_LIFT`), since it is painted about
+  half as bright as the CY bands. Comparison: `docs/rooms/ironbark_05/ch9_vs_mockup.png`.
+  Its floor step is used at every gallery step (`_ch9_step()`): only its
+  face and upper floor (it is painted 18 px tall, a step is 16), on the upper
+  walking line, mirrored for steps down, upside down for ceiling steps. Ceiling steps are
+  tinted toward the ceiling band (`CH9_CEILING_STEP_TINT`: the floor's cap is
+  painted warm and twice as bright) and cut so the two that face each other
+  across the bulkhead (x 26 to 29) each cover half of it and keep both faces. Its
+  second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the

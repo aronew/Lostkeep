@@ -67,8 +67,6 @@ const MASSES := [
 	[47, 13, 2, 1, 1],    # the ledge under the east gap (the way back up)
 	[50, 21, 4, 1, 1],    # the shelf on the east wall, over the lower East door
 ]
-## The galleries' slabs and ceilings are painted by CH7's strips (_galleries()).
-const GALLERY_SKIP := [[0, 0, 19, 3], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 4], [22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
 const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 4, 1], [22, 22, 2, 1], [29, 22, 2, 1],
 	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [50, 21, 4, 1]]
 const STONE := [[0, 0, 58, 34]]
@@ -98,7 +96,7 @@ func _initialize() -> void:
 	spaces = SPACES
 	masses = MASSES
 	stone = STONE
-	skip = SKIP + GALLERY_SKIP
+	skip = SKIP + (CH9_SKIP if USE_CH9 else [])
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	_unlit = CanvasItemMaterial.new()
@@ -306,21 +304,49 @@ func _build_secrets() -> void:
 
 
 # --- The galleries after the moody mockup ------------------------------------------------
-## The creative lead: the top hallway "still doesn't match the mockup look"
-## (docs/mockups/mood/shrine_hall_moody.webp). In the mockup each gallery is a
-## slab whose underside tapers and hangs into the hall, under a ragged cobble
-## ceiling, with a brick wall behind it. The skin draws straight bands, so the
-## galleries wear CH7's cave strips (ch_cave.png): over each floor run with its
-## cap on the walking line, and upside down along each ceiling run; and a brick
-## back wall stands behind them.
+## The creative lead's moody mockup of this room (docs/mockups/mood/
+## shrine_hall_moody.webp): the galleries' walking lines and ceilings run
+## straight and only step ("the top hallways in the mockup are straight"), a
+## brick wall stands behind them, and only the slabs' undersides are ragged,
+## hanging into the hall. The skin draws the straight edges; CH7's cave strips
+## (ch_cave.png), cut below their cap, hang under each slab.
 const CAVE := ENV + "ch_cave.png"
-## CH7's long strips: [x, y, w, h] in ch_cave.png and the cap row in each.
-## Each: [x, y, w, h, cap row]: the stretches of each strip clear of its roots.
+## CH7's long strips, the stretches clear of their roots: [x, y, w, h, cap row].
 const STRIPS := [[71, 105, 370, 66, 10], [66, 9, 375, 82, 12], [241, 191, 200, 71, 13], [11, 191, 150, 71, 13], [11, 275, 130, 77, 15]]
-## Floor runs [x0, x1, row] and ceiling runs [x0, x1, row of the ceiling's
-## underside], in tiles.
-const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50, 58, 7]]
+## Floor runs [x0, x1, row] and ceiling runs [x0, x1, row of the underside].
+const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50, 54, 7]]
 const GALLERY_CEILINGS := [[0, 8, 3], [8, 13, 2], [13, 19, 3], [22, 26, 3], [26, 29, 4], [29, 38, 3], [38, 46, 4], [46, 50, 2], [50, 58, 2]]
+## The skin's straight band keeps the line; the strip starts this far from it.
+const BAND := 8
+## CH9 (the creative lead's gallery bands, the generator's own export, brought
+## in by tools/make_crypt_ch9.py): straight floor and ceiling bands in cobble and
+## an underside strip, each repeating. With them on, they paint the galleries'
+## lines in place of the skin and CH7's strips.
+const USE_CH9 := true
+const CH9_FLOOR := ENV + "ch9_floor.png"       # walking line on its first row
+const CH9_CEILING := ENV + "ch9_ceiling.png"   # underside on its last row
+const CH9_UNDER := ENV + "ch9_under.png"       # straight top on its first row
+const CH9_LIFT := Color(1.7, 1.65, 1.6)
+## CH9's floor step (ch9_steps.png): from its face (column 93) to its end, the
+## upper floor's cap on row 1. Painted 18 px tall where a step is 16, so only
+## the face and the upper floor are used, lined up on the upper walking line;
+## the lower floor's own band runs in under it. Flipped upside down it is a
+## ceiling step (its lit cap then on the underside, as the ceiling band's).
+## The sheet's second piece joins a ceiling to a floor and is not used.
+const CH9_STEPS := ENV + "ch9_steps.png"
+const CH9_STEP := Rect2(93, 1, 82, 43)
+const CH9_CEILING_STEP_TINT := Color(0.62, 0.66, 0.8)
+## Floor steps [face x, upper row, upper side +1 east / -1 west] and ceiling
+## steps [face x, lower row (the lower underside), lower side +1 east / -1 west].
+## A fourth number, where given, is how many tiles of the upper floor (lower
+## ceiling) the piece may cover: where two steps face each other across a short
+## run (the bulkhead, x 26 to 29, 3 tiles), each takes its half, so neither
+## paints over the other's face.
+const CH9_FLOOR_STEPS := [[14, 7, 1], [29, 8, -1]]
+const CH9_CEILING_STEPS := [[8, 3, -1], [13, 3, 1], [26, 4, 1, 1.5], [29, 4, -1, 1.5], [38, 4, 1]]
+## The skin leaves the galleries' slabs and ceilings to CH9.
+const CH9_SKIP := [[0, 0, 19, 3], [8, 2, 5, 1], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 3], [26, 3, 3, 1], [38, 3, 8, 1],
+	[22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
 const GALLERY_BACK := [[0, 3, 14, 5], [8, 2, 5, 1], [14, 3, 5, 4], [22, 3, 4, 5], [26, 4, 3, 4], [29, 3, 9, 6], [38, 4, 8, 5], [50, 2, 8, 5]]
 
 
@@ -335,6 +361,9 @@ func _galleries(placed: Node) -> void:
 	for r in GALLERY_BACK:
 		regions.append(Rect2i(r[0], r[1], r[2], r[3]))
 	wall.set("regions", regions)
+	if USE_CH9:
+		_ch9_galleries(placed)
+		return
 	var strips := _node(Node2D.new(), "GalleryStrips", placed) as Node2D
 	var i := 0
 	for f in GALLERY_FLOORS:
@@ -345,11 +374,12 @@ func _galleries(placed: Node) -> void:
 		i += 1
 
 
-## A run of CH7 strip from tile x0 to x1, its cap on the line y (a floor), or
-## upside down with its cap under the line (a ceiling's underside).
+## The masonry of a CH7 strip, below its cap, from tile x0 to x1. Under a
+## floor's walking line (y) it fills the slab and its ragged underside hangs
+## into the hall; over a ceiling's underside (y), upside down, it rises into the
+## dark. Either way the skin's straight band keeps the line itself.
 func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> void:
-	var w := (x1 - x0) * TILE + 4
-	# The first strip, counting on from n, long enough for the run.
+	var w := (x1 - x0) * TILE
 	var st: Array = STRIPS[0]
 	for k in STRIPS.size():
 		var cand: Array = STRIPS[(n + k) % STRIPS.size()]
@@ -357,14 +387,68 @@ func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> 
 			st = cand
 			break
 	var off := (n * 97) % maxi(1, int(st[2]) - w)
-	var region := Rect2(st[0] + off, st[1], mini(w, int(st[2])), st[3])
+	var top := int(st[4]) + 3
+	var region := Rect2(st[0] + off, st[1] + top, w, int(st[3]) - top)
+	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE, y + BAND))
 	if ceiling:
-		# Only the cap and the masonry under it, upside down: the cap row is the
-		# ceiling's clean edge and the ragged underside rises into the dark. What
-		# grows on the strip's top (crystals, tufts) would dangle, so it is left off.
-		region = Rect2(region.position.x, st[1] + st[4], region.size.x, st[3] - st[4])
-	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE - 2, y - st[4]))
-	sp.name = "CeilingStrip" if ceiling else "FloorStrip"
-	if ceiling:
+		sp.name = "CeilingStrip"
 		sp.flip_v = true
-		sp.position.y = y - region.size.y
+		sp.position.y = y - BAND - region.size.y
+	else:
+		sp.name = "FloorStrip"
+
+
+## CH9's bands along the galleries: a floor band on every floor run, a ceiling
+## band on every ceiling run, the underside strip under each slab.
+func _ch9_galleries(placed: Node) -> void:
+	# On the root, not under PlacedArt, so _grade_stone() leaves them as painted.
+	var node := _node(Node2D.new(), "GalleryBands", _root) as Node2D
+	node.z_index = 5
+	# CH9 is painted about half as bright as the CY bands beside it, and the
+	# room's murk multiplies both: lifted here (the art is unchanged) so the
+	# galleries read as the mockup's do.
+	node.modulate = CH9_LIFT
+	for f in GALLERY_FLOORS:
+		_band(node, CH9_FLOOR, f[0], f[1], f[2] * TILE, false, "FloorBand")
+	for c in GALLERY_CEILINGS:
+		_band(node, CH9_CEILING, c[0], c[1], c[2] * TILE, true, "CeilingBand")
+	# Under the slabs: the strip hangs from the hall's ceiling line (row 11),
+	# overlapping the floor band's dark by a few pixels.
+	for u in [[0, 19], [22, 46], [50, 54]]:
+		_band(node, CH9_UNDER, u[0], u[1], 11 * TILE - 6, false, "Underside")
+	for st in CH9_FLOOR_STEPS:
+		_ch9_step(node, st[0], st[1] * TILE, st[2], false, float(st[3]) if st.size() > 3 else 0.0)
+	for st in CH9_CEILING_STEPS:
+		_ch9_step(node, st[0], st[1] * TILE, st[2], true, float(st[3]) if st.size() > 3 else 0.0)
+
+
+## A step's face on the tile line x, its higher floor (or lower ceiling) on the
+## line y, on the side `side` of the face.
+func _ch9_step(parent: Node, x: int, y: float, side: int, ceiling: bool, run := 0.0) -> void:
+	var region := CH9_STEP
+	if run > 0.0:
+		region.size.x = minf(region.size.x, roundf(run * TILE) + 1)
+	var w := region.size.x
+	var h := region.size.y
+	var px: float = x * TILE - 1 if side > 0 else x * TILE - w + 1
+	var py: float = y - h if ceiling else y
+	var sp := _sprite(parent, CH9_STEPS, region, Vector2(px, py))
+	sp.flip_h = side < 0
+	sp.flip_v = ceiling
+	if ceiling:
+		# The piece is the floor's step: its cap is painted warm and about twice
+		# as bright as the ceiling band's lit edge, so it is cooled and dimmed
+		# toward the ceiling band (the creative lead: "the ceiling is a different
+		# color for the step").
+		sp.modulate = CH9_CEILING_STEP_TINT
+	sp.name = "CeilingStep" if ceiling else "FloorStep"
+
+
+## A band repeated from tile x0 to x1: its first row on the line y, or (ceiling)
+## its last row just above it.
+func _band(parent: Node, tex_path: String, x0: int, x1: int, y: float, ceiling: bool, band_name: String) -> void:
+	var tex: Texture2D = load(tex_path)
+	var h := tex.get_height()
+	var sp := _sprite(parent, tex_path, Rect2(x0 * TILE, 0, (x1 - x0) * TILE, h), Vector2(x0 * TILE, y - h if ceiling else y))
+	sp.texture_repeat = CanvasItem.TEXTURE_REPEAT_ENABLED
+	sp.name = band_name
