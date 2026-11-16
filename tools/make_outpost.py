@@ -1,5 +1,5 @@
 """The outpost building (Book 1, OP1), from the generator's own image
-art/source/ironbark/outpost/outpost_building.png (1536 x 1024, painted at full
+art/source/ironbark/outpost/outpost_building_white.png (1536 x 1024, painted at full
 resolution, no pixel grid).
 
 Cropped to the building, reduced 5:1 (box), its alpha hardened at half:
@@ -15,7 +15,8 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "art/source/ironbark/outpost/outpost_building.png"
+# The white door (the creative lead's pick); outpost_building.png is the gold one.
+SRC = ROOT / "art/source/ironbark/outpost/outpost_building_white.png"
 OUT = ROOT / "game/assets/environment/ironbark/outpost.png"
 FACTOR = 5
 

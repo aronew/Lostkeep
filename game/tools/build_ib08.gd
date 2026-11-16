@@ -79,8 +79,8 @@ func _initialize() -> void:
 ## stranger's interior (IB-09).
 func _build_outpost(behind: Node) -> void:
 	# The building: the creative lead's OP1, reduced 5:1 (tools/make_outpost.py),
-	# its golden doorway on the walkway's entry (x 22.5), its base stones sunk
-	# 3 px into the floor. On the root, not graded, so the door stays gold.
+	# its white doorway on the walkway's entry (x 22.5), its base stones sunk
+	# 3 px into the floor. On the root, not graded, so the door stays bright.
 	var hut := _node(Sprite2D.new(), "Outpost", _root) as Sprite2D
 	hut.texture = load(ENV + "outpost.png")
 	hut.centered = false
@@ -165,11 +165,12 @@ func _build_secrets() -> void:
 ## reference: a pale glow in the doorway, a fan of light spilling out of it
 ## across the walkway, a pool on the stones in front, and a haze blooming
 ## round the building in the mist. All additive, never baked into tiles.
-## Gold, as the painted doorway of OP1.
-const SPILL := Color(1.0, 0.78, 0.42)
-const OUTPOST_SIZE := Vector2(278, 184)
-const OUTPOST_DOOR := Vector2(76, 179)   # the doorway, centre and sill
-const OUTPOST_LEAF := Vector2(169, 145)  # the leaf window
+## White, as OP1's painted doorway (the creative lead: "how about a white light
+## at the door"), barely cool so it reads as light, not paper.
+const SPILL := Color(0.92, 0.96, 1.0)
+const OUTPOST_SIZE := Vector2(278, 185)
+const OUTPOST_DOOR := Vector2(76, 180)   # the doorway, centre and sill
+const OUTPOST_LEAF := Vector2(169, 146)  # the leaf window
 
 
 func _doorway_glow(behind: Node, foot: Vector2) -> void:
@@ -177,7 +178,7 @@ func _doorway_glow(behind: Node, foot: Vector2) -> void:
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	# The light itself, strong: the mood pass halves cold lights.
-	_light(behind, foot + Vector2(0, -24), SPILL, 1.6, 1.6, "DoorLight")
+	_light(behind, foot + Vector2(0, -24), SPILL, 2.2, 1.6, "DoorLight")
 	var tex := _halo_texture()
 	# The haze round the building, wide and faint.
 	var haze := _node(Sprite2D.new(), "OutpostHaze", _root) as Sprite2D

@@ -110,3 +110,9 @@ graded, so the gold stays gold). The light spilling out (`_doorway_glow()`) is
 gold to match the painted door; its leaf window has a faint teal light; the
 detail pass keeps clear of its front (`detail_skip`). The save shrine moved to
 x 11. `mode=tour` passes as before. Image: `docs/rooms/ironbark_08/outpost_in_game.png`.
+
+**The white door** (the creative lead: "how about a white light at the door"):
+their second OP1, the same building with a white doorway
+(`outpost_building_white.png`; the gold one stays in the source folder), is
+the one in the game, and the spilled light is white to match (`SPILL`).
+Image: `docs/rooms/ironbark_08/outpost_white_door.png`.
