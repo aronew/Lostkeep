@@ -644,7 +644,9 @@ She steps forward with every hit.
   **IB-05 now wears it as its own look** (the creative lead: "I like that look
   instead of so bright"; `docs/mockups/mood/shrine_hall_moody.webp`): a room
   sets `_mood = true` and `_finish()` calls `_moody()` in `room_builder.gd`
-  (`MOOD_*` constants). Other rooms can switch it on once IB-05 is approved.
+  (`MOOD_*` constants). **All four crypt rooms wear it now** (IB-02, IB-05,
+  IB-06, IB-07; the creative lead asked whether the other areas were moody
+  too): `docs/rooms/mood/`. The surface rooms (IB-01, IB-03, IB-04) don't.
   Don't run `mood_test.gd` on IB-05: it would double the fog.
 - **The CH sheets are in** (the creative lead's CH1 to CH8, delivered
   grid-aligned: resampled from their drafts onto the grid by another tool, so
