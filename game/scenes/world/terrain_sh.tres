@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="TerrainMaterial" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_fill.png" id="1_avrsp"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_corner_top.png" id="1_nxihj"]
+[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_e7ud3"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_corner_under.png" id="2_syw8y"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_top.png" id="3_nxihj"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_under.png" id="4_syw8y"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_wall.png" id="5_64lti"]
+
+[resource]
+script = ExtResource("2_e7ud3")
+fill = ExtResource("1_avrsp")
+fade_tiles = 5.0
+top_band = ExtResource("3_nxihj")
+top_line = 8
+under_band = ExtResource("4_syw8y")
+under_line = 48
+wall_band = ExtResource("5_64lti")
+wall_face = 37
+corner_top = ExtResource("1_nxihj")
+corner_top_anchor = Vector2(36, 29)
+corner_under = ExtResource("2_syw8y")
+corner_under_anchor = Vector2(42, 42)
+outline_color = Color(0, 0, 0, 0)

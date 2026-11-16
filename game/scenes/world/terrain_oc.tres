@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="TerrainMaterial" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/oc_corner_top.png" id="1_3dn00"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/oc_fill.png" id="1_eb0ed"]
+[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="2_3dn00"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/oc_top.png" id="3_1wdu2"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/oc_under.png" id="4_1glj6"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/oc_wall.png" id="5_vj6ns"]
+
+[resource]
+script = ExtResource("2_3dn00")
+fill = ExtResource("1_eb0ed")
+top_band = ExtResource("3_1wdu2")
+top_line = 8
+under_band = ExtResource("4_1glj6")
+under_line = 48
+wall_band = ExtResource("5_vj6ns")
+wall_face = 37
+corner_top = ExtResource("1_3dn00")
+corner_top_anchor = Vector2(60, 8)
+outline_color = Color(0, 0, 0, 0)

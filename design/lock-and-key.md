@@ -87,6 +87,8 @@ rescue or a truth).
 | W1 | Ironbark | The first descent, under the great tree: a cracked plate floor | Hard | ✔ min ~5 | A shortcut back to the start lantern |
 | W2 | Ironbark **IB-02** | The Old Crypt: a plated door across the west gallery (upper line) | Hard | ✔ | The Refuge road, a health shard and a warden's journal |
 | W3 | Ironbark | The keep wall beside the bridge (lower route) | Hard | ✔ | The route to the armory, where the key is |
+| W1b | Ironbark **IB-05** | The Shrine Hall: the pit in the lower floor has a cracked bark-plate floor, motes rising through the cracks and a faint light below | Hard | ✔ | A shaft down into the Undercroft, stepping down on wall ledges that take turns on each wall: a shortcut into its depths, and the way back up |
+| W1c | Ironbark **IB-06** | The Undercroft: a bark plate across the bottom-left room's west door | Hard | ✔ | The Pit Shaft (IB-07), the other way in |
 | W4 | Refuge | A plated hatch under the camp | Hard | — | The Refuge cellar: the map-maker rescue |
 | W5 | Dusk-Drifter | Carapax-plated shutters | Hard | — | The critical path into the forge |
 
@@ -104,6 +106,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | B1 | Ironbark | The keep's tall well-shaft, a lip visible above jump height | Hard | ✔ | The keep's battlements: a lore room and a wing upgrade hint |
 | B1b | Ironbark **IB-02** | The Old Crypt: the Root Well's mouth, far above any jump, moonlight coming down it. Also the cave's wall up to the west gallery | Hard | ✔ | The Guard Post from below; a way back up the loop |
+| B1c | Ironbark **IB-06** | The Undercroft: an alcove high in the void's east wall, far above the arcade | Hard | ✔ | A cache in the alcove |
 | B2 | Dusk-Drifter | The ash chimneys | Hard | ✔ | A secret forge and a charm |
 | B3 | Hearth-Plains | The silo tower beside the Silk Mother arena | Hard | ✔ | A bypass shortcut |
 | B4 | Refuge | The camp's chimney under the well | Hard | (it's the sandbox) | — |
@@ -113,6 +116,7 @@ rescue or a truth).
 | ID | Region | Where | H/S | Before key? | Return pays |
 |---|---|---|---|---|---|
 | G1 | Ironbark | The broken arch bridge with its centre fallen, a torn banner over the gap | Hard | ✔ | The far bank: an express lane over the graveyard |
+| G1b | Ironbark **IB-04** | The Gate Road: a far chunk high over the road's end, something glinting on it, out of reach from every island | Hard | ✔ | A relic |
 | G2 | Hearth-Plains | The wind-mill gorge | Hard | ✔ | Rootling village outskirts: a rescue |
 | G3 | Dusk-Drifter | Heat updrafts from braziers lit with Emberwick, with nothing to ride them yet | Hard | ✔ (a planted combo) | A sky route over the forge |
 | G4 | Fen-Stalker | The swamp's canopy chasm | Hard | — | The critical path west |
@@ -122,6 +126,7 @@ rescue or a truth).
 |---|---|---|---|---|---|
 | D1 | Ironbark **IB-01** | The moat under the keep bridge: dark water, a glint below | Hard | ✔ | A sunken reliquary: a lore room |
 | D1b | Ironbark **IB-02** | The Old Crypt: the cistern and its flooded gallery, a glint deep inside | Hard | ✔ | A drowned burial: a relic |
+| D1c | Ironbark **IB-06** | The Undercroft: the sump in the basin at the bottom of the void, dark water going on down, a glint in it | Hard | ✔ | A flooded way down under the clearing |
 | D2 | Refuge | The flooded undercroft under the camp | Hard | ✔ | The undercroft shortcut to the Vats |
 | D3 | Fen-Stalker | Deep fen pools | Hard | ✔ | Mire-Kin rescues |
 | D4 | Tide-Weaver | The whole region | Hard | — | Return region |
@@ -227,3 +232,18 @@ descending means going deeper into the truth:
       inside Ironbark (the region shows 7 locks for later abilities).
 - [ ] No route reaches any key without passing its lock first.
 - [ ] Every hard gate holds against the generous player model.
+
+## Secrets (false walls) and Resin
+
+False walls with no collision, painted as the room's own unbroken wall, each
+with a tell (motes drifting into the stone) and a cache of Resin (the
+currency, a stand-in name). Base kit: reward curiosity, never a lock.
+
+| Room | Where | Tell | Reward |
+|---|---|---|---|
+| IB-02 | The vault behind the root cave's west wall | Masonry in a raw cave, moss, a draught | 6 Resin; the empty Prism socket (S1b) |
+| IB-05 | Behind the hall's west wall, off the west wall's ledge | Motes drifting into the wall | 3 Resin |
+| IB-06 | Behind L2's west wall | Motes | 4 Resin |
+| IB-06 | Behind L4's west wall | Motes | 6 Resin |
+| IB-07 | At the foot of the west wall (behind the plate: needs the Ward) | Motes | 5 Resin |
+

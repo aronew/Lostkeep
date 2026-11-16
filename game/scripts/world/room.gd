@@ -17,7 +17,7 @@ const TILE := 16
 
 ## Art hidden in box view (F1), leaving the collision, Kleo and the machines.
 const ART_NODES := ["Behind", "PlacedArt", "Front", "PrismShrine/Art", "GuardLift/Frame", "EarthBackWalls", "BackWalls",
-	"Foreground", "BierHoist/Frame"]
+	"Foreground", "ForegroundNear", "BierHoist/Frame"]
 
 
 func _ready() -> void:
@@ -43,3 +43,7 @@ func set_box_view(on: bool) -> void:
 		var n := get_node_or_null(path)
 		if n:
 			n.visible = not on
+	# Islands that are paintings: their collision tiles show only in the box view.
+	var masses := get_node_or_null("Masses")
+	if masses and masses.has_meta("under_art"):
+		masses.visible = on

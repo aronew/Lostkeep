@@ -59,6 +59,15 @@ var _fade_layer: CanvasLayer
 var _fade_rect: ColorRect
 var _debug_label: Label
 
+## Resin, the currency (a stand-in name): beads found in secrets and caches.
+## There is no save file yet, so it lasts until F5 (which clears the flags too,
+## so every bead comes back).
+signal currency_changed(total: int, delta: int)
+var currency := 0
+var _hud_count: Label
+var _hud: Control
+var _hud_tween: Tween
+
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
@@ -118,6 +127,9 @@ func _unhandled_input(event: InputEvent) -> void:
 				Engine.time_scale = _base_time_scale()
 		KEY_F5:
 			flags.clear()
+			currency = 0
+			_hud_count.text = "0"
+			_hud.modulate.a = 0.0
 			_hitstop_end_us = 0
 			Engine.time_scale = _base_time_scale()
 			get_tree().reload_current_scene()
@@ -173,6 +185,44 @@ func _setup_screen_layers() -> void:
 	_debug_label.add_theme_color_override("font_shadow_color", Color(0, 0, 0, 0.8))
 	_debug_label.visible = false
 	_fade_layer.add_child(_debug_label)
+	# The Resin counter, top left: an icon and the count. Hidden until the first
+	# bead; it brightens for a moment whenever the count goes up.
+	var hud_layer := CanvasLayer.new()
+	hud_layer.layer = 90
+	add_child(hud_layer)
+	_hud = HBoxContainer.new()
+	_hud.position = Vector2(10, 8)
+	_hud.add_theme_constant_override("separation", 3)
+	_hud.modulate.a = 0.0
+	hud_layer.add_child(_hud)
+	var icon := TextureRect.new()
+	var at := AtlasTexture.new()
+	at.atlas = load("res://assets/items/resin.png")
+	at.region = Rect2(0, 0, 9, 9)
+	icon.texture = at
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_CENTERED
+	icon.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	_hud.add_child(icon)
+	_hud_count = Label.new()
+	_hud_count.add_theme_font_size_override("font_size", 10)
+	_hud_count.add_theme_color_override("font_color", Color(1.0, 0.9, 0.7))
+	_hud_count.add_theme_color_override("font_shadow_color", Color(0.04, 0.03, 0.07, 0.9))
+	_hud_count.add_theme_constant_override("shadow_offset_x", 1)
+	_hud_count.add_theme_constant_override("shadow_offset_y", 1)
+	_hud_count.text = "0"
+	_hud.add_child(_hud_count)
+
+
+## Add Resin to the count and show it.
+func add_currency(amount: int) -> void:
+	currency += amount
+	_hud_count.text = str(currency)
+	currency_changed.emit(currency, amount)
+	if _hud_tween:
+		_hud_tween.kill()
+	_hud.modulate = Color(1.6, 1.4, 1.0, 1.0)
+	_hud_tween = create_tween()
+	_hud_tween.tween_property(_hud, "modulate", Color(1, 1, 1, 0.85), 0.5)
 
 
 ## Leave the room for another: fade out, load it, arrive at `door`, fade in.

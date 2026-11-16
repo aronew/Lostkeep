@@ -20,12 +20,34 @@ mockups and the principles pull apart:
 | Built stone beside raw cave | East: the guard's masonry (the crypt kit). West: a gallery, then a root cave that has broken into it |
 | A flooded lowest level | The cistern: the well's water runs east into a drowned gallery |
 
+## Reskin (the creative lead: "reskin the Old Crypt with the same stone")
+
+> **Now the CY stone** (chunky brick after reference Y, `_use_crypt_y_stone()`),
+> as in IB-05; what follows describes the SH stone it replaced. The vault's
+> false wall still draws SH2's wall band.
+
+All its masonry is now the Shrine Hall's (SH1 and SH2, `_use_shrine_stone()` in
+`room_builder.gd`): floors, ceilings, walls and corners, and the false wall over
+the vault, which draws SH2's wall band so it still reads as unbroken wall. The
+galleries no longer have a plum masonry back wall: they open onto SH8's misty
+hall behind, as the Shrine Hall does. It is brighter and bluer
+(CanvasModulate 0.8, 0.82, 0.96). Then *"make the well stone too"*: the Root Well's walls, its mouth, the lip of
+the cave mouth, the grave island and the east low island are SH masonry (the
+west low island is SH4's arch island); the grave carries crystals and flowers.
+Only the root cave stays earth. Collision unchanged.
+
+Colour: SH8 as painted read *"so much bluer than the reference mockup"*; it is
+graded toward the mockup's dark slate (`SHRINE_FAR_TINT` in `room_builder.gd`,
+greyer violet mist, CanvasModulate 0.9, 0.9, 0.96 in both crypt rooms). On
+screen the background now measures about (45-63, 47-67, 69-100) against the
+mockup's (46-60, 50-68, 75-99).
+
 ## Spec
 
 | Field | Content |
 | --- | --- |
-| **Identity** | Ironbark Guard, IB-02. East upper: IB-01's hall door. East lower: the Undercroft, under the clearing (not built). West: the Refuge road (behind the plated door). Above: the Guard Post's well (out of reach) |
-| **World grid** | West of IB-01 and 27 tiles lower: its origin is at IB-01's (-112, 27). Its East door (rows 5 to 9) is IB-01's hall door (rows 32 to 36) |
+| **Identity** | Ironbark Guard, IB-02. East upper and lower: IB-05, the Shrine Hall (the Old Crypt's first section). West: the Refuge road (behind the plated door). Above: the Guard Post's well (out of reach) |
+| **World grid** | West of IB-05 (the Shrine Hall): its origin is at IB-01's (-170, 28). Its East doors (rows 5 to 9, 23 to 27) are IB-05's West doors (rows 3 to 7, 21 to 25) |
 | **Idea** | The guard's burial galleries, stacked beside a root-choked well that has broken through them; the way on is down, and the hoist brings you back |
 | **Purpose** | The first labyrinth: reading a tall space, committing to drops, a loop that crosses itself. Establishes a landmark (the moonlit well). Shows four locks before their keys. Hides the game's first secret and teaches its tell. Folds a shortcut back to the door. Tells part of the story (a hideout, a cocoon hung out of reach) |
 | **Size** | 112 × 40 tiles (1792 × 640 px): 2.8 screens wide, 1.8 tall |

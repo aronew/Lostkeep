@@ -1,0 +1,100 @@
+[
+  {
+    "sheet": "SH1",
+    "size": [
+      3072,
+      1024
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ],
+    "opposite_edge_pixels_match": true
+  },
+  {
+    "sheet": "SH2",
+    "size": [
+      2048,
+      2048
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ],
+    "wall_repeat_boundary_matches": true
+  },
+  {
+    "sheet": "SH3",
+    "size": [
+      3072,
+      1536
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "sheet": "SH4",
+    "size": [
+      3072,
+      1536
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "sheet": "SH5",
+    "size": [
+      2048,
+      2048
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "sheet": "SH6",
+    "size": [
+      2048,
+      2048
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "sheet": "SH7",
+    "size": [
+      3072,
+      1024
+    ],
+    "exact_flat_pixel_grid": 8,
+    "alpha_values": [
+      0,
+      255
+    ]
+  },
+  {
+    "sheet": "SH8",
+    "size": [
+      3072,
+      1440
+    ],
+    "exact_flat_pixel_grid": 4,
+    "alpha_values": [
+      255
+    ],
+    "opposite_edge_pixels_match": true
+  }
+]

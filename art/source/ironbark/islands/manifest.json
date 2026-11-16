@@ -1,0 +1,171 @@
+{
+  "project": "Lost Keep",
+  "status": "Generated asset drafts",
+  "assets": [
+    {
+      "file": "01_graveyard.png",
+      "width": 3584,
+      "height": 1536,
+      "pixel_scale": 8
+    },
+    {
+      "file": "02_root_held.png",
+      "width": 2560,
+      "height": 1536,
+      "pixel_scale": 8
+    },
+    {
+      "file": "03_tree.png",
+      "width": 2560,
+      "height": 2048,
+      "pixel_scale": 8
+    },
+    {
+      "file": "04_shrine.png",
+      "width": 1536,
+      "height": 1024,
+      "pixel_scale": 8
+    },
+    {
+      "file": "05_ruin.png",
+      "width": 1280,
+      "height": 896,
+      "pixel_scale": 8
+    },
+    {
+      "file": "06_chunk_headstone.png",
+      "width": 768,
+      "height": 512,
+      "pixel_scale": 8
+    },
+    {
+      "file": "07_chunk_bush.png",
+      "width": 512,
+      "height": 384,
+      "pixel_scale": 8
+    },
+    {
+      "file": "islands_overview.png",
+      "width": 3072,
+      "height": 3072,
+      "pixel_scale": 8
+    },
+    {
+      "file": "cliffs_and_ruins.png",
+      "width": 3072,
+      "height": 3072,
+      "pixel_scale": 8
+    }
+  ],
+  "cliff_cuts": [
+    {
+      "piece": "terrace_1024",
+      "rect_px": [
+        64,
+        64,
+        1024,
+        320
+      ]
+    },
+    {
+      "piece": "terrace_768",
+      "rect_px": [
+        64,
+        480,
+        768,
+        288
+      ]
+    },
+    {
+      "piece": "terrace_512",
+      "rect_px": [
+        64,
+        864,
+        512,
+        256
+      ]
+    },
+    {
+      "piece": "stairs_5",
+      "rect_px": [
+        1664,
+        64,
+        640,
+        384
+      ]
+    },
+    {
+      "piece": "stairs_8",
+      "rect_px": [
+        1664,
+        608,
+        1024,
+        512
+      ]
+    },
+    {
+      "piece": "door_blue_lantern",
+      "rect_px": [
+        64,
+        1280,
+        896,
+        576
+      ]
+    },
+    {
+      "piece": "door_ruined",
+      "rect_px": [
+        1216,
+        1280,
+        896,
+        576
+      ]
+    },
+    {
+      "piece": "crystal_shrine",
+      "rect_px": [
+        64,
+        1984,
+        768,
+        512
+      ]
+    },
+    {
+      "piece": "timber_gate",
+      "rect_px": [
+        1152,
+        1984,
+        640,
+        512
+      ]
+    },
+    {
+      "piece": "lantern_post",
+      "rect_px": [
+        2048,
+        1984,
+        320,
+        512
+      ]
+    },
+    {
+      "piece": "foreground_left",
+      "rect_px": [
+        64,
+        2624,
+        1024,
+        384
+      ]
+    },
+    {
+      "piece": "foreground_right",
+      "rect_px": [
+        1856,
+        2624,
+        1152,
+        384
+      ]
+    }
+  ],
+  "island_overview": "Reduced preview layout; use individual island PNGs for requested nominal widths."
+}
