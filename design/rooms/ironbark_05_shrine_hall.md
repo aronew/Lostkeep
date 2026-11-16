@@ -103,7 +103,10 @@ with CH7's strips over the floors and ceilings, "a little wild", and "the top
 hallways in the mockup are straight ... the floor is all uneven too". So: the
 walking lines and ceilings are the skin's straight bands, stepping where the
 plan steps; a brick back wall (`sh_fill`, `GalleryBackWall`) stands behind the
-galleries; and only the slabs' undersides are ragged: CH7's cave strips, cut
-5 px below their cap (`UNDER_CUT`), hang from the hall's ceiling line under
-each gallery (`GALLERY_UNDERSIDES`, `_galleries()` in `build_ib05.gd`). They
+galleries; and CH7's cave strips, cut just under their cap, fill each slab
+under its walking line (their ragged undersides hanging into the hall) and,
+upside down, rise over each ceiling's band into the dark (the creative lead,
+after the strips came off: "you had it mostly right before"). The strips start
+8 px from each line (`BAND`), so the skin's straight band keeps the line
+(`GALLERY_FLOORS`, `GALLERY_CEILINGS`, `_galleries()` in `build_ib05.gd`). They
 have no collision. Collision unchanged; tours and checker as before.

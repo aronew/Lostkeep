@@ -313,10 +313,11 @@ func _build_secrets() -> void:
 const CAVE := ENV + "ch_cave.png"
 ## CH7's long strips, the stretches clear of their roots: [x, y, w, h, cap row].
 const STRIPS := [[71, 105, 370, 66, 10], [66, 9, 375, 82, 12], [241, 191, 200, 71, 13], [11, 191, 150, 71, 13], [11, 275, 130, 77, 15]]
-## How far below its cap a strip is cut: what hangs is the masonry under it.
-const UNDER_CUT := 5
-## The slabs' undersides over the hall [x0, x1, row of the hall's ceiling].
-const GALLERY_UNDERSIDES := [[3, 19, 11], [22, 46, 11], [50, 54, 11]]
+## Floor runs [x0, x1, row] and ceiling runs [x0, x1, row of the underside].
+const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50, 54, 7]]
+const GALLERY_CEILINGS := [[0, 8, 3], [8, 13, 2], [13, 19, 3], [22, 26, 3], [26, 29, 4], [29, 38, 3], [38, 46, 4], [46, 50, 2], [50, 58, 2]]
+## The skin's straight band keeps the line; the strip starts this far from it.
+const BAND := 8
 const GALLERY_BACK := [[0, 3, 14, 5], [8, 2, 5, 1], [14, 3, 5, 4], [22, 3, 4, 5], [26, 4, 3, 4], [29, 3, 9, 6], [38, 4, 8, 5], [50, 2, 8, 5]]
 
 
@@ -331,16 +332,21 @@ func _galleries(placed: Node) -> void:
 	for r in GALLERY_BACK:
 		regions.append(Rect2i(r[0], r[1], r[2], r[3]))
 	wall.set("regions", regions)
-	var strips := _node(Node2D.new(), "GalleryUndersides", placed) as Node2D
+	var strips := _node(Node2D.new(), "GalleryStrips", placed) as Node2D
 	var i := 0
-	for u in GALLERY_UNDERSIDES:
-		_underside(strips, u[0], u[1], u[2] * TILE, i)
+	for f in GALLERY_FLOORS:
+		_strip(strips, f[0], f[1], f[2] * TILE, false, i)
+		i += 1
+	for c in GALLERY_CEILINGS:
+		_strip(strips, c[0], c[1], c[2] * TILE, true, i)
 		i += 1
 
 
-## The masonry under a CH7 strip's cap, from tile x0 to x1, hanging from the
-## line y (a slab's underside) into the space below.
-func _underside(parent: Node, x0: int, x1: int, y: float, n: int) -> void:
+## The masonry of a CH7 strip, below its cap, from tile x0 to x1. Under a
+## floor's walking line (y) it fills the slab and its ragged underside hangs
+## into the hall; over a ceiling's underside (y), upside down, it rises into the
+## dark. Either way the skin's straight band keeps the line itself.
+func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> void:
 	var w := (x1 - x0) * TILE
 	var st: Array = STRIPS[0]
 	for k in STRIPS.size():
@@ -349,6 +355,12 @@ func _underside(parent: Node, x0: int, x1: int, y: float, n: int) -> void:
 			st = cand
 			break
 	var off := (n * 97) % maxi(1, int(st[2]) - w)
-	var top := int(st[4]) + UNDER_CUT
+	var top := int(st[4]) + 3
 	var region := Rect2(st[0] + off, st[1] + top, w, int(st[3]) - top)
-	_sprite(parent, CAVE, region, Vector2(x0 * TILE, y - 2)).name = "Underside"
+	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE, y + BAND))
+	if ceiling:
+		sp.name = "CeilingStrip"
+		sp.flip_v = true
+		sp.position.y = y - BAND - region.size.y
+	else:
+		sp.name = "FloorStrip"
