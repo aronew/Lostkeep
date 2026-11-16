@@ -112,7 +112,8 @@ func _build_outpost(behind: Node) -> void:
 	# The stranger lives inside (the creative lead: "I want it that you have to
 	# enter his outpost"): the doorway leads into IB-09, the outpost's interior.
 	_entry("OutpostDoor", Vector2(22.5 * TILE, WALK), Vector2(28, 44), IB09, "Entry", 1)
-	_doorway_glow(behind, Vector2(22.5 * TILE, WALK))
+	# Centred on the painted opening itself, 2.5 px right of the entry's middle.
+	_doorway_glow(behind, Vector2(22.5 * TILE + 2.5, WALK))
 
 
 ## The lock seen before its key: a cracked bark plate in the gallery's floor
@@ -198,12 +199,18 @@ func _doorway_glow(behind: Node, foot: Vector2) -> void:
 	door.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.95)
 	door.material = add
 	door.z_index = 6
-	# The fan of light spilling out, widening and fading toward the floor.
-	var fan := _node(Polygon2D.new(), "LightSpill", _root) as Polygon2D
-	fan.polygon = PackedVector2Array([foot + Vector2(-12, -48), foot + Vector2(12, -48), foot + Vector2(70, 2), foot + Vector2(-70, 2)])
-	fan.vertex_colors = PackedColorArray([Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.0), Color(SPILL.r, SPILL.g, SPILL.b, 0.0)])
-	fan.material = add
-	fan.z_index = 11
+	# The fan of light spilling out: narrow at the opening, widening and fading
+	# toward the floor, in three nested fans so its edges soften instead of
+	# ending in a line (the creative lead: "soften the cone ... narrow the top").
+	for f in [[3.0, 44.0, 0.1], [4.0, 58.0, 0.08], [5.0, 72.0, 0.06]]:
+		var top_w: float = f[0]
+		var foot_w: float = f[1]
+		var a0: float = f[2]
+		var fan := _node(Polygon2D.new(), "LightSpill", _root) as Polygon2D
+		fan.polygon = PackedVector2Array([foot + Vector2(-top_w, -44), foot + Vector2(top_w, -44), foot + Vector2(foot_w, 2), foot + Vector2(-foot_w, 2)])
+		fan.vertex_colors = PackedColorArray([Color(SPILL.r, SPILL.g, SPILL.b, a0), Color(SPILL.r, SPILL.g, SPILL.b, a0), Color(SPILL.r, SPILL.g, SPILL.b, 0.0), Color(SPILL.r, SPILL.g, SPILL.b, 0.0)])
+		fan.material = add
+		fan.z_index = 11
 	# The pool on the stones in front of the door.
 	var pool := _node(Sprite2D.new(), "LightPool", _root) as Sprite2D
 	pool.texture = tex

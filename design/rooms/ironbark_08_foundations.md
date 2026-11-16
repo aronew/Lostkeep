@@ -121,3 +121,9 @@ The doorway light raised to the painted opening (the creative lead: "a little
 higher ... its coming at lower middle"): then at about three quarters of its height
 ("not at the very top of the door"): the door glow at 44 px above the sill,
 the light at 46, the fan from 48 px; `docs/rooms/ironbark_08/door_light.png`.
+
+The cone softened and centred (the creative lead: "soften the cone ... or narrow
+the top ... it looks a little off center"): the painted opening is 2.5 px right
+of the entry's middle, so the glow is centred on it; the fan is three nested
+fans (3, 4 and 5 px wide at the top, 44 to 72 at the floor, fainter outward)
+so its edges fade instead of ending in a line.
