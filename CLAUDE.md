@@ -685,8 +685,11 @@ She steps forward with every hit.
   second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
-- **IB-05 is dressed in the CH pieces** (step 1, awaiting the creative lead's
-  approval before the other crypts get them): CH1 slabs for its small plates,
+- **The crypts are dressed in the CH pieces** (IB-05 approved by the creative
+  lead, "it looks good"; then IB-02, IB-06 and IB-07 the same way: `_ch_detail`
+  and `_rim` on, IB-06's and IB-07's SH4 plates now `CH1_SLAB_SPEC` through
+  `_platform`, IB-07's wall ledge `_corbel()` on [11, 36, 3, 1]; CH4's roots
+  left out, they read as the Blight's crimson in warm light). IB-05 first: CH1 slabs for its small plates,
   CH2 corbels for its wall ledges, and `_ch_detail` (the detail pass in CH4,
   CH5 and CH8 pieces; `detail_skip` keeps it on the CH9 galleries). Also `_rim`
   (in `room_builder.gd`): a warm rim light along every walking edge, brighter

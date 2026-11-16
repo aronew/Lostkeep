@@ -860,6 +860,15 @@ const SH4_PLATE_C := [Rect2(272, 24, 32, 32), 5, 2, 30]
 const SH4_BROKEN_LEDGE := [Rect2(208, 128, 32, 32), 3, 0, 31]
 const SH4_WALL_LEDGE := [Rect2(104, 120, 64, 56), 16, 0, 63]  # its wall on the left; flip for a wall on the right
 const SH4_ARCH_ISLAND := [Rect2(8, 8, 96, 88), 50, 0, 95]
+## CH1's small slab (ch_platforms.png), in the same form: region, walking
+## line, walking extent, and its sheet. Replaces SH4's plates (the creative
+## lead: "the platforms ... just look weird").
+const CH1_SLAB_SPEC := [Rect2(228, 21, 38, 30), 8, 0, 37, ENV + "ch_platforms.png"]
+## CH2's large corbel (ch_supports.png): a pier 8 px wide going into the wall
+## on its left, then a ledge 47 px long, its walking line on row 10.
+const CH2_CORBEL_REGION := Rect2(104, 54, 55, 44)
+const CH2_CORBEL_LINE_ROW := 10
+const CH2_CORBEL_PIER := 8
 
 
 ## One of SH4's pieces on its mass [tile_x, row, tiles]: its walking line on the
@@ -874,9 +883,21 @@ func _platform(parent: Node, spec: Array, tile_x: int, row: int, tiles: int, fli
 		x0 = w - x1
 		x1 = w - t
 	var x: float = tile_x * TILE + (tiles * TILE - float(x1 - x0 + 1)) * 0.5 - x0
-	var sp := _sprite(parent, ENV + "sh_platforms.png", region, Vector2(x, row * TILE - int(spec[1])))
+	var sheet: String = spec[4] if spec.size() > 4 else ENV + "sh_platforms.png"
+	var sp := _sprite(parent, sheet, region, Vector2(x, row * TILE - int(spec[1])))
 	sp.name = "Platform"
 	sp.flip_h = flip
+	return sp
+
+
+## CH2's corbel on its mass [tile_x, row, tiles]: its pier in the wall beside
+## the mass (on the right with `wall_right`), its ledge over the mass.
+func _corbel(parent: Node, tile_x: int, row: int, tiles: int, wall_right: bool) -> Sprite2D:
+	var r := CH2_CORBEL_REGION
+	var x: float = (tile_x + tiles) * TILE + CH2_CORBEL_PIER - r.size.x if wall_right else tile_x * TILE - CH2_CORBEL_PIER
+	var sp := _sprite(parent, ENV + "ch_supports.png", r, Vector2(x, row * TILE - CH2_CORBEL_LINE_ROW))
+	sp.flip_h = wall_right
+	sp.name = "Corbel"
 	return sp
 
 
@@ -1277,8 +1298,10 @@ func _mood_fog(parent: Node, fog_name: String, rect: Rect2, density: float, z: i
 const CH_PIECES := ENV + "ch_pieces.json"
 ## CH4 (ch_hangings.png): moss curtains, roots and chains by length; the stone
 ## drips for low ceilings. Indices into ch_pieces.json's "ch_hangings".
-const CH_HANG_LONG := [0, 2, 6, 7, 8, 10, 11]
-const CH_HANG_MID := [1, 3, 4, 9, 17]
+## (CH4's roots, 6 to 9, are left out: their maroon reads as the Blight's
+## crimson in warm light, and red is the Blight's alone.)
+const CH_HANG_LONG := [0, 2, 10, 11]
+const CH_HANG_MID := [1, 3, 4, 17]
 const CH_HANG_SHORT := [5, 13, 14, 15, 16]
 ## CH5 (ch_props.png): crystals, tufts and rubble standing on floors.
 const CH_TOPS := [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 14, 15, 16]
@@ -1445,9 +1468,10 @@ func _warm_glow() -> void:
 		var halo := _node(Sprite2D.new(), "Halo", node) as Sprite2D
 		halo.texture = tex
 		halo.global_position = pl.global_position
-		var size := clampf(pl.texture_scale * 70.0, 28.0, 96.0)
+		# Kept small and faint: a big lantern's halo read as a ringed disc.
+		var size := clampf(pl.texture_scale * 48.0, 24.0, 56.0)
 		halo.scale = Vector2.ONE * (size / 64.0)
-		halo.modulate = Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, 0.55)
+		halo.modulate = Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, 0.45)
 		halo.material = add
 
 

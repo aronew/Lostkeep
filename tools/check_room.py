@@ -108,7 +108,7 @@ ROOMS = {
                   "the chasm and the landing (from the plate)": (15, 13, 9, 16),
                   "the arched-door room and the west cave (from the plate)": (0, 13, 17, 43)},
         # SH4's plates and wall ledge: one tile of collision under each painting.
-        "seals": [(10, 36, 4, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
+        "seals": [(11, 36, 3, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
         "exits": {"east (to the Undercroft's plated door)": (43, 40), "east lower (on to the deep)": (43, 59)},
     },
 }

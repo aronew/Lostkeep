@@ -103,6 +103,8 @@ func _initialize() -> void:
 	# The moody look, as IB-05's (the creative lead: "I like that look instead of
 	# so bright"): see _moody() in room_builder.gd.
 	_mood = true
+	_ch_detail = true
+	_rim = true
 	_finish()
 	quit()
 

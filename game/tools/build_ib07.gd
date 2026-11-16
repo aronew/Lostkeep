@@ -50,7 +50,7 @@ const MASSES := [
 	[4, 32, 2, 24, 1],   # the wall under it
 	[1, 32, 3, 20, 1],   # and the rock behind it, down to the secret room at its foot
 	[14, 28, 10, 13, 1], # the zig-zag mass: the landing on top (row 28)
-	[10, 36, 4, 1, 1],   # a wall ledge off its west side (row 36, SH4's)
+	[11, 36, 3, 1, 1],   # a wall ledge off its west side (row 36, CH2's corbel)
 	[17, 41, 5, 11, 1],  # the mass going on down
 	[15, 52, 7, 6, 1],   # its foot
 	[10, 50, 2, 1, 1],   # a plate low in the west cave (row 50, SH4's)
@@ -64,7 +64,7 @@ const MASSES := [
 ]
 const STONE := [[0, 0, 44, 64]]
 ## Cells painted by placed art (SH4's plates and wall ledge), not the skin.
-const SKIP := [[10, 36, 4, 1], [10, 50, 2, 1], [25, 41, 2, 1], [23, 46, 2, 1], [26, 50, 2, 1], [22, 54, 2, 1]]
+const SKIP := [[11, 36, 3, 1], [10, 50, 2, 1], [25, 41, 2, 1], [23, 46, 2, 1], [26, 50, 2, 1], [22, 54, 2, 1]]
 const SPAWN := Vector2(40 * 16, 41 * 16)
 const LAMP := Color(1.0, 0.72, 0.4)
 
@@ -84,12 +84,12 @@ func _initialize() -> void:
 	_shrine_far()
 	var t := _terrain(tileset)
 	var placed: Node = t["placed"]
-	_platform(placed, SH4_WALL_LEDGE, 10, 36, 4, true).name = "WestWallLedge"
-	_platform(placed, SH4_PLATE_A, 10, 50, 2).name = "WestCavePlate"
-	_platform(placed, SH4_BROKEN_LEDGE, 25, 41, 2).name = "NichePlate"
-	_platform(placed, SH4_PLATE_B, 23, 46, 2).name = "ClimbPlate46"
-	_platform(placed, SH4_PLATE_C, 26, 50, 2).name = "ClimbPlate50"
-	_platform(placed, SH4_PLATE_A, 22, 54, 2, true).name = "ClimbPlate54"
+	_corbel(placed, 11, 36, 3, true).name = "WestWallLedge"
+	_platform(placed, CH1_SLAB_SPEC, 10, 50, 2).name = "WestCavePlate"
+	_platform(placed, CH1_SLAB_SPEC, 25, 41, 2, true).name = "NichePlate"
+	_platform(placed, CH1_SLAB_SPEC, 23, 46, 2).name = "ClimbPlate46"
+	_platform(placed, CH1_SLAB_SPEC, 26, 50, 2, true).name = "ClimbPlate50"
+	_platform(placed, CH1_SLAB_SPEC, 22, 54, 2).name = "ClimbPlate54"
 	_grade_stone()
 	_build_plate(t["behind"])
 	_dress(t["behind"])
@@ -104,6 +104,8 @@ func _initialize() -> void:
 	# The moody look, as IB-05's (the creative lead: "I like that look instead of
 	# so bright"): see _moody() in room_builder.gd.
 	_mood = true
+	_ch_detail = true
+	_rim = true
 	_finish()
 	quit()
 
