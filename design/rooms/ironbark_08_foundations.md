@@ -2,7 +2,7 @@
 
 | | |
 |---|---|
-| **Identity** | Ironbark Guard, IB-08. West: the Undercroft's lower East door (IB-06). East (lower): on toward the Keep (not built) |
+| **Identity** | Ironbark Guard, IB-08. West: the Undercroft's lower East door (IB-06). East (lower): on toward the Keep (not built). The outpost's doorway: IB-09, its interior |
 | **World grid** | Origin at IB-01's (44, 88). Its West door (rows 12 to 16) is IB-06's lower East door (rows 60 to 64) |
 | **Size** | 64 × 28 tiles (1024 × 448 px): 1.6 screens wide, 1.25 tall |
 | **Idea** | The first rest since the clearing: a long straight walkway under a cave ceiling, the hooded stranger's outpost on it, then the walkway breaks off into the foundations' lower gallery and the way on east |
@@ -63,3 +63,26 @@ point". Their choices:
   full speed, the crossbeam holds.
 - Images: `docs/rooms/ironbark_08/outpost_shots.png` (in-game),
   `room_routes.png`.
+
+## Inside the outpost (IB-09) and the light coming out of it
+
+The creative lead: "I want it that you have to enter his outpost ... spooky
+feeling in a way not all bright", and "there's light coming out of it sort of
+like how Hollow Knight does it".
+
+- **The doorway is an entry** (`_entry()` in `room_builder.gd`,
+  `scripts/world/entry_door.gd`): interact to go in; coming back out, Kleo
+  stands at the `OutpostDoor` marker on the walkway.
+- **IB-09, the outpost inside** (`tools/build_ib09.gd`,
+  `scenes/rooms/ironbark_09_outpost.tscn`): one screen, not on the world grid.
+  Dim: the crypts' mood sunk darker (`mood_murk` (0.27, 0.27, 0.36)), lit only
+  by a candelabra, two candles, a faint violet crystal and the stranger's
+  amber eyes. Shelves of arches (CH6), jars, bones, a cobweb and chains (CH4),
+  fog on the floor; no black near-layer roots (`detail_near = false`). The
+  stranger stands behind his counter. Its west door leads back out.
+- **The light coming out** (`_doorway_glow()` in `build_ib08.gd`): a pale glow in
+  the doorway, a fan of light spilling out across the walkway, a pool on the
+  stones, and a wide haze blooming round the building in the mist; all
+  additive. OP1's leaf window gets the same when the building arrives.
+- `mode=tour` now goes in, buys a rumour, comes back out at the doorway, then
+  on as before: all true. Image: `docs/rooms/ironbark_08/outpost_outside_inside.png`.

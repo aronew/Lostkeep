@@ -1415,7 +1415,13 @@ func _tour_ib08() -> void:
 	lines.append("knelt at the shrine: %s (state %s)" % [Game.flags.has("ib08_shrine"), kleo.state])
 	_tap("move_right")
 	await _wait(40)
-	await _hold_until(["move_right"], func(): return kleo.global_position.x > 29.6 * TILE, 400)
+	# In through the outpost's doorway (IB-09, the stranger's den).
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 22.3 * TILE, 400)
+	_tap("interact")
+	await _hold_until([], func(): return room.name == "IronbarkOutpost", 120)
+	await _wait(40)
+	lines.append("entered the outpost: %s" % (room.name == "IronbarkOutpost"))
+	await _hold_until(["move_right"], func(): return kleo.global_position.x > 25.0 * TILE, 400)
 	await _wait(10)
 	Game.add_currency(12)
 	var before := Game.currency
@@ -1433,6 +1439,9 @@ func _tour_ib08() -> void:
 	await _wait(10)
 	var closed: bool = not room.get_node("Stranger").get("_open") and kleo.state == Kleo.State.NORMAL
 	lines.append("talked to the stranger: opened %s, bought a rumour for 5 %s, said farewell %s" % [opened, bought, closed])
+	await _hold_until(["move_left"], func(): return room.name == "IronbarkFoundations", 500)
+	await _wait(40)
+	lines.append("back out of the doorway onto the walkway: %s (x %.0f, on the floor %s)" % [room.name == "IronbarkFoundations", kleo.global_position.x, kleo.is_on_floor()])
 	await _hold_until(["move_right"], func(): return _floor_at(24), 400)
 	lines.append("off the walkway's end into the lower gallery: %s (x %.0f)" % [_floor_at(24), kleo.global_position.x])
 	var resin := Game.currency

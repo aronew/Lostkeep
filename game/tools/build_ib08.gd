@@ -15,6 +15,7 @@ extends "res://tools/room_builder.gd"
 
 const ROOM_PATH := "res://scenes/rooms/ironbark_08_foundations.tscn"
 const IB06 := "res://scenes/rooms/ironbark_06_undercroft.tscn"
+const IB09 := "res://scenes/rooms/ironbark_09_outpost.tscn"
 
 const ROOM := Rect2i(0, 0, 64, 28)
 const ROCK := [[0, 0, 64, 28, 1]]
@@ -72,7 +73,8 @@ func _initialize() -> void:
 
 
 ## The outpost on the walkway: the save shrine (as the clearing's, where Kleo
-## kneels), the building (a stand-in until OP1 comes), and the stranger.
+## kneels), the building (a stand-in until OP1 comes), and its doorway into the
+## stranger's interior (IB-09).
 func _build_outpost(behind: Node) -> void:
 	# The building, a stand-in: CH6's arcade recess with its lantern, a doorway.
 	var hut := _sprite(behind, ENV + "ch_alcoves.png", Rect2(8, 22, 127, 89), Vector2(22 * TILE, WALK - 80))
@@ -99,22 +101,10 @@ func _build_outpost(behind: Node) -> void:
 	shrine.set("awake_region", Rect2(196, 3, 184, 119))
 	shrine.set("prompt_offset", Vector2(0, -88))
 	shrine.set("flag", "ib08_shrine")
-	# The stranger, by the outpost's door, facing the way Kleo comes in.
-	var stranger := _node(Area2D.new(), "Stranger", _root) as Area2D
-	stranger.set_script(load("res://scripts/world/stranger.gd"))
-	stranger.position = Vector2(31 * TILE, WALK)
-	stranger.z_index = 9
-	var cs := CollisionShape2D.new()
-	var cr := RectangleShape2D.new()
-	cr.size = Vector2(40, 40)
-	cs.shape = cr
-	cs.position = Vector2(0, -20)
-	_node(cs, "Shape", stranger)
-	var art := _sprite(stranger, "res://assets/characters/stranger/stranger.png", Rect2(0, 0, 34, 48), Vector2(-17, -48))
-	art.name = "Art"
-	art.flip_h = true
-	stranger.set("prompt_offset", Vector2(0, -58))
-	_light(stranger, Vector2(0, -36), Color(1.0, 0.75, 0.45), 0.35, 0.35, "StrangerGlow")
+	# The stranger lives inside (the creative lead: "I want it that you have to
+	# enter his outpost"): the doorway leads into IB-09, the outpost's interior.
+	_entry("OutpostDoor", Vector2(22.5 * TILE, WALK), Vector2(28, 44), IB09, "Entry", 1)
+	_doorway_glow(behind, Vector2(22.5 * TILE, WALK))
 
 
 ## The lock seen before its key: a cracked bark plate in the gallery's floor
@@ -162,3 +152,49 @@ func _build_secrets() -> void:
 	_false_wall("GallerySecret", Rect2i(36, 20, 6, 4), 42, Vector2i(20, 4), 1, "ib08_gallery_secret")
 	_draught("GalleryDraught", Rect2(42.2 * TILE, 20.5 * TILE, 2.0 * TILE, 3.0 * TILE), Vector2(-1, 0))
 	_resin_cache(_root, 36.6 * TILE, 40.6 * TILE, LOW, 6, "ib08_gallery_resin")
+
+
+## Light coming out of the outpost, as in the creative lead's Hollow Knight
+## reference: a pale glow in the doorway, a fan of light spilling out of it
+## across the walkway, a pool on the stones in front, and a haze blooming
+## round the building in the mist. All additive, never baked into tiles.
+const SPILL := Color(0.72, 0.95, 0.9)
+
+
+func _doorway_glow(behind: Node, foot: Vector2) -> void:
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	# The light itself, strong: the mood pass halves cold lights.
+	_light(behind, foot + Vector2(0, -24), SPILL, 3.4, 2.0, "DoorLight")
+	var tex := _halo_texture()
+	# The haze round the building, wide and faint.
+	var haze := _node(Sprite2D.new(), "OutpostHaze", _root) as Sprite2D
+	haze.texture = tex
+	haze.position = foot + Vector2(40, -60)
+	haze.scale = Vector2(6.5, 4.0)
+	haze.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.38)
+	haze.material = add
+	haze.z_index = 1
+	# The doorway, glowing.
+	var door := _node(Sprite2D.new(), "DoorGlow", _root) as Sprite2D
+	door.texture = tex
+	door.position = foot + Vector2(0, -22)
+	door.scale = Vector2(0.75, 1.1)
+	door.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.95)
+	door.material = add
+	door.z_index = 6
+	# The fan of light spilling out, widening and fading toward the floor.
+	var fan := _node(Polygon2D.new(), "LightSpill", _root) as Polygon2D
+	fan.polygon = PackedVector2Array([foot + Vector2(-10, -40), foot + Vector2(10, -40), foot + Vector2(70, 2), foot + Vector2(-70, 2)])
+	fan.vertex_colors = PackedColorArray([Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.0), Color(SPILL.r, SPILL.g, SPILL.b, 0.0)])
+	fan.material = add
+	fan.z_index = 11
+	# The pool on the stones in front of the door.
+	var pool := _node(Sprite2D.new(), "LightPool", _root) as Sprite2D
+	pool.texture = tex
+	pool.position = foot + Vector2(0, 1)
+	pool.scale = Vector2(2.6, 0.32)
+	pool.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.7)
+	pool.material = add
+	pool.z_index = 7

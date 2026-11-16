@@ -113,6 +113,12 @@ var detail_skip = null
 ## lead: "a little bit of light effect to the tops of the platforms"). See
 ## _rim_light(). IB-05 first, for approval.
 var _rim := false
+## The murk `_moody()` sinks the room into; a room can set a darker one (the
+## outpost's interior: "spooky feeling in a way, not all bright").
+var mood_murk := Color(0.36, 0.46, 0.52)
+## Whether the CH detail pass lays black root arches nearest the camera (an
+## interior leaves them out: in a small room they cover the floor).
+var detail_near := true
 
 
 func _use_crypt_y_stone() -> void:
@@ -499,6 +505,31 @@ func _door(door_name: String, rect: Rect2i, side: int, target_scene: String, tar
 	cs.shape = shape
 	cs.position = Vector2(edge_x - side * 7.0, floor_y - rect.size.y * TILE * 0.5)
 	_node(cs, "Shape", exit)
+
+
+## A doorway in the middle of the room (a building's door): interact to go to
+## `target_door` in `target_scene`; `door_name` is the marker where Kleo comes
+## back out, standing at `pos` (her feet), facing `facing`.
+func _entry(door_name: String, pos: Vector2, size: Vector2, target_scene: String, target_door: String, facing := 1) -> Area2D:
+	var doors := _root.get_node_or_null("Doors")
+	if doors == null:
+		doors = _node(Node2D.new(), "Doors", _root)
+	var mark := _node(Marker2D.new(), door_name, doors) as Marker2D
+	mark.position = pos
+	mark.set_meta("facing", facing)
+	var e := _node(Area2D.new(), door_name + "Entry", _root) as Area2D
+	e.set_script(load("res://scripts/world/entry_door.gd"))
+	e.position = pos
+	e.set("target_scene", target_scene)
+	e.set("target_door", target_door)
+	e.set("prompt_offset", Vector2(0, -size.y - 8))
+	var cs := CollisionShape2D.new()
+	var r := RectangleShape2D.new()
+	r.size = size
+	cs.shape = r
+	cs.position = Vector2(0, -size.y * 0.5)
+	_node(cs, "Shape", e)
+	return e
 
 
 # --- Resources --------------------------------------------------------------------------
@@ -1205,7 +1236,7 @@ const MOOD_FAR := Color(0.55, 1.3, 0.98)           # the backdrops, lifted towar
 func _moody() -> void:
 	var dark := _root.get_node_or_null("Darkness") as CanvasModulate
 	if dark:
-		dark.color = MOOD_MURK
+		dark.color = mood_murk
 	for c in _root.get_children():
 		if c is Parallax2D and (c as Parallax2D).z_index < 0:
 			(c as Parallax2D).modulate = MOOD_FAR
@@ -1371,7 +1402,7 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 				m.flip_h = _cellhash(c, 11) % 2 == 0
 			# Nearest the camera: thin root arches in black, sparse, low, and only on
 			# the room's lower floors (in a gallery they stood in the way).
-			elif _cellhash(c, 12) < 30 and y >= room.position.y + room.size.y * 0.6:
+			elif detail_near and _cellhash(c, 12) < 30 and y >= room.position.y + room.size.y * 0.6:
 				var reg5: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_NEAR[_cellhash(c, 13) % CH_FLOOR_NEAR.size()])
 				var nr := _sprite(near_node, ENV + "ch_foreground.png", reg5, Vector2(x * TILE + 8 - reg5.size.x * 0.5, floor_y - reg5.size.y * 0.35))
 				nr.name = "FloorNear"
