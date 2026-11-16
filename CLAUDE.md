@@ -506,7 +506,7 @@ She steps forward with every hit.
   hooded stranger (`scripts/world/stranger.gd`) sells rumours (5 Resin) and the
   map of Ironbark (60); the save shrine is the clearing's kind; breakables drop
   Resin once (`resin` in `breakable.gd`); `kleo.release()` ends a conversation.
-  `room=ib08 mode=tour`. The building is a stand-in until OP1. **The stranger
+  `room=ib08 mode=tour`. The building is OP1 (`tools/make_outpost.py`, 5:1). **The stranger
   lives inside**: the outpost's doorway is an `_entry()` (`entry_door.gd`) into
   IB-09, the outpost's interior (`build_ib09.gd`): dim and spooky (`mood_murk`,
   candles, the stranger's eyes; `detail_near = false`). Light comes out of the

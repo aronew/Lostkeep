@@ -45,6 +45,8 @@ func _initialize() -> void:
 	masses = MASSES
 	stone = STONE
 	skip = SKIP
+	# The detail pass keeps clear of the outpost's front (nothing in its doorway).
+	detail_skip = SKIP + [[17, 10, 20, 7]]
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	var tileset := _shared()
@@ -76,15 +78,21 @@ func _initialize() -> void:
 ## kneels), the building (a stand-in until OP1 comes), and its doorway into the
 ## stranger's interior (IB-09).
 func _build_outpost(behind: Node) -> void:
-	# The building, a stand-in: CH6's arcade recess with its lantern, a doorway.
-	var hut := _sprite(behind, ENV + "ch_alcoves.png", Rect2(8, 22, 127, 89), Vector2(22 * TILE, WALK - 80))
-	hut.name = "OutpostStandIn"
-	_sh_doorway(behind, 20 * TILE, WALK, false)
-	_hanging_lantern(behind, 28 * TILE, 4 * TILE)
+	# The building: the creative lead's OP1, reduced 5:1 (tools/make_outpost.py),
+	# its golden doorway on the walkway's entry (x 22.5), its base stones sunk
+	# 3 px into the floor. On the root, not graded, so the door stays gold.
+	var hut := _node(Sprite2D.new(), "Outpost", _root) as Sprite2D
+	hut.texture = load(ENV + "outpost.png")
+	hut.centered = false
+	hut.position = Vector2(22.5 * TILE - OUTPOST_DOOR.x, WALK + 3 - OUTPOST_SIZE.y)
+	hut.z_index = 2
+	# Its leaf window glows faintly from inside.
+	_light(behind, hut.position + OUTPOST_LEAF, Color(0.6, 0.95, 0.88), 0.9, 0.5, "LeafWindowLight")
+	_hanging_lantern(behind, 36 * TILE, 4 * TILE)
 	# The save shrine.
 	var shrine := _node(Area2D.new(), "PrismShrine", _root) as Area2D
 	shrine.set_script(load("res://scripts/world/prism_shrine.gd"))
-	shrine.position = Vector2(13 * TILE, WALK)
+	shrine.position = Vector2(11 * TILE, WALK)
 	shrine.z_index = 3
 	var ss := CollisionShape2D.new()
 	var sr := RectangleShape2D.new()
@@ -128,10 +136,9 @@ func _build_plate(behind: Node) -> void:
 func _dress(behind: Node) -> void:
 	var bag := ENV + "props_guard_belongings.png"
 	var T := float(TILE)
-	_sh_piece(behind, "arcades", Rect2(144, 32, 64, 80), 9.0 * T, WALK, "Arch")
 	_sh_piece(behind, "arcades", Rect2(272, 32, 20, 80), 37.5 * T, WALK, "Pillar")
 	_sh_piece(behind, "arcades", Rect2(4, 32, 128, 80), 50.0 * T, LOW, "Arcade")
-	_hanging_lantern(behind, 9.0 * T, 4 * T)
+	_hanging_lantern(behind, 7.0 * T, 4 * T)
 	_hanging_lantern(behind, 58.0 * T, 9 * T)
 	_sh_torch(behind, 5.0 * T, WALK - 56)
 	_breakable(bag, POT, 35.0 * T, WALK, CLAY)
@@ -158,7 +165,11 @@ func _build_secrets() -> void:
 ## reference: a pale glow in the doorway, a fan of light spilling out of it
 ## across the walkway, a pool on the stones in front, and a haze blooming
 ## round the building in the mist. All additive, never baked into tiles.
-const SPILL := Color(0.72, 0.95, 0.9)
+## Gold, as the painted doorway of OP1.
+const SPILL := Color(1.0, 0.78, 0.42)
+const OUTPOST_SIZE := Vector2(278, 184)
+const OUTPOST_DOOR := Vector2(76, 179)   # the doorway, centre and sill
+const OUTPOST_LEAF := Vector2(169, 145)  # the leaf window
 
 
 func _doorway_glow(behind: Node, foot: Vector2) -> void:
@@ -166,7 +177,7 @@ func _doorway_glow(behind: Node, foot: Vector2) -> void:
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	# The light itself, strong: the mood pass halves cold lights.
-	_light(behind, foot + Vector2(0, -24), SPILL, 3.4, 2.0, "DoorLight")
+	_light(behind, foot + Vector2(0, -24), SPILL, 1.6, 1.6, "DoorLight")
 	var tex := _halo_texture()
 	# The haze round the building, wide and faint.
 	var haze := _node(Sprite2D.new(), "OutpostHaze", _root) as Sprite2D

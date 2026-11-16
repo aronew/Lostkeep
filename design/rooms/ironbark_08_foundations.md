@@ -30,8 +30,7 @@ point". Their choices:
 - **The save shrine**, as the clearing's ("save should be like the shrine you
   kneel at in the beginning"): the same Prism-shard shrine (`prism_shrine.gd`),
   flag `ib08_shrine`, at x 13 on the walkway.
-- **The building:** a stand-in (CH6's arcade recess and an SH doorway) until
-  OP1, the outpost in pixel art, arrives.
+- **The building:** OP1, the creative lead's pixel-art outpost (see below).
 - **Resin from smashing:** every breakable now drops Resin (`resin`, 1 by
   default, in `breakable.gd`). Each drop is flagged by its room and place, so
   a pot that is back next visit doesn't pay again.
@@ -99,3 +98,15 @@ conversation is open, talk (4 to 7: the hand lifting, the eyes smiling). The
 conversation box sits at the top of the screen so the scene stays in view, and
 the detail pass keeps clear of his counter. Image:
 `docs/rooms/ironbark_08/stranger_idle_talk.png`.
+
+## The outpost building (OP1)
+
+The creative lead's OP1 (`art/source/ironbark/outpost/outpost_building.png`,
+the generator's own, painted at full resolution): `tools/make_outpost.py` crops
+it to the building, reduces it 5:1 (box) and hardens the alpha, to
+`outpost.png`, 278 × 184 px. It stands on the walkway with its golden doorway
+on the entry (x 22.5), its base stones 3 px into the floor, on the root (not
+graded, so the gold stays gold). The light spilling out (`_doorway_glow()`) is
+gold to match the painted door; its leaf window has a faint teal light; the
+detail pass keeps clear of its front (`detail_skip`). The save shrine moved to
+x 11. `mode=tour` passes as before. Image: `docs/rooms/ironbark_08/outpost_in_game.png`.
