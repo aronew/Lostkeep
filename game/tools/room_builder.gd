@@ -1492,8 +1492,6 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 	var rect_of := func(sheet: String, i: int) -> Rect2:
 		var r: Array = table[sheet][i]["rect"]
 		return Rect2(r[0], r[1], r[2], r[3])
-	var tops_node := _node(Node2D.new(), "Tops", _root) as Node2D
-	tops_node.z_index = 3
 	for y in range(room.position.y, room.end.y):
 		for x in range(room.position.x, room.end.x):
 			var c := Vector2i(x, y)
@@ -1541,12 +1539,8 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 						var ivy := _sprite(hang_node, ENV + "ch_hangings.png", reg2,
 							Vector2(x * TILE + (0 if side < 0 else 16 - reg2.size.x), (y + 1 + depth) * TILE - 3))
 						ivy.name = "CornerMoss"
-			# On the floor: crystals, tufts, rubble, behind her.
-			if _cellhash(c, 8) < 140:
-				var reg3: Rect2 = rect_of.call("ch_props", CH_TOPS[_cellhash(c, 9) % CH_TOPS.size()])
-				var top := _sprite(tops_node, ENV + "ch_props.png", reg3, Vector2(x * TILE + 8 - reg3.size.x * 0.5, floor_y - reg3.size.y + 1))
-				top.name = "Top"
-				top.flip_h = _cellhash(c, 10) % 2 == 0
+			# (No crystals, tufts or rubble dotted along the floors: the creative
+			# lead had them taken out with the scattered foreground.)
 	_slab_keels(is_solid, skipped, hang_node)
 	# No foreground pieces in front of the floors. The darkened mounds, drums
 	# and grass dotted along the floors, and the black root arches, read as

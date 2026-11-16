@@ -325,7 +325,17 @@ She steps forward with every hit.
   pieces: Book 1's FG6 (crypt, bottom of the view), FG7 (crypt, top), FG8 (a
   strip along the front of every floor, with end caps), FG9 and FG10 (the
   surface's undergrowth and canopy). FG1, FG3, FG5 and CH8 are superseded.
-  `_near_foreground()` can place world-anchored pieces when needed.
+  `_near_foreground()` can place world-anchored pieces when needed. The
+  crystals, tufts and rubble the detail pass dotted along every floor (CH5)
+  are gone too (the creative lead asked); hand-placed props in each room's
+  builder stay. **The band rules** (`FG_BAND` in Book 1, after GameMaker's
+  parallax guide, which the creative lead pointed to): one continuous piece,
+  never separate objects; two versions (A and B) that join, so nothing repeats
+  within two screen widths; quiet most of its length with open space; nearest
+  darkest and most detailed; placed in the world (about 1.15 sideways and 1.05
+  up and down), never pinned to the screen. Book 1 is published as an
+  artifact: https://claude.ai/artifact/C2whNafxvDzo3XNzmMz3MQ (republish it
+  from `docs/art-production/ironbark-environment-prompt-book.html`).
   **Lights:** the lanterns no longer light the fog, haze or backdrops (light
   mask 2, `LIGHT_MASK_AIR`): amber on teal fog made a green ringed disc round
   every flame. Their falloff is smooth (`_soft_light_texture()`), and the glow
