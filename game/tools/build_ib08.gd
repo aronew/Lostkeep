@@ -178,12 +178,12 @@ func _doorway_glow(behind: Node, foot: Vector2) -> void:
 	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
 	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
 	# The light itself, strong: the mood pass halves cold lights.
-	_light(behind, foot + Vector2(0, -24), SPILL, 2.2, 1.6, "DoorLight")
+	_light(behind, foot + Vector2(0, -38), SPILL, 2.2, 1.6, "DoorLight")
 	var tex := _halo_texture()
 	# The haze round the building, wide and faint.
 	var haze := _node(Sprite2D.new(), "OutpostHaze", _root) as Sprite2D
 	haze.texture = tex
-	haze.position = foot + Vector2(40, -60)
+	haze.position = foot + Vector2(40, -72)
 	haze.scale = Vector2(6.5, 4.0)
 	haze.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.38)
 	haze.material = add
@@ -191,14 +191,15 @@ func _doorway_glow(behind: Node, foot: Vector2) -> void:
 	# The doorway, glowing.
 	var door := _node(Sprite2D.new(), "DoorGlow", _root) as Sprite2D
 	door.texture = tex
-	door.position = foot + Vector2(0, -22)
-	door.scale = Vector2(0.75, 1.1)
+	# Centred on the painted opening (about 64 px tall, its middle ~34 px up).
+	door.position = foot + Vector2(0, -36)
+	door.scale = Vector2(0.8, 1.35)
 	door.modulate = Color(SPILL.r, SPILL.g, SPILL.b, 0.95)
 	door.material = add
 	door.z_index = 6
 	# The fan of light spilling out, widening and fading toward the floor.
 	var fan := _node(Polygon2D.new(), "LightSpill", _root) as Polygon2D
-	fan.polygon = PackedVector2Array([foot + Vector2(-10, -40), foot + Vector2(10, -40), foot + Vector2(70, 2), foot + Vector2(-70, 2)])
+	fan.polygon = PackedVector2Array([foot + Vector2(-12, -58), foot + Vector2(12, -58), foot + Vector2(70, 2), foot + Vector2(-70, 2)])
 	fan.vertex_colors = PackedColorArray([Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.34), Color(SPILL.r, SPILL.g, SPILL.b, 0.0), Color(SPILL.r, SPILL.g, SPILL.b, 0.0)])
 	fan.material = add
 	fan.z_index = 11

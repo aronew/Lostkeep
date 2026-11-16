@@ -116,3 +116,7 @@ their second OP1, the same building with a white doorway
 (`outpost_building_white.png`; the gold one stays in the source folder), is
 the one in the game, and the spilled light is white to match (`SPILL`).
 Image: `docs/rooms/ironbark_08/outpost_white_door.png`.
+
+The doorway light raised to the painted opening (the creative lead: "a little
+higher ... its coming at lower middle"): the door glow at 36 px above the sill,
+the light at 38, the fan from 58 px; `docs/rooms/ironbark_08/door_light.png`.
