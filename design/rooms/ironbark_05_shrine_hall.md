@@ -96,16 +96,14 @@ galleries have "more character" than our straight corridor.
 - Image: `docs/rooms/ironbark_05/moody_vs_mockup.png` (the mockup above, the
   room below).
 
-### The galleries wear CH7 (the creative lead: the top hallway "still doesn't match the mockup look")
+### The galleries after the moody mockup
 
-The skin draws straight bands; the mockup's galleries are ragged slabs whose
-undersides hang into the hall, under a lumpy cobble ceiling, with a brick wall
-behind. `_galleries()` in `build_ib05.gd`: CH7's cave strips (`ch_cave.png`)
-over every gallery floor run with their cap on the walking line, and upside
-down along every ceiling run (only the cap and the masonry under it: the creative
-lead found the whole strip upside down "a little wild", its crystals and
-tufts dangling); the skin skips the galleries' slabs and ceilings
-(`GALLERY_SKIP`) so the strips are their only edge; a brick back wall
-(`sh_fill`, `GalleryBackWall`) stands behind them. Only stretches of the strips
-clear of their roots are used (`STRIPS`). Collision unchanged; tours, checker
-as before.
+The creative lead: the top hallway "still doesn't match the mockup look"; then,
+with CH7's strips over the floors and ceilings, "a little wild", and "the top
+hallways in the mockup are straight ... the floor is all uneven too". So: the
+walking lines and ceilings are the skin's straight bands, stepping where the
+plan steps; a brick back wall (`sh_fill`, `GalleryBackWall`) stands behind the
+galleries; and only the slabs' undersides are ragged: CH7's cave strips, cut
+5 px below their cap (`UNDER_CUT`), hang from the hall's ceiling line under
+each gallery (`GALLERY_UNDERSIDES`, `_galleries()` in `build_ib05.gd`). They
+have no collision. Collision unchanged; tours and checker as before.

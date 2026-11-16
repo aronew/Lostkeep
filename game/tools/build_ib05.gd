@@ -67,8 +67,6 @@ const MASSES := [
 	[47, 13, 2, 1, 1],    # the ledge under the east gap (the way back up)
 	[50, 21, 4, 1, 1],    # the shelf on the east wall, over the lower East door
 ]
-## The galleries' slabs and ceilings are painted by CH7's strips (_galleries()).
-const GALLERY_SKIP := [[0, 0, 19, 3], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 4], [22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
 const SKIP := [[13, 17, 15, 1], [7, 20, 2, 1], [10, 22, 2, 1], [3, 16, 4, 1], [22, 22, 2, 1], [29, 22, 2, 1],
 	[31, 18, 2, 1], [34, 17, 2, 1], [37, 16, 2, 1], [41, 18, 6, 1], [47, 13, 2, 1], [50, 21, 4, 1]]
 const STONE := [[0, 0, 58, 34]]
@@ -98,7 +96,7 @@ func _initialize() -> void:
 	spaces = SPACES
 	masses = MASSES
 	stone = STONE
-	skip = SKIP + GALLERY_SKIP
+	skip = SKIP
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	_unlit = CanvasItemMaterial.new()
@@ -306,21 +304,19 @@ func _build_secrets() -> void:
 
 
 # --- The galleries after the moody mockup ------------------------------------------------
-## The creative lead: the top hallway "still doesn't match the mockup look"
-## (docs/mockups/mood/shrine_hall_moody.webp). In the mockup each gallery is a
-## slab whose underside tapers and hangs into the hall, under a ragged cobble
-## ceiling, with a brick wall behind it. The skin draws straight bands, so the
-## galleries wear CH7's cave strips (ch_cave.png): over each floor run with its
-## cap on the walking line, and upside down along each ceiling run; and a brick
-## back wall stands behind them.
+## The creative lead's moody mockup of this room (docs/mockups/mood/
+## shrine_hall_moody.webp): the galleries' walking lines and ceilings run
+## straight and only step ("the top hallways in the mockup are straight"), a
+## brick wall stands behind them, and only the slabs' undersides are ragged,
+## hanging into the hall. The skin draws the straight edges; CH7's cave strips
+## (ch_cave.png), cut below their cap, hang under each slab.
 const CAVE := ENV + "ch_cave.png"
-## CH7's long strips: [x, y, w, h] in ch_cave.png and the cap row in each.
-## Each: [x, y, w, h, cap row]: the stretches of each strip clear of its roots.
+## CH7's long strips, the stretches clear of their roots: [x, y, w, h, cap row].
 const STRIPS := [[71, 105, 370, 66, 10], [66, 9, 375, 82, 12], [241, 191, 200, 71, 13], [11, 191, 150, 71, 13], [11, 275, 130, 77, 15]]
-## Floor runs [x0, x1, row] and ceiling runs [x0, x1, row of the ceiling's
-## underside], in tiles.
-const GALLERY_FLOORS := [[0, 14, 8], [14, 19, 7], [22, 29, 8], [29, 46, 9], [50, 58, 7]]
-const GALLERY_CEILINGS := [[0, 8, 3], [8, 13, 2], [13, 19, 3], [22, 26, 3], [26, 29, 4], [29, 38, 3], [38, 46, 4], [46, 50, 2], [50, 58, 2]]
+## How far below its cap a strip is cut: what hangs is the masonry under it.
+const UNDER_CUT := 5
+## The slabs' undersides over the hall [x0, x1, row of the hall's ceiling].
+const GALLERY_UNDERSIDES := [[3, 19, 11], [22, 46, 11], [50, 54, 11]]
 const GALLERY_BACK := [[0, 3, 14, 5], [8, 2, 5, 1], [14, 3, 5, 4], [22, 3, 4, 5], [26, 4, 3, 4], [29, 3, 9, 6], [38, 4, 8, 5], [50, 2, 8, 5]]
 
 
@@ -335,21 +331,17 @@ func _galleries(placed: Node) -> void:
 	for r in GALLERY_BACK:
 		regions.append(Rect2i(r[0], r[1], r[2], r[3]))
 	wall.set("regions", regions)
-	var strips := _node(Node2D.new(), "GalleryStrips", placed) as Node2D
+	var strips := _node(Node2D.new(), "GalleryUndersides", placed) as Node2D
 	var i := 0
-	for f in GALLERY_FLOORS:
-		_strip(strips, f[0], f[1], f[2] * TILE, false, i)
-		i += 1
-	for c in GALLERY_CEILINGS:
-		_strip(strips, c[0], c[1], c[2] * TILE, true, i)
+	for u in GALLERY_UNDERSIDES:
+		_underside(strips, u[0], u[1], u[2] * TILE, i)
 		i += 1
 
 
-## A run of CH7 strip from tile x0 to x1, its cap on the line y (a floor), or
-## upside down with its cap under the line (a ceiling's underside).
-func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> void:
-	var w := (x1 - x0) * TILE + 4
-	# The first strip, counting on from n, long enough for the run.
+## The masonry under a CH7 strip's cap, from tile x0 to x1, hanging from the
+## line y (a slab's underside) into the space below.
+func _underside(parent: Node, x0: int, x1: int, y: float, n: int) -> void:
+	var w := (x1 - x0) * TILE
 	var st: Array = STRIPS[0]
 	for k in STRIPS.size():
 		var cand: Array = STRIPS[(n + k) % STRIPS.size()]
@@ -357,14 +349,6 @@ func _strip(parent: Node, x0: int, x1: int, y: float, ceiling: bool, n: int) -> 
 			st = cand
 			break
 	var off := (n * 97) % maxi(1, int(st[2]) - w)
-	var region := Rect2(st[0] + off, st[1], mini(w, int(st[2])), st[3])
-	if ceiling:
-		# Only the cap and the masonry under it, upside down: the cap row is the
-		# ceiling's clean edge and the ragged underside rises into the dark. What
-		# grows on the strip's top (crystals, tufts) would dangle, so it is left off.
-		region = Rect2(region.position.x, st[1] + st[4], region.size.x, st[3] - st[4])
-	var sp := _sprite(parent, CAVE, region, Vector2(x0 * TILE - 2, y - st[4]))
-	sp.name = "CeilingStrip" if ceiling else "FloorStrip"
-	if ceiling:
-		sp.flip_v = true
-		sp.position.y = y - region.size.y
+	var top := int(st[4]) + UNDER_CUT
+	var region := Rect2(st[0] + off, st[1] + top, w, int(st[3]) - top)
+	_sprite(parent, CAVE, region, Vector2(x0 * TILE, y - 2)).name = "Underside"

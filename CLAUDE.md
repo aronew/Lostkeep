@@ -651,8 +651,10 @@ She steps forward with every hit.
   03 stairs and 06 alcoves show a crosshatch shimmer; the others are clean).
   Originals in `art/source/ironbark/crypt_ch/`; `tools/make_crypt_ch.py`
   reduces them by their cell size to `ch_*.png` and lists each sheet's pieces
-  (rect, walking line) in `ch_pieces.json`. First use: IB-05's galleries wear
-  CH7's strips (`_galleries()`). Don't use the CH1 slab with the icy-blue
+  (rect, walking line) in `ch_pieces.json`. First use: CH7's strips hang under
+  IB-05's gallery slabs (`_galleries()`); never over a walking line or a
+  ceiling (the creative lead: hallways stay straight, the strips' wavy cap
+  made them "all uneven"). Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
