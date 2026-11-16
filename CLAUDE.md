@@ -282,7 +282,8 @@ She steps forward with every hit.
   the counter at the top left (it appears with the first bead). Placed with
   `_pickup(parent, pos, value, flag)` or `_resin_cache(parent, x0, x1, floor_y,
   count, flag)`; each bead's flag keeps it taken. F5 clears the count with the
-  flags. To be spent at the Refuge (not built). 24 beads so far, all in secrets.
+  flags. Spent at the outpost in IB-08 (the hooded stranger) and later the Refuge. 34
+  beads placed so far (secrets and IB-08's pit), plus one from every breakable.
 - **The terrain:** two TileMapLayers are the collision (tile atlas column 0 is
   earth, 1 is stone). `Solid` is the rock (floors, walls, ceilings); `Masses`
   holds the masses put back into the spaces (islands, shelves, capstones), so
@@ -499,8 +500,14 @@ She steps forward with every hit.
   A tall shaft fails the checker's floor-run and small-step rules by design.
   `tools/world_map.py` draws every room on the world grid
   (`docs/maps/where_we_are.png`).
-- **Rooms not built yet:** the Keep's foundations (east of the Undercroft's
-  lower East door: next on the main line), the Refuge road (west of IB-02,
+- **IB-08, the Keep's foundations, is built (blockout, awaiting review)**
+  (`design/rooms/ironbark_08_foundations.md`, origin (44, 88), 64 x 28): the
+  outpost, after the creative lead's mockups (`docs/mockups/outpost/`). The
+  hooded stranger (`scripts/world/stranger.gd`) sells rumours (5 Resin) and the
+  map of Ironbark (60); the save shrine is the clearing's kind; breakables drop
+  Resin once (`resin` in `breakable.gd`); `kleo.release()` ends a conversation.
+  `room=ib08 mode=tour`. The building is a stand-in until OP1.
+- **Rooms not built yet:** the Refuge road (west of IB-02,
   behind the plated door: needs the Ward), the Guard Post above IB-02's well
   (the surface rooms lie over the crypt instead). All end in darkness today.
 - **The Old Crypt's first section is built as IB-05, the Shrine Hall, and

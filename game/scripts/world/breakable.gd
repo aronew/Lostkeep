@@ -15,6 +15,10 @@ extends Node2D
 ## Props land lighter than things that fight back: Kleo scales her hit-stop and
 ## screen shake by this.
 @export var hit_weight := 0.35
+## Resin it drops when broken (the creative lead: currency from "finding
+## secrets and smashing things"). Each drop is remembered by its place, so a
+## pot that is back next visit doesn't pay again.
+@export var resin := 1
 
 @onready var art: Sprite2D = $Art
 @onready var hurtbox: Area2D = $Hurtbox
@@ -77,4 +81,38 @@ func _break(dir: int, power: int) -> void:
 	var centre := global_position + Vector2(0, -r.size.y * 0.5)
 	Fx.burst(self, centre, chip_color, 10 + power * 3, 110.0)
 	Fx.dust(self, global_position, Fx.LANDING, dir)
+	_drop_resin(centre)
 	queue_free()
+
+
+func _drop_resin(at: Vector2) -> void:
+	if resin <= 0:
+		return
+	var room := get_tree().current_scene
+	var key := "drop_%s_%d_%d" % [room.name if room else "", int(global_position.x), int(global_position.y)]
+	for i in resin:
+		var flag := "%s_%d" % [key, i]
+		if Game.flags.has(flag):
+			continue
+		var p := Area2D.new()
+		p.name = "Resin"
+		p.set_script(load("res://scripts/world/pickup.gd"))
+		p.set("value", 1)
+		p.set("flag", flag)
+		p.z_index = 15
+		var cs := CollisionShape2D.new()
+		var cc := CircleShape2D.new()
+		cc.radius = 6.0
+		cs.shape = cc
+		p.add_child(cs)
+		var art_node := Sprite2D.new()
+		art_node.name = "Art"
+		art_node.texture = load("res://assets/items/resin.png")
+		art_node.hframes = 6
+		art_node.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+		var m := CanvasItemMaterial.new()
+		m.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+		art_node.material = m
+		p.add_child(art_node)
+		p.position = (at + Vector2(i * 8 - (resin - 1) * 4, -4)).round()
+		get_parent().add_child(p)

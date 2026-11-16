@@ -111,6 +111,16 @@ ROOMS = {
         "seals": [(11, 36, 3, 1), (10, 50, 2, 1), (25, 41, 2, 1), (23, 46, 2, 1), (26, 50, 2, 1), (22, 54, 2, 1)],
         "exits": {"east (to the Undercroft's plated door)": (43, 40), "east lower (on to the deep)": (43, 59)},
     },
+    "ib08": {
+        "cells": "game/tests/out/ib08/map/cells.json",
+        "spawn": (4, 16),
+        "lift": [],
+        "water": (0, 0, 0, 0),
+        "gated": {"the pit under the cracked bark plate (Ironbark Ward)": (52, 25, 3, 2)},
+        # CH1's two slabs and the bark plate: non-tile collision.
+        "seals": [(43, 18, 2, 1), (47, 21, 2, 1), (52, 24, 3, 1)],
+        "exits": {"west (to the Undercroft)": (0, 16), "east lower (toward the Keep)": (63, 23)},
+    },
 }
 ROOM = ROOMS[sys.argv[1] if len(sys.argv) > 1 and sys.argv[1] in ROOMS else "ib01"]
 SPAWN, LIFT, WATER = ROOM["spawn"], ROOM["lift"], ROOM["water"]
