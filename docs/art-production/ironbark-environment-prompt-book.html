@@ -494,6 +494,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["X", "X-crypt-shrine-hall.jpg", "Shrine Hall (the Old Crypt's first section)", "The creative lead's target for IB-05: pale blue-grey block masonry with thick rims, the hooded statue's carved island, crystal blocks, lit doorways, small stone plates. Attach to every SH card."],
     ["Y", "Y-crypt-mood-depth.jpg", "Crypt mood and depth", "The creative lead's reference for the crypts' mood and depth: purple above, deep teal below, many receding layers, dark roots and pillars framing the edges. Attach to the FG cards."],
     ["AA", "AA-character-lantern-crypt.jpg", "Character: lantern crypt", "One of the creative lead's ten character mockups: a cave of arcades, a tomb island held up by a double arcade, stepped stairs, moss and crystals on every ledge. Attach to every CH card."],
+    ["AC", "AC-shrine-hall-moody.jpg", "The Shrine Hall, moody", "The creative lead's moody mockup of IB-05: dark teal murk, warm torchlight, and top galleries whose floors and ceilings run dead straight in cobble masonry, stepping, with ragged undersides. Attach to CH9."],
     ["AB", "AB-character-rootbound-crypt.jpg", "Character: rootbound crypt", "The vertical one: slabs with tapering undersides and hanging moss, alcoves with arches and lanterns, stepped edges, a cobble cave wall wound with roots. Attach to every CH card."],
     ["Z", "Z-moonlit-forest-islands.jpg", "Moonlit forest and islands", "The surface rooms' target (IB-03, IB-04): plum boulder terrain, large floating islands, purple sky, teal forest. Attach to the surface FG cards."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
@@ -1278,6 +1279,23 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Two broken column drums lying on their sides with moss.",
         "- Three thin root arches rising from the bottom edge and back down, 300 to 600 px wide, no thicker than 40 px (thin shapes only: a big black shape reads as a hole).",
         "- Four tall grass and fern tufts, 120 to 240 px tall."
+      ] },
+    { id: "CH9", group: "character", file: "crypt_gallery_bands", title: "Gallery floor and ceiling bands: straight lines in cobble masonry", pilot: true,
+      about: "The Shrine Hall's top hallways, after mockup AC. CH7's strips have the right cobble stone, but their edge bulges on purpose, so on a hallway the floor and ceiling went 'all uneven'; the plain CY bands are straight but bare. These are tiling bands in CH7's cobble with a perfectly straight walking line and ceiling line, so the hallway can be both.",
+      canvas: WIDE, game: "4 bands, each 384 wide, repeating left to right, plus step pieces", attach: ["AC", "Your approved CH7 (07-cave-edges): the stone to match", "AA"],
+      text: [
+        "TASK: on one transparent canvas, the pieces below, separated by transparent space. Every band joins a copy of itself left to right with no visible seam.",
+        "",
+        CLEAN_GRID,
+        "",
+        "STYLE: the cobble masonry of attached CH7 and of the galleries in mockup AC exactly: rounded squarish grey-lavender cobble stones in loose courses, a pale worn cap row, moss in a few joints. Crisp pixel art, four tones per material, lit from above by warm torchlight. Strict side view, no perspective.",
+        "",
+        FADE_RULE,
+        "",
+        "1. FLOOR BAND, 3072 px wide, 512 px tall: the walking line is a PERFECTLY STRAIGHT, FLAT horizontal line 64 px below the top of the band, along its whole length (no bulge, no dip, no stone standing above it, no grass or crystals on it). Above the line only transparency. Below it the pale cap row, then three or four courses of cobble, then fading course by course into the void by 448 px below the line.",
+        "2. CEILING BAND, 3072 px wide, 512 px tall: the same stone upside down in its lighting, its underside a PERFECTLY STRAIGHT horizontal line 64 px above the bottom of the band; below the line only transparency; above it a darker edge course, then cobble fading into the void. Nothing hangs below the line.",
+        "3. UNDERSIDE STRIP, 3072 px wide, 512 px tall: what hangs under a gallery slab into the hall: its top edge a straight line in dark masonry (it meets the floor band's dark), its bottom ragged, tapering into hanging wedges of cobble 128 to 448 px long, a few moss strands.",
+        "4. STEP PIECES in the same stone: a floor stepping up one tile (128 px) to the right, with a straight vertical face of cobble and straight walking lines either side; a ceiling stepping down one tile; each 512 px wide."
       ] },
     // ------------------------------------------------------------- crypt stone after Y
     { id: "CY1", group: "cryptstone", file: "crypt_y_bands", title: "Crypt stone after Y: floor and ceiling bands",

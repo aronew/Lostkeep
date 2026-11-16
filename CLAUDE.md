@@ -655,7 +655,9 @@ She steps forward with every hit.
   IB-05's gallery slabs under their walking lines and rise over their ceilings
   (`_galleries()`), 8 px from each line; never on a walking line or a
   ceiling's edge (the creative lead: hallways stay straight, the strips' wavy cap
-  made them "all uneven"). Don't use the CH1 slab with the icy-blue
+  made them "all uneven"). The look they liked is CH7's cobble on the
+  hallway's own lines: Book 1's CH9 asks for gallery floor and ceiling bands in
+  that cobble with perfectly straight lines (mockup AC). Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
