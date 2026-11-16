@@ -229,61 +229,110 @@ func _shrine_far() -> void:
 ## In front of everything: OC7's dark rock along the top and bottom of the view.
 ## Scrolls faster than the playfield; stays put vertically.
 func _crypt_foreground() -> void:
-	# Depth in two value steps in front of the playfield (the creative lead: "2
-	# layers of foreground, one not all the way silhouetted and one full
-	# silhouette"). Both frame the screen: they slide sideways faster than the
-	# room (nearer the camera) but hold their height on screen (scroll y 0), so
-	# a tall room has them on every floor and they never slide up or down when
-	# the camera changes floors. Thin shapes (roots, rubble, a pillar), never big
-	# blobs: a big black shape reads as a hole.
+	# Nothing here is pinned to the screen any more. The first foreground held
+	# its height on screen and was blown up two to five times: its pixels did
+	# not match the room's, and a root hung in mid-air in the same place on
+	# every screen (the creative lead: "weirdly attached"). The foreground now
+	# belongs to the world, at the room's own pixel size, in two value steps:
+	#   - the mid step stands on the floors themselves (`FloorMid`, the detail
+	#     pass), darkened to about half value, its form still showing;
+	#   - the near step (`_near_foreground`) is near-black, stands on the long
+	#     floors and hangs from the long ceilings, and slides sideways a little
+	#     faster than the room, but never up or down against it.
+	# This layer stays as the holder of the fog bank along the bottom of the view.
 	_detail_kind = "crypt"
 	var w := float(room.size.x * TILE)
-	var unlit := CanvasItemMaterial.new()
-	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
-	# The mid step: roots and ivy along the top of the view, rubble, crystals and
-	# a broken pillar along its bottom, darkened to about half value and tinted
-	# toward the room's plum, their form still showing.
 	var mid := _node(Parallax2D.new(), "Foreground", _root) as Parallax2D
 	mid.scroll_scale = Vector2(1.15, 0.0)
 	mid.repeat_size = Vector2(960, 0)
 	mid.repeat_times = maxi(3, int(w / 960.0) + 3)
 	mid.z_index = 30
-	var mid_tint := Color(0.4, 0.36, 0.5)
-	var pieces := [
-		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(60, -6), 2.0],
-		[ENV + "sh_flora.png", Rect2(88, 112, 24, 64), Vector2(420, -10), 2.0],
-		[ENV + "sh_flora.png", Rect2(184, 112, 16, 32), Vector2(700, -4), 2.0],
-		[ENV + "oc_foreground.png", Rect2(0, 250, 120, 110), Vector2(180, 360 - 70), 1.0],
-		[ENV + "sh_flora.png", Rect2(152, 0, 64, 40), Vector2(520, 360 - 50), 1.6],
-		[ENV + "sh_arcades.png", Rect2(224, 80, 16, 32), Vector2(820, 360 - 58), 2.0],
-	]
-	for pc in pieces:
-		var reg: Rect2 = pc[1]
-		var sp := _sprite(mid, pc[0], reg, pc[2])
-		sp.name = "MidPiece"
-		sp.scale = Vector2(pc[3], pc[3])
-		sp.modulate = mid_tint
-		sp.material = unlit
-	# The near step: pure silhouettes, sparse, scrolling fastest: long roots
-	# from the top, rubble along the very bottom, a great pillar now and then.
-	var near := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
-	near.scroll_scale = Vector2(1.5, 0.0)
-	near.repeat_size = Vector2(1500, 0)
-	near.repeat_times = maxi(3, int(w / 1500.0) + 3)
-	near.z_index = 31
-	var black := Color(0.03, 0.022, 0.05)
-	var near_pieces := [
-		[ENV + "sh_flora.png", Rect2(224, 112, 20, 64), Vector2(260, -14), 2.2],
-		[ENV + "oc_foreground.png", Rect2(400, 290, 80, 70), Vector2(640, 360 - 44), 1.6],
-		[ENV + "sh_arcades.png", Rect2(272, 32, 20, 80), Vector2(1100, -20), 4.8],
-	]
-	for pc in near_pieces:
-		var reg: Rect2 = pc[1]
-		var sp := _sprite(near, pc[0], reg, pc[2])
-		sp.name = "Silhouette"
-		sp.scale = Vector2(pc[3], pc[3])
-		sp.modulate = black
-		sp.material = unlit
+
+
+## How much faster than the room the near step slides sideways.
+const NEAR_SCROLL := 1.16
+## Dark, its form still faintly showing: pure black pieces standing on a lit
+## floor read as holes.
+const NEAR_TINT := Color(0.2, 0.22, 0.3)
+## CH8 (ch_foreground.png) pieces that stand in front of a floor: the small
+## mound, the drums, grass and ferns. [index, share of its height sunk below
+## the walking line, in front of the slab].
+const NEAR_FLOOR := [[3, 0.5], [4, 0.42], [5, 0.42], [9, 0.45], [11, 0.4], [12, 0.4], [16, 0.45]]
+## CH4 (ch_hangings.png) pieces that hang in front of a ceiling: moss curtains
+## and chains, short enough to leave her the lower half of a gallery.
+const NEAR_HANG := [1, 3, 5, 4]
+
+
+## The near step of the foreground, anchored to the world. Each piece stands
+## on a floor run (its foot sunk in front of the slab) or hangs from a ceiling
+## run, at the room's pixel size, near-black. The layer scrolls NEAR_SCROLL
+## sideways and 1.0 vertically: a piece keeps its floor or ceiling exactly and
+## only drifts along it. Each is kept far enough from an open end of its run
+## that the drift never carries it out over the void.
+func _near_foreground(is_solid: Callable, skipped: Callable) -> void:
+	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CH_PIECES))
+	var layer := _node(Parallax2D.new(), "ForegroundNear", _root) as Parallax2D
+	layer.scroll_scale = Vector2(NEAR_SCROLL, 1.0)
+	layer.z_index = 31
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var k := NEAR_SCROLL - 1.0
+	# A piece at layer x `p` shows at world x `w` when the view is centred on w.
+	var to_layer := func(wx: float) -> float: return wx + (wx - 320.0) * k
+	for y in range(room.position.y + 1, room.end.y):
+		# 0: floors (solid at y, two open cells over it); 1: ceilings (solid at y - 1... ).
+		for kind in 2:
+			var x := room.position.x
+			while x < room.end.x:
+				var ok := func(cx: int) -> bool:
+					if kind == 0:
+						return is_solid.call(Vector2i(cx, y)) and is_solid.call(Vector2i(cx, y + 1)) \
+							and not is_solid.call(Vector2i(cx, y - 1)) and not is_solid.call(Vector2i(cx, y - 2)) \
+							and not is_solid.call(Vector2i(cx, y - 3))
+					return is_solid.call(Vector2i(cx, y - 1)) and not is_solid.call(Vector2i(cx, y)) \
+						and not is_solid.call(Vector2i(cx, y + 1)) and not is_solid.call(Vector2i(cx, y + 2)) \
+						and not is_solid.call(Vector2i(cx, y + 3)) and not is_solid.call(Vector2i(cx, y + 4))
+				if not ok.call(x):
+					x += 1
+					continue
+				var x0 := x
+				while x < room.end.x and ok.call(x):
+					x += 1
+				var x1 := x  # the run is [x0, x1)
+				# A wall beside the run's end holds a drifting piece; open air does not.
+				var open_row := y - 1 if kind == 0 else y
+				var wall_l: bool = is_solid.call(Vector2i(x0 - 1, open_row))
+				var wall_r: bool = is_solid.call(Vector2i(x1, open_row))
+				var at := x0 + 3 + _cellhash(Vector2i(x0, y), 40 + kind) % 5
+				while at < x1:
+					var c := Vector2i(at, y - 1 if kind == 0 else y)
+					var pick: int
+					var sheet: String
+					var sink := 0.0
+					if kind == 0:
+						var e: Array = NEAR_FLOOR[_cellhash(c, 41) % NEAR_FLOOR.size()]
+						pick = e[0]
+						sink = e[1]
+						sheet = "ch_foreground"
+					else:
+						pick = NEAR_HANG[_cellhash(c, 42) % NEAR_HANG.size()]
+						sheet = "ch_hangings"
+					var r: Array = table[sheet][pick]["rect"]
+					var reg := Rect2(r[0], r[1], r[2], r[3])
+					var half := reg.size.x * 0.5
+					var drift := k * (320.0 + half)
+					var cx := at * TILE + 8.0
+					var lo := x0 * TILE + (half * 0.5 if wall_l else half + drift)
+					var hi := x1 * TILE - (half * 0.5 if wall_r else half + drift)
+					if cx >= lo and cx <= hi and not skipped.call(c) and _cellhash(c, 43) < 520:
+						var pos := Vector2(to_layer.call(cx) - half, y * TILE - reg.size.y * (1.0 - sink)) if kind == 0 \
+							else Vector2(to_layer.call(cx) - half, y * TILE - 5.0)
+						var sp := _sprite(layer, ENV + sheet + ".png", reg, pos.round())
+						sp.name = "Near"
+						sp.modulate = NEAR_TINT
+						sp.material = unlit
+						sp.flip_h = _cellhash(c, 44) % 2 == 0
+					at += 11 + _cellhash(c, 45) % 7
 
 
 # --- Detail: what hangs from the ceilings, what stands in front of the floors ----------------
@@ -1004,8 +1053,8 @@ func _resin_cache(parent: Node, x0: float, x1: float, floor_y: float, count: int
 ## rock, so the wall's face at tile column `face_x` runs on across the opening
 ## (rows `rows`: from, count) and its bands and dark run on round it.
 ## `faces` is the side the wall faces (1: the open room is to the right of the
-## face). No collision: Kleo walks through, and once she is inside it fades for
-## good (`flag`). Give it a tell: moss over it, a draught (`_draught`).
+## face). No collision: Kleo walks through; it fades while she is inside and
+## closes again when she leaves (`flag` records the find). Give it a tell: moss over it, a draught (`_draught`).
 func _false_wall(node_name: String, hide: Rect2i, face_x: int, rows: Vector2i, faces: int, flag: String) -> Node2D:
 	var cover := _node(Node2D.new(), node_name, _root) as Node2D
 	cover.set_script(load("res://scripts/world/secret_cover.gd"))
@@ -1259,11 +1308,25 @@ func _moody() -> void:
 		var w := rect.size.x * 1.3 + 800.0
 		var bank := _mood_fog(fg, "ScreenFog", Rect2(-400, 250, w, 120), 0.45, 0)
 		bank.material.set_shader_parameter("scale", Vector2(w / 600.0, 0.6))
+	# The lights belong to the room, not to the air or the far wall: a lantern
+	# lit the teal fog and the backdrop behind it too, and amber on teal came
+	# out as a green disc round every flame. Fog and backdrops now ignore the
+	# point lights (their own light mask); the glow in the air is the halo's job
+	# (`_warm_glow`). And the falloff is smooth: the stepped one drew rings.
+	for c in _root.get_children():
+		if (c is Parallax2D and (c as Parallax2D).z_index < 0) or c.name == "Foreground":
+			_unlight(c)
+	for f in _root.find_children("*", "ColorRect", true, false):
+		var fm := (f as ColorRect).material as ShaderMaterial
+		if f.name == "MoodHaze" or (fm and fm.shader and fm.shader.resource_path.ends_with("fog.gdshader")):
+			(f as ColorRect).light_mask = LIGHT_MASK_AIR
+	var soft := _soft_light_texture()
 	for l in _root.find_children("*", "PointLight2D", true, false):
 		var pl := l as PointLight2D
+		pl.texture = soft
 		if pl.color.r > pl.color.b:
 			pl.energy *= 1.9
-			pl.texture_scale *= 1.15
+			pl.texture_scale *= 1.3
 		else:
 			pl.energy *= 0.5
 	var vig := _root.get_node_or_null("Screen/Vignette") as ColorRect
@@ -1344,6 +1407,86 @@ const CH_FLOOR_NEAR := [6, 7, 8]
 const CH_NEAR_TINT := Color(0.04, 0.03, 0.06)
 
 
+## CH4's corner bracket (ch_hangings.png, its wall on the left).
+const CH_BRACKET := 12
+## The undersides of CH1's slabs (ch_platforms.png): the stone under each
+## slab's band, tapering down to a point with moss off it. Hung under the thin
+## slabs of the terrain, they turn a square-cut bar into a slab with a keel of
+## hanging stone, as in the character mockups ("slabs taper into hanging
+## stone"). Widest first.
+const CH_KEELS := [Rect2(147, 86, 232, 32), Rect2(9, 32, 128, 29), Rect2(5, 86, 125, 35),
+	Rect2(289, 33, 69, 21), Rect2(228, 34, 38, 17), Rect2(181, 34, 24, 12)]
+## The keels sit in the slab's own shadow, toward the CY stone's plum.
+const KEEL_TINT := Color(0.74, 0.7, 0.82)
+## A slab this many tiles thick or less gets keels; thicker is a mass.
+const KEEL_SLAB := 3
+
+
+## Under every thin slab (a floor up to KEEL_SLAB tiles thick with open air
+## beneath): keels of hanging stone along its underside, packed from end to
+## end, each as wide as the run allows, and never so deep that she could not
+## stand under it. No collision; drawn under the terrain's own bands, so each
+## grows out of its slab.
+func _slab_keels(is_solid: Callable, skipped: Callable, parent: Node2D) -> void:
+	for y in range(room.position.y + 2, room.end.y):
+		var x := room.position.x
+		while x < room.end.x:
+			var under := func(cx: int) -> bool:
+				var c := Vector2i(cx, y)
+				if is_solid.call(c) or skipped.call(c) or not is_solid.call(c + Vector2i.UP):
+					return false
+				var t := 1
+				while t <= KEEL_SLAB and is_solid.call(Vector2i(cx, y - 1 - t)):
+					t += 1
+				return t <= KEEL_SLAB and room.has_point(Vector2i(cx, y - 1 - t))
+			if not under.call(x):
+				x += 1
+				continue
+			var x0 := x
+			while x < room.end.x and under.call(x):
+				x += 1
+			var x1 := x
+			# Pack the run [x0, x1) with keels.
+			var at := float(x0 * TILE) - 2.0
+			var end := float(x1 * TILE) + 2.0
+			var n := 0
+			while end - at >= 24.0:
+				var h := _cellhash(Vector2i(int(at), y), 30 + n)
+				var fits := []
+				for kreg in CH_KEELS:
+					if (kreg as Rect2).size.x <= end - at:
+						fits.append(kreg)
+				if fits.is_empty():
+					break
+				# Mostly the widest that fits, sometimes the next one down.
+				var reg: Rect2 = fits[mini(fits.size() - 1, 0 if h % 3 != 0 else 1)]
+				# Room to stand under it, all along it.
+				var clear := true
+				for cx in range(int(floor(at / TILE)), int(ceil((at + reg.size.x) / TILE))):
+					var open := 0
+					while open < 8 and not is_solid.call(Vector2i(cx, y + open)):
+						open += 1
+					if open * TILE - reg.size.y < 46.0:
+						clear = false
+						break
+				if not clear:
+					# Try the smallest; else move on a tile.
+					reg = CH_KEELS[CH_KEELS.size() - 1]
+					var open2 := 0
+					while open2 < 8 and not is_solid.call(Vector2i(int(floor(at / TILE)), y + open2)):
+						open2 += 1
+					if open2 * TILE - reg.size.y < 46.0:
+						at += TILE
+						n += 1
+						continue
+				var sp := _sprite(parent, ENV + "ch_platforms.png", reg, Vector2(at, y * TILE - 3.0).round())
+				sp.name = "Keel"
+				sp.flip_h = h % 2 == 0
+				sp.modulate = KEEL_TINT
+				at += reg.size.x + float(h % 3) * 4.0
+				n += 1
+
+
 func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, mid_node: Node2D, unlit: Material) -> void:
 	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CH_PIECES))
 	var rect_of := func(sheet: String, i: int) -> Rect2:
@@ -1351,9 +1494,6 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 		return Rect2(r[0], r[1], r[2], r[3])
 	var tops_node := _node(Node2D.new(), "Tops", _root) as Node2D
 	tops_node.z_index = 3
-	var near_node := _node(Node2D.new(), "FloorNear", _root) as Node2D
-	near_node.z_index = 27
-	var mid_tint := Color(0.5, 0.48, 0.6)
 	for y in range(room.position.y, room.end.y):
 		for x in range(room.position.x, room.end.x):
 			var c := Vector2i(x, y)
@@ -1371,6 +1511,21 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 				if reg.size.y <= room_px:
 					var sp := _sprite(hang_node, ENV + "ch_hangings.png", reg, Vector2(x * TILE + (_cellhash(c, 3) % 8) - reg.size.x * 0.5 + 8, y * TILE - 3))
 					sp.name = "Hang"
+			# Where a ceiling meets a wall: CH4's stone bracket in the corner, so a
+			# slab stands on something instead of meeting its wall at a bare right angle.
+			if is_solid.call(c + Vector2i.UP) and room.has_point(c + Vector2i.UP) and _cellhash(c, 20) < 800:
+				for side in [-1, 1]:
+					var wall := c + Vector2i(side, 0)
+					if is_solid.call(wall) and is_solid.call(wall + Vector2i.DOWN) and is_solid.call(wall + Vector2i(0, 2)) \
+							and room.has_point(wall) \
+							and not is_solid.call(c + Vector2i.DOWN) and not is_solid.call(c + Vector2i(0, 2)) \
+							and not is_solid.call(c - Vector2i(side, 0)) and not is_solid.call(c - Vector2i(2 * side, 0)):
+						var regb: Rect2 = rect_of.call("ch_hangings", CH_BRACKET)
+						var bx := x * TILE - 3.0 if side < 0 else (x + 1) * TILE + 3.0 - regb.size.x
+						var br := _sprite(hang_node, ENV + "ch_hangings.png", regb, Vector2(bx, y * TILE - 3))
+						br.name = "Bracket"
+						br.flip_h = side > 0
+						br.modulate = KEEL_TINT
 			if not (is_solid.call(c + Vector2i.DOWN) and room.has_point(c + Vector2i.DOWN)):
 				continue
 			var floor_y := float((y + 1) * TILE)
@@ -1392,23 +1547,13 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 				var top := _sprite(tops_node, ENV + "ch_props.png", reg3, Vector2(x * TILE + 8 - reg3.size.x * 0.5, floor_y - reg3.size.y + 1))
 				top.name = "Top"
 				top.flip_h = _cellhash(c, 10) % 2 == 0
-			# In front of the floor, the mid step: darkened mounds, drums, grass.
-			if _cellhash(c, 6) < 45:
-				var reg4: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_MID[_cellhash(c, 7) % CH_FLOOR_MID.size()])
-				var m := _sprite(mid_node, ENV + "ch_foreground.png", reg4, Vector2(x * TILE + 8 - reg4.size.x * 0.5, floor_y - reg4.size.y * 0.55))
-				m.name = "FloorMid"
-				m.modulate = mid_tint
-				m.material = unlit
-				m.flip_h = _cellhash(c, 11) % 2 == 0
-			# Nearest the camera: thin root arches in black, sparse, low, and only on
-			# the room's lower floors (in a gallery they stood in the way).
-			elif detail_near and _cellhash(c, 12) < 30 and y >= room.position.y + room.size.y * 0.6:
-				var reg5: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_NEAR[_cellhash(c, 13) % CH_FLOOR_NEAR.size()])
-				var nr := _sprite(near_node, ENV + "ch_foreground.png", reg5, Vector2(x * TILE + 8 - reg5.size.x * 0.5, floor_y - reg5.size.y * 0.35))
-				nr.name = "FloorNear"
-				nr.modulate = CH_NEAR_TINT
-				nr.material = unlit
-				nr.flip_h = _cellhash(c, 14) % 2 == 0
+	_slab_keels(is_solid, skipped, hang_node)
+	# No foreground pieces in front of the floors. The darkened mounds, drums
+	# and grass dotted along the floors, and the black root arches, read as
+	# little pieces here and there (the creative lead: "we need all new
+	# foreground art ... these little pieces here and there just look bad").
+	# The foreground waits for continuous bands made for it: FG6 to FG10 in
+	# Book 1. (`_near_foreground` is kept to place pieces anchored to the world.)
 
 
 # --- Rim light along the walking edges --------------------------------------------------------
@@ -1485,37 +1630,68 @@ const GLOW_HALO := Color(0.95, 0.55, 0.22)  # the halo in the air round a flame
 ## soft additive disc in four stepped rings (pixel art, not a smooth blur),
 ## sized to the light. Glows stay off the tiles: the halo is its own sprite.
 func _warm_glow() -> void:
-	var tex := _halo_texture()
 	var node := _node(Node2D.new(), "WarmGlow", _root) as Node2D
 	node.z_index = 7
-	var add := CanvasItemMaterial.new()
-	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
-	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var shader: Shader = load("res://shaders/glow.gdshader")
 	for l in _root.find_children("*", "PointLight2D", true, false):
 		var pl := l as PointLight2D
 		if pl.color.r <= pl.color.b:
 			continue
 		pl.color = GLOW_LIGHT
-		var halo := _node(Sprite2D.new(), "Halo", node) as Sprite2D
-		halo.texture = tex
-		halo.global_position = pl.global_position
-		# Kept small and faint: a big lantern's halo read as a ringed disc.
-		var size := clampf(pl.texture_scale * 48.0, 24.0, 56.0)
-		halo.scale = Vector2.ONE * (size / 64.0)
-		halo.modulate = Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, 0.45)
-		halo.material = add
+		# Two soft discs: a wide faint one (the lit air) and a small bright one
+		# at the flame. Smooth and dithered (`glow.gdshader`), never ringed.
+		for ring in [[170.0, 0.26, 2.4], [56.0, 0.4, 1.6]]:
+			var halo := _node(ColorRect.new(), "Halo", node) as ColorRect
+			var size := clampf(pl.texture_scale * float(ring[0]), float(ring[0]) * 0.6, float(ring[0]) * 1.3)
+			halo.size = Vector2(size, size)
+			halo.position = (pl.global_position - halo.size * 0.5).round()
+			halo.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			var m := ShaderMaterial.new()
+			m.shader = shader
+			m.set_shader_parameter("tint", Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, ring[1]))
+			m.set_shader_parameter("falloff", ring[2])
+			halo.material = m
 
 
-func _halo_texture() -> GradientTexture2D:
+## The light mask of things the point lights must not touch: fog, haze, the
+## backdrops. (Everything else keeps mask 1, which the lights use.)
+const LIGHT_MASK_AIR := 2
+
+
+func _unlight(n: Node) -> void:
+	if n is CanvasItem:
+		(n as CanvasItem).light_mask = LIGHT_MASK_AIR
+	for c in n.get_children():
+		_unlight(c)
+
+
+## A point light's falloff with no steps in it: bright at the flame, most of
+## its fall in the first third, a long faint tail.
+func _soft_light_texture() -> GradientTexture2D:
 	var g := Gradient.new()
-	g.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
-	g.offsets = PackedFloat32Array([0.0, 0.22, 0.45, 0.7, 0.95])
-	g.colors = PackedColorArray([Color(1, 1, 1, 0.55), Color(1, 1, 1, 0.32), Color(1, 1, 1, 0.16), Color(1, 1, 1, 0.06), Color(1, 1, 1, 0.0)])
+	g.offsets = PackedFloat32Array([0.0, 0.12, 0.3, 0.55, 0.8, 1.0])
+	g.colors = PackedColorArray([Color(1, 1, 1, 1), Color(1, 1, 1, 0.74), Color(1, 1, 1, 0.42),
+		Color(1, 1, 1, 0.17), Color(1, 1, 1, 0.045), Color(1, 1, 1, 0)])
 	var t := GradientTexture2D.new()
 	t.gradient = g
 	t.fill = GradientTexture2D.FILL_RADIAL
 	t.fill_from = Vector2(0.5, 0.5)
 	t.fill_to = Vector2(1.0, 0.5)
-	t.width = 64
-	t.height = 64
+	t.width = 256
+	t.height = 256
+	return t
+
+
+## A soft radial disc for additive glows (smooth: stepped rings read as discs).
+func _halo_texture() -> GradientTexture2D:
+	var g := Gradient.new()
+	g.offsets = PackedFloat32Array([0.0, 0.2, 0.45, 0.72, 1.0])
+	g.colors = PackedColorArray([Color(1, 1, 1, 0.55), Color(1, 1, 1, 0.3), Color(1, 1, 1, 0.12), Color(1, 1, 1, 0.03), Color(1, 1, 1, 0.0)])
+	var t := GradientTexture2D.new()
+	t.gradient = g
+	t.fill = GradientTexture2D.FILL_RADIAL
+	t.fill_from = Vector2(0.5, 0.5)
+	t.fill_to = Vector2(1.0, 0.5)
+	t.width = 128
+	t.height = 128
 	return t
