@@ -450,11 +450,13 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Keep masonry: fill and edges", "Nothing", "need", "K1, K2"],
     ["Keep masonry faces, arch ends, corners", "In: faces, corners, arch ends", "ok", "K4"],
     ["Crypt arcade at K4's scale (full-height piers)", "In", "ok", "K5"],
+    ["Surface great floating islands and cliffs (moonlit mockups X1 to X6)", "None", "need", "SF14, SF15"],
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
     ["Crypt stone after Y: bands, walls and corners, inside fill, stairs, supports, ledges, masses fading into the dark", "SH1 and SH2 graded toward Y", "need", "CY1 to CY6"],
     ["Foreground depth: crypt and surface silhouettes, side frames, rubble for the value steps", "Placeholders (OC7, P5 blown up)", "need", "FG1 to FG5"],
     ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
+    ["The great floating islands of O, P, Q", "None", "need", "OC9"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
     ["The moat bank and bridge end as one set piece", "In", "ok", "L6"],
     ["Ironbark timber: floors, posts, the one walkway", "Nothing", "need", "K3"],
@@ -496,6 +498,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["AA", "AA-character-lantern-crypt.jpg", "Character: lantern crypt", "One of the creative lead's ten character mockups: a cave of arcades, a tomb island held up by a double arcade, stepped stairs, moss and crystals on every ledge. Attach to every CH card."],
     ["AB", "AB-character-rootbound-crypt.jpg", "Character: rootbound crypt", "The vertical one: slabs with tapering undersides and hanging moss, alcoves with arches and lanterns, stepped edges, a cobble cave wall wound with roots. Attach to every CH card."],
     ["Z", "Z-moonlit-forest-islands.jpg", "Moonlit forest and islands", "The surface rooms' target (IB-03, IB-04): plum boulder terrain, large floating islands, purple sky, teal forest. Attach to the surface FG cards."],
+    ["X1", "X1-moonlit-floating-ruins.jpg", "Moonlit: floating ruins", "Two great floating graveyard islands, one held by tree roots; cliff terraces with stairs both sides. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
+    ["X2", "X2-moonlit-ruins-islands.jpg", "Moonlit: ruins and islands", "A huge island with a gothic window and crystals; terraces climbing to a chapel. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
+    ["X3", "X3-moonlit-ruin-gardens.jpg", "Moonlit: ruin gardens", "A big island with its own tree and gothic ruin; terraced graveyard stairs. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
+    ["X4", "X4-moonlit-gate-terraces.jpg", "Moonlit: gate terraces", "A floating graveyard with a large window; a timber gate over a drop; the great tree. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
+    ["X5", "X5-moonlit-crystal-grove.jpg", "Moonlit: crystal grove", "The crystal shrine window on the ground; a floating ruin island; a cliff to a chapel. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
+    ["X6", "X6-moonlit-aqueduct-ruins.jpg", "Moonlit: aqueduct ruins", "Small floating ruins along a branch walk; crystal windows; a far aqueduct. The primary Ironbark surface style: masses black at heart, lit only at their edges."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
     ["S", "S-surface-aqueduct-garden.jpg", "Surface: aqueduct garden", "Terraced earth, waterfalls, a far aqueduct, ruined arches, fenced chapel. Style target for the SF cards."],
     ["T", "T-surface-chapel-gully.jpg", "Surface: chapel gully", "The chapel over a gully, floating islands, stone terraces, a sunken arch. Style target for the SF cards."],
@@ -948,6 +956,40 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "",
         "1. Far (y 0 to 864, opaque): violet dusk sky with small soft rose clouds near the top; below, rows of misty blue-teal tree crowns and a long ruined aqueduct with tall arches far away, very low contrast.",
         "2. Mid (y 864 to 1728, transparent above the treetops): whole rounded teal tree crowns, darker trunks, two ruined arch silhouettes among them, mist across the bottom. Higher contrast than the far layer, lower than the playfield. No warm colours except two tiny lanterns."
+      ] },
+    { id: "SF14", group: "surface", file: "surface_great_islands", title: "The great floating islands (from X1 to X6)",
+      about: "The large floating islands that make these mockups: graveyard islands with gothic windows and crystals, an island with its own tree, an island held up by the great tree's roots. Set pieces the player stands on and explores, not platforms.",
+      canvas: "3072×3072 px (art 384 × 384 px at x8)", game: "6 islands, 6 to 28 tiles wide, cut apart", attach: ["X1", "X2", "X3", "X4", "X5", "B"],
+      text: [
+        "TASK: six floating islands of Ironbark earth on one transparent canvas, separated by transparent space.",
+        "",
+        "STYLE: copy attached mockups X1 to X6 exactly: moonlit violet dusk, plum boulder earth that is near-black at its heart and lit only along its open edges, bright yellow-green moss lips and hanging vines, grey-violet gothic ruins, pale-teal crystals behind ruined windows, warm amber lanterns (flame and glass only, never a halo). Each piece on its own, separated by transparent space. Do not copy whole scenes. Hex codes are guides, never a palette to snap to.",
+        "",
+        "EVERY ISLAND: a perfectly straight grassy walking line across the top, moss rolling over both ends; under it a thick layer of round plum boulders that darkens to near-black #0B0812 toward its heart, the outer boulders lit by moonlight; the underside an inverted, lumpy cone of boulders 1.5 to 2 times as deep as the top layer, vines and roots dangling from it.",
+        "",
+        "1. THE GRAVEYARD ISLAND (X2, X3), 3584 px wide (28 tiles): a tall gothic window ruin with tracery at its centre, pale-teal crystals glowing behind the glass, broken walls and column stumps either side, a row of headstones and crosses, ivy.",
+        "2. THE ROOT-HELD ISLAND (X1 left, X4 centre), 2560 px (20 tiles): a graveyard with a ruined arch, headstones and a crystal cluster; thick twisting tree roots wrap round its underside and reach off one side, as if the great tree holds it up.",
+        "3. THE TREE ISLAND (X3 centre), 2560 px (20 tiles): its own wide-crowned tree growing from it beside a gothic ruin wall with a window, roots spilling out of the underside.",
+        "4. THE SHRINE ISLAND (X1 centre-top), 1536 px (12 tiles): a small ruined chapel window with crystals, vines hanging far below.",
+        "5. THE RUIN ISLAND (X1, X6), 1280 px (10 tiles): a broken arch and two pillars.",
+        "6. TWO SMALL CHUNKS, 768 and 512 px (6 and 4 tiles): moss and a single headstone or bush, for stepping between the big islands.",
+        "",
+        "They must read as torn-up pieces of the forest graveyard floating in the night, not game platforms."
+      ] },
+    { id: "SF15", group: "surface", file: "surface_cliff_terraces", title: "Cliff terraces, gothic doorways and the crystal window (from X1 to X6)",
+      about: "What frames every mockup: black cliff masses at the sides climbed by grassy terraces and stone stairs, gothic arched doorways cut into them, the timber gate over a drop, and the crystal shrine window on the ground.",
+      canvas: "3072×3072 px (art 384 × 384 px at x8)", game: "Pieces cut apart", attach: ["X1", "X2", "X4", "X5", "Your approved SF14"],
+      text: [
+        "TASK: the pieces of the cliffs and their ruins, separately, on a transparent canvas.",
+        "",
+        "STYLE: copy attached mockups X1 to X6 exactly: moonlit violet dusk, plum boulder earth that is near-black at its heart and lit only along its open edges, bright yellow-green moss lips and hanging vines, grey-violet gothic ruins, pale-teal crystals behind ruined windows, warm amber lanterns (flame and glass only, never a halo). Each piece on its own, separated by transparent space. Do not copy whole scenes. Hex codes are guides, never a palette to snap to.",
+        "",
+        "1. Three terrace ledges cut into a cliff, 1024, 768 and 512 px wide: a straight grassy walking line, a lit boulder edge, the mass behind going black.",
+        "2. Two flights of worn stone stairs climbing a cliff (5 and 8 steps, each step a full 128 px tread), half buried in moss.",
+        "3. Two gothic arched doorways set into black rock, one with a dark blue-lit interior and a lantern post beside it, one ruined.",
+        "4. The crystal shrine window: a broad carved gothic window frame on a low wall, pale-teal crystals growing inside it, 768 px wide.",
+        "5. A timber gate frame over a drop (two posts and a beam), and a timber lantern post with a lit lantern.",
+        "6. Dark foreground arches and ferns for the bottom corners (near-black silhouettes, faint violet rim)."
       ] },
     { id: "OC1", group: "oldcrypt", file: "oldcrypt_floor_ceiling", title: "Old Crypt floor and ceiling bands",
       about: "Every walkable floor and every ceiling in the galleries. Like the stone bands in O and Q.",
@@ -1449,6 +1491,24 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Full canvas height. The inner side is ragged and open, never a straight line. Different from each other, not mirrored.",
         "- Nearly black, plum and teal in the shadows, a faint purple moonlit rim on the edges facing the sky."
       ] },
+    { id: "OC9", group: "oldcrypt", file: "oldcrypt_great_islands", title: "The great floating islands (from O, P, Q)",
+      about: "The large floating islands that carry these mockups: a temple island with a hooded statue, ruin islands with arches and pillars, ossuary islands of bones. Each is a set piece the player stands on, not a platform.",
+      canvas: "3072×3072 px (art 384 × 384 px at x8)", game: "6 islands, 10 to 24 tiles wide, cut apart", attach: ["O", "P", "Q", "B"],
+      text: [
+        "TASK: six large floating stone islands on one transparent canvas, separated by transparent space.",
+        "",
+        "STYLE: copy the look of attached mockups O, P and Q exactly: grey-violet dressed stone with soft four-tone shading, thin outlines on silhouettes only, ivy and yellow-green moss trailing off every edge, purple mushrooms and crystals, bones and skulls, small amber flames as the only warm light (flame only, never a halo). Paint each island on its own, separated by transparent space. Do not copy whole scenes.",
+        "EVERY ISLAND: a perfectly straight walking line across its top (the dressing stands on it); a thick masonry slab under the walk; below that an inverted cone of broken stone that tapers to a point, 1.5 to 2 times as deep as the island is wide is tall, dripping vines, roots and stone stalactites; the underside darkens toward its heart, lit only along its outer edges.",
+        "",
+        "1. THE SHRINE ISLAND (Q, centre), 3072 px wide (24 tiles): a broad carved slab with a medallion and carved bands on its front, a short central stair up to a hooded stone statue holding a glowing orb, framed by two broken crescent-moon arches and slender ruined spires; two smaller hooded statues in niches; two lit braziers on plinths; heaps of fallen pale-purple stone blocks; ivy, purple flowers, hanging moss; a deep tapering underside with stalactites.",
+        "2. THE ARCH ISLAND (Q, right), 2048 px (16 tiles): a ruined round arch on columns, two broken column stumps, a pile of purple stone blocks, a carved band along its front, ivy and flowers.",
+        "3. THE OSSUARY ISLAND (O, centre), 1792 px (14 tiles): skulls heaped along its top, two bone pillars, lit candles, purple mushrooms; long bones and ribs hanging from its underside among the vines.",
+        "4. THE HIGH OSSUARY ISLAND (O, top), 1536 px (12 tiles): a skull pile and a small bone obelisk, a carved cornice, bones dangling below.",
+        "5. THE COLONNADE ISLAND (P, left), 1792 px (14 tiles): a broken double arcade of two arches standing on it, purple crystals and flowers, long ivy curtains below.",
+        "6. THE SHRINE RUIN ISLAND (P, centre), 1536 px (12 tiles): a broken column, a lit candle stand, clay pots, a small rubble heap, ivy, a carved slab front.",
+        "",
+        "They must look like broken pieces of a great underground temple held in the air, not game platforms."
+      ] },
     // ------------------------------------------------------------- parallax
     { id: "P1", group: "parallax", file: "ironbark_bg_sky", title: "Sky and the three moons", scale: 4,
       about: "The deepest layer (scroll 0.05). The Triad of Vaelora's moons, near alignment: the eclipse that frames the whole story.",
@@ -1712,7 +1772,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
 
   function shared(card) { return [rules(card), STYLE_LOCK].join("\n\n"); }
   function attachLine(card) {
-    var names = { R: "R: the surface grave-crossing mockup", S: "S: the surface aqueduct-garden mockup", T: "T: the surface chapel-gully mockup", O: "O: the crypt ossuary mockup", P: "P: the crypt cistern mockup", Q: "Q: the crypt shrine mockup", L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
+    var names = { X1: "X1: moonlit floating ruins", X2: "X2: moonlit ruins and islands", X3: "X3: moonlit ruin gardens", X4: "X4: moonlit gate terraces", X5: "X5: moonlit crystal grove", X6: "X6: moonlit aqueduct ruins", R: "R: the surface grave-crossing mockup", S: "S: the surface aqueduct-garden mockup", T: "T: the surface chapel-gully mockup", O: "O: the crypt ossuary mockup", P: "P: the crypt cistern mockup", Q: "Q: the crypt shrine mockup", L: "L: the silk cavern mockup (only for how masses go into shadow)", A: "A: the Ironbark mockup", B: "B: the palette sheet", C: "C: the aqueducts mockup", D: "D: the shrine mockup", E: "E: the silk nest mockup", H: "H: the Keep throne hall mockup", F: "F: the Silk Mother arena mockup" };
     var list = card.attach.map(function (a) { return names[a] || a.replace("Your approved ", "the approved "); });
     return "\n\nATTACHED: " + list.join("; ") + ".";
   }

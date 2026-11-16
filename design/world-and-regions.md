@@ -225,3 +225,9 @@ as art targets. What they share, for the surface rooms:
 
 Where they show rows of tiny stepping blocks in the air, the principles win:
 islands and branch walks, not small platforms.
+
+**Moonlit mockups X1 to X6** (`lostkeep-attach/X*.jpg`) are the creative lead's
+preferred Ironbark surface look: masses black at heart and lit only at the
+edges, great floating graveyard islands (one held by the tree's roots, one
+with its own tree), cliff terraces with stairs at the sides, gothic doorways,
+crystal windows. Use them over R, S, T where they differ. Book 1: SF14, SF15.
