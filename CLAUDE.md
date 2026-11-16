@@ -657,7 +657,10 @@ She steps forward with every hit.
   ceiling's edge (the creative lead: hallways stay straight, the strips' wavy cap
   made them "all uneven"). The look they liked is CH7's cobble on the
   hallway's own lines: Book 1's CH9 asks for gallery floor and ceiling bands in
-  that cobble with perfectly straight lines (mockup AC). Don't use the CH1 slab with the icy-blue
+  that cobble with perfectly straight lines (mockup AC). A first CH9 came rebuilt onto the grid by
+  another tool (8 colours, flattened): tried in IB-05 (`USE_CH9` in
+  `build_ib05.gd`, `docs/rooms/ironbark_05/ch9_trial.png`) it read too dark
+  and flat, so it is off; the generator's own export is asked for again. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
