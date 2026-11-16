@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://du66sxmpxg2j8"
-path="res://.godot/imported/ch_gallery_bands.png-7aacaac2a128f2d070f91f01bd500e87.ctex"
+uid="uid://bre2uyakrs7ro"
+path="res://.godot/imported/ch9_floor.png-6c9a61dbe15391cd46d7776c936ced93.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/environment/ironbark/ch_gallery_bands.png"
-dest_files=["res://.godot/imported/ch_gallery_bands.png-7aacaac2a128f2d070f91f01bd500e87.ctex"]
+source_file="res://assets/environment/ironbark/ch9_floor.png"
+dest_files=["res://.godot/imported/ch9_floor.png-6c9a61dbe15391cd46d7776c936ced93.ctex"]
 
 [params]
 
