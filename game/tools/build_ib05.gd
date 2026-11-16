@@ -338,11 +338,12 @@ const CH9_STEP := Rect2(93, 1, 82, 43)
 const CH9_CEILING_STEP_TINT := Color(0.62, 0.66, 0.8)
 ## Floor steps [face x, upper row, upper side +1 east / -1 west] and ceiling
 ## steps [face x, lower row (the lower underside), lower side +1 east / -1 west].
-## A fourth number, where given, is how many tiles the upper floor (lower
-## ceiling) runs before the next step: the piece is cut there so two steps
-## facing each other (the bulkhead, x 26 to 29) don't paint over each other.
+## A fourth number, where given, is how many tiles of the upper floor (lower
+## ceiling) the piece may cover: where two steps face each other across a short
+## run (the bulkhead, x 26 to 29, 3 tiles), each takes its half, so neither
+## paints over the other's face.
 const CH9_FLOOR_STEPS := [[14, 7, 1], [29, 8, -1]]
-const CH9_CEILING_STEPS := [[8, 3, -1], [13, 3, 1], [26, 4, 1, 3], [29, 4, -1, 3], [38, 4, 1]]
+const CH9_CEILING_STEPS := [[8, 3, -1], [13, 3, 1], [26, 4, 1, 1.5], [29, 4, -1, 1.5], [38, 4, 1]]
 ## The skin leaves the galleries' slabs and ceilings to CH9.
 const CH9_SKIP := [[0, 0, 19, 3], [8, 2, 5, 1], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 3], [26, 3, 3, 1], [38, 3, 8, 1],
 	[22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
@@ -416,17 +417,17 @@ func _ch9_galleries(placed: Node) -> void:
 	for u in [[0, 19], [22, 46], [50, 54]]:
 		_band(node, CH9_UNDER, u[0], u[1], 11 * TILE - 6, false, "Underside")
 	for st in CH9_FLOOR_STEPS:
-		_ch9_step(node, st[0], st[1] * TILE, st[2], false, st[3] if st.size() > 3 else 0)
+		_ch9_step(node, st[0], st[1] * TILE, st[2], false, float(st[3]) if st.size() > 3 else 0.0)
 	for st in CH9_CEILING_STEPS:
-		_ch9_step(node, st[0], st[1] * TILE, st[2], true, st[3] if st.size() > 3 else 0)
+		_ch9_step(node, st[0], st[1] * TILE, st[2], true, float(st[3]) if st.size() > 3 else 0.0)
 
 
 ## A step's face on the tile line x, its higher floor (or lower ceiling) on the
 ## line y, on the side `side` of the face.
-func _ch9_step(parent: Node, x: int, y: float, side: int, ceiling: bool, run := 0) -> void:
+func _ch9_step(parent: Node, x: int, y: float, side: int, ceiling: bool, run := 0.0) -> void:
 	var region := CH9_STEP
-	if run > 0:
-		region.size.x = minf(region.size.x, run * TILE + 1)
+	if run > 0.0:
+		region.size.x = minf(region.size.x, roundf(run * TILE) + 1)
 	var w := region.size.x
 	var h := region.size.y
 	var px: float = x * TILE - 1 if side > 0 else x * TILE - w + 1
