@@ -669,7 +669,10 @@ She steps forward with every hit.
   bands on the ceilings, the underside strip under each slab, on the root (not
   graded) and lifted 1.7x in the game (`CH9_LIFT`), since it is painted about
   half as bright as the CY bands. Comparison: `docs/rooms/ironbark_05/ch9_vs_mockup.png`.
-  Its step pieces are not used yet. Don't use the CH1 slab with the icy-blue
+  Its floor step is used at every gallery step (`_ch9_step()`): only its
+  face and upper floor (it is painted 18 px tall, a step is 16), on the upper
+  walking line, mirrored for steps down, upside down for ceiling steps. Its
+  second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the

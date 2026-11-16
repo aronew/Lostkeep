@@ -123,3 +123,9 @@ cells (`CH9_SKIP`). The bands are lifted 1.7x in the game (`CH9_LIFT`): the art
 is painted about half as bright as the CY stone and the room's murk multiplies
 it. Collision unchanged; `mode=tour` and `mode=upper` pass. Image:
 `docs/rooms/ironbark_05/ch9_vs_mockup.png` (mockup, the CH7 version, CH9).
+
+CH9's floor step now turns each gallery step (the creative lead: "put those
+step pieces in"): its face and upper floor only, on the upper walking line,
+mirrored for steps down and upside down for the ceiling's steps (x 8, 13, 26,
+29, 38). The two-tile ceiling step over the East door's gap keeps the skin.
+Image: `docs/rooms/ironbark_05/ch9_steps.png`.

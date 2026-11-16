@@ -327,6 +327,18 @@ const CH9_FLOOR := ENV + "ch9_floor.png"       # walking line on its first row
 const CH9_CEILING := ENV + "ch9_ceiling.png"   # underside on its last row
 const CH9_UNDER := ENV + "ch9_under.png"       # straight top on its first row
 const CH9_LIFT := Color(1.7, 1.65, 1.6)
+## CH9's floor step (ch9_steps.png): from its face (column 93) to its end, the
+## upper floor's cap on row 1. Painted 18 px tall where a step is 16, so only
+## the face and the upper floor are used, lined up on the upper walking line;
+## the lower floor's own band runs in under it. Flipped upside down it is a
+## ceiling step (its lit cap then on the underside, as the ceiling band's).
+## The sheet's second piece joins a ceiling to a floor and is not used.
+const CH9_STEPS := ENV + "ch9_steps.png"
+const CH9_STEP := Rect2(93, 1, 82, 43)
+## Floor steps [face x, upper row, upper side +1 east / -1 west] and ceiling
+## steps [face x, lower row (the lower underside), lower side +1 east / -1 west].
+const CH9_FLOOR_STEPS := [[14, 7, 1], [29, 8, -1]]
+const CH9_CEILING_STEPS := [[8, 3, -1], [13, 3, 1], [26, 4, 1], [29, 4, -1], [38, 4, 1]]
 ## The skin leaves the galleries' slabs and ceilings to CH9.
 const CH9_SKIP := [[0, 0, 19, 3], [8, 2, 5, 1], [0, 8, 19, 3], [14, 7, 5, 1], [22, 0, 24, 3], [26, 3, 3, 1], [38, 3, 8, 1],
 	[22, 8, 24, 3], [46, 0, 4, 2], [50, 0, 8, 2], [50, 7, 4, 4]]
@@ -399,6 +411,23 @@ func _ch9_galleries(placed: Node) -> void:
 	# overlapping the floor band's dark by a few pixels.
 	for u in [[0, 19], [22, 46], [50, 54]]:
 		_band(node, CH9_UNDER, u[0], u[1], 11 * TILE - 6, false, "Underside")
+	for st in CH9_FLOOR_STEPS:
+		_ch9_step(node, st[0], st[1] * TILE, st[2], false)
+	for st in CH9_CEILING_STEPS:
+		_ch9_step(node, st[0], st[1] * TILE, st[2], true)
+
+
+## A step's face on the tile line x, its higher floor (or lower ceiling) on the
+## line y, on the side `side` of the face.
+func _ch9_step(parent: Node, x: int, y: float, side: int, ceiling: bool) -> void:
+	var w := CH9_STEP.size.x
+	var h := CH9_STEP.size.y
+	var px: float = x * TILE - 1 if side > 0 else x * TILE - w + 1
+	var py: float = y - h if ceiling else y
+	var sp := _sprite(parent, CH9_STEPS, CH9_STEP, Vector2(px, py))
+	sp.flip_h = side < 0
+	sp.flip_v = ceiling
+	sp.name = "CeilingStep" if ceiling else "FloorStep"
 
 
 ## A band repeated from tile x0 to x1: its first row on the line y, or (ceiling)
