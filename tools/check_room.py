@@ -79,8 +79,8 @@ ROOMS = {
         "gated": {"the shaft under the pit (Ironbark Ward, W1b)": (29, 32, 4, 2)},
         # The painted islands', plates' and ledges' single tile of collision,
         # and the pit's cracked plate (W1b).
-        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 4, 1), (22, 22, 2, 1), (29, 22, 2, 1),
-                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (50, 21, 4, 1),
+        "seals": [(13, 17, 15, 1), (7, 20, 2, 1), (10, 22, 2, 1), (3, 16, 3, 1), (22, 22, 2, 1), (29, 22, 2, 1),
+                  (31, 18, 2, 1), (34, 17, 2, 1), (37, 16, 2, 1), (41, 18, 6, 1), (47, 13, 2, 1), (51, 21, 3, 1),
                   (29, 31, 4, 1)],
         "exits": {"east upper (to the Lantern Clearing)": (57, 6), "west upper (to the Old Crypt)": (0, 7),
                   "west lower (to the Old Crypt's long gallery)": (0, 25), "east lower (to the Undercroft)": (57, 25)},

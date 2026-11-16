@@ -680,6 +680,12 @@ She steps forward with every hit.
   second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
+- **IB-05 is dressed in the CH pieces** (step 1, awaiting the creative lead's
+  approval before the other crypts get them): CH1 slabs for its small plates,
+  CH2 corbels for its wall ledges, and `_ch_detail` (the detail pass in CH4,
+  CH5 and CH8 pieces; `detail_skip` keeps it on the CH9 galleries). Next, once
+  approved: the same in IB-06 and IB-07 (whose SH4 plates the creative lead
+  called weird) and IB-02, then the Keep's foundations.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the
   Mossback is a surface creature).
 - Polish noted in the first room: corner caps where tops meet walls; the sky's

@@ -1,54 +1,59 @@
 [gd_scene format=4]
 
-[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_lsqqt"]
 [ext_resource type="Script" path="res://scripts/player/kleo.gd" id="1_p5lty"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_far.png" id="2_f7tym"]
-[ext_resource type="Shader" path="res://shaders/fog.gdshader" id="3_b0y7t"]
+[ext_resource type="Script" path="res://scripts/world/room.gd" id="1_rqiw8"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_far.png" id="2_w4fwo"]
+[ext_resource type="Shader" path="res://shaders/fog.gdshader" id="3_p3ncr"]
 [ext_resource type="Script" path="res://scripts/world/lantern_light.gd" id="3_vnlfr"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_mid_arcades.png" id="4_cuw6s"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_arcades.png" id="5_6sese"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_doorways.png" id="6_rqiw8"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_flora.png" id="8_w4fwo"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_props.png" id="9_p3ncr"]
-[ext_resource type="TileSet" path="res://scenes/world/blockout_tileset.tres" id="10_tcygh"]
-[ext_resource type="Script" path="res://scripts/world/terrain_skin.gd" id="11_cp717"]
-[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="12_2p2u2"]
-[ext_resource type="Resource" path="res://scenes/world/terrain_earth.tres" id="13_7r3k1"]
-[ext_resource type="Resource" path="res://scenes/world/terrain_cy.tres" id="14_16ey1"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_shrine_island.png" id="15_oqypf"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_platforms.png" id="16_qvhqn"]
-[ext_resource type="Script" path="res://scripts/world/back_wall.gd" id="17_18vac"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_fill.png" id="18_ex223"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_floor.png" id="19_lustj"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_ceiling.png" id="20_d3mbd"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_under.png" id="21_p2an7"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_steps.png" id="22_odds7"]
-[ext_resource type="Script" path="res://scripts/world/breakable.gd" id="23_q4kkq"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/props_guard_belongings.png" id="24_cnitd"]
-[ext_resource type="Texture2D" path="res://assets/fx/mote.png" id="25_0b7jv"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_foreground.png" id="26_tytmi"]
-[ext_resource type="Texture2D" path="res://assets/environment/ironbark/gate_bark_plate.png" id="27_5l5ko"]
-[ext_resource type="Script" path="res://scripts/world/secret_cover.gd" id="28_yr1m5"]
-[ext_resource type="Script" path="res://scripts/world/pickup.gd" id="29_xxjw4"]
-[ext_resource type="Texture2D" path="res://assets/items/resin.png" id="30_muchq"]
-[ext_resource type="Script" path="res://scripts/world/room_exit.gd" id="31_l5i7t"]
-[ext_resource type="PackedScene" path="res://scenes/player/kleo.tscn" id="32_41o0c"]
-[ext_resource type="Script" path="res://scripts/core/camera_rig.gd" id="34_arrd3"]
-[ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="35_pt6bu"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_mid_arcades.png" id="4_tcygh"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_arcades.png" id="5_cp717"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_doorways.png" id="7_2p2u2"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_flora.png" id="8_7r3k1"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_props.png" id="9_16ey1"]
+[ext_resource type="TileSet" path="res://scenes/world/blockout_tileset.tres" id="10_oqypf"]
+[ext_resource type="Script" path="res://scripts/world/terrain_skin.gd" id="11_qvhqn"]
+[ext_resource type="Script" path="res://scripts/world/terrain_material.gd" id="12_18vac"]
+[ext_resource type="Resource" path="res://scenes/world/terrain_earth.tres" id="13_ex223"]
+[ext_resource type="Resource" path="res://scenes/world/terrain_cy.tres" id="14_lustj"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_shrine_island.png" id="15_d3mbd"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/sh_platforms.png" id="16_p2an7"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch_platforms.png" id="17_odds7"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch_supports.png" id="18_q4kkq"]
+[ext_resource type="Script" path="res://scripts/world/back_wall.gd" id="19_cnitd"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/terrain/sh_fill.png" id="20_0b7jv"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_floor.png" id="21_tytmi"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_ceiling.png" id="22_5l5ko"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_under.png" id="23_yr1m5"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch9_steps.png" id="24_xxjw4"]
+[ext_resource type="Script" path="res://scripts/world/breakable.gd" id="25_muchq"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/props_guard_belongings.png" id="26_l5i7t"]
+[ext_resource type="Texture2D" path="res://assets/fx/mote.png" id="27_41o0c"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/oc_foreground.png" id="28_arrd3"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/gate_bark_plate.png" id="29_pt6bu"]
+[ext_resource type="Script" path="res://scripts/world/secret_cover.gd" id="30_fch6n"]
+[ext_resource type="Script" path="res://scripts/world/pickup.gd" id="31_t6h2o"]
+[ext_resource type="Texture2D" path="res://assets/items/resin.png" id="32_8e04v"]
+[ext_resource type="Script" path="res://scripts/world/room_exit.gd" id="33_rp4xg"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch_hangings.png" id="34_wvgjp"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch_foreground.png" id="35_1q5ng"]
+[ext_resource type="Texture2D" path="res://assets/environment/ironbark/ch_props.png" id="36_iy6hr"]
+[ext_resource type="PackedScene" path="res://scenes/player/kleo.tscn" id="37_cbmh6"]
+[ext_resource type="Script" path="res://scripts/core/camera_rig.gd" id="39_qklo1"]
+[ext_resource type="Shader" path="res://shaders/vignette.gdshader" id="40_8iv67"]
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_fch6n"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_edtgu"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t6h2o"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_oh7nu"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_fch6n")
+noise = SubResource("FastNoiseLite_edtgu")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8e04v"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_t6h2o")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_gd5pq"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_oh7nu")
 shader_parameter/tint = Color(0.24705882, 0.6039216, 0.5254902, 1)
 shader_parameter/density = 0.34
 shader_parameter/drift = Vector2(0.004, 0)
@@ -56,19 +61,19 @@ shader_parameter/scale = Vector2(5.078125, 1.275)
 shader_parameter/levels = null
 shader_parameter/side_fade = null
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rp4xg"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_dmpmn"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wvgjp"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_mfdlo"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_rp4xg")
+noise = SubResource("FastNoiseLite_dmpmn")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1q5ng"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_wvgjp")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3sxav"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_mfdlo")
 shader_parameter/tint = Color(0.36862746, 0.41568628, 0.5254902, 1)
 shader_parameter/density = 0.16
 shader_parameter/drift = Vector2(0.006, 0)
@@ -76,74 +81,9 @@ shader_parameter/scale = Vector2(5.46875, 0.95625)
 shader_parameter/levels = null
 shader_parameter/side_fade = null
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iy6hr"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5s5ev"]
 blend_mode = 3
 light_mode = 1
-
-[sub_resource type="Gradient" id="Gradient_cbmh6"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_qklo1"]
-gradient = SubResource("Gradient_cbmh6")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_8iv67"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_edtgu"]
-gradient = SubResource("Gradient_8iv67")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_oh7nu"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_gd5pq"]
-gradient = SubResource("Gradient_oh7nu")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_dmpmn"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_mfdlo"]
-gradient = SubResource("Gradient_dmpmn")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
-
-[sub_resource type="Gradient" id="Gradient_3sxav"]
-interpolation_mode = 1
-offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
-colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_5s5ev"]
-gradient = SubResource("Gradient_3sxav")
-width = 128
-height = 128
-fill = 1
-fill_from = Vector2(0.5, 0.5)
-fill_to = Vector2(1, 0.5)
 
 [sub_resource type="Gradient" id="Gradient_thm1v"]
 interpolation_mode = 1
@@ -197,43 +137,147 @@ fill = 1
 fill_from = Vector2(0.5, 0.5)
 fill_to = Vector2(1, 0.5)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uy0xj"]
+[sub_resource type="Gradient" id="Gradient_uy0xj"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_uk2mr"]
+gradient = SubResource("Gradient_uy0xj")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_l5fqj"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ryd58"]
+gradient = SubResource("Gradient_l5fqj")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_1dyaj"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_booy6"]
+gradient = SubResource("Gradient_1dyaj")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_wbwwy"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_cpxvd"]
+gradient = SubResource("Gradient_wbwwy")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_phmmu"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_qt5jw"]
+gradient = SubResource("Gradient_phmmu")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_asw76"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mht1k"]
+gradient = SubResource("Gradient_asw76")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_pq6mg"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0bcs0"]
+gradient = SubResource("Gradient_pq6mg")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="Gradient" id="Gradient_j7j2l"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.18, 0.36, 0.55, 0.75, 0.92)
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0.78, 1, 1, 1, 0.55, 1, 1, 1, 0.34, 1, 1, 1, 0.16, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_tyi14"]
+gradient = SubResource("Gradient_j7j2l")
+width = 128
+height = 128
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_f5dqn"]
 normal = Vector2(1, 0)
 
-[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_uk2mr"]
+[sub_resource type="WorldBoundaryShape2D" id="WorldBoundaryShape2D_3bm44"]
 normal = Vector2(-1, 0)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l5fqj"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x54cl"]
 size = Vector2(16, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ryd58"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_g3hmd"]
 size = Vector2(11, 18)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1dyaj"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_d5v0i"]
 size = Vector2(16, 20)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_booy6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v0lww"]
 size = Vector2(23, 28)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wbwwy"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xd1wy"]
 size = Vector2(11, 18)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_cpxvd"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_kyqi2"]
 size = Vector2(11, 18)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_phmmu"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_l1ue0"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qt5jw"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wrefb"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_phmmu")
+noise = SubResource("FastNoiseLite_l1ue0")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_asw76"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_qt5jw")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_81a7l"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_wrefb")
 shader_parameter/tint = Color(0.4, 0.39215687, 0.49411765, 1)
 shader_parameter/density = 0.16
 shader_parameter/drift = Vector2(0.005, 0)
@@ -241,26 +285,26 @@ shader_parameter/scale = Vector2(1.5625, 0.2734375)
 shader_parameter/levels = null
 shader_parameter/side_fade = null
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_mht1k"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_i6ur6"]
 blend_mode = 1
 light_mode = 1
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_pq6mg"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_5jny5"]
 light_mode = 1
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0bcs0"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_iivpy"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j7j2l"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b4cih"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_0bcs0")
+noise = SubResource("FastNoiseLite_iivpy")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tyi14"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_j7j2l")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f25rc"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_b4cih")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.45
 shader_parameter/drift = Vector2(0.005, 0)
@@ -268,62 +312,62 @@ shader_parameter/scale = Vector2(3.344, 0.6)
 shader_parameter/levels = null
 shader_parameter/side_fade = null
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_f5dqn"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1pt40"]
 size = Vector2(64, 16)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3bm44"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v6r43"]
 size = Vector2(48, 48)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_x54cl"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_gdvs4"]
 blend_mode = 1
 light_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_g3hmd"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_vu7x0"]
 radius = 6.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d5v0i"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rsxmf"]
 light_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_v0lww"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_3sb1g"]
 radius = 6.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_xd1wy"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_cowi2"]
 light_mode = 1
 
-[sub_resource type="CircleShape2D" id="CircleShape2D_kyqi2"]
+[sub_resource type="CircleShape2D" id="CircleShape2D_2i6is"]
 radius = 6.0
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_l1ue0"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_dtmy7"]
 light_mode = 1
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_wrefb"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ciegg"]
 size = Vector2(10, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_81a7l"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_djf3f"]
 size = Vector2(10, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_i6ur6"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lfacg"]
 size = Vector2(10, 80)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_5jny5"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_svucq"]
 size = Vector2(10, 64)
 
-[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_iivpy"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_2sqo2"]
 light_mode = 1
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_b4cih"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1ya7v"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_f25rc"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kxkps"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_b4cih")
+noise = SubResource("FastNoiseLite_1ya7v")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1pt40"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_f25rc")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g16gs"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_kxkps")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.28
 shader_parameter/drift = Vector2(0.005, 0)
@@ -331,19 +375,19 @@ shader_parameter/scale = Vector2(1.16, 3.8857143)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.08
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_v6r43"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_jnp26"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gdvs4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kdvg8"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_v6r43")
+noise = SubResource("FastNoiseLite_jnp26")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vu7x0"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_gdvs4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0xkd"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_kdvg8")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -351,19 +395,19 @@ shader_parameter/scale = Vector2(0.55, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rsxmf"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_3x7hv"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3sb1g"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_k3ifn"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_rsxmf")
+noise = SubResource("FastNoiseLite_3x7hv")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_cowi2"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_3sb1g")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5eads"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_k3ifn")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -371,19 +415,19 @@ shader_parameter/scale = Vector2(0.55, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_2i6is"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hxgql"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dtmy7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jwnvc"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_2i6is")
+noise = SubResource("FastNoiseLite_hxgql")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ciegg"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_dtmy7")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c66m7"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_jwnvc")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -391,19 +435,19 @@ shader_parameter/scale = Vector2(0.975, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_djf3f"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_hrbo6"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lfacg"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_m1bnn"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_djf3f")
+noise = SubResource("FastNoiseLite_hrbo6")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_svucq"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_lfacg")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k6pd7"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_m1bnn")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -411,19 +455,19 @@ shader_parameter/scale = Vector2(0.975, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_2sqo2"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_v2p1m"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1ya7v"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jc68m"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_2sqo2")
+noise = SubResource("FastNoiseLite_v2p1m")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kxkps"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_1ya7v")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ue1t8"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_jc68m")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -431,19 +475,19 @@ shader_parameter/scale = Vector2(0.2, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_g16gs"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4ated"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_jnp26"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fwxrc"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_g16gs")
+noise = SubResource("FastNoiseLite_4ated")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kdvg8"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_jnp26")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f11ht"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_fwxrc")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -451,19 +495,19 @@ shader_parameter/scale = Vector2(0.2, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_t0xkd"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ivax2"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3x7hv"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r4pk1"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_t0xkd")
+noise = SubResource("FastNoiseLite_ivax2")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_k3ifn"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_3x7hv")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r60hl"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_r4pk1")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -471,19 +515,19 @@ shader_parameter/scale = Vector2(0.275, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5eads"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_sw88m"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hxgql"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_vea27"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_5eads")
+noise = SubResource("FastNoiseLite_sw88m")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jwnvc"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_hxgql")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nsudb"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_vea27")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -491,19 +535,19 @@ shader_parameter/scale = Vector2(0.275, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_c66m7"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_ve5gc"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_hrbo6"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_8la4t"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_c66m7")
+noise = SubResource("FastNoiseLite_ve5gc")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m1bnn"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_hrbo6")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ltqlp"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_8la4t")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -511,19 +555,19 @@ shader_parameter/scale = Vector2(0.425, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_k6pd7"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u8khp"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_v2p1m"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_btfec"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_k6pd7")
+noise = SubResource("FastNoiseLite_u8khp")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jc68m"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_v2p1m")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h0n5b"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_btfec")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -531,19 +575,19 @@ shader_parameter/scale = Vector2(0.425, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ue1t8"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1xfxf"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4ated"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_44432"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_ue1t8")
+noise = SubResource("FastNoiseLite_1xfxf")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fwxrc"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_4ated")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rrt77"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_44432")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -551,19 +595,19 @@ shader_parameter/scale = Vector2(0.25, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_f11ht"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_0ws6n"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ivax2"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_lafmk"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_f11ht")
+noise = SubResource("FastNoiseLite_0ws6n")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r4pk1"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_ivax2")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0brp7"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_lafmk")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -571,19 +615,19 @@ shader_parameter/scale = Vector2(0.25, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_r60hl"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_psd3o"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_sw88m"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_76mau"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_r60hl")
+noise = SubResource("FastNoiseLite_psd3o")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vea27"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_sw88m")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ru1aq"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_76mau")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -591,19 +635,19 @@ shader_parameter/scale = Vector2(0.5, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_nsudb"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_rmyph"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ve5gc"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qukoq"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_nsudb")
+noise = SubResource("FastNoiseLite_rmyph")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8la4t"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_ve5gc")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7v6t8"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_qukoq")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -611,99 +655,19 @@ shader_parameter/scale = Vector2(0.5, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ltqlp"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_5qht7"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u8khp"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_fyrcm"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_ltqlp")
+noise = SubResource("FastNoiseLite_5qht7")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_btfec"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_u8khp")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.4
-shader_parameter/drift = Vector2(0.005, 0)
-shader_parameter/scale = Vector2(0.25, 0.6755555)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.12
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_h0n5b"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_1xfxf"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_h0n5b")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_44432"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_1xfxf")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.22
-shader_parameter/drift = Vector2(-0.008, 0)
-shader_parameter/scale = Vector2(0.25, 0.35555556)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.15
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_rrt77"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ws6n"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_rrt77")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_lafmk"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_0ws6n")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.4
-shader_parameter/drift = Vector2(0.005, 0)
-shader_parameter/scale = Vector2(0.45, 0.6755555)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.12
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_0brp7"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_psd3o"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_0brp7")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_76mau"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_psd3o")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.22
-shader_parameter/drift = Vector2(-0.008, 0)
-shader_parameter/scale = Vector2(0.45, 0.35555556)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.15
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ru1aq"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_rmyph"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_ru1aq")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qukoq"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_rmyph")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wv77o"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_fyrcm")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -711,19 +675,19 @@ shader_parameter/scale = Vector2(0.225, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_7v6t8"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2utyx"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5qht7"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_r0tof"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_7v6t8")
+noise = SubResource("FastNoiseLite_2utyx")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fyrcm"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_5qht7")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_87d7m"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_r0tof")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -731,59 +695,19 @@ shader_parameter/scale = Vector2(0.225, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_wv77o"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_4prhu"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2utyx"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4e7j0"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_wv77o")
+noise = SubResource("FastNoiseLite_4prhu")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_r0tof"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_2utyx")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.4
-shader_parameter/drift = Vector2(0.005, 0)
-shader_parameter/scale = Vector2(0.175, 0.6755555)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.12
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_87d7m"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_4prhu"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_87d7m")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_4e7j0"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_4prhu")
-shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
-shader_parameter/density = 0.22
-shader_parameter/drift = Vector2(-0.008, 0)
-shader_parameter/scale = Vector2(0.175, 0.35555556)
-shader_parameter/levels = null
-shader_parameter/side_fade = 0.15
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_5yo3u"]
-frequency = 0.012
-fractal_octaves = 3
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bp08l"]
-width = 256
-height = 128
-noise = SubResource("FastNoiseLite_5yo3u")
-seamless = true
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wihm1"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_bp08l")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5yo3u"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_4e7j0")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -791,19 +715,19 @@ shader_parameter/scale = Vector2(0.45, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_v1yrw"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_bp08l"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kiaek"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_wihm1"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_v1yrw")
+noise = SubResource("FastNoiseLite_bp08l")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_60ghh"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_kiaek")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v1yrw"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_wihm1")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -811,19 +735,99 @@ shader_parameter/scale = Vector2(0.45, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_26141"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kiaek"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_pgxxj"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_60ghh"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_26141")
+noise = SubResource("FastNoiseLite_kiaek")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gw6mk"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_pgxxj")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_26141"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_60ghh")
+shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
+shader_parameter/density = 0.4
+shader_parameter/drift = Vector2(0.005, 0)
+shader_parameter/scale = Vector2(0.225, 0.6755555)
+shader_parameter/levels = null
+shader_parameter/side_fade = 0.12
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pgxxj"]
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_gw6mk"]
+width = 256
+height = 128
+noise = SubResource("FastNoiseLite_pgxxj")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ia6va"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_gw6mk")
+shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
+shader_parameter/density = 0.22
+shader_parameter/drift = Vector2(-0.008, 0)
+shader_parameter/scale = Vector2(0.225, 0.35555556)
+shader_parameter/levels = null
+shader_parameter/side_fade = 0.15
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_qd1r4"]
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_07jex"]
+width = 256
+height = 128
+noise = SubResource("FastNoiseLite_qd1r4")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6fp3s"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_07jex")
+shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
+shader_parameter/density = 0.4
+shader_parameter/drift = Vector2(0.005, 0)
+shader_parameter/scale = Vector2(0.45, 0.6755555)
+shader_parameter/levels = null
+shader_parameter/side_fade = 0.12
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_2rnh8"]
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ltdo"]
+width = 256
+height = 128
+noise = SubResource("FastNoiseLite_2rnh8")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hm5ah"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_0ltdo")
+shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
+shader_parameter/density = 0.22
+shader_parameter/drift = Vector2(-0.008, 0)
+shader_parameter/scale = Vector2(0.45, 0.35555556)
+shader_parameter/levels = null
+shader_parameter/side_fade = 0.15
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_523m5"]
+frequency = 0.012
+fractal_octaves = 3
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_dkao8"]
+width = 256
+height = 128
+noise = SubResource("FastNoiseLite_523m5")
+seamless = true
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t8fd4"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_dkao8")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -831,19 +835,19 @@ shader_parameter/scale = Vector2(0.175, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_ia6va"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_u6ntn"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qd1r4"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_kxqxs"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_ia6va")
+noise = SubResource("FastNoiseLite_u6ntn")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_07jex"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_qd1r4")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mkywh"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_kxqxs")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -851,19 +855,19 @@ shader_parameter/scale = Vector2(0.175, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_6fp3s"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_66o8w"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_2rnh8"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_ioypw"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_6fp3s")
+noise = SubResource("FastNoiseLite_66o8w")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ltdo"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_2rnh8")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aw362"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_ioypw")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -871,19 +875,19 @@ shader_parameter/scale = Vector2(0.7, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_hm5ah"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_fj662"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_523m5"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_j3tw1"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_hm5ah")
+noise = SubResource("FastNoiseLite_fj662")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dkao8"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_523m5")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vwjh5"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_j3tw1")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -891,19 +895,19 @@ shader_parameter/scale = Vector2(0.7, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_t8fd4"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_28q3m"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_u6ntn"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_t41u7"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_t8fd4")
+noise = SubResource("FastNoiseLite_28q3m")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kxqxs"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_u6ntn")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ktf4k"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_t41u7")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.4
 shader_parameter/drift = Vector2(0.005, 0)
@@ -911,19 +915,19 @@ shader_parameter/scale = Vector2(0.325, 0.6755555)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.12
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_mkywh"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mtf7r"]
 frequency = 0.012
 fractal_octaves = 3
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_66o8w"]
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_g6tdp"]
 width = 256
 height = 128
-noise = SubResource("FastNoiseLite_mkywh")
+noise = SubResource("FastNoiseLite_mtf7r")
 seamless = true
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ioypw"]
-shader = ExtResource("3_b0y7t")
-shader_parameter/noise = SubResource("NoiseTexture2D_66o8w")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wntqx"]
+shader = ExtResource("3_p3ncr")
+shader_parameter/noise = SubResource("NoiseTexture2D_g6tdp")
 shader_parameter/tint = Color(0.32, 0.48, 0.52, 1)
 shader_parameter/density = 0.22
 shader_parameter/drift = Vector2(-0.008, 0)
@@ -931,156 +935,156 @@ shader_parameter/scale = Vector2(0.325, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_aw362"]
-shader = ExtResource("35_pt6bu")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ii0p"]
+shader = ExtResource("40_8iv67")
 shader_parameter/strength = null
 shader_parameter/inner = null
 shader_parameter/outer = null
 shader_parameter/shadow = null
 
-[node name="IronbarkShrineHall" type="Node2D" unique_id=1419162215]
-script = ExtResource("1_lsqqt")
+[node name="IronbarkShrineHall" type="Node2D" unique_id=2056822770]
+script = ExtResource("1_rqiw8")
 room_rect = Rect2i(0, 0, 58, 34)
 spawn = Vector2(888, 112)
 
-[node name="Far" type="Parallax2D" parent="." unique_id=798569854]
+[node name="Far" type="Parallax2D" parent="." unique_id=2119331355]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.12, 0.15)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="Far" unique_id=29428931]
+[node name="Art" type="Sprite2D" parent="Far" unique_id=1480391804]
 modulate = Color(0.74, 1, 0.8, 1)
 position = Vector2(0, -40)
-texture = ExtResource("2_f7tym")
+texture = ExtResource("2_w4fwo")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="Art2" type="Sprite2D" parent="Far" unique_id=1526369084]
+[node name="Art2" type="Sprite2D" parent="Far" unique_id=1369648814]
 modulate = Color(0.74, 1, 0.8, 1)
 position = Vector2(0, 318)
-texture = ExtResource("2_f7tym")
+texture = ExtResource("2_w4fwo")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="FogFar" type="Parallax2D" parent="." unique_id=1299349812]
+[node name="FogFar" type="Parallax2D" parent="." unique_id=121321757]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.22, 0.25)
 
-[node name="Fog" type="ColorRect" parent="FogFar" unique_id=1202830367]
-material = SubResource("ShaderMaterial_8e04v")
+[node name="Fog" type="ColorRect" parent="FogFar" unique_id=1764654900]
+material = SubResource("ShaderMaterial_gd5pq")
 offset_left = -300.0
 offset_top = 163.2
 offset_right = 2300.0
 offset_bottom = 489.59998
 mouse_filter = 2
 
-[node name="MidFar" type="Parallax2D" parent="." unique_id=1939316045]
+[node name="MidFar" type="Parallax2D" parent="." unique_id=1211220430]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.32, 0.35)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="MidFar" unique_id=464829235]
+[node name="Art" type="Sprite2D" parent="MidFar" unique_id=1590226424]
 modulate = Color(0.5, 0.68, 0.64, 0.55)
 position = Vector2(-200, 98)
-texture = ExtResource("4_cuw6s")
+texture = ExtResource("4_tcygh")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="FogMid" type="Parallax2D" parent="." unique_id=2112310860]
+[node name="FogMid" type="Parallax2D" parent="." unique_id=474487861]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.45, 0.5)
 
-[node name="Fog" type="ColorRect" parent="FogMid" unique_id=1081433794]
-material = SubResource("ShaderMaterial_1q5ng")
+[node name="Fog" type="ColorRect" parent="FogMid" unique_id=1105841999]
+material = SubResource("ShaderMaterial_3sxav")
 offset_left = -300.0
 offset_top = 244.8
 offset_right = 2500.0
 offset_bottom = 489.6
 mouse_filter = 2
 
-[node name="Mid" type="Parallax2D" parent="." unique_id=706143549]
+[node name="Mid" type="Parallax2D" parent="." unique_id=298337799]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.58, 0.62)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="Mid" unique_id=127727115]
+[node name="Art" type="Sprite2D" parent="Mid" unique_id=688439871]
 modulate = Color(0.3, 0.46, 0.44, 0.9)
 position = Vector2(150, 228)
-texture = ExtResource("4_cuw6s")
+texture = ExtResource("4_tcygh")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="Ruins" type="Parallax2D" parent="." unique_id=551205598]
+[node name="Ruins" type="Parallax2D" parent="." unique_id=1556838217]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.78, 0.82)
 repeat_size = Vector2(900, 0)
 repeat_times = 4
 
-[node name="Ruin" type="Sprite2D" parent="Ruins" unique_id=375449722]
+[node name="Ruin" type="Sprite2D" parent="Ruins" unique_id=667290123]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(40, 376)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(4, 32, 128, 80)
 
-[node name="Ruin2" type="Sprite2D" parent="Ruins" unique_id=511985970]
+[node name="Ruin2" type="Sprite2D" parent="Ruins" unique_id=929544326]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(300, 376)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Ruin3" type="Sprite2D" parent="Ruins" unique_id=1807989461]
+[node name="Ruin3" type="Sprite2D" parent="Ruins" unique_id=1945962790]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(470, 376)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Ruin4" type="Sprite2D" parent="Ruins" unique_id=1736647645]
+[node name="Ruin4" type="Sprite2D" parent="Ruins" unique_id=25901058]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(640, 424)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(248, 56, 16, 56)
 
-[node name="Ruin5" type="Sprite2D" parent="Ruins" unique_id=1337728597]
+[node name="Ruin5" type="Sprite2D" parent="Ruins" unique_id=779576421]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(760, 376)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Mood" type="Polygon2D" parent="." unique_id=887026875]
+[node name="Mood" type="Polygon2D" parent="." unique_id=1474107197]
 z_index = -9
-material = SubResource("CanvasItemMaterial_iy6hr")
+material = SubResource("CanvasItemMaterial_5s5ev")
 polygon = PackedVector2Array(-400, -200, 1328, -200, 1328, 744, -400, 744)
 vertex_colors = PackedColorArray(1, 0.52, 1, 1, 1, 0.52, 1, 1, 0.48, 1, 0.92, 1, 0.48, 1, 0.92, 1)
 
-[node name="MoodHaze" type="ColorRect" parent="." unique_id=729107254]
+[node name="MoodHaze" type="ColorRect" parent="." unique_id=1281089196]
 z_index = -9
 offset_left = -400.0
 offset_top = -400.0
@@ -1089,813 +1093,837 @@ offset_bottom = 944.0
 mouse_filter = 2
 color = Color(0.04, 0.11, 0.13, 0.24)
 
-[node name="Behind" type="Node2D" parent="." unique_id=520322564]
+[node name="Behind" type="Node2D" parent="." unique_id=1075098398]
 modulate = Color(0.82, 0.76, 0.74, 1)
 z_index = 2
 
-[node name="Doorway" type="Sprite2D" parent="Behind" unique_id=207366959]
+[node name="ShrineBrazierLight" type="PointLight2D" parent="Behind" unique_id=1194121926]
+position = Vector2(297, 255)
+color = Color(1, 0.7, 0.38, 1)
+energy = 1.0450001
+texture = SubResource("GradientTexture2D_ua4t0")
+texture_scale = 0.48299998
+script = ExtResource("3_vnlfr")
+
+[node name="ShrineBrazierLight2" type="PointLight2D" parent="Behind" unique_id=1595763854]
+position = Vector2(387, 255)
+color = Color(1, 0.7, 0.38, 1)
+energy = 1.0450001
+texture = SubResource("GradientTexture2D_p8qim")
+texture_scale = 0.48299998
+script = ExtResource("3_vnlfr")
+
+[node name="ShrineOrbLight" type="PointLight2D" parent="Behind" unique_id=2072338182]
+position = Vector2(328, 234)
+color = Color(1, 0.78, 0.45, 1)
+energy = 0.76
+texture = SubResource("GradientTexture2D_ormk8")
+texture_scale = 0.322
+script = ExtResource("3_vnlfr")
+
+[node name="Doorway" type="Sprite2D" parent="Behind" unique_id=1628963314]
 position = Vector2(-18, 34)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow" type="PointLight2D" parent="Behind" unique_id=2076950810]
+[node name="DoorwayGlow" type="PointLight2D" parent="Behind" unique_id=687436283]
 position = Vector2(22, 88)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
-texture = SubResource("GradientTexture2D_qklo1")
+texture = SubResource("GradientTexture2D_s6onj")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch" type="Sprite2D" parent="Behind" unique_id=34785568]
+[node name="Torch" type="Sprite2D" parent="Behind" unique_id=1138894936]
 position = Vector2(64, 72)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight" type="PointLight2D" parent="Behind" unique_id=820180489]
+[node name="TorchLight" type="PointLight2D" parent="Behind" unique_id=192202990]
 position = Vector2(72, 78)
 color = Color(1, 0.7, 0.38, 1)
 energy = 1.9
-texture = SubResource("GradientTexture2D_edtgu")
+texture = SubResource("GradientTexture2D_uk2mr")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway2" type="Sprite2D" parent="Behind" unique_id=1061597018]
+[node name="Doorway2" type="Sprite2D" parent="Behind" unique_id=427171039]
 position = Vector2(866, 18)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 flip_h = true
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow2" type="PointLight2D" parent="Behind" unique_id=1852450695]
+[node name="DoorwayGlow2" type="PointLight2D" parent="Behind" unique_id=1855459042]
 position = Vector2(906, 72)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
-texture = SubResource("GradientTexture2D_gd5pq")
+texture = SubResource("GradientTexture2D_ryd58")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch2" type="Sprite2D" parent="Behind" unique_id=1139129163]
+[node name="Torch2" type="Sprite2D" parent="Behind" unique_id=17329007]
 position = Vector2(852, 56)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight2" type="PointLight2D" parent="Behind" unique_id=540383717]
+[node name="TorchLight2" type="PointLight2D" parent="Behind" unique_id=795598485]
 position = Vector2(860, 62)
 color = Color(1, 0.7, 0.38, 1)
 energy = 1.9
-texture = SubResource("GradientTexture2D_mfdlo")
+texture = SubResource("GradientTexture2D_booy6")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway3" type="Sprite2D" parent="Behind" unique_id=1073884648]
+[node name="Doorway3" type="Sprite2D" parent="Behind" unique_id=1058086388]
 position = Vector2(-18, 322)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 16, 80, 96)
 
-[node name="DoorwayGlow3" type="PointLight2D" parent="Behind" unique_id=1179298463]
+[node name="DoorwayGlow3" type="PointLight2D" parent="Behind" unique_id=872482026]
 position = Vector2(22, 376)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
-texture = SubResource("GradientTexture2D_5s5ev")
+texture = SubResource("GradientTexture2D_cpxvd")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch3" type="Sprite2D" parent="Behind" unique_id=2080520991]
+[node name="Torch3" type="Sprite2D" parent="Behind" unique_id=1006644838]
 position = Vector2(64, 360)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight3" type="PointLight2D" parent="Behind" unique_id=1344951451]
+[node name="TorchLight3" type="PointLight2D" parent="Behind" unique_id=1452552023]
 position = Vector2(72, 366)
 color = Color(1, 0.7, 0.38, 1)
 energy = 1.9
-texture = SubResource("GradientTexture2D_ua4t0")
+texture = SubResource("GradientTexture2D_qt5jw")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway4" type="Sprite2D" parent="Behind" unique_id=1890779898]
+[node name="Doorway4" type="Sprite2D" parent="Behind" unique_id=1961261659]
 position = Vector2(866, 322)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 flip_h = true
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow4" type="PointLight2D" parent="Behind" unique_id=1234136786]
+[node name="DoorwayGlow4" type="PointLight2D" parent="Behind" unique_id=45401352]
 position = Vector2(906, 376)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
-texture = SubResource("GradientTexture2D_p8qim")
+texture = SubResource("GradientTexture2D_mht1k")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch4" type="Sprite2D" parent="Behind" unique_id=1569794298]
+[node name="Torch4" type="Sprite2D" parent="Behind" unique_id=1238630599]
 position = Vector2(852, 360)
-texture = ExtResource("6_rqiw8")
+texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight4" type="PointLight2D" parent="Behind" unique_id=1450785705]
+[node name="TorchLight4" type="PointLight2D" parent="Behind" unique_id=1068286652]
 position = Vector2(860, 366)
 color = Color(1, 0.7, 0.38, 1)
 energy = 1.9
-texture = SubResource("GradientTexture2D_ormk8")
+texture = SubResource("GradientTexture2D_0bcs0")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Arch" type="Sprite2D" parent="Behind" unique_id=1407237790]
+[node name="Arch" type="Sprite2D" parent="Behind" unique_id=433586049]
 position = Vector2(120, 50)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Pots" type="Sprite2D" parent="Behind" unique_id=1103498990]
+[node name="Pots" type="Sprite2D" parent="Behind" unique_id=2084629477]
 position = Vector2(200, 106)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(304, 88, 40, 24)
 
-[node name="Flowers" type="Sprite2D" parent="Behind" unique_id=760142125]
+[node name="Flowers" type="Sprite2D" parent="Behind" unique_id=1339650839]
 position = Vector2(250, 94)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 72, 32, 20)
 
-[node name="Arcade" type="Sprite2D" parent="Behind" unique_id=1005981376]
+[node name="Arcade" type="Sprite2D" parent="Behind" unique_id=2001079706]
 position = Vector2(474, 66)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(4, 32, 128, 80)
 
-[node name="Pillar" type="Sprite2D" parent="Behind" unique_id=1829271790]
+[node name="Pillar" type="Sprite2D" parent="Behind" unique_id=451825322]
 position = Vector2(380, 50)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Chest" type="Sprite2D" parent="Behind" unique_id=142882432]
+[node name="Chest" type="Sprite2D" parent="Behind" unique_id=1453612870]
 position = Vector2(600, 130)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(352, 96, 24, 16)
 
-[node name="Flowers2" type="Sprite2D" parent="Behind" unique_id=1350970393]
+[node name="Flowers2" type="Sprite2D" parent="Behind" unique_id=998450522]
 position = Vector2(630, 118)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 64, 48, 28)
 
-[node name="Crystals" type="Sprite2D" parent="Behind" unique_id=2135925133]
+[node name="Crystals" type="Sprite2D" parent="Behind" unique_id=120869112]
 position = Vector2(830, 90)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 16, 32, 24)
 
-[node name="Arch2" type="Sprite2D" parent="Behind" unique_id=190099851]
+[node name="Arch2" type="Sprite2D" parent="Behind" unique_id=1262762569]
 position = Vector2(640, 338)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Pillar2" type="Sprite2D" parent="Behind" unique_id=537135516]
+[node name="Pillar2" type="Sprite2D" parent="Behind" unique_id=1931943889]
 position = Vector2(120, 362)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(248, 56, 16, 56)
 
-[node name="Pillar3" type="Sprite2D" parent="Behind" unique_id=214851501]
+[node name="Pillar3" type="Sprite2D" parent="Behind" unique_id=295706976]
 position = Vector2(560, 386)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 80, 16, 32)
 
-[node name="Crystals2" type="Sprite2D" parent="Behind" unique_id=104821098]
+[node name="Crystals2" type="Sprite2D" parent="Behind" unique_id=27337566]
 position = Vector2(540, 378)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(152, 0, 64, 40)
 
-[node name="Crystals3" type="Sprite2D" parent="Behind" unique_id=749658846]
+[node name="Crystals3" type="Sprite2D" parent="Behind" unique_id=1073538041]
 position = Vector2(230, 402)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 8, 48, 32)
 
-[node name="Flowers3" type="Sprite2D" parent="Behind" unique_id=758950228]
+[node name="Flowers3" type="Sprite2D" parent="Behind" unique_id=562557660]
 position = Vector2(290, 398)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(152, 56, 64, 36)
 
-[node name="Flowers4" type="Sprite2D" parent="Behind" unique_id=1194368411]
+[node name="Flowers4" type="Sprite2D" parent="Behind" unique_id=1400524847]
 position = Vector2(740, 390)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 64, 48, 28)
 
-[node name="Grass" type="Sprite2D" parent="Behind" unique_id=1895170362]
+[node name="Grass" type="Sprite2D" parent="Behind" unique_id=118772498]
 position = Vector2(40, 394)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(16, 208, 48, 24)
 
-[node name="WhiteFlowers" type="Sprite2D" parent="Behind" unique_id=515714903]
+[node name="WhiteFlowers" type="Sprite2D" parent="Behind" unique_id=1562019279]
 position = Vector2(880, 394)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(112, 208, 48, 24)
 
-[node name="Bier" type="Sprite2D" parent="Behind" unique_id=786963133]
+[node name="Bier" type="Sprite2D" parent="Behind" unique_id=626355078]
 position = Vector2(360, 406)
-texture = ExtResource("9_p3ncr")
+texture = ExtResource("9_16ey1")
 centered = false
 region_enabled = true
 region_rect = Rect2(2, 91, 77, 28)
 
-[node name="Bones" type="Sprite2D" parent="Behind" unique_id=1566491549]
+[node name="Bones" type="Sprite2D" parent="Behind" unique_id=513131143]
 position = Vector2(700, 397)
-texture = ExtResource("9_p3ncr")
+texture = ExtResource("9_16ey1")
 centered = false
 region_enabled = true
 region_rect = Rect2(41, 46, 46, 21)
 
-[node name="Hanging" type="Sprite2D" parent="Behind" unique_id=1830219913]
+[node name="Hanging" type="Sprite2D" parent="Behind" unique_id=862890155]
 position = Vector2(90, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="Hanging2" type="Sprite2D" parent="Behind" unique_id=560661872]
+[node name="Hanging2" type="Sprite2D" parent="Behind" unique_id=74098843]
 position = Vector2(230, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="Hanging3" type="Sprite2D" parent="Behind" unique_id=1393746867]
+[node name="Hanging3" type="Sprite2D" parent="Behind" unique_id=959475701]
 position = Vector2(300, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 112, 16, 32)
 
-[node name="Hanging4" type="Sprite2D" parent="Behind" unique_id=490412990]
+[node name="Hanging4" type="Sprite2D" parent="Behind" unique_id=796915094]
 position = Vector2(400, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="Hanging5" type="Sprite2D" parent="Behind" unique_id=1846113430]
+[node name="Hanging5" type="Sprite2D" parent="Behind" unique_id=1299960194]
 position = Vector2(560, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="Hanging6" type="Sprite2D" parent="Behind" unique_id=440336484]
+[node name="Hanging6" type="Sprite2D" parent="Behind" unique_id=1648147249]
 position = Vector2(650, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="Hanging7" type="Sprite2D" parent="Behind" unique_id=23580633]
+[node name="Hanging7" type="Sprite2D" parent="Behind" unique_id=468148403]
 position = Vector2(860, 174)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 112, 16, 32)
 
-[node name="ShaftGlow" type="PointLight2D" parent="Behind" unique_id=800021208]
+[node name="ShaftGlow" type="PointLight2D" parent="Behind" unique_id=1551337925]
 position = Vector2(496, 528)
 color = Color(0.55, 0.75, 1, 1)
 energy = 0.25
-texture = SubResource("GradientTexture2D_s6onj")
+texture = SubResource("GradientTexture2D_tyi14")
 texture_scale = 0.7
 script = ExtResource("3_vnlfr")
 
-[node name="Solid" type="TileMapLayer" parent="." unique_id=1037406514 groups=["solid_tiles"]]
+[node name="Solid" type="TileMapLayer" parent="." unique_id=2142762730 groups=["solid_tiles"]]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAABAAAAABAAAAAAAAABEAAAABAAAAAAAAABIAAAABAAAAAAAAABMAAAABAAAAAAAAABQAAAABAAAAAAAAABoAAAABAAAAAAAAABsAAAABAAAAAAAAABwAAAABAAAAAAAAAB0AAAABAAAAAAAAAB4AAAABAAAAAAAAAB8AAAABAAAAAAAAACAAAAABAAAAAAAAACEAAAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAgAAAABAAAAAAABAAkAAAABAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAABAAwAAAABAAAAAAABABAAAAABAAAAAAABABEAAAABAAAAAAABABIAAAABAAAAAAABABMAAAABAAAAAAABABQAAAABAAAAAAABABoAAAABAAAAAAABABsAAAABAAAAAAABABwAAAABAAAAAAABAB0AAAABAAAAAAABAB4AAAABAAAAAAABAB8AAAABAAAAAAABACAAAAABAAAAAAABACEAAAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAgAAAABAAAAAAACAAkAAAABAAAAAAACAAoAAAABAAAAAAACAAsAAAABAAAAAAACAAwAAAABAAAAAAACABAAAAABAAAAAAACABEAAAABAAAAAAACABIAAAABAAAAAAACABMAAAABAAAAAAACABQAAAABAAAAAAACABoAAAABAAAAAAACABsAAAABAAAAAAACABwAAAABAAAAAAACAB0AAAABAAAAAAACAB4AAAABAAAAAAACAB8AAAABAAAAAAACACAAAAABAAAAAAACACEAAAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAgAAAABAAAAAAADAAkAAAABAAAAAAADAAoAAAABAAAAAAADABoAAAABAAAAAAADABsAAAABAAAAAAADABwAAAABAAAAAAADAB0AAAABAAAAAAADAB4AAAABAAAAAAADAB8AAAABAAAAAAADACAAAAABAAAAAAADACEAAAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEABoAAAABAAAAAAAEABsAAAABAAAAAAAEABwAAAABAAAAAAAEAB0AAAABAAAAAAAEAB4AAAABAAAAAAAEAB8AAAABAAAAAAAEACAAAAABAAAAAAAEACEAAAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFABoAAAABAAAAAAAFABsAAAABAAAAAAAFABwAAAABAAAAAAAFAB0AAAABAAAAAAAFAB4AAAABAAAAAAAFAB8AAAABAAAAAAAFACAAAAABAAAAAAAFACEAAAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAABAAAAAAAGAAIAAAABAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAABAAAAAAAGABoAAAABAAAAAAAGABsAAAABAAAAAAAGABwAAAABAAAAAAAGAB0AAAABAAAAAAAGAB4AAAABAAAAAAAGAB8AAAABAAAAAAAGACAAAAABAAAAAAAGACEAAAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAABAAAAAAAHABoAAAABAAAAAAAHABsAAAABAAAAAAAHABwAAAABAAAAAAAHAB0AAAABAAAAAAAHAB4AAAABAAAAAAAHAB8AAAABAAAAAAAHACAAAAABAAAAAAAHACEAAAABAAAAAAAIAAAAAAABAAAAAAAIAAEAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAABAAAAAAAIAAoAAAABAAAAAAAIABoAAAABAAAAAAAIABsAAAABAAAAAAAIABwAAAABAAAAAAAIAB0AAAABAAAAAAAIAB4AAAABAAAAAAAIAB8AAAABAAAAAAAIACAAAAABAAAAAAAIACEAAAABAAAAAAAJAAAAAAABAAAAAAAJAAEAAAABAAAAAAAJAAgAAAABAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJABoAAAABAAAAAAAJABsAAAABAAAAAAAJABwAAAABAAAAAAAJAB0AAAABAAAAAAAJAB4AAAABAAAAAAAJAB8AAAABAAAAAAAJACAAAAABAAAAAAAJACEAAAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKABoAAAABAAAAAAAKABsAAAABAAAAAAAKABwAAAABAAAAAAAKAB0AAAABAAAAAAAKAB4AAAABAAAAAAAKAB8AAAABAAAAAAAKACAAAAABAAAAAAAKACEAAAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALABoAAAABAAAAAAALABsAAAABAAAAAAALABwAAAABAAAAAAALAB0AAAABAAAAAAALAB4AAAABAAAAAAALAB8AAAABAAAAAAALACAAAAABAAAAAAALACEAAAABAAAAAAAMAAAAAAABAAAAAAAMAAEAAAABAAAAAAAMAAgAAAABAAAAAAAMAAkAAAABAAAAAAAMAAoAAAABAAAAAAAMABoAAAABAAAAAAAMABsAAAABAAAAAAAMABwAAAABAAAAAAAMAB0AAAABAAAAAAAMAB4AAAABAAAAAAAMAB8AAAABAAAAAAAMACAAAAABAAAAAAAMACEAAAABAAAAAAANAAAAAAABAAAAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAgAAAABAAAAAAANAAkAAAABAAAAAAANAAoAAAABAAAAAAANABoAAAABAAAAAAANABsAAAABAAAAAAANABwAAAABAAAAAAANAB0AAAABAAAAAAANAB4AAAABAAAAAAANAB8AAAABAAAAAAANACAAAAABAAAAAAANACEAAAABAAAAAAAOAAAAAAABAAAAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAcAAAABAAAAAAAOAAgAAAABAAAAAAAOAAkAAAABAAAAAAAOAAoAAAABAAAAAAAOABoAAAABAAAAAAAOABsAAAABAAAAAAAOABwAAAABAAAAAAAOAB0AAAABAAAAAAAOAB4AAAABAAAAAAAOAB8AAAABAAAAAAAOACAAAAABAAAAAAAOACEAAAABAAAAAAAPAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAAAAAAPABsAAAABAAAAAAAPABwAAAABAAAAAAAPAB0AAAABAAAAAAAPAB4AAAABAAAAAAAPAB8AAAABAAAAAAAPACAAAAABAAAAAAAPACEAAAABAAAAAAAQAAAAAAABAAAAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAcAAAABAAAAAAAQAAgAAAABAAAAAAAQAAkAAAABAAAAAAAQAAoAAAABAAAAAAAQABsAAAABAAAAAAAQABwAAAABAAAAAAAQAB0AAAABAAAAAAAQAB4AAAABAAAAAAAQAB8AAAABAAAAAAAQACAAAAABAAAAAAAQACEAAAABAAAAAAARAAAAAAABAAAAAAARAAEAAAABAAAAAAARAAIAAAABAAAAAAARAAcAAAABAAAAAAARAAgAAAABAAAAAAARAAkAAAABAAAAAAARAAoAAAABAAAAAAARABsAAAABAAAAAAARABwAAAABAAAAAAARAB0AAAABAAAAAAARAB4AAAABAAAAAAARAB8AAAABAAAAAAARACAAAAABAAAAAAARACEAAAABAAAAAAASAAAAAAABAAAAAAASAAEAAAABAAAAAAASAAIAAAABAAAAAAASAAcAAAABAAAAAAASAAgAAAABAAAAAAASAAkAAAABAAAAAAASAAoAAAABAAAAAAASABsAAAABAAAAAAASABwAAAABAAAAAAASAB0AAAABAAAAAAASAB4AAAABAAAAAAASAB8AAAABAAAAAAASACAAAAABAAAAAAASACEAAAABAAAAAAATABsAAAABAAAAAAATABwAAAABAAAAAAATAB0AAAABAAAAAAATAB4AAAABAAAAAAATAB8AAAABAAAAAAATACAAAAABAAAAAAATACEAAAABAAAAAAAUABsAAAABAAAAAAAUABwAAAABAAAAAAAUAB0AAAABAAAAAAAUAB4AAAABAAAAAAAUAB8AAAABAAAAAAAUACAAAAABAAAAAAAUACEAAAABAAAAAAAVABsAAAABAAAAAAAVABwAAAABAAAAAAAVAB0AAAABAAAAAAAVAB4AAAABAAAAAAAVAB8AAAABAAAAAAAVACAAAAABAAAAAAAVACEAAAABAAAAAAAWAAAAAAABAAAAAAAWAAEAAAABAAAAAAAWAAIAAAABAAAAAAAWAAgAAAABAAAAAAAWAAkAAAABAAAAAAAWAAoAAAABAAAAAAAWABsAAAABAAAAAAAWABwAAAABAAAAAAAWAB0AAAABAAAAAAAWAB4AAAABAAAAAAAWAB8AAAABAAAAAAAWACAAAAABAAAAAAAWACEAAAABAAAAAAAXAAAAAAABAAAAAAAXAAEAAAABAAAAAAAXAAIAAAABAAAAAAAXAAgAAAABAAAAAAAXAAkAAAABAAAAAAAXAAoAAAABAAAAAAAXABsAAAABAAAAAAAXABwAAAABAAAAAAAXAB0AAAABAAAAAAAXAB4AAAABAAAAAAAXAB8AAAABAAAAAAAXACAAAAABAAAAAAAXACEAAAABAAAAAAAYAAAAAAABAAAAAAAYAAEAAAABAAAAAAAYAAIAAAABAAAAAAAYAAgAAAABAAAAAAAYAAkAAAABAAAAAAAYAAoAAAABAAAAAAAYABsAAAABAAAAAAAYABwAAAABAAAAAAAYAB0AAAABAAAAAAAYAB4AAAABAAAAAAAYAB8AAAABAAAAAAAYACAAAAABAAAAAAAYACEAAAABAAAAAAAZAAAAAAABAAAAAAAZAAEAAAABAAAAAAAZAAIAAAABAAAAAAAZAAgAAAABAAAAAAAZAAkAAAABAAAAAAAZAAoAAAABAAAAAAAZABoAAAABAAAAAAAZABsAAAABAAAAAAAZABwAAAABAAAAAAAZAB0AAAABAAAAAAAZAB4AAAABAAAAAAAZAB8AAAABAAAAAAAZACAAAAABAAAAAAAZACEAAAABAAAAAAAaAAAAAAABAAAAAAAaAAEAAAABAAAAAAAaAAIAAAABAAAAAAAaAAMAAAABAAAAAAAaAAgAAAABAAAAAAAaAAkAAAABAAAAAAAaAAoAAAABAAAAAAAaABoAAAABAAAAAAAaABsAAAABAAAAAAAaABwAAAABAAAAAAAaAB0AAAABAAAAAAAaAB4AAAABAAAAAAAaAB8AAAABAAAAAAAaACAAAAABAAAAAAAaACEAAAABAAAAAAAbAAAAAAABAAAAAAAbAAEAAAABAAAAAAAbAAIAAAABAAAAAAAbAAMAAAABAAAAAAAbAAgAAAABAAAAAAAbAAkAAAABAAAAAAAbAAoAAAABAAAAAAAbABoAAAABAAAAAAAbABsAAAABAAAAAAAbABwAAAABAAAAAAAbAB0AAAABAAAAAAAbAB4AAAABAAAAAAAbAB8AAAABAAAAAAAbACAAAAABAAAAAAAbACEAAAABAAAAAAAcAAAAAAABAAAAAAAcAAEAAAABAAAAAAAcAAIAAAABAAAAAAAcAAMAAAABAAAAAAAcAAgAAAABAAAAAAAcAAkAAAABAAAAAAAcAAoAAAABAAAAAAAcABoAAAABAAAAAAAcABsAAAABAAAAAAAcABwAAAABAAAAAAAcAB0AAAABAAAAAAAcAB4AAAABAAAAAAAcAB8AAAABAAAAAAAcACAAAAABAAAAAAAcACEAAAABAAAAAAAdAAAAAAABAAAAAAAdAAEAAAABAAAAAAAdAAIAAAABAAAAAAAdAAkAAAABAAAAAAAdAAoAAAABAAAAAAAeAAAAAAABAAAAAAAeAAEAAAABAAAAAAAeAAIAAAABAAAAAAAeAAkAAAABAAAAAAAeAAoAAAABAAAAAAAfAAAAAAABAAAAAAAfAAEAAAABAAAAAAAfAAIAAAABAAAAAAAfAAkAAAABAAAAAAAfAAoAAAABAAAAAAAgAAAAAAABAAAAAAAgAAEAAAABAAAAAAAgAAIAAAABAAAAAAAgAAkAAAABAAAAAAAgAAoAAAABAAAAAAAhAAAAAAABAAAAAAAhAAEAAAABAAAAAAAhAAIAAAABAAAAAAAhAAkAAAABAAAAAAAhAAoAAAABAAAAAAAhABoAAAABAAAAAAAhABsAAAABAAAAAAAhABwAAAABAAAAAAAhAB0AAAABAAAAAAAhAB4AAAABAAAAAAAhAB8AAAABAAAAAAAhACAAAAABAAAAAAAhACEAAAABAAAAAAAiAAAAAAABAAAAAAAiAAEAAAABAAAAAAAiAAIAAAABAAAAAAAiAAkAAAABAAAAAAAiAAoAAAABAAAAAAAiABoAAAABAAAAAAAiABsAAAABAAAAAAAiABwAAAABAAAAAAAiAB0AAAABAAAAAAAiAB4AAAABAAAAAAAiAB8AAAABAAAAAAAiACAAAAABAAAAAAAiACEAAAABAAAAAAAjAAAAAAABAAAAAAAjAAEAAAABAAAAAAAjAAIAAAABAAAAAAAjAAkAAAABAAAAAAAjAAoAAAABAAAAAAAjABoAAAABAAAAAAAjABsAAAABAAAAAAAjABwAAAABAAAAAAAjAB0AAAABAAAAAAAjAB4AAAABAAAAAAAjAB8AAAABAAAAAAAjACAAAAABAAAAAAAjACEAAAABAAAAAAAkAAAAAAABAAAAAAAkAAEAAAABAAAAAAAkAAIAAAABAAAAAAAkAAkAAAABAAAAAAAkAAoAAAABAAAAAAAkABoAAAABAAAAAAAkABsAAAABAAAAAAAkABwAAAABAAAAAAAkAB0AAAABAAAAAAAkAB4AAAABAAAAAAAkAB8AAAABAAAAAAAkACAAAAABAAAAAAAkACEAAAABAAAAAAAlAAAAAAABAAAAAAAlAAEAAAABAAAAAAAlAAIAAAABAAAAAAAlAAkAAAABAAAAAAAlAAoAAAABAAAAAAAlABoAAAABAAAAAAAlABsAAAABAAAAAAAlABwAAAABAAAAAAAlAB0AAAABAAAAAAAlAB4AAAABAAAAAAAlAB8AAAABAAAAAAAlACAAAAABAAAAAAAlACEAAAABAAAAAAAmAAAAAAABAAAAAAAmAAEAAAABAAAAAAAmAAIAAAABAAAAAAAmAAMAAAABAAAAAAAmAAkAAAABAAAAAAAmAAoAAAABAAAAAAAmABoAAAABAAAAAAAmABsAAAABAAAAAAAmABwAAAABAAAAAAAmAB0AAAABAAAAAAAmAB4AAAABAAAAAAAmAB8AAAABAAAAAAAmACAAAAABAAAAAAAmACEAAAABAAAAAAAnAAAAAAABAAAAAAAnAAEAAAABAAAAAAAnAAIAAAABAAAAAAAnAAMAAAABAAAAAAAnAAkAAAABAAAAAAAnAAoAAAABAAAAAAAnABoAAAABAAAAAAAnABsAAAABAAAAAAAnABwAAAABAAAAAAAnAB0AAAABAAAAAAAnAB4AAAABAAAAAAAnAB8AAAABAAAAAAAnACAAAAABAAAAAAAnACEAAAABAAAAAAAoAAAAAAABAAAAAAAoAAEAAAABAAAAAAAoAAIAAAABAAAAAAAoAAMAAAABAAAAAAAoAAkAAAABAAAAAAAoAAoAAAABAAAAAAAoABoAAAABAAAAAAAoABsAAAABAAAAAAAoABwAAAABAAAAAAAoAB0AAAABAAAAAAAoAB4AAAABAAAAAAAoAB8AAAABAAAAAAAoACAAAAABAAAAAAAoACEAAAABAAAAAAApAAAAAAABAAAAAAApAAEAAAABAAAAAAApAAIAAAABAAAAAAApAAMAAAABAAAAAAApAAkAAAABAAAAAAApAAoAAAABAAAAAAApABoAAAABAAAAAAApABsAAAABAAAAAAApABwAAAABAAAAAAApAB0AAAABAAAAAAApAB4AAAABAAAAAAApAB8AAAABAAAAAAApACAAAAABAAAAAAApACEAAAABAAAAAAAqAAAAAAABAAAAAAAqAAEAAAABAAAAAAAqAAIAAAABAAAAAAAqAAMAAAABAAAAAAAqAAkAAAABAAAAAAAqAAoAAAABAAAAAAAqABoAAAABAAAAAAAqABsAAAABAAAAAAAqABwAAAABAAAAAAAqAB0AAAABAAAAAAAqAB4AAAABAAAAAAAqAB8AAAABAAAAAAAqACAAAAABAAAAAAAqACEAAAABAAAAAAArAAAAAAABAAAAAAArAAEAAAABAAAAAAArAAIAAAABAAAAAAArAAMAAAABAAAAAAArAAkAAAABAAAAAAArAAoAAAABAAAAAAArABoAAAABAAAAAAArABsAAAABAAAAAAArABwAAAABAAAAAAArAB0AAAABAAAAAAArAB4AAAABAAAAAAArAB8AAAABAAAAAAArACAAAAABAAAAAAArACEAAAABAAAAAAAsAAAAAAABAAAAAAAsAAEAAAABAAAAAAAsAAIAAAABAAAAAAAsAAMAAAABAAAAAAAsAAkAAAABAAAAAAAsAAoAAAABAAAAAAAsABoAAAABAAAAAAAsABsAAAABAAAAAAAsABwAAAABAAAAAAAsAB0AAAABAAAAAAAsAB4AAAABAAAAAAAsAB8AAAABAAAAAAAsACAAAAABAAAAAAAsACEAAAABAAAAAAAtAAAAAAABAAAAAAAtAAEAAAABAAAAAAAtAAIAAAABAAAAAAAtAAMAAAABAAAAAAAtAAkAAAABAAAAAAAtAAoAAAABAAAAAAAtABoAAAABAAAAAAAtABsAAAABAAAAAAAtABwAAAABAAAAAAAtAB0AAAABAAAAAAAtAB4AAAABAAAAAAAtAB8AAAABAAAAAAAtACAAAAABAAAAAAAtACEAAAABAAAAAAAuAAAAAAABAAAAAAAuAAEAAAABAAAAAAAuABoAAAABAAAAAAAuABsAAAABAAAAAAAuABwAAAABAAAAAAAuAB0AAAABAAAAAAAuAB4AAAABAAAAAAAuAB8AAAABAAAAAAAuACAAAAABAAAAAAAuACEAAAABAAAAAAAvAAAAAAABAAAAAAAvAAEAAAABAAAAAAAvABoAAAABAAAAAAAvABsAAAABAAAAAAAvABwAAAABAAAAAAAvAB0AAAABAAAAAAAvAB4AAAABAAAAAAAvAB8AAAABAAAAAAAvACAAAAABAAAAAAAvACEAAAABAAAAAAAwAAAAAAABAAAAAAAwAAEAAAABAAAAAAAwABoAAAABAAAAAAAwABsAAAABAAAAAAAwABwAAAABAAAAAAAwAB0AAAABAAAAAAAwAB4AAAABAAAAAAAwAB8AAAABAAAAAAAwACAAAAABAAAAAAAwACEAAAABAAAAAAAxAAAAAAABAAAAAAAxAAEAAAABAAAAAAAxABoAAAABAAAAAAAxABsAAAABAAAAAAAxABwAAAABAAAAAAAxAB0AAAABAAAAAAAxAB4AAAABAAAAAAAxAB8AAAABAAAAAAAxACAAAAABAAAAAAAxACEAAAABAAAAAAAyAAAAAAABAAAAAAAyAAEAAAABAAAAAAAyAAcAAAABAAAAAAAyAAgAAAABAAAAAAAyAAkAAAABAAAAAAAyAAoAAAABAAAAAAAyABoAAAABAAAAAAAyABsAAAABAAAAAAAyABwAAAABAAAAAAAyAB0AAAABAAAAAAAyAB4AAAABAAAAAAAyAB8AAAABAAAAAAAyACAAAAABAAAAAAAyACEAAAABAAAAAAAzAAAAAAABAAAAAAAzAAEAAAABAAAAAAAzAAcAAAABAAAAAAAzAAgAAAABAAAAAAAzAAkAAAABAAAAAAAzAAoAAAABAAAAAAAzABoAAAABAAAAAAAzABsAAAABAAAAAAAzABwAAAABAAAAAAAzAB0AAAABAAAAAAAzAB4AAAABAAAAAAAzAB8AAAABAAAAAAAzACAAAAABAAAAAAAzACEAAAABAAAAAAA0AAAAAAABAAAAAAA0AAEAAAABAAAAAAA0AAcAAAABAAAAAAA0AAgAAAABAAAAAAA0AAkAAAABAAAAAAA0AAoAAAABAAAAAAA0ABoAAAABAAAAAAA0ABsAAAABAAAAAAA0ABwAAAABAAAAAAA0AB0AAAABAAAAAAA0AB4AAAABAAAAAAA0AB8AAAABAAAAAAA0ACAAAAABAAAAAAA0ACEAAAABAAAAAAA1AAAAAAABAAAAAAA1AAEAAAABAAAAAAA1AAcAAAABAAAAAAA1AAgAAAABAAAAAAA1AAkAAAABAAAAAAA1AAoAAAABAAAAAAA1ABoAAAABAAAAAAA1ABsAAAABAAAAAAA1ABwAAAABAAAAAAA1AB0AAAABAAAAAAA1AB4AAAABAAAAAAA1AB8AAAABAAAAAAA1ACAAAAABAAAAAAA1ACEAAAABAAAAAAA2AAAAAAABAAAAAAA2AAEAAAABAAAAAAA2AAcAAAABAAAAAAA2AAgAAAABAAAAAAA2AAkAAAABAAAAAAA2AAoAAAABAAAAAAA2AAsAAAABAAAAAAA2AAwAAAABAAAAAAA2AA0AAAABAAAAAAA2AA4AAAABAAAAAAA2AA8AAAABAAAAAAA2ABAAAAABAAAAAAA2ABEAAAABAAAAAAA2ABIAAAABAAAAAAA2ABMAAAABAAAAAAA2ABQAAAABAAAAAAA2ABUAAAABAAAAAAA2ABoAAAABAAAAAAA2ABsAAAABAAAAAAA2ABwAAAABAAAAAAA2AB0AAAABAAAAAAA2AB4AAAABAAAAAAA2AB8AAAABAAAAAAA2ACAAAAABAAAAAAA2ACEAAAABAAAAAAA3AAAAAAABAAAAAAA3AAEAAAABAAAAAAA3AAcAAAABAAAAAAA3AAgAAAABAAAAAAA3AAkAAAABAAAAAAA3AAoAAAABAAAAAAA3AAsAAAABAAAAAAA3AAwAAAABAAAAAAA3AA0AAAABAAAAAAA3AA4AAAABAAAAAAA3AA8AAAABAAAAAAA3ABAAAAABAAAAAAA3ABEAAAABAAAAAAA3ABIAAAABAAAAAAA3ABMAAAABAAAAAAA3ABQAAAABAAAAAAA3ABUAAAABAAAAAAA3ABoAAAABAAAAAAA3ABsAAAABAAAAAAA3ABwAAAABAAAAAAA3AB0AAAABAAAAAAA3AB4AAAABAAAAAAA3AB8AAAABAAAAAAA3ACAAAAABAAAAAAA3ACEAAAABAAAAAAA4AAAAAAABAAAAAAA4AAEAAAABAAAAAAA4AAcAAAABAAAAAAA4AAgAAAABAAAAAAA4AAkAAAABAAAAAAA4AAoAAAABAAAAAAA4AAsAAAABAAAAAAA4AAwAAAABAAAAAAA4AA0AAAABAAAAAAA4AA4AAAABAAAAAAA4AA8AAAABAAAAAAA4ABAAAAABAAAAAAA4ABEAAAABAAAAAAA4ABIAAAABAAAAAAA4ABMAAAABAAAAAAA4ABQAAAABAAAAAAA4ABUAAAABAAAAAAA4ABoAAAABAAAAAAA4ABsAAAABAAAAAAA4ABwAAAABAAAAAAA4AB0AAAABAAAAAAA4AB4AAAABAAAAAAA4AB8AAAABAAAAAAA4ACAAAAABAAAAAAA4ACEAAAABAAAAAAA5AAAAAAABAAAAAAA5AAEAAAABAAAAAAA5AAcAAAABAAAAAAA5AAgAAAABAAAAAAA5AAkAAAABAAAAAAA5AAoAAAABAAAAAAA5AAsAAAABAAAAAAA5AAwAAAABAAAAAAA5AA0AAAABAAAAAAA5AA4AAAABAAAAAAA5AA8AAAABAAAAAAA5ABAAAAABAAAAAAA5ABEAAAABAAAAAAA5ABIAAAABAAAAAAA5ABMAAAABAAAAAAA5ABQAAAABAAAAAAA5ABUAAAABAAAAAAA5ABoAAAABAAAAAAA5ABsAAAABAAAAAAA5ABwAAAABAAAAAAA5AB0AAAABAAAAAAA5AB4AAAABAAAAAAA5AB8AAAABAAAAAAA5ACAAAAABAAAAAAA5ACEAAAABAAAAAAA=")
-tile_set = ExtResource("10_tcygh")
+tile_set = ExtResource("10_oqypf")
 
-[node name="Masses" type="TileMapLayer" parent="." unique_id=525290506 groups=["solid_tiles"]]
+[node name="Masses" type="TileMapLayer" parent="." unique_id=2026121746 groups=["solid_tiles"]]
 visible = false
-tile_map_data = PackedByteArray("AAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAHABQAAAABAAAAAAAIABQAAAABAAAAAAAKABYAAAABAAAAAAALABYAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAGABAAAAABAAAAAAAWABYAAAABAAAAAAAXABYAAAABAAAAAAAdABYAAAABAAAAAAAeABYAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAlABAAAAABAAAAAAAmABAAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAABAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvAA0AAAABAAAAAAAwAA0AAAABAAAAAAAyABUAAAABAAAAAAAzABUAAAABAAAAAAA0ABUAAAABAAAAAAA1ABUAAAABAAAAAAA=")
-tile_set = ExtResource("10_tcygh")
+tile_map_data = PackedByteArray("AAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAHABQAAAABAAAAAAAIABQAAAABAAAAAAAKABYAAAABAAAAAAALABYAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAWABYAAAABAAAAAAAXABYAAAABAAAAAAAdABYAAAABAAAAAAAeABYAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAlABAAAAABAAAAAAAmABAAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAABAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvAA0AAAABAAAAAAAwAA0AAAABAAAAAAAzABUAAAABAAAAAAA0ABUAAAABAAAAAAA1ABUAAAABAAAAAAA=")
+tile_set = ExtResource("10_oqypf")
 metadata/under_art = true
 
-[node name="Edge" type="StaticBody2D" parent="." unique_id=17356450]
+[node name="Edge" type="StaticBody2D" parent="." unique_id=1622142736]
 
-[node name="Shape" type="CollisionShape2D" parent="Edge" unique_id=2112773295]
-shape = SubResource("WorldBoundaryShape2D_uy0xj")
+[node name="Shape" type="CollisionShape2D" parent="Edge" unique_id=2003659373]
+shape = SubResource("WorldBoundaryShape2D_f5dqn")
 
-[node name="Edge2" type="StaticBody2D" parent="." unique_id=2062184437]
+[node name="Edge2" type="StaticBody2D" parent="." unique_id=1939432589]
 position = Vector2(928, 0)
 
-[node name="Shape" type="CollisionShape2D" parent="Edge2" unique_id=1903566584]
-shape = SubResource("WorldBoundaryShape2D_uk2mr")
+[node name="Shape" type="CollisionShape2D" parent="Edge2" unique_id=1187106202]
+shape = SubResource("WorldBoundaryShape2D_3bm44")
 
-[node name="TerrainSkin" type="Node2D" parent="." unique_id=1514561481 node_paths=PackedStringArray("solid_layer", "mass_layer")]
+[node name="TerrainSkin" type="Node2D" parent="." unique_id=1145045137 node_paths=PackedStringArray("solid_layer", "mass_layer")]
 modulate = Color(0.8, 0.77, 0.86, 1)
 z_index = 4
-script = ExtResource("11_cp717")
+script = ExtResource("11_qvhqn")
 solid_layer = NodePath("../Solid")
 mass_layer = NodePath("../Masses")
-materials = Array[ExtResource("12_2p2u2")]([ExtResource("13_7r3k1"), ExtResource("14_16ey1")])
+materials = Array[ExtResource("12_18vac")]([ExtResource("13_ex223"), ExtResource("14_lustj")])
 room_rect = Rect2i(0, 0, 58, 34)
-skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 4, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(50, 21, 4, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
+skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 3, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(51, 21, 3, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
 
-[node name="PlacedArt" type="Node2D" parent="." unique_id=1291231720]
+[node name="PlacedArt" type="Node2D" parent="." unique_id=2028281636]
 modulate = Color(0.82, 0.76, 0.74, 1)
 z_index = 5
 
-[node name="ShrineIsland" type="Sprite2D" parent="PlacedArt" unique_id=1917887908]
+[node name="ShrineIsland" type="Sprite2D" parent="PlacedArt" unique_id=118300203]
 position = Vector2(136, 192)
-texture = ExtResource("15_oqypf")
+texture = ExtResource("15_d3mbd")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 384, 192)
 
-[node name="WestIsland" type="Sprite2D" parent="PlacedArt" unique_id=733565540]
-position = Vector2(112, 317)
-texture = ExtResource("16_qvhqn")
-centered = false
-region_enabled = true
-region_rect = Rect2(208, 128, 32, 32)
-
-[node name="Pedestal" type="Sprite2D" parent="PlacedArt" unique_id=905301503]
+[node name="Pedestal" type="Sprite2D" parent="PlacedArt" unique_id=1917601498]
 position = Vector2(160, 345)
-texture = ExtResource("16_qvhqn")
+texture = ExtResource("16_p2an7")
 centered = false
 region_enabled = true
 region_rect = Rect2(304, 96, 32, 80)
 
-[node name="WestWallLedge" type="Sprite2D" parent="PlacedArt" unique_id=161863487]
-position = Vector2(48, 240)
-texture = ExtResource("16_qvhqn")
-centered = false
-region_enabled = true
-region_rect = Rect2(8, 120, 64, 56)
-
-[node name="Nook" type="Sprite2D" parent="PlacedArt" unique_id=146266443]
-position = Vector2(352, 349)
-texture = ExtResource("16_qvhqn")
-centered = false
-flip_h = true
-region_enabled = true
-region_rect = Rect2(208, 128, 32, 32)
-
-[node name="PitLedge" type="Sprite2D" parent="PlacedArt" unique_id=1761806820]
-position = Vector2(464, 345)
-texture = ExtResource("16_qvhqn")
-centered = false
-flip_h = true
-region_enabled = true
-region_rect = Rect2(144, 24, 32, 32)
-
-[node name="Plate" type="Sprite2D" parent="PlacedArt" unique_id=1820758330]
-position = Vector2(496, 281)
-texture = ExtResource("16_qvhqn")
-centered = false
-region_enabled = true
-region_rect = Rect2(144, 24, 32, 32)
-
-[node name="Plate2" type="Sprite2D" parent="PlacedArt" unique_id=1097136339]
-position = Vector2(543, 265)
-texture = ExtResource("16_qvhqn")
-centered = false
-region_enabled = true
-region_rect = Rect2(208, 24, 32, 32)
-
-[node name="Plate3" type="Sprite2D" parent="PlacedArt" unique_id=815804660]
-position = Vector2(592, 251)
-texture = ExtResource("16_qvhqn")
-centered = false
-region_enabled = true
-region_rect = Rect2(272, 24, 32, 32)
-
-[node name="ArchIsland" type="Sprite2D" parent="PlacedArt" unique_id=926691219]
+[node name="ArchIsland" type="Sprite2D" parent="PlacedArt" unique_id=1114872553]
 position = Vector2(656, 238)
-texture = ExtResource("16_qvhqn")
+texture = ExtResource("16_p2an7")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 8, 96, 88)
 
-[node name="GapLedge" type="Sprite2D" parent="PlacedArt" unique_id=1882561280]
-position = Vector2(751, 201)
-texture = ExtResource("16_qvhqn")
+[node name="WestIsland" type="Sprite2D" parent="PlacedArt" unique_id=1531182351]
+position = Vector2(109, 312)
+texture = ExtResource("17_odds7")
+centered = false
+region_enabled = true
+region_rect = Rect2(228, 21, 38, 30)
+
+[node name="Nook" type="Sprite2D" parent="PlacedArt" unique_id=1377739060]
+position = Vector2(349, 344)
+texture = ExtResource("17_odds7")
 centered = false
 flip_h = true
 region_enabled = true
-region_rect = Rect2(208, 24, 32, 32)
+region_rect = Rect2(228, 21, 38, 30)
 
-[node name="EastShelf" type="Sprite2D" parent="PlacedArt" unique_id=1251775464]
-position = Vector2(800, 320)
-texture = ExtResource("16_qvhqn")
+[node name="PitLedge" type="Sprite2D" parent="PlacedArt" unique_id=991072729]
+position = Vector2(461, 344)
+texture = ExtResource("17_odds7")
+centered = false
+region_enabled = true
+region_rect = Rect2(228, 21, 38, 30)
+
+[node name="Plate" type="Sprite2D" parent="PlacedArt" unique_id=623800195]
+position = Vector2(493, 280)
+texture = ExtResource("17_odds7")
 centered = false
 flip_h = true
 region_enabled = true
-region_rect = Rect2(104, 120, 64, 56)
+region_rect = Rect2(228, 21, 38, 30)
 
-[node name="Front" type="Node2D" parent="." unique_id=1770825639]
+[node name="Plate2" type="Sprite2D" parent="PlacedArt" unique_id=1767460793]
+position = Vector2(541, 264)
+texture = ExtResource("17_odds7")
+centered = false
+region_enabled = true
+region_rect = Rect2(228, 21, 38, 30)
+
+[node name="Plate3" type="Sprite2D" parent="PlacedArt" unique_id=1724148206]
+position = Vector2(589, 248)
+texture = ExtResource("17_odds7")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(228, 21, 38, 30)
+
+[node name="GapLedge" type="Sprite2D" parent="PlacedArt" unique_id=1354739598]
+position = Vector2(749, 200)
+texture = ExtResource("17_odds7")
+centered = false
+region_enabled = true
+region_rect = Rect2(228, 21, 38, 30)
+
+[node name="WestWallLedge" type="Sprite2D" parent="PlacedArt" unique_id=997499041]
+position = Vector2(40, 246)
+texture = ExtResource("18_q4kkq")
+centered = false
+region_enabled = true
+region_rect = Rect2(104, 54, 55, 44)
+
+[node name="EastShelf" type="Sprite2D" parent="PlacedArt" unique_id=258727477]
+position = Vector2(817, 326)
+texture = ExtResource("18_q4kkq")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(104, 54, 55, 44)
+
+[node name="Front" type="Node2D" parent="." unique_id=1955405101]
 z_index = 20
 
-[node name="GalleryBackWall" type="Node2D" parent="." unique_id=1656201541]
+[node name="GalleryBackWall" type="Node2D" parent="." unique_id=2121559166]
 z_index = -2
 texture_repeat = 2
-script = ExtResource("17_18vac")
+script = ExtResource("19_cnitd")
 regions = Array[Rect2i]([Rect2i(0, 3, 14, 5), Rect2i(8, 2, 5, 1), Rect2i(14, 3, 5, 4), Rect2i(22, 3, 4, 5), Rect2i(26, 4, 3, 4), Rect2i(29, 3, 9, 6), Rect2i(38, 4, 8, 5), Rect2i(50, 2, 8, 5)])
-fill = ExtResource("18_ex223")
+fill = ExtResource("20_0b7jv")
 brightness = 0.62
 
-[node name="GalleryBands" type="Node2D" parent="." unique_id=1144535384]
+[node name="GalleryBands" type="Node2D" parent="." unique_id=15427373]
 modulate = Color(1.7, 1.65, 1.6, 1)
 z_index = 5
 
-[node name="FloorBand" type="Sprite2D" parent="GalleryBands" unique_id=1904838803]
+[node name="FloorBand" type="Sprite2D" parent="GalleryBands" unique_id=2146735215]
 texture_repeat = 2
 position = Vector2(0, 128)
-texture = ExtResource("19_lustj")
+texture = ExtResource("21_tytmi")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 224, 45)
 
-[node name="FloorBand2" type="Sprite2D" parent="GalleryBands" unique_id=761250906]
+[node name="FloorBand2" type="Sprite2D" parent="GalleryBands" unique_id=1711389006]
 texture_repeat = 2
 position = Vector2(224, 112)
-texture = ExtResource("19_lustj")
+texture = ExtResource("21_tytmi")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 0, 80, 45)
 
-[node name="FloorBand3" type="Sprite2D" parent="GalleryBands" unique_id=640978442]
+[node name="FloorBand3" type="Sprite2D" parent="GalleryBands" unique_id=1690652119]
 texture_repeat = 2
 position = Vector2(352, 128)
-texture = ExtResource("19_lustj")
+texture = ExtResource("21_tytmi")
 centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 112, 45)
 
-[node name="FloorBand4" type="Sprite2D" parent="GalleryBands" unique_id=1427422559]
+[node name="FloorBand4" type="Sprite2D" parent="GalleryBands" unique_id=292843400]
 texture_repeat = 2
 position = Vector2(464, 144)
-texture = ExtResource("19_lustj")
+texture = ExtResource("21_tytmi")
 centered = false
 region_enabled = true
 region_rect = Rect2(464, 0, 272, 45)
 
-[node name="FloorBand5" type="Sprite2D" parent="GalleryBands" unique_id=1827507023]
+[node name="FloorBand5" type="Sprite2D" parent="GalleryBands" unique_id=459832364]
 texture_repeat = 2
 position = Vector2(800, 112)
-texture = ExtResource("19_lustj")
+texture = ExtResource("21_tytmi")
 centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 64, 45)
 
-[node name="CeilingBand" type="Sprite2D" parent="GalleryBands" unique_id=199630103]
+[node name="CeilingBand" type="Sprite2D" parent="GalleryBands" unique_id=572956337]
 texture_repeat = 2
 position = Vector2(0, -3)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 51)
 
-[node name="CeilingBand2" type="Sprite2D" parent="GalleryBands" unique_id=137687394]
+[node name="CeilingBand2" type="Sprite2D" parent="GalleryBands" unique_id=977019314]
 texture_repeat = 2
 position = Vector2(128, -19)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(128, 0, 80, 51)
 
-[node name="CeilingBand3" type="Sprite2D" parent="GalleryBands" unique_id=1068717060]
+[node name="CeilingBand3" type="Sprite2D" parent="GalleryBands" unique_id=1464347900]
 texture_repeat = 2
 position = Vector2(208, -3)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(208, 0, 96, 51)
 
-[node name="CeilingBand4" type="Sprite2D" parent="GalleryBands" unique_id=834925280]
+[node name="CeilingBand4" type="Sprite2D" parent="GalleryBands" unique_id=1755652815]
 texture_repeat = 2
 position = Vector2(352, -3)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 64, 51)
 
-[node name="CeilingBand5" type="Sprite2D" parent="GalleryBands" unique_id=2064534399]
+[node name="CeilingBand5" type="Sprite2D" parent="GalleryBands" unique_id=1200492106]
 texture_repeat = 2
 position = Vector2(416, 13)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(416, 0, 48, 51)
 
-[node name="CeilingBand6" type="Sprite2D" parent="GalleryBands" unique_id=473566335]
+[node name="CeilingBand6" type="Sprite2D" parent="GalleryBands" unique_id=58726563]
 texture_repeat = 2
 position = Vector2(464, -3)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(464, 0, 144, 51)
 
-[node name="CeilingBand7" type="Sprite2D" parent="GalleryBands" unique_id=45024322]
+[node name="CeilingBand7" type="Sprite2D" parent="GalleryBands" unique_id=477639451]
 texture_repeat = 2
 position = Vector2(608, 13)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(608, 0, 128, 51)
 
-[node name="CeilingBand8" type="Sprite2D" parent="GalleryBands" unique_id=1990460194]
+[node name="CeilingBand8" type="Sprite2D" parent="GalleryBands" unique_id=1439742901]
 texture_repeat = 2
 position = Vector2(736, -19)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(736, 0, 64, 51)
 
-[node name="CeilingBand9" type="Sprite2D" parent="GalleryBands" unique_id=1507241858]
+[node name="CeilingBand9" type="Sprite2D" parent="GalleryBands" unique_id=1643142801]
 texture_repeat = 2
 position = Vector2(800, -19)
-texture = ExtResource("20_d3mbd")
+texture = ExtResource("22_5l5ko")
 centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 128, 51)
 
-[node name="Underside" type="Sprite2D" parent="GalleryBands" unique_id=333177498]
+[node name="Underside" type="Sprite2D" parent="GalleryBands" unique_id=1769267720]
 texture_repeat = 2
 position = Vector2(0, 170)
-texture = ExtResource("21_p2an7")
+texture = ExtResource("23_yr1m5")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 304, 48)
 
-[node name="Underside2" type="Sprite2D" parent="GalleryBands" unique_id=1971664564]
+[node name="Underside2" type="Sprite2D" parent="GalleryBands" unique_id=549473158]
 texture_repeat = 2
 position = Vector2(352, 170)
-texture = ExtResource("21_p2an7")
+texture = ExtResource("23_yr1m5")
 centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 384, 48)
 
-[node name="Underside3" type="Sprite2D" parent="GalleryBands" unique_id=2065029960]
+[node name="Underside3" type="Sprite2D" parent="GalleryBands" unique_id=2062719053]
 texture_repeat = 2
 position = Vector2(800, 170)
-texture = ExtResource("21_p2an7")
+texture = ExtResource("23_yr1m5")
 centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 64, 48)
 
-[node name="FloorStep" type="Sprite2D" parent="GalleryBands" unique_id=1028963333]
+[node name="FloorStep" type="Sprite2D" parent="GalleryBands" unique_id=959001340]
 position = Vector2(223, 112)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="FloorStep2" type="Sprite2D" parent="GalleryBands" unique_id=2036240022]
+[node name="FloorStep2" type="Sprite2D" parent="GalleryBands" unique_id=212685400]
 position = Vector2(383, 128)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_h = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep" type="Sprite2D" parent="GalleryBands" unique_id=935623006]
+[node name="CeilingStep" type="Sprite2D" parent="GalleryBands" unique_id=1973538056]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(47, 5)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_h = true
 flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep2" type="Sprite2D" parent="GalleryBands" unique_id=395019441]
+[node name="CeilingStep2" type="Sprite2D" parent="GalleryBands" unique_id=1291793886]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(207, 5)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep3" type="Sprite2D" parent="GalleryBands" unique_id=2037988328]
+[node name="CeilingStep3" type="Sprite2D" parent="GalleryBands" unique_id=2018963158]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(415, 21)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 25, 43)
 
-[node name="CeilingStep4" type="Sprite2D" parent="GalleryBands" unique_id=245234659]
+[node name="CeilingStep4" type="Sprite2D" parent="GalleryBands" unique_id=476203313]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(440, 21)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_h = true
 flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 25, 43)
 
-[node name="CeilingStep5" type="Sprite2D" parent="GalleryBands" unique_id=714552130]
+[node name="CeilingStep5" type="Sprite2D" parent="GalleryBands" unique_id=413540429]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(607, 21)
-texture = ExtResource("22_odds7")
+texture = ExtResource("24_xxjw4")
 centered = false
 flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="Breakable" type="Node2D" parent="." unique_id=899091871]
+[node name="Breakable" type="Node2D" parent="." unique_id=316783045]
 z_index = 6
 position = Vector2(690, 144)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable" unique_id=1161266513]
+[node name="Art" type="Sprite2D" parent="Breakable" unique_id=1080534113]
 position = Vector2(-10, -21)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(212, 24, 20, 22)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable" unique_id=232837947]
+[node name="Hurtbox" type="Area2D" parent="Breakable" unique_id=375144912]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable/Hurtbox" unique_id=210826940]
+[node name="Shape" type="CollisionShape2D" parent="Breakable/Hurtbox" unique_id=2091183495]
 position = Vector2(0, -11)
-shape = SubResource("RectangleShape2D_l5fqj")
+shape = SubResource("RectangleShape2D_x54cl")
 
-[node name="Breakable2" type="Node2D" parent="." unique_id=1593116002]
+[node name="Breakable2" type="Node2D" parent="." unique_id=1194930472]
 z_index = 6
 position = Vector2(706, 144)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable2" unique_id=1891864100]
+[node name="Art" type="Sprite2D" parent="Breakable2" unique_id=1839272225]
 position = Vector2(-8, -19)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable2" unique_id=1980568303]
+[node name="Hurtbox" type="Area2D" parent="Breakable2" unique_id=698199960]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable2/Hurtbox" unique_id=1927815810]
+[node name="Shape" type="CollisionShape2D" parent="Breakable2/Hurtbox" unique_id=798609999]
 position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_ryd58")
+shape = SubResource("RectangleShape2D_g3hmd")
 
-[node name="Breakable3" type="Node2D" parent="." unique_id=658090637]
+[node name="Breakable3" type="Node2D" parent="." unique_id=1291752772]
 z_index = 6
 position = Vector2(800, 416)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable3" unique_id=1570271392]
+[node name="Art" type="Sprite2D" parent="Breakable3" unique_id=1029311232]
 position = Vector2(-10, -21)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(212, 24, 20, 22)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable3" unique_id=1934092538]
+[node name="Hurtbox" type="Area2D" parent="Breakable3" unique_id=461488436]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable3/Hurtbox" unique_id=1928536196]
+[node name="Shape" type="CollisionShape2D" parent="Breakable3/Hurtbox" unique_id=1996807577]
 position = Vector2(0, -11)
-shape = SubResource("RectangleShape2D_1dyaj")
+shape = SubResource("RectangleShape2D_d5v0i")
 
-[node name="Breakable4" type="Node2D" parent="." unique_id=352100428]
+[node name="Breakable4" type="Node2D" parent="." unique_id=281284259]
 z_index = 6
 position = Vector2(820, 416)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 511
 
-[node name="Art" type="Sprite2D" parent="Breakable4" unique_id=597053722]
+[node name="Art" type="Sprite2D" parent="Breakable4" unique_id=1206969848]
 position = Vector2(-14, -29)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 16, 27, 30)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable4" unique_id=1668994687]
+[node name="Hurtbox" type="Area2D" parent="Breakable4" unique_id=1656620914]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable4/Hurtbox" unique_id=1826065003]
+[node name="Shape" type="CollisionShape2D" parent="Breakable4/Hurtbox" unique_id=1347985112]
 position = Vector2(0, -15)
-shape = SubResource("RectangleShape2D_booy6")
+shape = SubResource("RectangleShape2D_v0lww")
 
-[node name="Breakable5" type="Node2D" parent="." unique_id=464889857]
+[node name="Breakable5" type="Node2D" parent="." unique_id=1907384785]
 z_index = 6
 position = Vector2(80, 256)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable5" unique_id=1313864192]
+[node name="Art" type="Sprite2D" parent="Breakable5" unique_id=303893278]
 position = Vector2(-8, -19)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable5" unique_id=378123995]
+[node name="Hurtbox" type="Area2D" parent="Breakable5" unique_id=101457154]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable5/Hurtbox" unique_id=1140445137]
+[node name="Shape" type="CollisionShape2D" parent="Breakable5/Hurtbox" unique_id=1757686088]
 position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_wbwwy")
+shape = SubResource("RectangleShape2D_xd1wy")
 
-[node name="Breakable6" type="Node2D" parent="." unique_id=211935611]
+[node name="Breakable6" type="Node2D" parent="." unique_id=1163283575]
 z_index = 6
 position = Vector2(368, 352)
-script = ExtResource("23_q4kkq")
+script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable6" unique_id=1104669669]
+[node name="Art" type="Sprite2D" parent="Breakable6" unique_id=111739736]
 position = Vector2(-8, -19)
-texture = ExtResource("24_cnitd")
+texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable6" unique_id=1956904811]
+[node name="Hurtbox" type="Area2D" parent="Breakable6" unique_id=797407448]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable6/Hurtbox" unique_id=1976508619]
+[node name="Shape" type="CollisionShape2D" parent="Breakable6/Hurtbox" unique_id=1240944544]
 position = Vector2(0, -10)
-shape = SubResource("RectangleShape2D_cpxvd")
+shape = SubResource("RectangleShape2D_kyqi2")
 
-[node name="Darkness" type="CanvasModulate" parent="." unique_id=2113528099]
+[node name="Darkness" type="CanvasModulate" parent="." unique_id=1625132565]
 color = Color(0.36, 0.46, 0.52, 1)
 
-[node name="Fog" type="ColorRect" parent="." unique_id=1433810343]
-material = SubResource("ShaderMaterial_asw76")
+[node name="Fog" type="ColorRect" parent="." unique_id=491458976]
+material = SubResource("ShaderMaterial_81a7l")
 offset_left = 48.0
 offset_top = 350.0
 offset_right = 848.0
 offset_bottom = 420.0
 mouse_filter = 2
 
-[node name="Dust" type="CPUParticles2D" parent="." unique_id=1886734021]
+[node name="Dust" type="CPUParticles2D" parent="." unique_id=648863258]
 z_index = 14
-material = SubResource("CanvasItemMaterial_mht1k")
+material = SubResource("CanvasItemMaterial_i6ur6")
 position = Vector2(458, 240)
 amount = 30
-texture = ExtResource("25_0b7jv")
+texture = ExtResource("27_41o0c")
 lifetime = 9.0
 preprocess = 9.0
 emission_shape = 3
@@ -1908,136 +1936,136 @@ initial_velocity_max = 6.0
 scale_amount_min = 0.5
 color = Color(0.8, 0.86, 1, 0.7)
 
-[node name="Foreground" type="Parallax2D" parent="." unique_id=1450675018]
+[node name="Foreground" type="Parallax2D" parent="." unique_id=2121130861]
 z_index = 30
 scroll_scale = Vector2(1.15, 0)
 repeat_size = Vector2(960, 0)
 repeat_times = 3
 
-[node name="MidPiece" type="Sprite2D" parent="Foreground" unique_id=381423565]
+[node name="MidPiece" type="Sprite2D" parent="Foreground" unique_id=952443984]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(60, -6)
 scale = Vector2(2, 2)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="MidPiece2" type="Sprite2D" parent="Foreground" unique_id=672333785]
+[node name="MidPiece2" type="Sprite2D" parent="Foreground" unique_id=1302222025]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(420, -10)
 scale = Vector2(2, 2)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="MidPiece3" type="Sprite2D" parent="Foreground" unique_id=16935944]
+[node name="MidPiece3" type="Sprite2D" parent="Foreground" unique_id=1480700201]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(700, -4)
 scale = Vector2(2, 2)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="MidPiece4" type="Sprite2D" parent="Foreground" unique_id=1613711327]
+[node name="MidPiece4" type="Sprite2D" parent="Foreground" unique_id=1982395611]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(180, 290)
-texture = ExtResource("26_tytmi")
+texture = ExtResource("28_arrd3")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 250, 120, 110)
 
-[node name="MidPiece5" type="Sprite2D" parent="Foreground" unique_id=345487475]
+[node name="MidPiece5" type="Sprite2D" parent="Foreground" unique_id=1172645208]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(520, 310)
 scale = Vector2(1.6, 1.6)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(152, 0, 64, 40)
 
-[node name="MidPiece6" type="Sprite2D" parent="Foreground" unique_id=1414453189]
+[node name="MidPiece6" type="Sprite2D" parent="Foreground" unique_id=1578141180]
 modulate = Color(0.4, 0.36, 0.5, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(820, 302)
 scale = Vector2(2, 2)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 80, 16, 32)
 
-[node name="ScreenFog" type="ColorRect" parent="Foreground" unique_id=1237954476]
-material = SubResource("ShaderMaterial_tyi14")
+[node name="ScreenFog" type="ColorRect" parent="Foreground" unique_id=1756262294]
+material = SubResource("ShaderMaterial_f25rc")
 offset_left = -400.0
 offset_top = 250.0
 offset_right = 1606.4
 offset_bottom = 370.0
 mouse_filter = 2
 
-[node name="ForegroundNear" type="Parallax2D" parent="." unique_id=83974742]
+[node name="ForegroundNear" type="Parallax2D" parent="." unique_id=492351929]
 z_index = 31
 scroll_scale = Vector2(1.5, 0)
 repeat_size = Vector2(1500, 0)
 repeat_times = 3
 
-[node name="Silhouette" type="Sprite2D" parent="ForegroundNear" unique_id=482647500]
+[node name="Silhouette" type="Sprite2D" parent="ForegroundNear" unique_id=496662101]
 modulate = Color(0.03, 0.022, 0.05, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(260, -14)
 scale = Vector2(2.2, 2.2)
-texture = ExtResource("8_w4fwo")
+texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="Silhouette2" type="Sprite2D" parent="ForegroundNear" unique_id=1461516624]
+[node name="Silhouette2" type="Sprite2D" parent="ForegroundNear" unique_id=1400856476]
 modulate = Color(0.03, 0.022, 0.05, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(640, 316)
 scale = Vector2(1.6, 1.6)
-texture = ExtResource("26_tytmi")
+texture = ExtResource("28_arrd3")
 centered = false
 region_enabled = true
 region_rect = Rect2(400, 290, 80, 70)
 
-[node name="Silhouette3" type="Sprite2D" parent="ForegroundNear" unique_id=1627169070]
+[node name="Silhouette3" type="Sprite2D" parent="ForegroundNear" unique_id=1405354969]
 modulate = Color(0.03, 0.022, 0.05, 1)
-material = SubResource("CanvasItemMaterial_pq6mg")
+material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(1100, -20)
 scale = Vector2(4.8, 4.8)
-texture = ExtResource("5_6sese")
+texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="BarkPlateW1b" type="StaticBody2D" parent="." unique_id=2135474757]
+[node name="BarkPlateW1b" type="StaticBody2D" parent="." unique_id=586362617]
 z_index = 8
 position = Vector2(464, 496)
 
-[node name="Shape" type="CollisionShape2D" parent="BarkPlateW1b" unique_id=1794562647]
+[node name="Shape" type="CollisionShape2D" parent="BarkPlateW1b" unique_id=1790157403]
 position = Vector2(32, 8)
-shape = SubResource("RectangleShape2D_f5dqn")
+shape = SubResource("RectangleShape2D_1pt40")
 
-[node name="Art" type="Sprite2D" parent="BarkPlateW1b" unique_id=1460244501]
+[node name="Art" type="Sprite2D" parent="BarkPlateW1b" unique_id=1865885875]
 position = Vector2(0, -4)
-texture = ExtResource("27_5l5ko")
+texture = ExtResource("29_pt6bu")
 centered = false
 region_enabled = true
 region_rect = Rect2(65, 97, 63, 29)
 
-[node name="ShaftDraught" type="CPUParticles2D" parent="." unique_id=1829360735]
+[node name="ShaftDraught" type="CPUParticles2D" parent="." unique_id=1311208386]
 z_index = 21
-material = SubResource("CanvasItemMaterial_mht1k")
+material = SubResource("CanvasItemMaterial_i6ur6")
 position = Vector2(496, 489.6)
 amount = 6
-texture = ExtResource("25_0b7jv")
+texture = ExtResource("27_41o0c")
 lifetime = 3.0
 preprocess = 3.0
 emission_shape = 3
@@ -2051,42 +2079,42 @@ scale_amount_min = 0.5
 scale_amount_max = 0.5
 color = Color(0.8, 0.92, 1, 0.75)
 
-[node name="WestWallSecret" type="Node2D" parent="." unique_id=1473323394]
+[node name="WestWallSecret" type="Node2D" parent="." unique_id=966388842]
 z_index = 22
-script = ExtResource("28_yr1m5")
+script = ExtResource("30_fch6n")
 flag = "ib05_west_secret"
 
-[node name="FakeRock" type="TileMapLayer" parent="WestWallSecret" unique_id=1804679548]
+[node name="FakeRock" type="TileMapLayer" parent="WestWallSecret" unique_id=1265865504]
 visible = false
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAABAAAAABAAAAAAAAABEAAAABAAAAAAAAABIAAAABAAAAAAAAABMAAAABAAAAAAAAABQAAAABAAAAAAAAABoAAAABAAAAAAAAABsAAAABAAAAAAAAABwAAAABAAAAAAAAAB0AAAABAAAAAAAAAB4AAAABAAAAAAAAAB8AAAABAAAAAAAAACAAAAABAAAAAAAAACEAAAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAgAAAABAAAAAAABAAkAAAABAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAABAAwAAAABAAAAAAABABAAAAABAAAAAAABABEAAAABAAAAAAABABIAAAABAAAAAAABABMAAAABAAAAAAABABQAAAABAAAAAAABABoAAAABAAAAAAABABsAAAABAAAAAAABABwAAAABAAAAAAABAB0AAAABAAAAAAABAB4AAAABAAAAAAABAB8AAAABAAAAAAABACAAAAABAAAAAAABACEAAAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAgAAAABAAAAAAACAAkAAAABAAAAAAACAAoAAAABAAAAAAACAAsAAAABAAAAAAACAAwAAAABAAAAAAACABAAAAABAAAAAAACABEAAAABAAAAAAACABIAAAABAAAAAAACABMAAAABAAAAAAACABQAAAABAAAAAAACABoAAAABAAAAAAACABsAAAABAAAAAAACABwAAAABAAAAAAACAB0AAAABAAAAAAACAB4AAAABAAAAAAACAB8AAAABAAAAAAACACAAAAABAAAAAAACACEAAAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAgAAAABAAAAAAADAAkAAAABAAAAAAADAAoAAAABAAAAAAADABoAAAABAAAAAAADABsAAAABAAAAAAADABwAAAABAAAAAAADAB0AAAABAAAAAAADAB4AAAABAAAAAAADAB8AAAABAAAAAAADACAAAAABAAAAAAADACEAAAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEABoAAAABAAAAAAAEABsAAAABAAAAAAAEABwAAAABAAAAAAAEAB0AAAABAAAAAAAEAB4AAAABAAAAAAAEAB8AAAABAAAAAAAEACAAAAABAAAAAAAEACEAAAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFABoAAAABAAAAAAAFABsAAAABAAAAAAAFABwAAAABAAAAAAAFAB0AAAABAAAAAAAFAB4AAAABAAAAAAAFAB8AAAABAAAAAAAFACAAAAABAAAAAAAFACEAAAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAABAAAAAAAGAAIAAAABAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAABAAAAAAAGABoAAAABAAAAAAAGABsAAAABAAAAAAAGABwAAAABAAAAAAAGAB0AAAABAAAAAAAGAB4AAAABAAAAAAAGAB8AAAABAAAAAAAGACAAAAABAAAAAAAGACEAAAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAABAAAAAAAHABoAAAABAAAAAAAHABsAAAABAAAAAAAHABwAAAABAAAAAAAHAB0AAAABAAAAAAAHAB4AAAABAAAAAAAHAB8AAAABAAAAAAAHACAAAAABAAAAAAAHACEAAAABAAAAAAAIAAAAAAABAAAAAAAIAAEAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAABAAAAAAAIAAoAAAABAAAAAAAIABoAAAABAAAAAAAIABsAAAABAAAAAAAIABwAAAABAAAAAAAIAB0AAAABAAAAAAAIAB4AAAABAAAAAAAIAB8AAAABAAAAAAAIACAAAAABAAAAAAAIACEAAAABAAAAAAAJAAAAAAABAAAAAAAJAAEAAAABAAAAAAAJAAgAAAABAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJABoAAAABAAAAAAAJABsAAAABAAAAAAAJABwAAAABAAAAAAAJAB0AAAABAAAAAAAJAB4AAAABAAAAAAAJAB8AAAABAAAAAAAJACAAAAABAAAAAAAJACEAAAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKABoAAAABAAAAAAAKABsAAAABAAAAAAAKABwAAAABAAAAAAAKAB0AAAABAAAAAAAKAB4AAAABAAAAAAAKAB8AAAABAAAAAAAKACAAAAABAAAAAAAKACEAAAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALABoAAAABAAAAAAALABsAAAABAAAAAAALABwAAAABAAAAAAALAB0AAAABAAAAAAALAB4AAAABAAAAAAALAB8AAAABAAAAAAALACAAAAABAAAAAAALACEAAAABAAAAAAAMAAAAAAABAAAAAAAMAAEAAAABAAAAAAAMAAgAAAABAAAAAAAMAAkAAAABAAAAAAAMAAoAAAABAAAAAAAMABoAAAABAAAAAAAMABsAAAABAAAAAAAMABwAAAABAAAAAAAMAB0AAAABAAAAAAAMAB4AAAABAAAAAAAMAB8AAAABAAAAAAAMACAAAAABAAAAAAAMACEAAAABAAAAAAANAAAAAAABAAAAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAgAAAABAAAAAAANAAkAAAABAAAAAAANAAoAAAABAAAAAAANABoAAAABAAAAAAANABsAAAABAAAAAAANABwAAAABAAAAAAANAB0AAAABAAAAAAANAB4AAAABAAAAAAANAB8AAAABAAAAAAANACAAAAABAAAAAAANACEAAAABAAAAAAAOAAAAAAABAAAAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAcAAAABAAAAAAAOAAgAAAABAAAAAAAOAAkAAAABAAAAAAAOAAoAAAABAAAAAAAOABoAAAABAAAAAAAOABsAAAABAAAAAAAOABwAAAABAAAAAAAOAB0AAAABAAAAAAAOAB4AAAABAAAAAAAOAB8AAAABAAAAAAAOACAAAAABAAAAAAAOACEAAAABAAAAAAAPAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAAAAAAPABsAAAABAAAAAAAPABwAAAABAAAAAAAPAB0AAAABAAAAAAAPAB4AAAABAAAAAAAPAB8AAAABAAAAAAAPACAAAAABAAAAAAAPACEAAAABAAAAAAAQAAAAAAABAAAAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAcAAAABAAAAAAAQAAgAAAABAAAAAAAQAAkAAAABAAAAAAAQAAoAAAABAAAAAAAQABsAAAABAAAAAAAQABwAAAABAAAAAAAQAB0AAAABAAAAAAAQAB4AAAABAAAAAAAQAB8AAAABAAAAAAAQACAAAAABAAAAAAAQACEAAAABAAAAAAARAAAAAAABAAAAAAARAAEAAAABAAAAAAARAAIAAAABAAAAAAARAAcAAAABAAAAAAARAAgAAAABAAAAAAARAAkAAAABAAAAAAARAAoAAAABAAAAAAARABsAAAABAAAAAAARABwAAAABAAAAAAARAB0AAAABAAAAAAARAB4AAAABAAAAAAARAB8AAAABAAAAAAARACAAAAABAAAAAAARACEAAAABAAAAAAASAAAAAAABAAAAAAASAAEAAAABAAAAAAASAAIAAAABAAAAAAASAAcAAAABAAAAAAASAAgAAAABAAAAAAASAAkAAAABAAAAAAASAAoAAAABAAAAAAASABsAAAABAAAAAAASABwAAAABAAAAAAASAB0AAAABAAAAAAASAB4AAAABAAAAAAASAB8AAAABAAAAAAASACAAAAABAAAAAAASACEAAAABAAAAAAATABsAAAABAAAAAAATABwAAAABAAAAAAATAB0AAAABAAAAAAATAB4AAAABAAAAAAATAB8AAAABAAAAAAATACAAAAABAAAAAAATACEAAAABAAAAAAAUABsAAAABAAAAAAAUABwAAAABAAAAAAAUAB0AAAABAAAAAAAUAB4AAAABAAAAAAAUAB8AAAABAAAAAAAUACAAAAABAAAAAAAUACEAAAABAAAAAAAVABsAAAABAAAAAAAVABwAAAABAAAAAAAVAB0AAAABAAAAAAAVAB4AAAABAAAAAAAVAB8AAAABAAAAAAAVACAAAAABAAAAAAAVACEAAAABAAAAAAAWAAAAAAABAAAAAAAWAAEAAAABAAAAAAAWAAIAAAABAAAAAAAWAAgAAAABAAAAAAAWAAkAAAABAAAAAAAWAAoAAAABAAAAAAAWABsAAAABAAAAAAAWABwAAAABAAAAAAAWAB0AAAABAAAAAAAWAB4AAAABAAAAAAAWAB8AAAABAAAAAAAWACAAAAABAAAAAAAWACEAAAABAAAAAAAXAAAAAAABAAAAAAAXAAEAAAABAAAAAAAXAAIAAAABAAAAAAAXAAgAAAABAAAAAAAXAAkAAAABAAAAAAAXAAoAAAABAAAAAAAXABsAAAABAAAAAAAXABwAAAABAAAAAAAXAB0AAAABAAAAAAAXAB4AAAABAAAAAAAXAB8AAAABAAAAAAAXACAAAAABAAAAAAAXACEAAAABAAAAAAAYAAAAAAABAAAAAAAYAAEAAAABAAAAAAAYAAIAAAABAAAAAAAYAAgAAAABAAAAAAAYAAkAAAABAAAAAAAYAAoAAAABAAAAAAAYABsAAAABAAAAAAAYABwAAAABAAAAAAAYAB0AAAABAAAAAAAYAB4AAAABAAAAAAAYAB8AAAABAAAAAAAYACAAAAABAAAAAAAYACEAAAABAAAAAAAZAAAAAAABAAAAAAAZAAEAAAABAAAAAAAZAAIAAAABAAAAAAAZAAgAAAABAAAAAAAZAAkAAAABAAAAAAAZAAoAAAABAAAAAAAZABoAAAABAAAAAAAZABsAAAABAAAAAAAZABwAAAABAAAAAAAZAB0AAAABAAAAAAAZAB4AAAABAAAAAAAZAB8AAAABAAAAAAAZACAAAAABAAAAAAAZACEAAAABAAAAAAAaAAAAAAABAAAAAAAaAAEAAAABAAAAAAAaAAIAAAABAAAAAAAaAAMAAAABAAAAAAAaAAgAAAABAAAAAAAaAAkAAAABAAAAAAAaAAoAAAABAAAAAAAaABoAAAABAAAAAAAaABsAAAABAAAAAAAaABwAAAABAAAAAAAaAB0AAAABAAAAAAAaAB4AAAABAAAAAAAaAB8AAAABAAAAAAAaACAAAAABAAAAAAAaACEAAAABAAAAAAAbAAAAAAABAAAAAAAbAAEAAAABAAAAAAAbAAIAAAABAAAAAAAbAAMAAAABAAAAAAAbAAgAAAABAAAAAAAbAAkAAAABAAAAAAAbAAoAAAABAAAAAAAbABoAAAABAAAAAAAbABsAAAABAAAAAAAbABwAAAABAAAAAAAbAB0AAAABAAAAAAAbAB4AAAABAAAAAAAbAB8AAAABAAAAAAAbACAAAAABAAAAAAAbACEAAAABAAAAAAAcAAAAAAABAAAAAAAcAAEAAAABAAAAAAAcAAIAAAABAAAAAAAcAAMAAAABAAAAAAAcAAgAAAABAAAAAAAcAAkAAAABAAAAAAAcAAoAAAABAAAAAAAcABoAAAABAAAAAAAcABsAAAABAAAAAAAcABwAAAABAAAAAAAcAB0AAAABAAAAAAAcAB4AAAABAAAAAAAcAB8AAAABAAAAAAAcACAAAAABAAAAAAAcACEAAAABAAAAAAAdAAAAAAABAAAAAAAdAAEAAAABAAAAAAAdAAIAAAABAAAAAAAdAAkAAAABAAAAAAAdAAoAAAABAAAAAAAeAAAAAAABAAAAAAAeAAEAAAABAAAAAAAeAAIAAAABAAAAAAAeAAkAAAABAAAAAAAeAAoAAAABAAAAAAAfAAAAAAABAAAAAAAfAAEAAAABAAAAAAAfAAIAAAABAAAAAAAfAAkAAAABAAAAAAAfAAoAAAABAAAAAAAgAAAAAAABAAAAAAAgAAEAAAABAAAAAAAgAAIAAAABAAAAAAAgAAkAAAABAAAAAAAgAAoAAAABAAAAAAAhAAAAAAABAAAAAAAhAAEAAAABAAAAAAAhAAIAAAABAAAAAAAhAAkAAAABAAAAAAAhAAoAAAABAAAAAAAhABoAAAABAAAAAAAhABsAAAABAAAAAAAhABwAAAABAAAAAAAhAB0AAAABAAAAAAAhAB4AAAABAAAAAAAhAB8AAAABAAAAAAAhACAAAAABAAAAAAAhACEAAAABAAAAAAAiAAAAAAABAAAAAAAiAAEAAAABAAAAAAAiAAIAAAABAAAAAAAiAAkAAAABAAAAAAAiAAoAAAABAAAAAAAiABoAAAABAAAAAAAiABsAAAABAAAAAAAiABwAAAABAAAAAAAiAB0AAAABAAAAAAAiAB4AAAABAAAAAAAiAB8AAAABAAAAAAAiACAAAAABAAAAAAAiACEAAAABAAAAAAAjAAAAAAABAAAAAAAjAAEAAAABAAAAAAAjAAIAAAABAAAAAAAjAAkAAAABAAAAAAAjAAoAAAABAAAAAAAjABoAAAABAAAAAAAjABsAAAABAAAAAAAjABwAAAABAAAAAAAjAB0AAAABAAAAAAAjAB4AAAABAAAAAAAjAB8AAAABAAAAAAAjACAAAAABAAAAAAAjACEAAAABAAAAAAAkAAAAAAABAAAAAAAkAAEAAAABAAAAAAAkAAIAAAABAAAAAAAkAAkAAAABAAAAAAAkAAoAAAABAAAAAAAkABoAAAABAAAAAAAkABsAAAABAAAAAAAkABwAAAABAAAAAAAkAB0AAAABAAAAAAAkAB4AAAABAAAAAAAkAB8AAAABAAAAAAAkACAAAAABAAAAAAAkACEAAAABAAAAAAAlAAAAAAABAAAAAAAlAAEAAAABAAAAAAAlAAIAAAABAAAAAAAlAAkAAAABAAAAAAAlAAoAAAABAAAAAAAlABoAAAABAAAAAAAlABsAAAABAAAAAAAlABwAAAABAAAAAAAlAB0AAAABAAAAAAAlAB4AAAABAAAAAAAlAB8AAAABAAAAAAAlACAAAAABAAAAAAAlACEAAAABAAAAAAAmAAAAAAABAAAAAAAmAAEAAAABAAAAAAAmAAIAAAABAAAAAAAmAAMAAAABAAAAAAAmAAkAAAABAAAAAAAmAAoAAAABAAAAAAAmABoAAAABAAAAAAAmABsAAAABAAAAAAAmABwAAAABAAAAAAAmAB0AAAABAAAAAAAmAB4AAAABAAAAAAAmAB8AAAABAAAAAAAmACAAAAABAAAAAAAmACEAAAABAAAAAAAnAAAAAAABAAAAAAAnAAEAAAABAAAAAAAnAAIAAAABAAAAAAAnAAMAAAABAAAAAAAnAAkAAAABAAAAAAAnAAoAAAABAAAAAAAnABoAAAABAAAAAAAnABsAAAABAAAAAAAnABwAAAABAAAAAAAnAB0AAAABAAAAAAAnAB4AAAABAAAAAAAnAB8AAAABAAAAAAAnACAAAAABAAAAAAAnACEAAAABAAAAAAAoAAAAAAABAAAAAAAoAAEAAAABAAAAAAAoAAIAAAABAAAAAAAoAAMAAAABAAAAAAAoAAkAAAABAAAAAAAoAAoAAAABAAAAAAAoABoAAAABAAAAAAAoABsAAAABAAAAAAAoABwAAAABAAAAAAAoAB0AAAABAAAAAAAoAB4AAAABAAAAAAAoAB8AAAABAAAAAAAoACAAAAABAAAAAAAoACEAAAABAAAAAAApAAAAAAABAAAAAAApAAEAAAABAAAAAAApAAIAAAABAAAAAAApAAMAAAABAAAAAAApAAkAAAABAAAAAAApAAoAAAABAAAAAAApABoAAAABAAAAAAApABsAAAABAAAAAAApABwAAAABAAAAAAApAB0AAAABAAAAAAApAB4AAAABAAAAAAApAB8AAAABAAAAAAApACAAAAABAAAAAAApACEAAAABAAAAAAAqAAAAAAABAAAAAAAqAAEAAAABAAAAAAAqAAIAAAABAAAAAAAqAAMAAAABAAAAAAAqAAkAAAABAAAAAAAqAAoAAAABAAAAAAAqABoAAAABAAAAAAAqABsAAAABAAAAAAAqABwAAAABAAAAAAAqAB0AAAABAAAAAAAqAB4AAAABAAAAAAAqAB8AAAABAAAAAAAqACAAAAABAAAAAAAqACEAAAABAAAAAAArAAAAAAABAAAAAAArAAEAAAABAAAAAAArAAIAAAABAAAAAAArAAMAAAABAAAAAAArAAkAAAABAAAAAAArAAoAAAABAAAAAAArABoAAAABAAAAAAArABsAAAABAAAAAAArABwAAAABAAAAAAArAB0AAAABAAAAAAArAB4AAAABAAAAAAArAB8AAAABAAAAAAArACAAAAABAAAAAAArACEAAAABAAAAAAAsAAAAAAABAAAAAAAsAAEAAAABAAAAAAAsAAIAAAABAAAAAAAsAAMAAAABAAAAAAAsAAkAAAABAAAAAAAsAAoAAAABAAAAAAAsABoAAAABAAAAAAAsABsAAAABAAAAAAAsABwAAAABAAAAAAAsAB0AAAABAAAAAAAsAB4AAAABAAAAAAAsAB8AAAABAAAAAAAsACAAAAABAAAAAAAsACEAAAABAAAAAAAtAAAAAAABAAAAAAAtAAEAAAABAAAAAAAtAAIAAAABAAAAAAAtAAMAAAABAAAAAAAtAAkAAAABAAAAAAAtAAoAAAABAAAAAAAtABoAAAABAAAAAAAtABsAAAABAAAAAAAtABwAAAABAAAAAAAtAB0AAAABAAAAAAAtAB4AAAABAAAAAAAtAB8AAAABAAAAAAAtACAAAAABAAAAAAAtACEAAAABAAAAAAAuAAAAAAABAAAAAAAuAAEAAAABAAAAAAAuABoAAAABAAAAAAAuABsAAAABAAAAAAAuABwAAAABAAAAAAAuAB0AAAABAAAAAAAuAB4AAAABAAAAAAAuAB8AAAABAAAAAAAuACAAAAABAAAAAAAuACEAAAABAAAAAAAvAAAAAAABAAAAAAAvAAEAAAABAAAAAAAvABoAAAABAAAAAAAvABsAAAABAAAAAAAvABwAAAABAAAAAAAvAB0AAAABAAAAAAAvAB4AAAABAAAAAAAvAB8AAAABAAAAAAAvACAAAAABAAAAAAAvACEAAAABAAAAAAAwAAAAAAABAAAAAAAwAAEAAAABAAAAAAAwABoAAAABAAAAAAAwABsAAAABAAAAAAAwABwAAAABAAAAAAAwAB0AAAABAAAAAAAwAB4AAAABAAAAAAAwAB8AAAABAAAAAAAwACAAAAABAAAAAAAwACEAAAABAAAAAAAxAAAAAAABAAAAAAAxAAEAAAABAAAAAAAxABoAAAABAAAAAAAxABsAAAABAAAAAAAxABwAAAABAAAAAAAxAB0AAAABAAAAAAAxAB4AAAABAAAAAAAxAB8AAAABAAAAAAAxACAAAAABAAAAAAAxACEAAAABAAAAAAAyAAAAAAABAAAAAAAyAAEAAAABAAAAAAAyAAcAAAABAAAAAAAyAAgAAAABAAAAAAAyAAkAAAABAAAAAAAyAAoAAAABAAAAAAAyABoAAAABAAAAAAAyABsAAAABAAAAAAAyABwAAAABAAAAAAAyAB0AAAABAAAAAAAyAB4AAAABAAAAAAAyAB8AAAABAAAAAAAyACAAAAABAAAAAAAyACEAAAABAAAAAAAzAAAAAAABAAAAAAAzAAEAAAABAAAAAAAzAAcAAAABAAAAAAAzAAgAAAABAAAAAAAzAAkAAAABAAAAAAAzAAoAAAABAAAAAAAzABoAAAABAAAAAAAzABsAAAABAAAAAAAzABwAAAABAAAAAAAzAB0AAAABAAAAAAAzAB4AAAABAAAAAAAzAB8AAAABAAAAAAAzACAAAAABAAAAAAAzACEAAAABAAAAAAA0AAAAAAABAAAAAAA0AAEAAAABAAAAAAA0AAcAAAABAAAAAAA0AAgAAAABAAAAAAA0AAkAAAABAAAAAAA0AAoAAAABAAAAAAA0ABoAAAABAAAAAAA0ABsAAAABAAAAAAA0ABwAAAABAAAAAAA0AB0AAAABAAAAAAA0AB4AAAABAAAAAAA0AB8AAAABAAAAAAA0ACAAAAABAAAAAAA0ACEAAAABAAAAAAA1AAAAAAABAAAAAAA1AAEAAAABAAAAAAA1AAcAAAABAAAAAAA1AAgAAAABAAAAAAA1AAkAAAABAAAAAAA1AAoAAAABAAAAAAA1ABoAAAABAAAAAAA1ABsAAAABAAAAAAA1ABwAAAABAAAAAAA1AB0AAAABAAAAAAA1AB4AAAABAAAAAAA1AB8AAAABAAAAAAA1ACAAAAABAAAAAAA1ACEAAAABAAAAAAA2AAAAAAABAAAAAAA2AAEAAAABAAAAAAA2AAcAAAABAAAAAAA2AAgAAAABAAAAAAA2AAkAAAABAAAAAAA2AAoAAAABAAAAAAA2AAsAAAABAAAAAAA2AAwAAAABAAAAAAA2AA0AAAABAAAAAAA2AA4AAAABAAAAAAA2AA8AAAABAAAAAAA2ABAAAAABAAAAAAA2ABEAAAABAAAAAAA2ABIAAAABAAAAAAA2ABMAAAABAAAAAAA2ABQAAAABAAAAAAA2ABUAAAABAAAAAAA2ABoAAAABAAAAAAA2ABsAAAABAAAAAAA2ABwAAAABAAAAAAA2AB0AAAABAAAAAAA2AB4AAAABAAAAAAA2AB8AAAABAAAAAAA2ACAAAAABAAAAAAA2ACEAAAABAAAAAAA3AAAAAAABAAAAAAA3AAEAAAABAAAAAAA3AAcAAAABAAAAAAA3AAgAAAABAAAAAAA3AAkAAAABAAAAAAA3AAoAAAABAAAAAAA3AAsAAAABAAAAAAA3AAwAAAABAAAAAAA3AA0AAAABAAAAAAA3AA4AAAABAAAAAAA3AA8AAAABAAAAAAA3ABAAAAABAAAAAAA3ABEAAAABAAAAAAA3ABIAAAABAAAAAAA3ABMAAAABAAAAAAA3ABQAAAABAAAAAAA3ABUAAAABAAAAAAA3ABoAAAABAAAAAAA3ABsAAAABAAAAAAA3ABwAAAABAAAAAAA3AB0AAAABAAAAAAA3AB4AAAABAAAAAAA3AB8AAAABAAAAAAA3ACAAAAABAAAAAAA3ACEAAAABAAAAAAA4AAAAAAABAAAAAAA4AAEAAAABAAAAAAA4AAcAAAABAAAAAAA4AAgAAAABAAAAAAA4AAkAAAABAAAAAAA4AAoAAAABAAAAAAA4AAsAAAABAAAAAAA4AAwAAAABAAAAAAA4AA0AAAABAAAAAAA4AA4AAAABAAAAAAA4AA8AAAABAAAAAAA4ABAAAAABAAAAAAA4ABEAAAABAAAAAAA4ABIAAAABAAAAAAA4ABMAAAABAAAAAAA4ABQAAAABAAAAAAA4ABUAAAABAAAAAAA4ABoAAAABAAAAAAA4ABsAAAABAAAAAAA4ABwAAAABAAAAAAA4AB0AAAABAAAAAAA4AB4AAAABAAAAAAA4AB8AAAABAAAAAAA4ACAAAAABAAAAAAA4ACEAAAABAAAAAAA5AAAAAAABAAAAAAA5AAEAAAABAAAAAAA5AAcAAAABAAAAAAA5AAgAAAABAAAAAAA5AAkAAAABAAAAAAA5AAoAAAABAAAAAAA5AAsAAAABAAAAAAA5AAwAAAABAAAAAAA5AA0AAAABAAAAAAA5AA4AAAABAAAAAAA5AA8AAAABAAAAAAA5ABAAAAABAAAAAAA5ABEAAAABAAAAAAA5ABIAAAABAAAAAAA5ABMAAAABAAAAAAA5ABQAAAABAAAAAAA5ABUAAAABAAAAAAA5ABoAAAABAAAAAAA5ABsAAAABAAAAAAA5ABwAAAABAAAAAAA5AB0AAAABAAAAAAA5AB4AAAABAAAAAAA5AB8AAAABAAAAAAA5ACAAAAABAAAAAAA5ACEAAAABAAAAAAAAAA0AAAABAAAAAAAAAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA0AAAABAAAAAAABAA4AAAABAAAAAAABAA8AAAABAAAAAAACAA0AAAABAAAAAAACAA4AAAABAAAAAAACAA8AAAABAAAAAAA=")
-tile_set = ExtResource("10_tcygh")
+tile_set = ExtResource("10_oqypf")
 collision_enabled = false
 
-[node name="Clip" type="Polygon2D" parent="WestWallSecret" unique_id=251070534]
+[node name="Clip" type="Polygon2D" parent="WestWallSecret" unique_id=785092768]
 clip_children = 1
 polygon = PackedVector2Array(-48, 160, 48, 160, 48, 304, -48, 304)
 
-[node name="FakeSkin" type="Node2D" parent="WestWallSecret/Clip" unique_id=438151315 node_paths=PackedStringArray("solid_layer", "mass_layer")]
+[node name="FakeSkin" type="Node2D" parent="WestWallSecret/Clip" unique_id=1491379 node_paths=PackedStringArray("solid_layer", "mass_layer")]
 modulate = Color(0.8, 0.77, 0.86, 1)
-script = ExtResource("11_cp717")
+script = ExtResource("11_qvhqn")
 solid_layer = NodePath("../../FakeRock")
 mass_layer = NodePath("../../../Masses")
-materials = Array[ExtResource("12_2p2u2")]([ExtResource("13_7r3k1"), ExtResource("14_16ey1")])
+materials = Array[ExtResource("12_18vac")]([ExtResource("13_ex223"), ExtResource("14_lustj")])
 room_rect = Rect2i(0, 7, 9, 15)
-skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 4, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(50, 21, 4, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
+skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 3, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(51, 21, 3, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
 
-[node name="Trigger" type="Area2D" parent="WestWallSecret" unique_id=960948779]
+[node name="Trigger" type="Area2D" parent="WestWallSecret" unique_id=76926235]
 
-[node name="Shape" type="CollisionShape2D" parent="WestWallSecret/Trigger" unique_id=610758302]
+[node name="Shape" type="CollisionShape2D" parent="WestWallSecret/Trigger" unique_id=1118879143]
 position = Vector2(24, 232)
-shape = SubResource("RectangleShape2D_3bm44")
+shape = SubResource("RectangleShape2D_v6r43")
 
-[node name="WestWallDraught" type="CPUParticles2D" parent="." unique_id=779397267]
+[node name="WestWallDraught" type="CPUParticles2D" parent="." unique_id=2088247734]
 z_index = 21
-material = SubResource("CanvasItemMaterial_x54cl")
+material = SubResource("CanvasItemMaterial_gdvs4")
 position = Vector2(67.2, 232)
 amount = 6
-texture = ExtResource("25_0b7jv")
+texture = ExtResource("27_41o0c")
 lifetime = 2.6
 preprocess = 2.6
 emission_shape = 3
@@ -2100,470 +2128,751 @@ scale_amount_min = 0.5
 scale_amount_max = 0.5
 color = Color(0.85, 0.95, 0.8, 0.8)
 
-[node name="Resin" type="Area2D" parent="." unique_id=399176109]
+[node name="Resin" type="Area2D" parent="." unique_id=1207900089]
 z_index = 15
 position = Vector2(10, 246)
-script = ExtResource("29_xxjw4")
+script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_0"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin" unique_id=982196644]
-shape = SubResource("CircleShape2D_g3hmd")
+[node name="Shape" type="CollisionShape2D" parent="Resin" unique_id=1126166469]
+shape = SubResource("CircleShape2D_vu7x0")
 
-[node name="Art" type="Sprite2D" parent="Resin" unique_id=432366244]
+[node name="Art" type="Sprite2D" parent="Resin" unique_id=727820855]
 texture_filter = 1
-material = SubResource("CanvasItemMaterial_d5v0i")
-texture = ExtResource("30_muchq")
+material = SubResource("CanvasItemMaterial_rsxmf")
+texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="Resin2" type="Area2D" parent="." unique_id=628623591]
+[node name="Resin2" type="Area2D" parent="." unique_id=1421001239]
 z_index = 15
 position = Vector2(24, 240)
-script = ExtResource("29_xxjw4")
+script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_1"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin2" unique_id=1380391632]
-shape = SubResource("CircleShape2D_v0lww")
+[node name="Shape" type="CollisionShape2D" parent="Resin2" unique_id=1696447749]
+shape = SubResource("CircleShape2D_3sb1g")
 
-[node name="Art" type="Sprite2D" parent="Resin2" unique_id=2109232770]
+[node name="Art" type="Sprite2D" parent="Resin2" unique_id=1936907271]
 texture_filter = 1
-material = SubResource("CanvasItemMaterial_xd1wy")
-texture = ExtResource("30_muchq")
+material = SubResource("CanvasItemMaterial_cowi2")
+texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="Resin3" type="Area2D" parent="." unique_id=302077048]
+[node name="Resin3" type="Area2D" parent="." unique_id=2102650894]
 z_index = 15
 position = Vector2(38, 246)
-script = ExtResource("29_xxjw4")
+script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_2"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin3" unique_id=1216108716]
-shape = SubResource("CircleShape2D_kyqi2")
+[node name="Shape" type="CollisionShape2D" parent="Resin3" unique_id=1989581485]
+shape = SubResource("CircleShape2D_2i6is")
 
-[node name="Art" type="Sprite2D" parent="Resin3" unique_id=1552213153]
+[node name="Art" type="Sprite2D" parent="Resin3" unique_id=993732284]
 texture_filter = 1
-material = SubResource("CanvasItemMaterial_l1ue0")
-texture = ExtResource("30_muchq")
+material = SubResource("CanvasItemMaterial_dtmy7")
+texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="EdgeShade" type="Polygon2D" parent="." unique_id=1313662807]
+[node name="EdgeShade" type="Polygon2D" parent="." unique_id=1596688694]
 z_index = 25
 polygon = PackedVector2Array(0, 0, 16, 0, 32, 0, 48, 0, 64, 0, 64, 544, 48, 544, 32, 544, 16, 544, 0, 544)
 vertex_colors = PackedColorArray(0.043, 0.031, 0.071, 1, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 1)
 
-[node name="EdgeShade2" type="Polygon2D" parent="." unique_id=1863393772]
+[node name="EdgeShade2" type="Polygon2D" parent="." unique_id=1319225022]
 z_index = 25
 polygon = PackedVector2Array(928, 0, 912, 0, 896, 0, 880, 0, 864, 0, 864, 544, 880, 544, 896, 544, 912, 544, 928, 544)
 vertex_colors = PackedColorArray(0.043, 0.031, 0.071, 1, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 1)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1074043852]
+[node name="Doors" type="Node2D" parent="." unique_id=1156521858]
 
-[node name="East" type="Marker2D" parent="Doors" unique_id=2048375534]
+[node name="East" type="Marker2D" parent="Doors" unique_id=1881471224]
 position = Vector2(888, 112)
 metadata/facing = -1
 
-[node name="EastExit" type="Area2D" parent="Doors" unique_id=292370149]
-script = ExtResource("31_l5i7t")
+[node name="EastExit" type="Area2D" parent="Doors" unique_id=96201200]
+script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_test_room.tscn"
 target_door = "WestLower"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/EastExit" unique_id=1565416156]
+[node name="Shape" type="CollisionShape2D" parent="Doors/EastExit" unique_id=1809290672]
 position = Vector2(921, 72)
-shape = SubResource("RectangleShape2D_wrefb")
+shape = SubResource("RectangleShape2D_ciegg")
 
-[node name="West" type="Marker2D" parent="Doors" unique_id=1393204725]
+[node name="West" type="Marker2D" parent="Doors" unique_id=712938769]
 position = Vector2(40, 128)
 metadata/facing = 1
 
-[node name="WestExit" type="Area2D" parent="Doors" unique_id=1746540302]
-script = ExtResource("31_l5i7t")
+[node name="WestExit" type="Area2D" parent="Doors" unique_id=1744362488]
+script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_02_old_crypt.tscn"
 target_door = "East"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/WestExit" unique_id=1016870207]
+[node name="Shape" type="CollisionShape2D" parent="Doors/WestExit" unique_id=531964535]
 position = Vector2(7, 88)
-shape = SubResource("RectangleShape2D_81a7l")
+shape = SubResource("RectangleShape2D_djf3f")
 
-[node name="WestLower" type="Marker2D" parent="Doors" unique_id=659707591]
+[node name="WestLower" type="Marker2D" parent="Doors" unique_id=1289541194]
 position = Vector2(40, 416)
 metadata/facing = 1
 
-[node name="WestLowerExit" type="Area2D" parent="Doors" unique_id=2135275676]
-script = ExtResource("31_l5i7t")
+[node name="WestLowerExit" type="Area2D" parent="Doors" unique_id=1312724809]
+script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_02_old_crypt.tscn"
 target_door = "EastLower"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/WestLowerExit" unique_id=1214258066]
+[node name="Shape" type="CollisionShape2D" parent="Doors/WestLowerExit" unique_id=1590897810]
 position = Vector2(7, 376)
-shape = SubResource("RectangleShape2D_i6ur6")
+shape = SubResource("RectangleShape2D_lfacg")
 
-[node name="EastLower" type="Marker2D" parent="Doors" unique_id=2099938807]
+[node name="EastLower" type="Marker2D" parent="Doors" unique_id=1541110279]
 position = Vector2(888, 416)
 metadata/facing = -1
 
-[node name="EastLowerExit" type="Area2D" parent="Doors" unique_id=906245488]
-script = ExtResource("31_l5i7t")
+[node name="EastLowerExit" type="Area2D" parent="Doors" unique_id=1125394787]
+script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_06_undercroft.tscn"
 target_door = "West"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/EastLowerExit" unique_id=575748406]
+[node name="Shape" type="CollisionShape2D" parent="Doors/EastLowerExit" unique_id=296558047]
 position = Vector2(921, 384)
-shape = SubResource("RectangleShape2D_5jny5")
+shape = SubResource("RectangleShape2D_svucq")
 
-[node name="Hanging" type="Node2D" parent="." unique_id=507144923]
+[node name="Hanging" type="Node2D" parent="." unique_id=2004172203]
 z_index = 3
 
-[node name="FloorMid" type="Node2D" parent="." unique_id=758601022]
+[node name="Hang" type="Sprite2D" parent="Hanging" unique_id=1739950334]
+position = Vector2(123, 29)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(158, 8, 32, 55)
+
+[node name="Hang2" type="Sprite2D" parent="Hanging" unique_id=1895390349]
+position = Vector2(155, 29)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 8, 29, 48)
+
+[node name="Hang3" type="Sprite2D" parent="Hanging" unique_id=981395777]
+position = Vector2(193, 29)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 8, 29, 48)
+
+[node name="Hang4" type="Sprite2D" parent="Hanging" unique_id=2082193274]
+position = Vector2(772, 29)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(135, 8, 15, 46)
+
+[node name="Hang5" type="Sprite2D" parent="Hanging" unique_id=27917746]
+position = Vector2(852, 29)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(111, 98, 13, 14)
+
+[node name="Hang6" type="Sprite2D" parent="Hanging" unique_id=1408823766]
+position = Vector2(59, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(64, 99, 9, 8)
+
+[node name="Hang7" type="Sprite2D" parent="Hanging" unique_id=1584418707]
+position = Vector2(69, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(137, 96, 15, 21)
+
+[node name="Hang8" type="Sprite2D" parent="Hanging" unique_id=798933700]
+position = Vector2(82, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(137, 96, 15, 21)
+
+[node name="Hang9" type="Sprite2D" parent="Hanging" unique_id=596745719]
+position = Vector2(207, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(197, 8, 20, 34)
+
+[node name="Hang10" type="Sprite2D" parent="Hanging" unique_id=2051797321]
+position = Vector2(232, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(111, 98, 13, 14)
+
+[node name="Hang11" type="Sprite2D" parent="Hanging" unique_id=880548330]
+position = Vector2(245, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 99, 12, 11)
+
+[node name="Hang12" type="Sprite2D" parent="Hanging" unique_id=1468413090]
+position = Vector2(388, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(64, 99, 9, 8)
+
+[node name="Hang13" type="Sprite2D" parent="Hanging" unique_id=1698839384]
+position = Vector2(407, 45)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 99, 12, 11)
+
+[node name="Hang14" type="Sprite2D" parent="Hanging" unique_id=317913353]
+position = Vector2(442, 61)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(64, 99, 9, 8)
+
+[node name="Hang15" type="Sprite2D" parent="Hanging" unique_id=73578050]
+position = Vector2(642, 61)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(137, 96, 15, 21)
+
+[node name="Hang16" type="Sprite2D" parent="Hanging" unique_id=4597855]
+position = Vector2(692, 61)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(197, 8, 20, 34)
+
+[node name="CornerMoss" type="Sprite2D" parent="Hanging" unique_id=819007566]
+position = Vector2(284, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(197, 8, 20, 34)
+
+[node name="CornerMoss2" type="Sprite2D" parent="Hanging" unique_id=827689519]
+position = Vector2(352, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(135, 8, 15, 46)
+
+[node name="Hang17" type="Sprite2D" parent="Hanging" unique_id=1635250848]
+position = Vector2(57, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 99, 12, 11)
+
+[node name="Hang18" type="Sprite2D" parent="Hanging" unique_id=934543050]
+position = Vector2(85, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(64, 99, 9, 8)
+
+[node name="Hang19" type="Sprite2D" parent="Hanging" unique_id=217961473]
+position = Vector2(94, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(158, 8, 32, 55)
+
+[node name="Hang20" type="Sprite2D" parent="Hanging" unique_id=1561767152]
+position = Vector2(127, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(164, 94, 18, 26)
+
+[node name="Hang21" type="Sprite2D" parent="Hanging" unique_id=283215882]
+position = Vector2(154, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(158, 8, 32, 55)
+
+[node name="Hang22" type="Sprite2D" parent="Hanging" unique_id=1969752217]
+position = Vector2(184, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(135, 8, 15, 46)
+
+[node name="Hang23" type="Sprite2D" parent="Hanging" unique_id=1833204091]
+position = Vector2(190, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 8, 29, 48)
+
+[node name="Hang24" type="Sprite2D" parent="Hanging" unique_id=64597106]
+position = Vector2(242, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(164, 94, 18, 26)
+
+[node name="Hang25" type="Sprite2D" parent="Hanging" unique_id=234367908]
+position = Vector2(399, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 8, 29, 48)
+
+[node name="Hang26" type="Sprite2D" parent="Hanging" unique_id=1118075876]
+position = Vector2(451, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(164, 94, 18, 26)
+
+[node name="Hang27" type="Sprite2D" parent="Hanging" unique_id=1819232512]
+position = Vector2(465, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(360, 8, 16, 111)
+
+[node name="Hang28" type="Sprite2D" parent="Hanging" unique_id=108469780]
+position = Vector2(514, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 99, 12, 11)
+
+[node name="Hang29" type="Sprite2D" parent="Hanging" unique_id=876497529]
+position = Vector2(637, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(257, 8, 22, 69)
+
+[node name="Hang30" type="Sprite2D" parent="Hanging" unique_id=459461401]
+position = Vector2(674, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(316, 8, 16, 57)
+
+[node name="Hang31" type="Sprite2D" parent="Hanging" unique_id=1799529881]
+position = Vector2(710, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(88, 99, 12, 11)
+
+[node name="Hang32" type="Sprite2D" parent="Hanging" unique_id=1917143347]
+position = Vector2(830, 173)
+texture = ExtResource("34_wvgjp")
+centered = false
+region_enabled = true
+region_rect = Rect2(56, 8, 29, 48)
+
+[node name="FloorMid" type="Node2D" parent="." unique_id=1802285511]
 z_index = 26
 
-[node name="FloorMid" type="Sprite2D" parent="FloorMid" unique_id=886380046]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(56, 398)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="FloorMid" type="Sprite2D" parent="FloorMid" unique_id=1427594844]
+modulate = Color(0.5, 0.48, 0.6, 1)
+material = SubResource("CanvasItemMaterial_2sqo2")
+position = Vector2(624, 391)
+texture = ExtResource("35_1q5ng")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(10, 181, 112, 46)
+
+[node name="FloorMid2" type="Sprite2D" parent="FloorMid" unique_id=1684671112]
+modulate = Color(0.5, 0.48, 0.6, 1)
+material = SubResource("CanvasItemMaterial_2sqo2")
+position = Vector2(722, 385)
+texture = ExtResource("35_1q5ng")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(62, 245, 108, 56)
+
+[node name="FloorMid3" type="Sprite2D" parent="FloorMid" unique_id=1164716520]
+modulate = Color(0.5, 0.48, 0.6, 1)
+material = SubResource("CanvasItemMaterial_2sqo2")
+position = Vector2(754, 385)
+texture = ExtResource("35_1q5ng")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(62, 245, 108, 56)
+
+[node name="Tops" type="Node2D" parent="." unique_id=224475716]
+z_index = 3
+
+[node name="Top" type="Sprite2D" parent="Tops" unique_id=1429805175]
+position = Vector2(225, 97)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(8, 72, 32, 20)
+region_rect = Rect2(25, 49, 47, 16)
 
-[node name="FloorMid2" type="Sprite2D" parent="FloorMid" unique_id=1247619419]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(84, 393)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top2" type="Sprite2D" parent="Tops" unique_id=1342466251]
+position = Vector2(805, 98)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(16, 208, 48, 24)
+region_rect = Rect2(205, 51, 38, 15)
 
-[node name="FloorMid3" type="Sprite2D" parent="FloorMid" unique_id=1668259453]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(516, 393)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top3" type="Sprite2D" parent="Tops" unique_id=1847415188]
+position = Vector2(833, 97)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(112, 208, 48, 24)
+region_rect = Rect2(25, 49, 47, 16)
 
-[node name="FloorMid4" type="Sprite2D" parent="FloorMid" unique_id=778512650]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(660, 393)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top4" type="Sprite2D" parent="Tops" unique_id=1450938624]
+position = Vector2(149, 108)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(16, 208, 48, 24)
+region_rect = Rect2(157, 18, 38, 21)
 
-[node name="FloorMid5" type="Sprite2D" parent="FloorMid" unique_id=1987158317]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(760, 398)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top5" type="Sprite2D" parent="Tops" unique_id=1831799379]
+position = Vector2(433, 113)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(8, 72, 32, 20)
+region_rect = Rect2(25, 49, 47, 16)
 
-[node name="FloorMid6" type="Sprite2D" parent="FloorMid" unique_id=688600994]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(788, 393)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top6" type="Sprite2D" parent="Tops" unique_id=383413197]
+position = Vector2(517, 124)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(16, 208, 48, 24)
+region_rect = Rect2(157, 18, 38, 21)
 
-[node name="FloorMid7" type="Sprite2D" parent="FloorMid" unique_id=1143042382]
-modulate = Color(0.62, 0.58, 0.72, 1)
-material = SubResource("CanvasItemMaterial_iivpy")
-position = Vector2(852, 393)
-scale = Vector2(1.25, 1.25)
-texture = ExtResource("8_w4fwo")
+[node name="Top7" type="Sprite2D" parent="Tops" unique_id=626342514]
+position = Vector2(586, 130)
+texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
-region_rect = Rect2(16, 208, 48, 24)
+region_rect = Rect2(282, 24, 28, 15)
 
-[node name="DeepFog" type="ColorRect" parent="." unique_id=1302750322]
+[node name="Top8" type="Sprite2D" parent="Tops" unique_id=1798808499]
+position = Vector2(634, 134)
+texture = ExtResource("36_iy6hr")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(328, 28, 28, 11)
+
+[node name="Top9" type="Sprite2D" parent="Tops" unique_id=1852407814]
+position = Vector2(437, 396)
+texture = ExtResource("36_iy6hr")
+centered = false
+region_enabled = true
+region_rect = Rect2(157, 18, 38, 21)
+
+[node name="Top10" type="Sprite2D" parent="Tops" unique_id=893967672]
+position = Vector2(588, 384)
+texture = ExtResource("36_iy6hr")
+centered = false
+region_enabled = true
+region_rect = Rect2(27, 6, 57, 33)
+
+[node name="Top11" type="Sprite2D" parent="Tops" unique_id=263032969]
+position = Vector2(803, 404)
+texture = ExtResource("36_iy6hr")
+centered = false
+flip_h = true
+region_enabled = true
+region_rect = Rect2(189, 107, 43, 13)
+
+[node name="Top12" type="Sprite2D" parent="Tops" unique_id=1778956611]
+position = Vector2(321, 417)
+texture = ExtResource("36_iy6hr")
+centered = false
+region_enabled = true
+region_rect = Rect2(25, 49, 47, 16)
+
+[node name="FloorNear" type="Node2D" parent="." unique_id=1377258885]
+z_index = 27
+
+[node name="FloorNear" type="Sprite2D" parent="FloorNear" unique_id=224248054]
+modulate = Color(0.04, 0.03, 0.06, 1)
+material = SubResource("CanvasItemMaterial_2sqo2")
+position = Vector2(53, 402)
+texture = ExtResource("35_1q5ng")
+centered = false
+region_enabled = true
+region_rect = Rect2(592, 190, 167, 39)
+
+[node name="DeepFog" type="ColorRect" parent="." unique_id=1484976645]
 z_index = 1
-material = SubResource("ShaderMaterial_1pt40")
+material = SubResource("ShaderMaterial_g16gs")
 offset_top = 244.8
 offset_right = 928.0
 offset_bottom = 571.2
 mouse_filter = 2
 
-[node name="FloorFog0" type="ColorRect" parent="." unique_id=798798963]
+[node name="FloorFog0" type="ColorRect" parent="." unique_id=907721901]
 z_index = 3
-material = SubResource("ShaderMaterial_vu7x0")
+material = SubResource("ShaderMaterial_t0xkd")
 offset_left = -24.0
 offset_top = -54.4
 offset_right = 328.0
 offset_bottom = 6.3999977
 mouse_filter = 2
 
-[node name="FloorFogFront0" type="ColorRect" parent="." unique_id=1671146193]
+[node name="FloorFogFront0" type="ColorRect" parent="." unique_id=1789978146]
 z_index = 12
-material = SubResource("ShaderMaterial_cowi2")
+material = SubResource("ShaderMaterial_5eads")
 offset_left = -24.0
 offset_top = -22.4
 offset_right = 328.0
 offset_bottom = 9.6
 mouse_filter = 2
 
-[node name="FloorFog1" type="ColorRect" parent="." unique_id=1759992320]
+[node name="FloorFog1" type="ColorRect" parent="." unique_id=263114844]
 z_index = 3
-material = SubResource("ShaderMaterial_ciegg")
+material = SubResource("ShaderMaterial_c66m7")
 offset_left = 328.0
 offset_top = -54.4
 offset_right = 952.0
 offset_bottom = 6.3999977
 mouse_filter = 2
 
-[node name="FloorFogFront1" type="ColorRect" parent="." unique_id=421069590]
+[node name="FloorFogFront1" type="ColorRect" parent="." unique_id=1101510602]
 z_index = 12
-material = SubResource("ShaderMaterial_svucq")
+material = SubResource("ShaderMaterial_k6pd7")
 offset_left = 328.0
 offset_top = -22.4
 offset_right = 952.0
 offset_bottom = 9.6
 mouse_filter = 2
 
-[node name="FloorFog2" type="ColorRect" parent="." unique_id=1702534275]
+[node name="FloorFog2" type="ColorRect" parent="." unique_id=1230571455]
 z_index = 3
-material = SubResource("ShaderMaterial_kxkps")
+material = SubResource("ShaderMaterial_ue1t8")
 offset_left = 200.0
 offset_top = 57.6
 offset_right = 328.0
 offset_bottom = 118.399994
 mouse_filter = 2
 
-[node name="FloorFogFront2" type="ColorRect" parent="." unique_id=1803082542]
+[node name="FloorFogFront2" type="ColorRect" parent="." unique_id=1324161350]
 z_index = 12
-material = SubResource("ShaderMaterial_kdvg8")
+material = SubResource("ShaderMaterial_f11ht")
 offset_left = 200.0
 offset_top = 89.6
 offset_right = 328.0
 offset_bottom = 121.6
 mouse_filter = 2
 
-[node name="FloorFog3" type="ColorRect" parent="." unique_id=330063721]
+[node name="FloorFog3" type="ColorRect" parent="." unique_id=346771150]
 z_index = 3
-material = SubResource("ShaderMaterial_k3ifn")
+material = SubResource("ShaderMaterial_r60hl")
 offset_left = 776.0
 offset_top = 57.6
 offset_right = 952.0
 offset_bottom = 118.399994
 mouse_filter = 2
 
-[node name="FloorFogFront3" type="ColorRect" parent="." unique_id=1491083204]
+[node name="FloorFogFront3" type="ColorRect" parent="." unique_id=433225033]
 z_index = 12
-material = SubResource("ShaderMaterial_jwnvc")
+material = SubResource("ShaderMaterial_nsudb")
 offset_left = 776.0
 offset_top = 89.6
 offset_right = 952.0
 offset_bottom = 121.6
 mouse_filter = 2
 
-[node name="FloorFog4" type="ColorRect" parent="." unique_id=1694817720]
+[node name="FloorFog4" type="ColorRect" parent="." unique_id=1459648804]
 z_index = 3
-material = SubResource("ShaderMaterial_m1bnn")
+material = SubResource("ShaderMaterial_ltqlp")
 offset_left = -24.0
 offset_top = 73.6
 offset_right = 248.0
 offset_bottom = 134.4
 mouse_filter = 2
 
-[node name="FloorFogFront4" type="ColorRect" parent="." unique_id=1104755556]
+[node name="FloorFogFront4" type="ColorRect" parent="." unique_id=1602337913]
 z_index = 12
-material = SubResource("ShaderMaterial_jc68m")
+material = SubResource("ShaderMaterial_h0n5b")
 offset_left = -24.0
 offset_top = 105.6
 offset_right = 248.0
 offset_bottom = 137.6
 mouse_filter = 2
 
-[node name="FloorFog5" type="ColorRect" parent="." unique_id=1750014552]
+[node name="FloorFog5" type="ColorRect" parent="." unique_id=133026081]
 z_index = 3
-material = SubResource("ShaderMaterial_fwxrc")
+material = SubResource("ShaderMaterial_rrt77")
 offset_left = 328.0
 offset_top = 73.6
 offset_right = 488.0
 offset_bottom = 134.4
 mouse_filter = 2
 
-[node name="FloorFogFront5" type="ColorRect" parent="." unique_id=1968496834]
+[node name="FloorFogFront5" type="ColorRect" parent="." unique_id=1823713600]
 z_index = 12
-material = SubResource("ShaderMaterial_r4pk1")
+material = SubResource("ShaderMaterial_0brp7")
 offset_left = 328.0
 offset_top = 105.6
 offset_right = 488.0
 offset_bottom = 137.6
 mouse_filter = 2
 
-[node name="FloorFog6" type="ColorRect" parent="." unique_id=372362596]
+[node name="FloorFog6" type="ColorRect" parent="." unique_id=1176738802]
 z_index = 3
-material = SubResource("ShaderMaterial_vea27")
+material = SubResource("ShaderMaterial_ru1aq")
 offset_left = 440.0
 offset_top = 89.6
 offset_right = 760.0
 offset_bottom = 150.4
 mouse_filter = 2
 
-[node name="FloorFogFront6" type="ColorRect" parent="." unique_id=1744481194]
+[node name="FloorFogFront6" type="ColorRect" parent="." unique_id=972610986]
 z_index = 12
-material = SubResource("ShaderMaterial_8la4t")
+material = SubResource("ShaderMaterial_7v6t8")
 offset_left = 440.0
 offset_top = 121.6
 offset_right = 760.0
 offset_bottom = 153.6
 mouse_filter = 2
 
-[node name="FloorFog7" type="ColorRect" parent="." unique_id=19458990]
+[node name="FloorFog7" type="ColorRect" parent="." unique_id=881550501]
 z_index = 3
-material = SubResource("ShaderMaterial_btfec")
+material = SubResource("ShaderMaterial_wv77o")
 offset_left = -24.0
 offset_top = 201.6
-offset_right = 136.0
+offset_right = 120.0
 offset_bottom = 262.4
 mouse_filter = 2
 
-[node name="FloorFogFront7" type="ColorRect" parent="." unique_id=560591344]
+[node name="FloorFogFront7" type="ColorRect" parent="." unique_id=1149463983]
 z_index = 12
-material = SubResource("ShaderMaterial_44432")
+material = SubResource("ShaderMaterial_87d7m")
 offset_left = -24.0
 offset_top = 233.6
-offset_right = 136.0
+offset_right = 120.0
 offset_bottom = 265.6
 mouse_filter = 2
 
-[node name="FloorFog8" type="ColorRect" parent="." unique_id=67847742]
+[node name="FloorFog8" type="ColorRect" parent="." unique_id=1950074118]
 z_index = 3
-material = SubResource("ShaderMaterial_lafmk")
+material = SubResource("ShaderMaterial_5yo3u")
 offset_left = 184.0
 offset_top = 217.6
 offset_right = 472.0
 offset_bottom = 278.4
 mouse_filter = 2
 
-[node name="FloorFogFront8" type="ColorRect" parent="." unique_id=1359619237]
+[node name="FloorFogFront8" type="ColorRect" parent="." unique_id=1127110123]
 z_index = 12
-material = SubResource("ShaderMaterial_76mau")
+material = SubResource("ShaderMaterial_v1yrw")
 offset_left = 184.0
 offset_top = 249.6
 offset_right = 472.0
 offset_bottom = 281.6
 mouse_filter = 2
 
-[node name="FloorFog9" type="ColorRect" parent="." unique_id=1283527657]
+[node name="FloorFog9" type="ColorRect" parent="." unique_id=1106601298]
 z_index = 3
-material = SubResource("ShaderMaterial_qukoq")
+material = SubResource("ShaderMaterial_26141")
 offset_left = 632.0
 offset_top = 233.6
 offset_right = 776.0
 offset_bottom = 294.4
 mouse_filter = 2
 
-[node name="FloorFogFront9" type="ColorRect" parent="." unique_id=876576964]
+[node name="FloorFogFront9" type="ColorRect" parent="." unique_id=608913841]
 z_index = 12
-material = SubResource("ShaderMaterial_fyrcm")
+material = SubResource("ShaderMaterial_ia6va")
 offset_left = 632.0
 offset_top = 265.6
 offset_right = 776.0
 offset_bottom = 297.6
 mouse_filter = 2
 
-[node name="FloorFog10" type="ColorRect" parent="." unique_id=1510472929]
+[node name="FloorFog10" type="ColorRect" parent="." unique_id=1254810234]
 z_index = 3
-material = SubResource("ShaderMaterial_r0tof")
-offset_left = 776.0
-offset_top = 281.6
-offset_right = 888.0
-offset_bottom = 342.4
-mouse_filter = 2
-
-[node name="FloorFogFront10" type="ColorRect" parent="." unique_id=814854954]
-z_index = 12
-material = SubResource("ShaderMaterial_4e7j0")
-offset_left = 776.0
-offset_top = 313.6
-offset_right = 888.0
-offset_bottom = 345.6
-mouse_filter = 2
-
-[node name="FloorFog11" type="ColorRect" parent="." unique_id=240353553]
-z_index = 3
-material = SubResource("ShaderMaterial_wihm1")
+material = SubResource("ShaderMaterial_6fp3s")
 offset_left = -24.0
 offset_top = 361.6
 offset_right = 264.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront11" type="ColorRect" parent="." unique_id=1805654423]
+[node name="FloorFogFront10" type="ColorRect" parent="." unique_id=1005078365]
 z_index = 12
-material = SubResource("ShaderMaterial_60ghh")
+material = SubResource("ShaderMaterial_hm5ah")
 offset_left = -24.0
 offset_top = 393.6
 offset_right = 264.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog12" type="ColorRect" parent="." unique_id=1171350225]
+[node name="FloorFog11" type="ColorRect" parent="." unique_id=1115312209]
 z_index = 3
-material = SubResource("ShaderMaterial_gw6mk")
+material = SubResource("ShaderMaterial_t8fd4")
 offset_left = 376.0
 offset_top = 361.6
 offset_right = 488.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront12" type="ColorRect" parent="." unique_id=1509810316]
+[node name="FloorFogFront11" type="ColorRect" parent="." unique_id=1291035377]
 z_index = 12
-material = SubResource("ShaderMaterial_07jex")
+material = SubResource("ShaderMaterial_mkywh")
 offset_left = 376.0
 offset_top = 393.6
 offset_right = 488.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog13" type="ColorRect" parent="." unique_id=908188533]
+[node name="FloorFog12" type="ColorRect" parent="." unique_id=1529967305]
 z_index = 3
-material = SubResource("ShaderMaterial_0ltdo")
+material = SubResource("ShaderMaterial_aw362")
 offset_left = 504.0
 offset_top = 361.6
 offset_right = 952.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront13" type="ColorRect" parent="." unique_id=687237902]
+[node name="FloorFogFront12" type="ColorRect" parent="." unique_id=462689928]
 z_index = 12
-material = SubResource("ShaderMaterial_dkao8")
+material = SubResource("ShaderMaterial_vwjh5")
 offset_left = 504.0
 offset_top = 393.6
 offset_right = 952.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog14" type="ColorRect" parent="." unique_id=530077349]
+[node name="FloorFog13" type="ColorRect" parent="." unique_id=1472984880]
 z_index = 3
-material = SubResource("ShaderMaterial_kxqxs")
+material = SubResource("ShaderMaterial_ktf4k")
 offset_left = 216.0
 offset_top = 377.6
 offset_right = 424.0
 offset_bottom = 438.4
 mouse_filter = 2
 
-[node name="FloorFogFront14" type="ColorRect" parent="." unique_id=122623629]
+[node name="FloorFogFront13" type="ColorRect" parent="." unique_id=2113644859]
 z_index = 12
-material = SubResource("ShaderMaterial_ioypw")
+material = SubResource("ShaderMaterial_wntqx")
 offset_left = 216.0
 offset_top = 409.6
 offset_right = 424.0
 offset_bottom = 441.6
 mouse_filter = 2
 
-[node name="Kleo" type="CharacterBody2D" parent="." unique_id=1906065576 instance=ExtResource("32_41o0c")]
+[node name="Kleo" type="CharacterBody2D" parent="." unique_id=299292702 instance=ExtResource("37_cbmh6")]
 z_index = 10
 position = Vector2(888, 112)
 collision_layer = 2
@@ -2571,15 +2880,15 @@ collision_mask = 65
 floor_snap_length = 4.0
 script = ExtResource("1_p5lty")
 
-[node name="Camera" type="Camera2D" parent="." unique_id=450488568]
+[node name="Camera" type="Camera2D" parent="." unique_id=689591075]
 position = Vector2(888, 112)
-script = ExtResource("34_arrd3")
+script = ExtResource("39_qklo1")
 
-[node name="Screen" type="CanvasLayer" parent="." unique_id=1431398310]
+[node name="Screen" type="CanvasLayer" parent="." unique_id=555830047]
 layer = 50
 
-[node name="Vignette" type="ColorRect" parent="Screen" unique_id=1601970735]
-material = SubResource("ShaderMaterial_aw362")
+[node name="Vignette" type="ColorRect" parent="Screen" unique_id=1851475404]
+material = SubResource("ShaderMaterial_7ii0p")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

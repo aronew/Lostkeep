@@ -102,6 +102,13 @@ var _detail_kind := ""
 ## docs/mockups/mood/): set by a room before _finish(), which sinks it into
 ## a teal murk with fog along its floors. See _moody().
 var _mood := false
+## The detail pass in the creative lead's CH pieces (Book 1, CH4 hangings, CH5
+## ledge dressing, CH8 floor front) instead of the SH flora. Set by a room
+## before _finish(); IB-05 first, for approval.
+var _ch_detail := false
+## Where the detail pass stays away from, if not the skin's skip regions (a
+## room whose painted bands are in `skip` still wants hangings under them).
+var detail_skip = null
 
 
 func _use_crypt_y_stone() -> void:
@@ -296,7 +303,7 @@ func _room_detail(surface: bool) -> void:
 		solid[c] = true
 	var is_solid := func(c: Vector2i) -> bool: return solid.has(c) or not room.has_point(c)
 	var skipped := func(c: Vector2i) -> bool:
-		for r in skip:
+		for r in (skip if detail_skip == null else detail_skip):
 			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
 				return true
 		for r in _secret_rects:
@@ -309,6 +316,9 @@ func _room_detail(surface: bool) -> void:
 	hang_node.z_index = 3  # under the skin's bands: each tucks up under its ceiling
 	var mid_node := _node(Node2D.new(), "FloorMid", _root) as Node2D
 	mid_node.z_index = 26  # in front of Kleo
+	if _ch_detail:
+		_ch_room_detail(is_solid, skipped, hang_node, mid_node, unlit)
+		return
 	var flora := ENV + "sh_flora.png"
 	var hangs := [Rect2(8, 112, 16, 16), Rect2(48, 112, 16, 32), Rect2(88, 112, 24, 64),
 		Rect2(144, 112, 16, 16), Rect2(184, 112, 16, 32), Rect2(224, 112, 20, 64)]
@@ -1253,3 +1263,88 @@ func _mood_fog(parent: Node, fog_name: String, rect: Rect2, density: float, z: i
 	r.z_index = z
 	r.material.set_shader_parameter("scale", Vector2(rect.size.x / 640.0, rect.size.y / 90.0))
 	return r
+
+
+# --- The detail pass in the CH pieces ---------------------------------------------------------
+
+const CH_PIECES := ENV + "ch_pieces.json"
+## CH4 (ch_hangings.png): moss curtains, roots and chains by length; the stone
+## drips for low ceilings. Indices into ch_pieces.json's "ch_hangings".
+const CH_HANG_LONG := [0, 2, 6, 7, 8, 10, 11]
+const CH_HANG_MID := [1, 3, 4, 9, 17]
+const CH_HANG_SHORT := [5, 13, 14, 15, 16]
+## CH5 (ch_props.png): crystals, tufts and rubble standing on floors.
+const CH_TOPS := [0, 1, 2, 3, 4, 5, 6, 7, 9, 11, 13, 14, 15, 16]
+## CH8 (ch_foreground.png): mounds, drums, grass for the mid step; thin root
+## arches and grass in black for the near step.
+const CH_FLOOR_MID := [0, 1, 2, 3, 4, 5, 9, 11, 12, 16]
+## Only the thin root arches: grass and ferns in black read as blobs.
+const CH_FLOOR_NEAR := [6, 7, 8]
+const CH_NEAR_TINT := Color(0.04, 0.03, 0.06)
+
+
+func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, mid_node: Node2D, unlit: Material) -> void:
+	var table: Dictionary = JSON.parse_string(FileAccess.get_file_as_string(CH_PIECES))
+	var rect_of := func(sheet: String, i: int) -> Rect2:
+		var r: Array = table[sheet][i]["rect"]
+		return Rect2(r[0], r[1], r[2], r[3])
+	var tops_node := _node(Node2D.new(), "Tops", _root) as Node2D
+	tops_node.z_index = 3
+	var near_node := _node(Node2D.new(), "FloorNear", _root) as Node2D
+	near_node.z_index = 27
+	var mid_tint := Color(0.5, 0.48, 0.6)
+	for y in range(room.position.y, room.end.y):
+		for x in range(room.position.x, room.end.x):
+			var c := Vector2i(x, y)
+			if is_solid.call(c) or skipped.call(c):
+				continue
+			# Under a ceiling: a hanging that leaves her room to pass (about 40 px).
+			if is_solid.call(c + Vector2i.UP) and room.has_point(c + Vector2i.UP) and _cellhash(c, 1) < 300:
+				var open := 0
+				while open < 12 and not is_solid.call(c + Vector2i(0, open + 1)):
+					open += 1
+				var room_px := (open + 1) * TILE - 40
+				var pool: Array = CH_HANG_LONG + CH_HANG_MID if open >= 8 else (CH_HANG_MID + CH_HANG_SHORT if open >= 5 else CH_HANG_SHORT)
+				var pick: int = pool[_cellhash(c, 2) % pool.size()]
+				var reg: Rect2 = rect_of.call("ch_hangings", pick)
+				if reg.size.y <= room_px:
+					var sp := _sprite(hang_node, ENV + "ch_hangings.png", reg, Vector2(x * TILE + (_cellhash(c, 3) % 8) - reg.size.x * 0.5 + 8, y * TILE - 3))
+					sp.name = "Hang"
+			if not (is_solid.call(c + Vector2i.DOWN) and room.has_point(c + Vector2i.DOWN)):
+				continue
+			var floor_y := float((y + 1) * TILE)
+			# Its end over open air: moss over the corner, under the slab.
+			for side in [-1, 1]:
+				var n := c + Vector2i(side, 0)
+				if not is_solid.call(n) and not is_solid.call(n + Vector2i.DOWN) and _cellhash(c, 4) < 600:
+					var depth := 0
+					while depth < 8 and is_solid.call(c + Vector2i(0, 1 + depth)):
+						depth += 1
+					if depth < 8:
+						var reg2: Rect2 = rect_of.call("ch_hangings", [5, 3, 1][_cellhash(c, 5) % 3])
+						var ivy := _sprite(hang_node, ENV + "ch_hangings.png", reg2,
+							Vector2(x * TILE + (0 if side < 0 else 16 - reg2.size.x), (y + 1 + depth) * TILE - 3))
+						ivy.name = "CornerMoss"
+			# On the floor: crystals, tufts, rubble, behind her.
+			if _cellhash(c, 8) < 140:
+				var reg3: Rect2 = rect_of.call("ch_props", CH_TOPS[_cellhash(c, 9) % CH_TOPS.size()])
+				var top := _sprite(tops_node, ENV + "ch_props.png", reg3, Vector2(x * TILE + 8 - reg3.size.x * 0.5, floor_y - reg3.size.y + 1))
+				top.name = "Top"
+				top.flip_h = _cellhash(c, 10) % 2 == 0
+			# In front of the floor, the mid step: darkened mounds, drums, grass.
+			if _cellhash(c, 6) < 45:
+				var reg4: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_MID[_cellhash(c, 7) % CH_FLOOR_MID.size()])
+				var m := _sprite(mid_node, ENV + "ch_foreground.png", reg4, Vector2(x * TILE + 8 - reg4.size.x * 0.5, floor_y - reg4.size.y * 0.55))
+				m.name = "FloorMid"
+				m.modulate = mid_tint
+				m.material = unlit
+				m.flip_h = _cellhash(c, 11) % 2 == 0
+			# Nearest the camera: thin root arches in black, sparse, low, and only on
+			# the room's lower floors (in a gallery they stood in the way).
+			elif _cellhash(c, 12) < 30 and y >= room.position.y + room.size.y * 0.6:
+				var reg5: Rect2 = rect_of.call("ch_foreground", CH_FLOOR_NEAR[_cellhash(c, 13) % CH_FLOOR_NEAR.size()])
+				var nr := _sprite(near_node, ENV + "ch_foreground.png", reg5, Vector2(x * TILE + 8 - reg5.size.x * 0.5, floor_y - reg5.size.y * 0.35))
+				nr.name = "FloorNear"
+				nr.modulate = CH_NEAR_TINT
+				nr.material = unlit
+				nr.flip_h = _cellhash(c, 14) % 2 == 0
