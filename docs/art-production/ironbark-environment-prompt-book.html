@@ -199,6 +199,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <a href="#cryptstone">Crypt stone after Y</a>
       <a href="#foreground">Foreground depth</a>
       <a href="#character">Character: what the rooms hang on</a>
+      <a href="#outpost">The outpost</a>
       <a href="#parallax">Parallax layers</a>
       <a href="#landmarks">Landmarks</a>
       <a href="#props">Lived-in dressing</a>
@@ -348,6 +349,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       <p><strong>One departure from the mockups, on purpose:</strong> their roots are crimson, which is the Blight's colour alone (here they are dull bark-brown and plum). Their floating slabs are welcome: platforms belong in the mix with large masses and large floating islands, as in these mockups; what the principles forbid is filling a room with dozens of them to cover space. Every card uses the CY brick, pixel grid and fade rule, so the pieces sit on the terrain without a seam.</p>
       <div class="cards" id="cards-character"></div>
     </section>
+    <section id="outpost" class="group-section">
+      <span class="eyebrow">Prompts</span>
+      <h2>The outpost (the Keep's foundations)</h2>
+      <p>The hooded wanderer's outpost: the first save shrine and the first place to spend Resin (lore and hints are cheap; the map of Ironbark is expensive). After the creative lead's mockups AD (the building, painted: for shape and mood only) and AE (the stranger, already pixel art). Everything here must be true pixel art at our scale.</p>
+      <div class="cards" id="cards-outpost"></div>
+    </section>
     <section id="parallax" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Parallax layers</h2>
@@ -495,6 +502,8 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Y", "Y-crypt-mood-depth.jpg", "Crypt mood and depth", "The creative lead's reference for the crypts' mood and depth: purple above, deep teal below, many receding layers, dark roots and pillars framing the edges. Attach to the FG cards."],
     ["AA", "AA-character-lantern-crypt.jpg", "Character: lantern crypt", "One of the creative lead's ten character mockups: a cave of arcades, a tomb island held up by a double arcade, stepped stairs, moss and crystals on every ledge. Attach to every CH card."],
     ["AC", "AC-shrine-hall-moody.jpg", "The Shrine Hall, moody", "The creative lead's moody mockup of IB-05: dark teal murk, warm torchlight, and top galleries whose floors and ceilings run dead straight in cobble masonry, stepping, with ragged undersides. Attach to CH9."],
+    ["AD", "AD-outpost-mockup.jpg", "The outpost (mood and shape only)", "The creative lead's mockup of the outpost in the Keep's foundations: a stone hut wrapped in great curved horn-ribs and roots, a lantern-lit arched doorway, a round window and a leaf-shaped window, a bench outside, mist. Painted, not pixel art: use it for shape and mood only. Attach to OP1."],
+    ["AE", "AE-hooded-stranger.png", "The hooded stranger", "The creative lead's pixel-art mockup of the outpost's wanderer: blue pointed hood, glowing amber eyes, plum robe with a gold clasp, grey hands and boots, about 34 x 48 px. Attach to OP1 (for the pixel style) and OP2."],
     ["AB", "AB-character-rootbound-crypt.jpg", "Character: rootbound crypt", "The vertical one: slabs with tapering undersides and hanging moss, alcoves with arches and lanterns, stepped edges, a cobble cave wall wound with roots. Attach to every CH card."],
     ["Z", "Z-moonlit-forest-islands.jpg", "Moonlit forest and islands", "The surface rooms' target (IB-03, IB-04): plum boulder terrain, large floating islands, purple sky, teal forest. Attach to the surface FG cards."],
     ["R", "R-surface-grave-crossing.jpg", "Surface: grave crossing", "Ironbark's surface at dusk: the great tree, stairs up to a chapel, a stone bridge over still water, lantern posts. Style target for the SF cards."],
@@ -1296,6 +1305,35 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "2. CEILING BAND, 3072 px wide, 512 px tall: the same stone upside down in its lighting, its underside a PERFECTLY STRAIGHT horizontal line 64 px above the bottom of the band; below the line only transparency; above it a darker edge course, then cobble fading into the void. Nothing hangs below the line.",
         "3. UNDERSIDE STRIP, 3072 px wide, 512 px tall: what hangs under a gallery slab into the hall: its top edge a straight line in dark masonry (it meets the floor band's dark), its bottom ragged, tapering into hanging wedges of cobble 128 to 448 px long, a few moss strands.",
         "4. STEP PIECES in the same stone: a floor stepping up one tile (128 px) to the right, with a straight vertical face of cobble and straight walking lines either side; a ceiling stepping down one tile; each 512 px wide."
+      ] },
+    // ------------------------------------------------------------- the outpost (the Keep's foundations)
+    { id: "OP1", group: "outpost", file: "outpost_building", title: "The outpost, in pixel art", pilot: true,
+      about: "The wanderer's outpost in the Keep's foundations, after mockup AD, redrawn as true pixel art in the style of the hooded stranger (AE) and our crypt stone. AD is painted, so in the game it 'would look weird' (the creative lead): this card asks for the same building as a pixel-art piece that stands on our floor.",
+      canvas: "3072×2048 px (art 384 × 256 px at x8)", game: "One building standing on a straight floor line, plus a few separate pieces", attach: ["AD", "AE", "Your approved CH9 bands (the cobble to match)", "AC"],
+      text: [
+        "TASK: on a transparent canvas, the outpost building from attached mockup AD, redrawn as crisp pixel art, standing on a perfectly straight bottom line (the floor it sits on is NOT part of the piece).",
+        "",
+        CLEAN_GRID,
+        "",
+        "STYLE: true pixel art like the attached hooded stranger AE and our crypt stone (CH9): readable shapes, four tones per material, thin dark outlines only on silhouettes, no painterly blur, no soft gradients, no glow halos (the game adds light). Strict side view.",
+        "",
+        "1. THE OUTPOST, about 2560 px wide and 1600 px tall at x8 (320 x 200 px in game): a domed hut of dark slate shingles and grey-lavender stone, wrapped by great curved horn-like ribs of pale weathered stone that rise and curl over it like a ribcage, and dull bark-brown and plum roots winding between them (never crimson or red: red is the Blight's alone). An arched stone doorway on its left, the opening dark with a faint glow deep inside; an iron lantern on a bracket beside the door (flame only); a round window; a tall leaf-shaped window with an iron lattice, glowing warm amber from inside (#F2B04A light behind the lattice: the outpost is a safe place). Moss and ivy on the ribs.",
+        "2. A wooden bench, 384 px wide.",
+        "3. A small wooden stall or table of the wanderer's wares (scrolls, a folded map, a few jars), 384 px wide.",
+        "4. A hanging sign on a post, a carved hood or eye symbol on it, 256 px tall."
+      ] },
+    { id: "OP2", group: "outpost", file: "hooded_stranger_frames", title: "The hooded stranger: idle and talk frames", pilot: true,
+      about: "The wanderer who runs the outpost, after the creative lead's own mockup AE, animated. Same size and pixel style: a 34 x 48 px figure.",
+      canvas: "2176×768 px (8 frames of 34 x 48 at x8, in a row, 272 x 384 each)", game: "Two strips: idle (4 frames) and talk (4 frames)", attach: ["AE"],
+      text: [
+        "TASK: eight frames of the hooded stranger in attached mockup AE, side by side in one row on a transparent canvas, each frame exactly 272 x 384 px (34 x 48 art pixels at x8), the figure's feet on the bottom row of every frame, the same position in every frame.",
+        "",
+        CLEAN_GRID,
+        "",
+        "STYLE: exactly the attached mockup AE: same palette, outline, proportions and pixel size. Nothing added or redesigned.",
+        "",
+        "Frames 1 to 4, IDLE: a slow breath, the hood's point swaying a pixel or two, the robe's hem stirring, the amber eyes blinking once on frame 3.",
+        "Frames 5 to 8, TALK: the head tilting slightly toward the viewer's left, one grey hand lifting from the robe and turning palm up, then lowering, the eyes narrowing in a knowing smile on frame 6."
       ] },
     // ------------------------------------------------------------- crypt stone after Y
     { id: "CY1", group: "cryptstone", file: "crypt_y_bands", title: "Crypt stone after Y: floor and ceiling bands",
