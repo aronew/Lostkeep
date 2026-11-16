@@ -340,28 +340,37 @@ She steps forward with every hit.
   silhouette sheet, `art/source/ironbark/foreground/`, reduced 3:1 by
   `tools/make_fg_bands.py` to `fg_<crypt|forest>_<bottom|top>_<a|b>.png`;
   FG8's lip reads as a ledge and the silhouettes as pieces, so both wait).
-  `_fg_bands(kind, fog_tint)` in `room_builder.gd` draws the bottom and top
-  band at three depths (`FG_DEPTHS`, after the creative lead: "closest to the
-  camera the silhouette to closer to the color as you get to the midground",
-  with fog between, `FG_FOG`): 1.07 / 1.03 near full colour, 1.18 / 1.06 at
-  half, 1.36 / 1.1 a silhouette, each alternating A and B. Anchored to the
-  world: the bottom band fills the screen's bottom when the camera is at its
-  lowest, the top band the top at its highest. They keep the play clear: the
-  bottom band rises at most `FG_FEET` (34 px) over the lowest floor, the top
-  band hangs no lower than `FG_HEAD` (52 px) over the highest. Crypts call it
-  from `_crypt_foreground()`, the surface rooms (IB-03, IB-04) from
-  `_build_foreground()` in place of P5's canopy and ferns; IB-01 keeps its
-  own. Where the bands are, `_moody()` drops the old fog bank pinned to the
-  screen's bottom. Comparison: `docs/rooms/foreground_bands.png`.
+  **One silhouette band** (the creative lead, after trying three depths:
+  "just having a band of black silhouette foreground layer, just one ...
+  instead of trying to do too many layers, it is pixel art after all"; and
+  the depths "too bright"): `_fg_bands(kind, fog_tint)` in `room_builder.gd`
+  draws only the bottom band, near-black (`FG_DEPTHS` holds one depth,
+  scroll 1.25 / 1.08; `FG_PARTS` only "bottom"): plants and bushes on the
+  surface (FG9), rock and ruins in the crypts (FG6). Anchored to the world
+  at the room's bottom and kept under every floor, the lowest included
+  (`FG_FEET`, 6 px: the creative lead couldn't see the floor in IB-03's
+  start, whose road runs 48 px above the room's bottom). Crypts call it from
+  `_crypt_foreground()`, IB-03 and IB-04 from `_build_foreground()`; IB-01
+  keeps its own. Where it is, `_moody()` drops the fog bank pinned to the
+  screen's bottom. **Ground fronts** (`_ground_fronts()`, FG8's strips laid in
+  rows down the front of every floor on solid ground, after the creative
+  lead's Silksong reference) are built but off (`ground_fronts = false`).
+  **Ceilings break** (the creative lead: "the ceilings ... really straight
+  and flat, I like the floors flat but everything just looking like blocks
+  with no breaks reads poorly"): `_ceiling_trim()` hangs FG7 (brick wedges,
+  vault ribs, roots, moss, chains) along every crypt ceiling in the room's
+  light, its dark top tucked 6 px into the mass, cut short where the room is
+  low so 44 px of air stays clear (`CEILING_CLEAR`); not on the CH9 galleries.
+  It replaces `_slab_keels()` (CH1's undersides), which would double up.
+  Walls are still straight. Comparison: `docs/rooms/foreground_bands.png`.
   **Lights:** the lanterns no longer light the fog, haze or backdrops (light
   mask 2, `LIGHT_MASK_AIR`): amber on teal fog made a green ringed disc round
   every flame. Their falloff is smooth (`_soft_light_texture()`), and the glow
   in the air is two dithered additive discs per flame (`shaders/glow.gdshader`,
   `_warm_glow()`). The curved bands near some lanterns are vault ribs painted
   in the backdrop, not light. **Ledges:** every thin slab (3 tiles or less
-  over open air) hangs CH1's tapering undersides under it (`_slab_keels()`,
-  kept 46 px clear of the floor below), and ceilings meeting walls get CH4's
-  stone bracket. Comparison: `docs/rooms/crypt_pass_before_after.png`.
+  over open air) hung CH1's tapering undersides (`_slab_keels()`, now retired
+  for the ceiling trim), and ceilings meeting walls get CH4's stone bracket. Comparison: `docs/rooms/crypt_pass_before_after.png`.
 - **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
   mass is the nearest thing to the camera, so it shadows to black toward its
   centre and only its edges get art. Every mass is black inside, piers

@@ -271,12 +271,15 @@ func _crypt_foreground() -> void:
 
 ## [scroll, tint, shift (px further off the screen's edge), first version, lit by the room's lights]
 const FG_DEPTHS := [
-	[Vector2(1.07, 1.03), Color(1.25, 1.22, 1.32), -16.0, "a", false],
-	[Vector2(1.18, 1.06), Color(0.5, 0.5, 0.62), -4.0, "b", false],
-	[Vector2(1.36, 1.1), Color(0.09, 0.08, 0.12), 14.0, "a", false],
+	# One band only (the creative lead: "just having a band of black silhouette
+	# foreground layer, just one ... instead of trying to do too many layers,
+	# it is pixel art after all"). The coloured and half-dark depths are gone.
+	[Vector2(1.25, 1.08), Color(0.045, 0.04, 0.065), 6.0, "a", false],
 ]
-## Fog laid in front of each depth but the nearest: [density in front of depth 1, of depth 2].
-const FG_FOG := [0.2, 0.1]
+## Fog laid in front of each depth but the nearest (none with one depth).
+const FG_FOG := []
+## Which bands to draw: the bottom only (the top band is now the ceilings' own trim).
+const FG_PARTS := ["bottom"]
 const FG_BAND_W := 724.0
 
 
@@ -303,6 +306,9 @@ func _fg_bands(kind: String, fog_tint: Color) -> void:
 			var up := c + Vector2i.UP
 			if room.has_point(up) and tm.get_cell_source_id(up) == -1 \
 					and not _is_solid_cell(up) and not _is_solid_cell(up + Vector2i.UP):
+				# The bottom band stays under every floor, the lowest included
+				# (the creative lead: in the first room, whose road runs 48 px
+				# above the room's bottom, "you can't see the floor").
 				lowest = maxf(lowest, c.y * TILE)
 				highest = minf(highest, c.y * TILE)
 	for i in FG_DEPTHS.size():
@@ -313,12 +319,12 @@ func _fg_bands(kind: String, fog_tint: Color) -> void:
 		layer.repeat_size = Vector2(FG_BAND_W * 2.0, 0)
 		layer.repeat_times = maxi(3, int(room.size.x * TILE / (FG_BAND_W * 2.0)) + 3)
 		layer.z_index = 27 + i * 2
-		var flip := i == 2
+		var flip := i == FG_DEPTHS.size() - 1
 		var first: String = d[3]
 		var order := [first, "b" if first == "a" else "a"]
 		if flip:
 			order.reverse()
-		for part in ["bottom", "top"]:
+		for part in FG_PARTS:
 			var band_h := 0.0
 			for j in 2:
 				var tex: Texture2D = load(ENV + "fg_%s_%s_%s.png" % [kind, part, order[j]])
@@ -358,7 +364,7 @@ func _fg_bands(kind: String, fog_tint: Color) -> void:
 
 
 ## How much of the bottom band may rise above the lowest floor's walking line.
-const FG_FEET := 34.0
+const FG_FEET := 6.0
 ## How far above the highest floor the top band must stay (her height and a jump's start).
 const FG_HEAD := 52.0
 
@@ -1545,6 +1551,211 @@ const CH_FLOOR_NEAR := [6, 7, 8]
 const CH_NEAR_TINT := Color(0.04, 0.03, 0.06)
 
 
+# --- Ceiling trim: no ceiling runs in a straight line ---------------------------------------
+#
+# The creative lead: "the ceilings and the art is really straight and flat, I
+# like the floors flat but everything just looking like blocks with no breaks
+# reads poorly". Every ceiling gets FG7's band (broken vault courses, brick
+# wedges, roots, moss and chains) hung along it in the room's own light, its
+# dark top tucked into the ceiling's mass so its ragged bricks become the
+# ceiling's edge. Where the space below is low it is cut short, so she always
+# has about three tiles of clear air under it. Not on the CH9 galleries
+# (`detail_skip`), whose straight lines were asked for.
+
+const CEILING_TRIM_TINT := Color(0.78, 0.76, 0.86)
+## Pixels of the band's dark top tucked up into the ceiling's mass.
+const CEILING_TUCK := 6.0
+## Clear air left under the trim (px).
+const CEILING_CLEAR := 44.0
+
+
+func _ceiling_trim(is_solid: Callable) -> void:
+	var skipped := func(c: Vector2i) -> bool:
+		for r in (skip if detail_skip == null else detail_skip):
+			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
+				return true
+		for r in _secret_rects:
+			if r.grow(1).has_point(c):
+				return true
+		return false
+	var node := _node(Node2D.new(), "CeilingTrim", _root) as Node2D
+	node.z_index = 5  # over the skin's ceiling band, under props and Kleo
+	var texs := [load(ENV + "fg_crypt_top_a.png"), load(ENV + "fg_crypt_top_b.png")]
+	var n := 0
+	for y in range(room.position.y + 1, room.end.y):
+		var x := room.position.x
+		while x < room.end.x:
+			var under := func(cx: int) -> bool:
+				var c := Vector2i(cx, y)
+				return not is_solid.call(c) and is_solid.call(c + Vector2i.UP) and not skipped.call(c)
+			if not under.call(x):
+				x += 1
+				continue
+			var x0 := x
+			while x < room.end.x and under.call(x):
+				x += 1
+			var x1 := x
+			if x1 - x0 < 3:
+				continue
+			# The lowest headroom along the run decides how deep it may hang.
+			var head := 99
+			for cx in range(x0, x1):
+				var open := 0
+				while open < 12 and not is_solid.call(Vector2i(cx, y + open)):
+					open += 1
+				head = mini(head, open)
+			var ceil_y := float(y * TILE)
+			var at := float(x0 * TILE)
+			var end := float(x1 * TILE)
+			var k := _cellhash(Vector2i(x0, y), 50) % 2
+			var off := float(_cellhash(Vector2i(x0, y), 51) % 500)
+			while at < end - 0.5:
+				var tex: Texture2D = texs[(k + n) % 2]
+				var h := minf(tex.get_height(), head * TILE - CEILING_CLEAR + CEILING_TUCK)
+				if h < 20.0:
+					break
+				var w := minf(tex.get_width() - off, end - at)
+				var sp := Sprite2D.new()
+				sp.texture = tex
+				sp.centered = false
+				sp.region_enabled = true
+				sp.region_rect = Rect2(off, 0, w, h)
+				sp.position = Vector2(at, ceil_y - CEILING_TUCK).round()
+				sp.modulate = CEILING_TRIM_TINT
+				_node(sp, "Trim", node)
+				at += w
+				off = 0.0
+				k += 1
+			n += 1
+
+
+# --- Ground fronts: the foreground built from the ground itself -----------------------------
+#
+# After the creative lead's reference (a recreation of Silksong's first scene):
+# the foreground is not a strip across the screen but the ground, built in rows.
+# Along the front of every floor that stands on solid ground, copies of FG8's
+# strip are laid in rows, each a little lower, darker and nearer the camera than
+# the one behind, so the mass reads as thick ground stepping down into the
+# dark, and the floor's own edge stays in sight above the first row. Where a
+# floor drops away the rows end on FG8's sloped pieces; where it meets a wall
+# they run into it.
+
+## Off: the creative lead preferred one silhouette band to rows of fronts.
+var ground_fronts := false
+const LIP := ENV + "fg_crypt_lip.png"
+## FG8's two strips: [strip, its cap line (y on the sheet), left end, right end].
+## Each end is painted on its strip's baseline; its high side meets the strip.
+const LIP_ROWS := [
+	[Rect2(7, 54, 432, 56), 74.0, Rect2(457, 60, 109, 48), Rect2(600, 56, 115, 51)],
+	[Rect2(7, 167, 432, 61), 193.0, Rect2(456, 176, 110, 51), Rect2(600, 176, 115, 52)],
+]
+## The rows, back to front: [cap line below the walking line (px), tint, scroll].
+const FRONT_ROWS := [
+	[15.0, Color(0.6, 0.58, 0.68), 1.0],
+	[34.0, Color(0.26, 0.25, 0.33), 1.025],
+	[54.0, Color(0.08, 0.07, 0.11), 1.05],
+]
+## Only floors standing on at least this many tiles of solid ground get fronts
+## (never thin slabs, galleries or islands).
+const FRONT_GROUND := 5
+const FRONT_MIN_RUN := 4
+
+
+func _ground_fronts(is_solid: Callable) -> void:
+	var in_skip := func(c: Vector2i) -> bool:
+		for r in skip:
+			if Rect2i(r[0], r[1], r[2], r[3]).grow(1).has_point(c):
+				return true
+		for r in _secret_rects:
+			if r.grow(2).has_point(c):
+				return true
+		return false
+	var front_floor := func(c: Vector2i) -> bool:
+		if not is_solid.call(c) or is_solid.call(c + Vector2i.UP) or is_solid.call(c + Vector2i(0, -2)):
+			return false
+		if not room.has_point(c + Vector2i.UP) or in_skip.call(c) or in_skip.call(c + Vector2i.UP):
+			return false
+		for k in FRONT_GROUND:
+			var d := c + Vector2i(0, k)
+			if room.has_point(d) and not is_solid.call(d):
+				return false
+		return true
+	var unlit := CanvasItemMaterial.new()
+	unlit.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var holder := _node(Node2D.new(), "GroundFronts", _root) as Node2D
+	var layers := []
+	for i in FRONT_ROWS.size():
+		var sc: float = FRONT_ROWS[i][2]
+		var layer: Node2D
+		if sc == 1.0:
+			layer = _node(Node2D.new(), "Row%d" % (i + 1), holder) as Node2D
+		else:
+			var px := _node(Parallax2D.new(), "Row%d" % (i + 1), holder) as Parallax2D
+			px.scroll_scale = Vector2(sc, sc)
+			layer = px
+		layer.z_index = 22 + i
+		layers.append(layer)
+	var room_px := Rect2(room.position * TILE, room.size * TILE)
+	var n := 0
+	for y in range(room.position.y + 2, room.end.y):
+		var x := room.position.x
+		while x < room.end.x:
+			if not front_floor.call(Vector2i(x, y)):
+				x += 1
+				continue
+			var x0 := x
+			while x < room.end.x and front_floor.call(Vector2i(x, y)):
+				x += 1
+			var x1 := x
+			if x1 - x0 < FRONT_MIN_RUN:
+				continue
+			# An end is open where the floor drops away beside it.
+			var open_l: bool = not is_solid.call(Vector2i(x0 - 1, y)) and not is_solid.call(Vector2i(x0 - 1, y - 1))
+			var open_r: bool = not is_solid.call(Vector2i(x1, y)) and not is_solid.call(Vector2i(x1, y - 1))
+			var wy := float(y * TILE)
+			# Where the camera's view is when it is centred on this run: rows that
+			# scroll faster than the room line up with it there.
+			var cam_tl := Vector2(clampf((x0 + x1) * 0.5 * TILE - 320.0, room_px.position.x, room_px.end.x - 640.0),
+				clampf(wy - 238.0, room_px.position.y, room_px.end.y - 360.0))
+			for i in FRONT_ROWS.size():
+				var row: Array = FRONT_ROWS[i]
+				var sc: float = row[2]
+				var shift := cam_tl * (sc - 1.0)
+				var cap_y := wy + float(row[0])
+				var tint: Color = row[1]
+				var lip: Array = LIP_ROWS[(n + i) % 2]
+				var left_end: Rect2 = lip[2]
+				var right_end: Rect2 = lip[3]
+				var a := float(x0 * TILE)
+				var b := float(x1 * TILE)
+				if open_l:
+					_front_piece(layers[i], lip[2], Vector2(a, cap_y - (float(lip[1]) - left_end.position.y)) + shift, tint, i, unlit)
+					a += left_end.size.x
+				if open_r:
+					_front_piece(layers[i], lip[3], Vector2(b - right_end.size.x, cap_y - (float(lip[1]) - right_end.position.y)) + shift, tint, i, unlit)
+					b -= right_end.size.x
+				var k := 0
+				var at := a
+				while at < b - 1.0:
+					var strip: Array = LIP_ROWS[(n + i + k) % 2]
+					var reg: Rect2 = strip[0]
+					var w := minf(reg.size.x, b - at)
+					var cut := Rect2(reg.position, Vector2(w, reg.size.y))
+					_front_piece(layers[i], cut, Vector2(at, cap_y - (float(strip[1]) - reg.position.y)) + shift, tint, i, unlit)
+					at += w
+					k += 1
+			n += 1
+
+
+func _front_piece(parent: Node, reg: Rect2, pos: Vector2, tint: Color, row: int, unlit: Material) -> void:
+	var sp := _sprite(parent, LIP, reg, pos.round())
+	sp.name = "Front"
+	sp.modulate = tint
+	# The row nearest the room takes the room's own light, like the floor it fronts.
+	if row > 0:
+		sp.material = unlit
+
+
 ## CH4's corner bracket (ch_hangings.png, its wall on the left).
 const CH_BRACKET := 12
 ## The undersides of CH1's slabs (ch_platforms.png): the stone under each
@@ -1679,7 +1890,11 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 						ivy.name = "CornerMoss"
 			# (No crystals, tufts or rubble dotted along the floors: the creative
 			# lead had them taken out with the scattered foreground.)
-	_slab_keels(is_solid, skipped, hang_node)
+	_ceiling_trim(is_solid)
+	# (`_slab_keels` hung CH1's undersides under thin slabs; the ceiling trim
+	# now breaks every ceiling, slabs included, so they would double up.)
+	if ground_fronts:
+		_ground_fronts(is_solid)
 	# No foreground pieces in front of the floors. The darkened mounds, drums
 	# and grass dotted along the floors, and the black root arches, read as
 	# little pieces here and there (the creative lead: "we need all new
