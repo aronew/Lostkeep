@@ -86,3 +86,16 @@ like how Hollow Knight does it".
   additive. OP1's leaf window gets the same when the building arrives.
 - `mode=tour` now goes in, buys a rumour, comes back out at the doorway, then
   on as before: all true. Image: `docs/rooms/ironbark_08/outpost_outside_inside.png`.
+
+## The stranger's frames (OP2)
+
+The creative lead's OP2 sheet (`art/source/ironbark/outpost/hooded_stranger_frames.png`,
+the generator's own): eight figures painted on a 7.75 px grid.
+`tools/make_stranger_frames.py` reads each art pixel at its centre, hardens the
+alpha, splits the figures and lines them up by their feet:
+`stranger_frames.png`, 8 frames of 32 × 47. `stranger.gd` plays them: idle
+(0 to 3, a slow breath, the blink on 2 every few seconds) and, while a
+conversation is open, talk (4 to 7: the hand lifting, the eyes smiling). The
+conversation box sits at the top of the screen so the scene stays in view, and
+the detail pass keeps clear of his counter. Image:
+`docs/rooms/ironbark_08/stranger_idle_talk.png`.

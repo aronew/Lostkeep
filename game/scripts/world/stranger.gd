@@ -20,6 +20,17 @@ const RUMOURS := [
 ]
 const NO_MORE := "That's all I'll say for now. Come back when the dark has moved."
 
+## His art: stranger_frames.png, 8 frames (Book 1, OP2): idle 0 to 3 (2 is
+## the blink), talk 4 to 7. The idle breathes slowly and blinks every few
+## seconds; while a conversation is open he talks.
+@export var art: Sprite2D
+const IDLE := [0, 1, 0, 1, 3, 1, 0, 1, 0, 2]
+const TALK := [4, 5, 6, 7, 6, 5]
+const IDLE_STEP := 0.42
+const TALK_STEP := 0.2
+var _anim_t := 0.0
+var _anim_i := 0
+
 var _open := false
 var _opened_frame := -1
 var _kleo: Node = null
@@ -40,9 +51,23 @@ func interact(kleo: Node) -> void:
 	Game.flags["stranger_met"] = true
 	_say(GREETING_FIRST if first else GREETING)
 	_open = true
+	_anim_i = 0
 	_opened_frame = Engine.get_physics_frames()
 	_choice = 0
 	_show_choice()
+
+
+func _process(delta: float) -> void:
+	super(delta)
+	if art == null:
+		return
+	var seq: Array = TALK if _open else IDLE
+	var step: float = TALK_STEP if _open else IDLE_STEP
+	_anim_t += delta
+	if _anim_t >= step:
+		_anim_t = 0.0
+		_anim_i = (_anim_i + 1) % seq.size()
+	art.frame = seq[_anim_i % seq.size()]
 
 
 func can_interact(_k: Node) -> bool:
@@ -93,6 +118,7 @@ func _confirm() -> void:
 
 func _close() -> void:
 	_open = false
+	_anim_i = 0
 	if _layer:
 		_layer.queue_free()
 		_layer = null
@@ -123,7 +149,7 @@ func _build_ui() -> void:
 	box.set_border_width_all(1)
 	box.set_content_margin_all(8)
 	_panel.add_theme_stylebox_override("panel", box)
-	_panel.position = Vector2(80, 230)
+	_panel.position = Vector2(80, 12)  # at the top: the scene (his counter, Kleo) stays in view
 	_panel.custom_minimum_size = Vector2(480, 112)
 	_layer.add_child(_panel)
 	var col := VBoxContainer.new()

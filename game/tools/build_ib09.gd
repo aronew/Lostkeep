@@ -34,6 +34,8 @@ func _initialize() -> void:
 	masses = MASSES
 	stone = STONE
 	skip = SKIP
+	# The detail pass keeps clear of his counter, so nothing stands in front of him.
+	detail_skip = [[21, 14, 14, 4]]
 	spawn = SPAWN
 	room_path = ROOM_PATH
 	var tileset := _shared()
@@ -115,9 +117,14 @@ func _build_stranger() -> void:
 	cs.shape = cr
 	cs.position = Vector2(-16, -20)
 	_node(cs, "Shape", stranger)
-	var art := _sprite(stranger, "res://assets/characters/stranger/stranger.png", Rect2(0, 0, 34, 48), Vector2(-17, -48))
-	art.name = "Art"
+	# His frames (OP2): 8 of 32 x 47, feet on the bottom row; stranger.gd plays them.
+	var art := _node(Sprite2D.new(), "Art", stranger) as Sprite2D
+	art.texture = load("res://assets/characters/stranger/stranger_frames.png")
+	art.hframes = 8
+	art.centered = false
+	art.position = Vector2(-16, -47)
 	art.flip_h = true
+	stranger.set("art", art)
 	stranger.set("prompt_offset", Vector2(0, -58))
 	# The eyes: a small cold-amber glow at the face, nothing more.
 	_light(stranger, Vector2(-2, -33), Color(1.0, 0.7, 0.3), 0.6, 0.25, "EyeGlow")
