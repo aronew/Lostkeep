@@ -338,8 +338,12 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     <section id="foreground" class="group-section">
       <span class="eyebrow">Prompts</span>
       <h2>Foreground depth (the nearest layers)</h2>
-      <p>The layers in front of Kleo, nearest the camera, that give a room its depth: they scroll faster than the playfield (1.3 to 1.5) and frame the view like the dark roots and pillars at the edges of mockup Y. Today they are placeholders (the crypt's OC7 strip, and P5's ferns blown up into flat black shapes). These are near-black silhouettes, but painted ones: lit faintly at their rims by the room's own light, never flat black cut-outs. They must be sparse: big shapes with wide gaps, so Kleo is behind them only for a moment. FG1 and FG2 are for the crypts (IB-02, IB-05), FG3 and FG4 for the surface (IB-03, IB-04).</p>
-      <p><strong>Depth in value steps (the creative lead, after Y and Hollow Knight):</strong> between the ground Kleo stands on and the black silhouette there are one or two nearer layers of rubble and stone, each a step darker and scrolling a little faster: the playfield (full value, 1.0), near rubble (about 70 % value, 1.12), nearer rubble (about 45 %, 1.25), then the black silhouette (1.4). FG5 is painted for those middle steps: lit like the playfield, so the game can darken each copy to its step without it going muddy.</p>
+      <p>The layers in front of Kleo, nearest the camera, that give a room its depth, framing the view like the dark roots and pillars at the edges of mockup Y. They are near-black, but painted: lit faintly at their rims by the room's own light, never flat black cut-outs. Make FG6 to FG10 (below); FG2 and FG4 (the side frames at a room's two ends) stay. The older cards further down (FG1, FG3, FG5) are kept for the record only.</p>
+      <div class="pilot">
+        <strong>New approach: continuous bands (FG6 to FG10)</strong>
+        <p>The creative lead: "we need all new foreground art, these like little pieces here and there just look bad". The scattered pieces (FG1, FG3, FG5, CH8) are retired. The foreground is now a few long, continuous bands, after the principles in GameMaker's parallax guide ("Creating Depth &amp; Immersion: Parallax"): two foreground layers, terrain and foliage, that frame the view like a window; moving only slightly faster than the room (about 1.15), and with the world up and down as well, never pinned to the screen; quiet for most of their length, with open space; nearest forms darkest and most detailed, anything set back drifting toward the air's colour; and each band made in two versions that join, so it never visibly repeats within two screen widths.</p>
+      </div>
+      <p><strong>Depth in value steps (the creative lead, after Y and Hollow Knight):</strong> between the ground Kleo stands on and the black silhouette there are one or two nearer layers of rubble and stone, each a step darker and scrolling a little faster: the playfield (full value, 1.0), near rubble (about 70 % value, 1.12), nearer rubble (about 45 %, 1.25), then the black silhouette. FG8 (the floor-front lip) is painted for the middle step: lit like the playfield, so the game can darken it without it going muddy.</p>
       <div class="cards" id="cards-foreground"></div>
     </section>
     <section id="character" class="group-section">
@@ -461,7 +465,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
     ["Ironbark surface: ground, walls, islands, stone, ruins, backdrops, foreground, props", "Mixed older art", "need", "SF1 to SF8"],
     ["Old Crypt (IB-02): floor and ceiling, walls, islands, ledges, backdrops, foreground, props", "In (drafts, after O to Q)", "ok", "OC1 to OC8"],
     ["Crypt stone after Y: bands, walls and corners, inside fill, stairs, supports, ledges, masses fading into the dark", "SH1 and SH2 graded toward Y", "need", "CY1 to CY6"],
-    ["Foreground depth: crypt and surface silhouettes, side frames, rubble for the value steps", "Placeholders (OC7, P5 blown up)", "need", "FG1 to FG5"],
+    ["Foreground depth: continuous bands (crypt bottom and top, the floor-front lip, surface undergrowth and canopy) and side frames", "In: FG6, FG7, FG9, FG10, at three depths in the crypts and IB-03/IB-04. FG8 reads as a ledge and is not used; the side frames are still to make", "ok", "FG6 to FG10 in; FG2, FG4 needed"],
     ["Shrine Hall (IB-05) after mockup X: masonry rim, corners, shrine island, islands and plates, crystals, doorways, colonnades", "Not matching X", "need", "SH1 to SH8"],
     ["The great floating islands of O, P, Q", "None", "need", "OC9"],
     ["The crypt kit: back wall, floor, arcade, its ends, walls, corners (one set)", "In (painted, tinted plum)", "ok", "CR1 to CR3"],
@@ -571,6 +575,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
   var CY_STYLE = "STYLE: match attached reference Y's masonry exactly in palette, brick size and finish: fine grey-lavender bricks in staggered courses, a pale worn cap row on every walking edge, moss in the joints, thin dull brick-red roots (never the Blight's crimson), lit faces #6E6C80 to #85839A, darker plum masonry #3A3248 to #2A2438 behind them, void #0B0812 at the heart. Crisp pixel art, four tones per material, thin dark outlines only on silhouettes. Strict side view, no perspective. Do not copy Y's layout or its character. " + FADE_RULE;
   var CLEAN_GRID = "CLEAN 8x PIXEL GRID (required: the first CY1 and CY2 drafts were resized and cannot be used): draw on a strict grid where every art pixel is a solid 8 x 8 square of a single colour, aligned to the canvas's top-left corner. No anti-aliasing, no blur, no soft or feathered edges, no smoothing, no gradients inside a pixel, no half-transparent pixels: every pixel is fully opaque or fully transparent. Export at exactly the canvas size given, never resized or upscaled afterward. Attached CY2b is drawn this way: match its pixel grid, brick size, colours and finish exactly.";
   var FG_STYLE = "STYLE: the nearest layer in front of the playfield, as in attached mockup Y's dark edges: near-black silhouettes (#0B0812 to #1A1424 for crypt stone, #14101C to #241A2A for wood and roots), painted, not flat: a faint rim light (one or two pixels, dull violet #4A3A5E or teal #2E5A5C) along the edges that face the room, and soft internal shapes one value step apart so the forms read. No bright colours except where stated. Large, readable shapes with wide transparent gaps between pieces. Crisp pixel art, thin dark outlines only where a shape needs separating, no blur.";
+  var FG_BAND = "THE BAND RULES (the creative lead: the scattered little pieces 'just look bad'; and the GameMaker parallax guide's principles): (1) ONE CONTINUOUS PIECE, never separate objects with gaps: it reads as a single layer of the world between the camera and the room, like a window frame. (2) TWO VERSIONS, A and B, stacked on the canvas (A in the top half, B in the bottom half, each with the band along its own edge as described), each joining ITSELF and the OTHER at both ends, so the game alternates them and nothing visibly repeats within two screen widths. (3) LEAVE BREATHING ROOM: the band is low and quiet most of its length and rises or hangs only in a few places; open space is part of the design. (4) NEAREST IS DARKEST AND MOST DETAILED: the frontmost forms are near-black with crisp silhouettes; anything set a little back is one value step lighter and simpler, drifting toward the room's air colour.";
   var SH_SHADOW = "SHADOW RULE: a solid mass is the nearest thing to the camera, so it is black at its heart and only its edges carry art: from any open edge, 192 px of lit blocks with no gaps, then 96 px stepping down into void #0B0812 along the blocks' own outlines, never a straight line. Only walking lines are perfectly straight.";
   var CH_RULE = "CHARACTER (attached mockups AA and AB): no bare right angle. A slab's underside is never a straight line: it tapers and steps down into hanging wedges of masonry, moss strands draped off it. Ends break off course by course, loose bricks at the break. Roots dull bark-brown and plum, never crimson (red is the Blight's alone).";
   var CY_FADE_HINT = "Like every mass in the crypts it fades into the dark gradually, stone by stone, never along a straight line.";
@@ -1199,7 +1204,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- A paler haze in the middle, darker toward the top and bottom. Two or three tiny far-off flames #F2B04A, no other warm colour."
       ] },
     { id: "FG5", group: "foreground", file: "crypt_fg_rubble", title: "Foreground rubble for the value steps (crypt)", scale: 4,
-      about: "Y's 'little extra slightly darker stone' in front of the floor: heaps of rubble, fallen bricks and broken blocks along the bottom of the view, used twice (about 70 % and 45 % value) between the playfield and the black silhouettes.",
+      about: "SUPERSEDED by the continuous bands FG6 to FG10 (the creative lead: the little pieces look bad). Y's 'little extra slightly darker stone' in front of the floor: heaps of rubble, fallen bricks and broken blocks along the bottom of the view, used twice (about 70 % and 45 % value) between the playfield and the black silhouettes.",
       canvas: BG, game: "Pieces cut apart, placed along the bottom of the view", attach: ["Y", "Your approved CY1"],
       text: [
         "TASK: rubble pieces for the foreground on a transparent canvas, each separated by transparent space, each sitting on the canvas's bottom edge.",
@@ -1498,7 +1503,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
       ] },
     // ------------------------------------------------------------- foreground depth
     { id: "FG1", group: "foreground", file: "crypt_fg_near", title: "Crypt foreground: pillars, roots and chains", scale: 4,
-      about: "The nearest crypt layer (scroll 1.35): pieces that pass in front of Kleo: a broken column, thick twisted roots, hanging chains, rubble. Placed one by one, sparse.",
+      about: "SUPERSEDED by the continuous bands FG6 to FG10 (the creative lead: the little pieces look bad). The nearest crypt layer (scroll 1.35): pieces that pass in front of Kleo: a broken column, thick twisted roots, hanging chains, rubble. Placed one by one, sparse.",
       canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Y", "X", "Your approved SH1"],
       text: [
         "TASK: foreground silhouettes for the crypt, on a transparent canvas, each piece separated by transparent space.",
@@ -1523,7 +1528,7 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Different from each other, not mirrored."
       ] },
     { id: "FG3", group: "foreground", file: "surface_fg_near", title: "Surface foreground: ferns, leaves, branches, trunks", scale: 4,
-      about: "The nearest surface layer (scroll 1.45) for IB-03 and IB-04: big fern clumps and leaves rising from the bottom, a branch and leaves hanging from the top, one trunk. Replaces P5's ferns blown up into black shapes.",
+      about: "SUPERSEDED by the continuous bands FG6 to FG10 (the creative lead: the little pieces look bad). The nearest surface layer (scroll 1.45) for IB-03 and IB-04: big fern clumps and leaves rising from the bottom, a branch and leaves hanging from the top, one trunk. Replaces P5's ferns blown up into black shapes.",
       canvas: BG, game: "Pieces cut apart, placed along the top and bottom of the view", attach: ["Z", "A", "B"],
       text: [
         "TASK: foreground silhouettes for the Ironbark forest at dusk, on a transparent canvas, each piece separated by transparent space.",
@@ -1546,6 +1551,82 @@ ul.checks li::before { content: ""; width: 14px; height: 14px; margin-top: 5px; 
         "- Each: the trunk of a great ironbark tree with spreading roots, its lower branches and leaves reaching in from the top, dense ferns and broad leaves at its foot.",
         "- Full canvas height. The inner side is ragged and open, never a straight line. Different from each other, not mirrored.",
         "- Nearly black, plum and teal in the shadows, a faint purple moonlit rim on the edges facing the sky."
+      ] },
+    // ------------------------------------------------------------- foreground, second approach: continuous bands
+    // The creative lead: "we need all new foreground art, these like little pieces here and there just look bad".
+    // Scattered pieces (FG1, FG3, FG5, CH8) are superseded: the foreground is now made of long continuous bands that
+    // tile sideways and frame the whole view, as in Hollow Knight, Ori and mockup Y.
+    { id: "FG6", group: "foreground", file: "crypt_fg_band_bottom", title: "Crypt foreground band: the bottom of the view (tiles)", scale: 4, pilot: true,
+      about: "ONE continuous strip of ruin along the bottom of the view, not pieces: it tiles sideways without end and frames every crypt room from below. Replaces FG1's columns and rubble, FG5 and CH8. Placed in the world along the room's lowest floors and pits (never pinned to the screen), moving only slightly faster than the room: about 1.15 sideways and 1.05 up and down.",
+      canvas: BG, game: "One seamless strip, its left and right edges joining", attach: ["Y", "X", "Your approved CY1"],
+      text: [
+        "TASK: one continuous foreground band across the bottom of the canvas, seamless: its left edge and right edge must join exactly, so copies placed side by side make one unbroken landscape.",
+        "",
+        FG_STYLE,
+        "",
+        FG_BAND,
+        "",
+        "- The band fills the bottom 30 to 45 % of the canvas everywhere (never a gap through to the canvas's bottom edge) and rises and falls along its length as ONE skyline: a long low ridge of fallen masonry and earth, rising twice into a broken wall stub or a leaning column stump (up to 60 % of the canvas height), dipping between them to low rubble and moss.",
+        "- Its top edge is rich and irregular: broken brick courses, a toppled column drum lying across the ridge, thick roots arching over and back into it, ferns and long grass tufts, a few hanging moss strands. Never a straight top and never repeating shapes.",
+        "- Everything is one connected mass, layered in depth: the nearest part darkest (#0B0812), parts set slightly back one step lighter (#1A1424 to #241A2A), so the band has depth inside itself.",
+        "- One or two clusters of tiny teal glowing mushrooms #3FE0C8 in the gaps, the only colour.",
+        "- Transparent above the band."
+      ] },
+    { id: "FG7", group: "foreground", file: "crypt_fg_band_top", title: "Crypt foreground band: the top of the view (tiles)", scale: 4,
+      about: "The ceiling's counterpart to FG6: one continuous hanging mass along the top of the view, roots, broken vault ribs and moss, tiling sideways. Placed in the world along the room's ceilings, at about 1.15 sideways and 1.05 up and down, never pinned to the screen.",
+      canvas: BG, game: "One seamless strip, its left and right edges joining", attach: ["Y", "X"],
+      text: [
+        "TASK: one continuous foreground band hanging from the top of the canvas, seamless: its left and right edges join exactly.",
+        "",
+        FG_STYLE,
+        "",
+        FG_BAND,
+        "",
+        "- The band fills the top 15 to 25 % of the canvas everywhere and hangs lower in three or four places (to 50 %): a broken vault rib with a few bricks dangling, a knot of thick twisted roots, a curtain of moss and ivy, a broken chain.",
+        "- Its lower edge is ragged and organic, layered in depth (nearest darkest, set-back parts one step lighter). Dull plum-brown roots, never crimson.",
+        "- Transparent below the band."
+      ] },
+    { id: "FG8", group: "foreground", file: "crypt_floor_lip", title: "Floor-front lip: a strip along the front of every floor (tiles)", scale: 4,
+      about: "The mid step, done as a strip instead of dotted pieces: a low continuous band of rubble, moss and grass that runs along the FRONT of a floor, in front of Kleo's feet, its top just above the walking line. Tiles along any floor; two end caps finish it where a floor ends. Painted at full value; the game darkens it to about 55 %.",
+      canvas: "3072×768 px (art 768 × 192 px at x4)", game: "A seamless strip plus a left and a right end cap", attach: ["Y", "Your approved CY1"],
+      text: [
+        "TASK: on one transparent canvas, three pieces separated by transparent space: (1) a seamless strip 2048 px wide whose left and right edges join exactly; (2) a left end cap 384 px wide; (3) a right end cap 384 px wide, different from the left (not mirrored).",
+        "",
+        "STYLE: the same masonry, palette and finish as the approved CY1 (Y's grey-lavender brick, moss, dull roots), painted at FULL value and lit from above like the playfield. Crisp pixel art, four tones, thin dark outlines only on silhouettes. Strict side view.",
+        "",
+        FG_BAND,
+        "",
+        "- The strip is 96 to 160 px tall: a continuous low line of fallen bricks, broken cap stones, moss, short grass and fern tufts, with gentle rises and dips; no gaps, no repeating lumps, and never taller than 160 px (it must not hide her feet).",
+        "- Each end cap tapers the strip down to nothing: a last stone, a tuft, a trailing root.",
+        "- No crystals (they stay on the floors themselves). No bright colours."
+      ] },
+    { id: "FG9", group: "foreground", file: "surface_fg_band_bottom", title: "Surface foreground band: undergrowth (tiles)", scale: 4,
+      about: "The surface rooms' counterpart to FG6: one continuous band of ferns, broad leaves, roots and grave stones along the bottom of the view, tiling sideways. Replaces FG3's separate clumps and P5's ferns blown up.",
+      canvas: BG, game: "One seamless strip, its left and right edges joining", attach: ["Z", "A", "B"],
+      text: [
+        "TASK: one continuous foreground band across the bottom of the canvas, seamless: its left and right edges join exactly.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        FG_BAND,
+        "",
+        "- The band fills the bottom 30 to 45 % of the canvas everywhere and rises and falls as one skyline of dense undergrowth: big ferns, broad leaves, long grass, a fallen log, the roots of an unseen tree, one leaning grave stone half swallowed by ferns.",
+        "- Very dark teal-green and plum, layered in depth (nearest darkest), a faint purple moonlit rim on the tops of the leaves.",
+        "- Transparent above the band."
+      ] },
+    { id: "FG10", group: "foreground", file: "surface_fg_band_top", title: "Surface foreground band: the canopy (tiles)", scale: 4,
+      about: "One continuous canopy along the top of the view for the surface rooms: branches, leaves and hanging vines, tiling sideways. Replaces P5's canopy and FG3's branches.",
+      canvas: BG, game: "One seamless strip, its left and right edges joining", attach: ["Z", "A"],
+      text: [
+        "TASK: one continuous foreground band hanging from the top of the canvas, seamless: its left and right edges join exactly.",
+        "",
+        FG_STYLE.replace("crypt", "forest"),
+        "",
+        FG_BAND,
+        "",
+        "- The band fills the top 15 to 25 % of the canvas everywhere and hangs lower in three or four places (to 45 %): a heavy leafy bough, a curtain of hanging vines, a cluster of broad leaves.",
+        "- Dark plum bark, dark teal leaves, layered in depth, a faint purple rim where the sky lights an edge. Lower edge ragged and organic.",
+        "- Transparent below the band."
       ] },
     { id: "OC9", group: "oldcrypt", file: "oldcrypt_great_islands", title: "The great floating islands (from O, P, Q)",
       about: "The large floating islands that carry these mockups: a temple island with a hooded statue, ruin islands with arches and pillars, ossuary islands of bones. Each is a set piece the player stands on, not a platform.",

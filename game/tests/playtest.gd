@@ -866,10 +866,19 @@ func _secrets() -> void:
 		_place(sc[1], sc[2], sc[3])
 		await _wait(10)
 		await _hold_until(["move_left"], func(): return kleo.global_position.x < sc[4] * TILE, 300)
+		_release_all()
+		await _wait(40)
+		var open_a: float = cover.modulate.a if cover else -1.0
 		await _hold_until(["move_right"], func(): return kleo.global_position.x > (sc[4] + 1.6) * TILE, 120)
 		await _wait(40)
 		await _capture("%s_%s" % [sc[0], sc[5]])
-		lines.append("%s %s: the wall opened: %s; Resin %d -> %d" % [sc[0], sc[5], cover != null and cover.get("found"), before, Game.currency])
+		# Back out into the room: the wall must close behind her.
+		await _hold_until(["move_right"], func(): return kleo.global_position.x > (sc[1] + 1.0) * TILE, 300)
+		_release_all()
+		await _wait(70)
+		var shut_a: float = cover.modulate.a if cover else -1.0
+		await _capture("%s_%s_after" % [sc[0], sc[5]])
+		lines.append("%s %s: the wall opened: %s (alpha %.2f inside); closed again after: %s (alpha %.2f); Resin %d -> %d" % [sc[0], sc[5], cover != null and cover.get("found"), open_a, shut_a > 0.95, shut_a, before, Game.currency])
 	_release_all()
 	_report(lines, "secrets")
 

@@ -267,7 +267,9 @@ She steps forward with every hit.
   the room is entered again. F5 clears them. There is no save file yet.
 - **Secrets:** a false wall (`_false_wall(name, hide, face_x, rows, faces, flag)`
   in `room_builder.gd`, script `secret_cover.gd`) has no collision: Kleo walks
-  straight through, and once she is inside it fades for good (`flag`). It
+  straight through; it fades while she is inside and closes again once she
+  leaves (the creative lead: "once you leave it it should go back to
+  hidden"); `flag` only records the find. It
   carries a copy of the rock layer with the hidden room filled in and a second
   terrain skin that paints it, clipped to the wall round the room, so from
   outside the room's own stone, bands and dark run on unbroken (the creative
@@ -312,6 +314,54 @@ She steps forward with every hit.
   camera changes floors. `_build_foreground()` in `surface_builder.gd`,
   `_crypt_foreground()` in `room_builder.gd`. IB-01 keeps its own. Comparison:
   `docs/rooms/foreground_two_steps.png`.
+- **The crypt pass (the creative lead: "the foreground looks really bad ...
+  weirdly attached", "the lights ... look like they don't belong", "the ledges
+  look too boxy", then "we need all new foreground art, these little pieces
+  here and there just look bad"):** in every crypt room (IB-02, IB-05 to
+  IB-09) the scattered foreground is gone: no screen-pinned roots or pillars
+  blown up 2 to 5x, no darkened mounds dotted in front of floors, no black
+  root arches. `_crypt_foreground()` now only holds the bottom fog bank. The
+  new foreground is to be **continuous bands that tile sideways**, not
+  pieces: Book 1's FG6 (crypt, bottom of the view), FG7 (crypt, top), FG8 (a
+  strip along the front of every floor, with end caps), FG9 and FG10 (the
+  surface's undergrowth and canopy). FG1, FG3, FG5 and CH8 are superseded.
+  `_near_foreground()` can place world-anchored pieces when needed. The
+  crystals, tufts and rubble the detail pass dotted along every floor (CH5)
+  are gone too (the creative lead asked); hand-placed props in each room's
+  builder stay. **The band rules** (`FG_BAND` in Book 1, after GameMaker's
+  parallax guide, which the creative lead pointed to): one continuous piece,
+  never separate objects; two versions (A and B) that join, so nothing repeats
+  within two screen widths; quiet most of its length with open space; nearest
+  darkest and most detailed; placed in the world (about 1.15 sideways and 1.05
+  up and down), never pinned to the screen. Book 1 is published as an
+  artifact: https://claude.ai/artifact/C2whNafxvDzo3XNzmMz3MQ (republish it
+  from `docs/art-production/ironbark-environment-prompt-book.html`).
+  **The bands are in** (the creative lead's FG6, FG7, FG9, FG10 and an FG1
+  silhouette sheet, `art/source/ironbark/foreground/`, reduced 3:1 by
+  `tools/make_fg_bands.py` to `fg_<crypt|forest>_<bottom|top>_<a|b>.png`;
+  FG8's lip reads as a ledge and the silhouettes as pieces, so both wait).
+  `_fg_bands(kind, fog_tint)` in `room_builder.gd` draws the bottom and top
+  band at three depths (`FG_DEPTHS`, after the creative lead: "closest to the
+  camera the silhouette to closer to the color as you get to the midground",
+  with fog between, `FG_FOG`): 1.07 / 1.03 near full colour, 1.18 / 1.06 at
+  half, 1.36 / 1.1 a silhouette, each alternating A and B. Anchored to the
+  world: the bottom band fills the screen's bottom when the camera is at its
+  lowest, the top band the top at its highest. They keep the play clear: the
+  bottom band rises at most `FG_FEET` (34 px) over the lowest floor, the top
+  band hangs no lower than `FG_HEAD` (52 px) over the highest. Crypts call it
+  from `_crypt_foreground()`, the surface rooms (IB-03, IB-04) from
+  `_build_foreground()` in place of P5's canopy and ferns; IB-01 keeps its
+  own. Where the bands are, `_moody()` drops the old fog bank pinned to the
+  screen's bottom. Comparison: `docs/rooms/foreground_bands.png`.
+  **Lights:** the lanterns no longer light the fog, haze or backdrops (light
+  mask 2, `LIGHT_MASK_AIR`): amber on teal fog made a green ringed disc round
+  every flame. Their falloff is smooth (`_soft_light_texture()`), and the glow
+  in the air is two dithered additive discs per flame (`shaders/glow.gdshader`,
+  `_warm_glow()`). The curved bands near some lanterns are vault ribs painted
+  in the backdrop, not light. **Ledges:** every thin slab (3 tiles or less
+  over open air) hangs CH1's tapering undersides under it (`_slab_keels()`,
+  kept 46 px clear of the floor below), and ceilings meeting walls get CH4's
+  stone bracket. Comparison: `docs/rooms/crypt_pass_before_after.png`.
 - **Shadow rule (the creative lead's, after Hollow Knight and Core Keeper):** a
   mass is the nearest thing to the camera, so it shadows to black toward its
   centre and only its edges get art. Every mass is black inside, piers
