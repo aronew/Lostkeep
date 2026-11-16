@@ -935,26 +935,49 @@ shader_parameter/scale = Vector2(0.325, 0.35555556)
 shader_parameter/levels = null
 shader_parameter/side_fade = 0.15
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ii0p"]
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_7ii0p"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_rkebu"]
+blend_mode = 1
+light_mode = 2
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_bxil2"]
+blend_mode = 1
+light_mode = 1
+
+[sub_resource type="Gradient" id="Gradient_b27bj"]
+interpolation_mode = 1
+offsets = PackedFloat32Array(0, 0.22, 0.45, 0.7, 0.95)
+colors = PackedColorArray(1, 1, 1, 0.55, 1, 1, 1, 0.32, 1, 1, 1, 0.16, 1, 1, 1, 0.06, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_wfc0y"]
+gradient = SubResource("Gradient_b27bj")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(1, 0.5)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m0dn5"]
 shader = ExtResource("40_8iv67")
 shader_parameter/strength = null
 shader_parameter/inner = null
 shader_parameter/outer = null
 shader_parameter/shadow = null
 
-[node name="IronbarkShrineHall" type="Node2D" unique_id=2056822770]
+[node name="IronbarkShrineHall" type="Node2D" unique_id=79760762]
 script = ExtResource("1_rqiw8")
 room_rect = Rect2i(0, 0, 58, 34)
 spawn = Vector2(888, 112)
 
-[node name="Far" type="Parallax2D" parent="." unique_id=2119331355]
+[node name="Far" type="Parallax2D" parent="." unique_id=1961290395]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.12, 0.15)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="Far" unique_id=1480391804]
+[node name="Art" type="Sprite2D" parent="Far" unique_id=1024936337]
 modulate = Color(0.74, 1, 0.8, 1)
 position = Vector2(0, -40)
 texture = ExtResource("2_w4fwo")
@@ -962,7 +985,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="Art2" type="Sprite2D" parent="Far" unique_id=1369648814]
+[node name="Art2" type="Sprite2D" parent="Far" unique_id=1965987017]
 modulate = Color(0.74, 1, 0.8, 1)
 position = Vector2(0, 318)
 texture = ExtResource("2_w4fwo")
@@ -970,12 +993,12 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="FogFar" type="Parallax2D" parent="." unique_id=121321757]
+[node name="FogFar" type="Parallax2D" parent="." unique_id=1981451656]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.22, 0.25)
 
-[node name="Fog" type="ColorRect" parent="FogFar" unique_id=1764654900]
+[node name="Fog" type="ColorRect" parent="FogFar" unique_id=1511839859]
 material = SubResource("ShaderMaterial_gd5pq")
 offset_left = -300.0
 offset_top = 163.2
@@ -983,14 +1006,14 @@ offset_right = 2300.0
 offset_bottom = 489.59998
 mouse_filter = 2
 
-[node name="MidFar" type="Parallax2D" parent="." unique_id=1211220430]
+[node name="MidFar" type="Parallax2D" parent="." unique_id=132506117]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.32, 0.35)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="MidFar" unique_id=1590226424]
+[node name="Art" type="Sprite2D" parent="MidFar" unique_id=691121479]
 modulate = Color(0.5, 0.68, 0.64, 0.55)
 position = Vector2(-200, 98)
 texture = ExtResource("4_tcygh")
@@ -998,12 +1021,12 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="FogMid" type="Parallax2D" parent="." unique_id=474487861]
+[node name="FogMid" type="Parallax2D" parent="." unique_id=1110815162]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.45, 0.5)
 
-[node name="Fog" type="ColorRect" parent="FogMid" unique_id=1105841999]
+[node name="Fog" type="ColorRect" parent="FogMid" unique_id=2091968153]
 material = SubResource("ShaderMaterial_3sxav")
 offset_left = -300.0
 offset_top = 244.8
@@ -1011,14 +1034,14 @@ offset_right = 2500.0
 offset_bottom = 489.6
 mouse_filter = 2
 
-[node name="Mid" type="Parallax2D" parent="." unique_id=298337799]
+[node name="Mid" type="Parallax2D" parent="." unique_id=1912699302]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.58, 0.62)
 repeat_size = Vector2(768, 0)
 repeat_times = 4
 
-[node name="Art" type="Sprite2D" parent="Mid" unique_id=688439871]
+[node name="Art" type="Sprite2D" parent="Mid" unique_id=1610923301]
 modulate = Color(0.3, 0.46, 0.44, 0.9)
 position = Vector2(150, 228)
 texture = ExtResource("4_tcygh")
@@ -1026,14 +1049,14 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 768, 360)
 
-[node name="Ruins" type="Parallax2D" parent="." unique_id=1556838217]
+[node name="Ruins" type="Parallax2D" parent="." unique_id=697468594]
 modulate = Color(0.7, 0.88, 0.9, 1)
 z_index = -10
 scroll_scale = Vector2(0.78, 0.82)
 repeat_size = Vector2(900, 0)
 repeat_times = 4
 
-[node name="Ruin" type="Sprite2D" parent="Ruins" unique_id=667290123]
+[node name="Ruin" type="Sprite2D" parent="Ruins" unique_id=917658957]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(40, 376)
 scale = Vector2(2, 2)
@@ -1042,7 +1065,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(4, 32, 128, 80)
 
-[node name="Ruin2" type="Sprite2D" parent="Ruins" unique_id=929544326]
+[node name="Ruin2" type="Sprite2D" parent="Ruins" unique_id=41781535]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(300, 376)
 scale = Vector2(2, 2)
@@ -1051,7 +1074,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Ruin3" type="Sprite2D" parent="Ruins" unique_id=1945962790]
+[node name="Ruin3" type="Sprite2D" parent="Ruins" unique_id=958437547]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(470, 376)
 scale = Vector2(2, 2)
@@ -1060,7 +1083,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Ruin4" type="Sprite2D" parent="Ruins" unique_id=25901058]
+[node name="Ruin4" type="Sprite2D" parent="Ruins" unique_id=649627353]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(640, 424)
 scale = Vector2(2, 2)
@@ -1069,7 +1092,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(248, 56, 16, 56)
 
-[node name="Ruin5" type="Sprite2D" parent="Ruins" unique_id=779576421]
+[node name="Ruin5" type="Sprite2D" parent="Ruins" unique_id=580076002]
 modulate = Color(0.12, 0.17, 0.19, 1)
 position = Vector2(760, 376)
 scale = Vector2(2, 2)
@@ -1078,13 +1101,13 @@ centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Mood" type="Polygon2D" parent="." unique_id=1474107197]
+[node name="Mood" type="Polygon2D" parent="." unique_id=527452856]
 z_index = -9
 material = SubResource("CanvasItemMaterial_5s5ev")
 polygon = PackedVector2Array(-400, -200, 1328, -200, 1328, 744, -400, 744)
 vertex_colors = PackedColorArray(1, 0.52, 1, 1, 1, 0.52, 1, 1, 0.48, 1, 0.92, 1, 0.48, 1, 0.92, 1)
 
-[node name="MoodHaze" type="ColorRect" parent="." unique_id=1281089196]
+[node name="MoodHaze" type="ColorRect" parent="." unique_id=363556550]
 z_index = -9
 offset_left = -400.0
 offset_top = -400.0
@@ -1093,42 +1116,42 @@ offset_bottom = 944.0
 mouse_filter = 2
 color = Color(0.04, 0.11, 0.13, 0.24)
 
-[node name="Behind" type="Node2D" parent="." unique_id=1075098398]
+[node name="Behind" type="Node2D" parent="." unique_id=1568372701]
 modulate = Color(0.82, 0.76, 0.74, 1)
 z_index = 2
 
-[node name="ShrineBrazierLight" type="PointLight2D" parent="Behind" unique_id=1194121926]
+[node name="ShrineBrazierLight" type="PointLight2D" parent="Behind" unique_id=1919223772]
 position = Vector2(297, 255)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.0450001
 texture = SubResource("GradientTexture2D_ua4t0")
 texture_scale = 0.48299998
 script = ExtResource("3_vnlfr")
 
-[node name="ShrineBrazierLight2" type="PointLight2D" parent="Behind" unique_id=1595763854]
+[node name="ShrineBrazierLight2" type="PointLight2D" parent="Behind" unique_id=1043994164]
 position = Vector2(387, 255)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.0450001
 texture = SubResource("GradientTexture2D_p8qim")
 texture_scale = 0.48299998
 script = ExtResource("3_vnlfr")
 
-[node name="ShrineOrbLight" type="PointLight2D" parent="Behind" unique_id=2072338182]
+[node name="ShrineOrbLight" type="PointLight2D" parent="Behind" unique_id=1344419758]
 position = Vector2(328, 234)
-color = Color(1, 0.78, 0.45, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 0.76
 texture = SubResource("GradientTexture2D_ormk8")
 texture_scale = 0.322
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway" type="Sprite2D" parent="Behind" unique_id=1628963314]
+[node name="Doorway" type="Sprite2D" parent="Behind" unique_id=627125947]
 position = Vector2(-18, 34)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow" type="PointLight2D" parent="Behind" unique_id=687436283]
+[node name="DoorwayGlow" type="PointLight2D" parent="Behind" unique_id=350495523]
 position = Vector2(22, 88)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
@@ -1136,22 +1159,22 @@ texture = SubResource("GradientTexture2D_s6onj")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch" type="Sprite2D" parent="Behind" unique_id=1138894936]
+[node name="Torch" type="Sprite2D" parent="Behind" unique_id=1188176314]
 position = Vector2(64, 72)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight" type="PointLight2D" parent="Behind" unique_id=192202990]
+[node name="TorchLight" type="PointLight2D" parent="Behind" unique_id=194854157]
 position = Vector2(72, 78)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.9
 texture = SubResource("GradientTexture2D_uk2mr")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway2" type="Sprite2D" parent="Behind" unique_id=427171039]
+[node name="Doorway2" type="Sprite2D" parent="Behind" unique_id=180450004]
 position = Vector2(866, 18)
 texture = ExtResource("7_2p2u2")
 centered = false
@@ -1159,7 +1182,7 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow2" type="PointLight2D" parent="Behind" unique_id=1855459042]
+[node name="DoorwayGlow2" type="PointLight2D" parent="Behind" unique_id=871600437]
 position = Vector2(906, 72)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
@@ -1167,29 +1190,29 @@ texture = SubResource("GradientTexture2D_ryd58")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch2" type="Sprite2D" parent="Behind" unique_id=17329007]
+[node name="Torch2" type="Sprite2D" parent="Behind" unique_id=1779908515]
 position = Vector2(852, 56)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight2" type="PointLight2D" parent="Behind" unique_id=795598485]
+[node name="TorchLight2" type="PointLight2D" parent="Behind" unique_id=1674481153]
 position = Vector2(860, 62)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.9
 texture = SubResource("GradientTexture2D_booy6")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway3" type="Sprite2D" parent="Behind" unique_id=1058086388]
+[node name="Doorway3" type="Sprite2D" parent="Behind" unique_id=1904471823]
 position = Vector2(-18, 322)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 16, 80, 96)
 
-[node name="DoorwayGlow3" type="PointLight2D" parent="Behind" unique_id=872482026]
+[node name="DoorwayGlow3" type="PointLight2D" parent="Behind" unique_id=1642882975]
 position = Vector2(22, 376)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
@@ -1197,22 +1220,22 @@ texture = SubResource("GradientTexture2D_cpxvd")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch3" type="Sprite2D" parent="Behind" unique_id=1006644838]
+[node name="Torch3" type="Sprite2D" parent="Behind" unique_id=777586568]
 position = Vector2(64, 360)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight3" type="PointLight2D" parent="Behind" unique_id=1452552023]
+[node name="TorchLight3" type="PointLight2D" parent="Behind" unique_id=2017174199]
 position = Vector2(72, 366)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.9
 texture = SubResource("GradientTexture2D_qt5jw")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Doorway4" type="Sprite2D" parent="Behind" unique_id=1961261659]
+[node name="Doorway4" type="Sprite2D" parent="Behind" unique_id=203947754]
 position = Vector2(866, 322)
 texture = ExtResource("7_2p2u2")
 centered = false
@@ -1220,7 +1243,7 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(16, 16, 80, 96)
 
-[node name="DoorwayGlow4" type="PointLight2D" parent="Behind" unique_id=45401352]
+[node name="DoorwayGlow4" type="PointLight2D" parent="Behind" unique_id=32393939]
 position = Vector2(906, 376)
 color = Color(0.55, 0.7, 1, 1)
 energy = 0.3
@@ -1228,204 +1251,204 @@ texture = SubResource("GradientTexture2D_mht1k")
 texture_scale = 0.9
 script = ExtResource("3_vnlfr")
 
-[node name="Torch4" type="Sprite2D" parent="Behind" unique_id=1238630599]
+[node name="Torch4" type="Sprite2D" parent="Behind" unique_id=165752803]
 position = Vector2(852, 360)
 texture = ExtResource("7_2p2u2")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 160, 16, 32)
 
-[node name="TorchLight4" type="PointLight2D" parent="Behind" unique_id=1068286652]
+[node name="TorchLight4" type="PointLight2D" parent="Behind" unique_id=2129141962]
 position = Vector2(860, 366)
-color = Color(1, 0.7, 0.38, 1)
+color = Color(1, 0.6, 0.27, 1)
 energy = 1.9
 texture = SubResource("GradientTexture2D_0bcs0")
 texture_scale = 0.92
 script = ExtResource("3_vnlfr")
 
-[node name="Arch" type="Sprite2D" parent="Behind" unique_id=433586049]
+[node name="Arch" type="Sprite2D" parent="Behind" unique_id=2103879617]
 position = Vector2(120, 50)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Pots" type="Sprite2D" parent="Behind" unique_id=2084629477]
+[node name="Pots" type="Sprite2D" parent="Behind" unique_id=1057089864]
 position = Vector2(200, 106)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(304, 88, 40, 24)
 
-[node name="Flowers" type="Sprite2D" parent="Behind" unique_id=1339650839]
+[node name="Flowers" type="Sprite2D" parent="Behind" unique_id=189561572]
 position = Vector2(250, 94)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 72, 32, 20)
 
-[node name="Arcade" type="Sprite2D" parent="Behind" unique_id=2001079706]
+[node name="Arcade" type="Sprite2D" parent="Behind" unique_id=494451498]
 position = Vector2(474, 66)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(4, 32, 128, 80)
 
-[node name="Pillar" type="Sprite2D" parent="Behind" unique_id=451825322]
+[node name="Pillar" type="Sprite2D" parent="Behind" unique_id=459439858]
 position = Vector2(380, 50)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="Chest" type="Sprite2D" parent="Behind" unique_id=1453612870]
+[node name="Chest" type="Sprite2D" parent="Behind" unique_id=994899369]
 position = Vector2(600, 130)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(352, 96, 24, 16)
 
-[node name="Flowers2" type="Sprite2D" parent="Behind" unique_id=998450522]
+[node name="Flowers2" type="Sprite2D" parent="Behind" unique_id=1440959742]
 position = Vector2(630, 118)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 64, 48, 28)
 
-[node name="Crystals" type="Sprite2D" parent="Behind" unique_id=120869112]
+[node name="Crystals" type="Sprite2D" parent="Behind" unique_id=1616509003]
 position = Vector2(830, 90)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 16, 32, 24)
 
-[node name="Arch2" type="Sprite2D" parent="Behind" unique_id=1262762569]
+[node name="Arch2" type="Sprite2D" parent="Behind" unique_id=76057400]
 position = Vector2(640, 338)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(144, 32, 64, 80)
 
-[node name="Pillar2" type="Sprite2D" parent="Behind" unique_id=1931943889]
+[node name="Pillar2" type="Sprite2D" parent="Behind" unique_id=606940431]
 position = Vector2(120, 362)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(248, 56, 16, 56)
 
-[node name="Pillar3" type="Sprite2D" parent="Behind" unique_id=295706976]
+[node name="Pillar3" type="Sprite2D" parent="Behind" unique_id=1471860842]
 position = Vector2(560, 386)
 texture = ExtResource("5_cp717")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 80, 16, 32)
 
-[node name="Crystals2" type="Sprite2D" parent="Behind" unique_id=27337566]
+[node name="Crystals2" type="Sprite2D" parent="Behind" unique_id=2049540722]
 position = Vector2(540, 378)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(152, 0, 64, 40)
 
-[node name="Crystals3" type="Sprite2D" parent="Behind" unique_id=1073538041]
+[node name="Crystals3" type="Sprite2D" parent="Behind" unique_id=696023047]
 position = Vector2(230, 402)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 8, 48, 32)
 
-[node name="Flowers3" type="Sprite2D" parent="Behind" unique_id=562557660]
+[node name="Flowers3" type="Sprite2D" parent="Behind" unique_id=485274082]
 position = Vector2(290, 398)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(152, 56, 64, 36)
 
-[node name="Flowers4" type="Sprite2D" parent="Behind" unique_id=1400524847]
+[node name="Flowers4" type="Sprite2D" parent="Behind" unique_id=281507157]
 position = Vector2(740, 390)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 64, 48, 28)
 
-[node name="Grass" type="Sprite2D" parent="Behind" unique_id=118772498]
+[node name="Grass" type="Sprite2D" parent="Behind" unique_id=753030903]
 position = Vector2(40, 394)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(16, 208, 48, 24)
 
-[node name="WhiteFlowers" type="Sprite2D" parent="Behind" unique_id=1562019279]
+[node name="WhiteFlowers" type="Sprite2D" parent="Behind" unique_id=673857555]
 position = Vector2(880, 394)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(112, 208, 48, 24)
 
-[node name="Bier" type="Sprite2D" parent="Behind" unique_id=626355078]
+[node name="Bier" type="Sprite2D" parent="Behind" unique_id=137973788]
 position = Vector2(360, 406)
 texture = ExtResource("9_16ey1")
 centered = false
 region_enabled = true
 region_rect = Rect2(2, 91, 77, 28)
 
-[node name="Bones" type="Sprite2D" parent="Behind" unique_id=513131143]
+[node name="Bones" type="Sprite2D" parent="Behind" unique_id=1531297020]
 position = Vector2(700, 397)
 texture = ExtResource("9_16ey1")
 centered = false
 region_enabled = true
 region_rect = Rect2(41, 46, 46, 21)
 
-[node name="Hanging" type="Sprite2D" parent="Behind" unique_id=862890155]
+[node name="Hanging" type="Sprite2D" parent="Behind" unique_id=229127142]
 position = Vector2(90, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="Hanging2" type="Sprite2D" parent="Behind" unique_id=74098843]
+[node name="Hanging2" type="Sprite2D" parent="Behind" unique_id=1919992653]
 position = Vector2(230, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="Hanging3" type="Sprite2D" parent="Behind" unique_id=959475701]
+[node name="Hanging3" type="Sprite2D" parent="Behind" unique_id=1570246593]
 position = Vector2(300, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 112, 16, 32)
 
-[node name="Hanging4" type="Sprite2D" parent="Behind" unique_id=796915094]
+[node name="Hanging4" type="Sprite2D" parent="Behind" unique_id=1884467242]
 position = Vector2(400, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="Hanging5" type="Sprite2D" parent="Behind" unique_id=1299960194]
+[node name="Hanging5" type="Sprite2D" parent="Behind" unique_id=185961065]
 position = Vector2(560, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="Hanging6" type="Sprite2D" parent="Behind" unique_id=1648147249]
+[node name="Hanging6" type="Sprite2D" parent="Behind" unique_id=578046059]
 position = Vector2(650, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="Hanging7" type="Sprite2D" parent="Behind" unique_id=468148403]
+[node name="Hanging7" type="Sprite2D" parent="Behind" unique_id=677630879]
 position = Vector2(860, 174)
 texture = ExtResource("8_7r3k1")
 centered = false
 region_enabled = true
 region_rect = Rect2(48, 112, 16, 32)
 
-[node name="ShaftGlow" type="PointLight2D" parent="Behind" unique_id=1551337925]
+[node name="ShaftGlow" type="PointLight2D" parent="Behind" unique_id=1145280862]
 position = Vector2(496, 528)
 color = Color(0.55, 0.75, 1, 1)
 energy = 0.25
@@ -1433,28 +1456,28 @@ texture = SubResource("GradientTexture2D_tyi14")
 texture_scale = 0.7
 script = ExtResource("3_vnlfr")
 
-[node name="Solid" type="TileMapLayer" parent="." unique_id=2142762730 groups=["solid_tiles"]]
+[node name="Solid" type="TileMapLayer" parent="." unique_id=1507834835 groups=["solid_tiles"]]
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAABAAAAABAAAAAAAAABEAAAABAAAAAAAAABIAAAABAAAAAAAAABMAAAABAAAAAAAAABQAAAABAAAAAAAAABoAAAABAAAAAAAAABsAAAABAAAAAAAAABwAAAABAAAAAAAAAB0AAAABAAAAAAAAAB4AAAABAAAAAAAAAB8AAAABAAAAAAAAACAAAAABAAAAAAAAACEAAAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAgAAAABAAAAAAABAAkAAAABAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAABAAwAAAABAAAAAAABABAAAAABAAAAAAABABEAAAABAAAAAAABABIAAAABAAAAAAABABMAAAABAAAAAAABABQAAAABAAAAAAABABoAAAABAAAAAAABABsAAAABAAAAAAABABwAAAABAAAAAAABAB0AAAABAAAAAAABAB4AAAABAAAAAAABAB8AAAABAAAAAAABACAAAAABAAAAAAABACEAAAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAgAAAABAAAAAAACAAkAAAABAAAAAAACAAoAAAABAAAAAAACAAsAAAABAAAAAAACAAwAAAABAAAAAAACABAAAAABAAAAAAACABEAAAABAAAAAAACABIAAAABAAAAAAACABMAAAABAAAAAAACABQAAAABAAAAAAACABoAAAABAAAAAAACABsAAAABAAAAAAACABwAAAABAAAAAAACAB0AAAABAAAAAAACAB4AAAABAAAAAAACAB8AAAABAAAAAAACACAAAAABAAAAAAACACEAAAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAgAAAABAAAAAAADAAkAAAABAAAAAAADAAoAAAABAAAAAAADABoAAAABAAAAAAADABsAAAABAAAAAAADABwAAAABAAAAAAADAB0AAAABAAAAAAADAB4AAAABAAAAAAADAB8AAAABAAAAAAADACAAAAABAAAAAAADACEAAAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEABoAAAABAAAAAAAEABsAAAABAAAAAAAEABwAAAABAAAAAAAEAB0AAAABAAAAAAAEAB4AAAABAAAAAAAEAB8AAAABAAAAAAAEACAAAAABAAAAAAAEACEAAAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFABoAAAABAAAAAAAFABsAAAABAAAAAAAFABwAAAABAAAAAAAFAB0AAAABAAAAAAAFAB4AAAABAAAAAAAFAB8AAAABAAAAAAAFACAAAAABAAAAAAAFACEAAAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAABAAAAAAAGAAIAAAABAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAABAAAAAAAGABoAAAABAAAAAAAGABsAAAABAAAAAAAGABwAAAABAAAAAAAGAB0AAAABAAAAAAAGAB4AAAABAAAAAAAGAB8AAAABAAAAAAAGACAAAAABAAAAAAAGACEAAAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAABAAAAAAAHABoAAAABAAAAAAAHABsAAAABAAAAAAAHABwAAAABAAAAAAAHAB0AAAABAAAAAAAHAB4AAAABAAAAAAAHAB8AAAABAAAAAAAHACAAAAABAAAAAAAHACEAAAABAAAAAAAIAAAAAAABAAAAAAAIAAEAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAABAAAAAAAIAAoAAAABAAAAAAAIABoAAAABAAAAAAAIABsAAAABAAAAAAAIABwAAAABAAAAAAAIAB0AAAABAAAAAAAIAB4AAAABAAAAAAAIAB8AAAABAAAAAAAIACAAAAABAAAAAAAIACEAAAABAAAAAAAJAAAAAAABAAAAAAAJAAEAAAABAAAAAAAJAAgAAAABAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJABoAAAABAAAAAAAJABsAAAABAAAAAAAJABwAAAABAAAAAAAJAB0AAAABAAAAAAAJAB4AAAABAAAAAAAJAB8AAAABAAAAAAAJACAAAAABAAAAAAAJACEAAAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKABoAAAABAAAAAAAKABsAAAABAAAAAAAKABwAAAABAAAAAAAKAB0AAAABAAAAAAAKAB4AAAABAAAAAAAKAB8AAAABAAAAAAAKACAAAAABAAAAAAAKACEAAAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALABoAAAABAAAAAAALABsAAAABAAAAAAALABwAAAABAAAAAAALAB0AAAABAAAAAAALAB4AAAABAAAAAAALAB8AAAABAAAAAAALACAAAAABAAAAAAALACEAAAABAAAAAAAMAAAAAAABAAAAAAAMAAEAAAABAAAAAAAMAAgAAAABAAAAAAAMAAkAAAABAAAAAAAMAAoAAAABAAAAAAAMABoAAAABAAAAAAAMABsAAAABAAAAAAAMABwAAAABAAAAAAAMAB0AAAABAAAAAAAMAB4AAAABAAAAAAAMAB8AAAABAAAAAAAMACAAAAABAAAAAAAMACEAAAABAAAAAAANAAAAAAABAAAAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAgAAAABAAAAAAANAAkAAAABAAAAAAANAAoAAAABAAAAAAANABoAAAABAAAAAAANABsAAAABAAAAAAANABwAAAABAAAAAAANAB0AAAABAAAAAAANAB4AAAABAAAAAAANAB8AAAABAAAAAAANACAAAAABAAAAAAANACEAAAABAAAAAAAOAAAAAAABAAAAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAcAAAABAAAAAAAOAAgAAAABAAAAAAAOAAkAAAABAAAAAAAOAAoAAAABAAAAAAAOABoAAAABAAAAAAAOABsAAAABAAAAAAAOABwAAAABAAAAAAAOAB0AAAABAAAAAAAOAB4AAAABAAAAAAAOAB8AAAABAAAAAAAOACAAAAABAAAAAAAOACEAAAABAAAAAAAPAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAAAAAAPABsAAAABAAAAAAAPABwAAAABAAAAAAAPAB0AAAABAAAAAAAPAB4AAAABAAAAAAAPAB8AAAABAAAAAAAPACAAAAABAAAAAAAPACEAAAABAAAAAAAQAAAAAAABAAAAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAcAAAABAAAAAAAQAAgAAAABAAAAAAAQAAkAAAABAAAAAAAQAAoAAAABAAAAAAAQABsAAAABAAAAAAAQABwAAAABAAAAAAAQAB0AAAABAAAAAAAQAB4AAAABAAAAAAAQAB8AAAABAAAAAAAQACAAAAABAAAAAAAQACEAAAABAAAAAAARAAAAAAABAAAAAAARAAEAAAABAAAAAAARAAIAAAABAAAAAAARAAcAAAABAAAAAAARAAgAAAABAAAAAAARAAkAAAABAAAAAAARAAoAAAABAAAAAAARABsAAAABAAAAAAARABwAAAABAAAAAAARAB0AAAABAAAAAAARAB4AAAABAAAAAAARAB8AAAABAAAAAAARACAAAAABAAAAAAARACEAAAABAAAAAAASAAAAAAABAAAAAAASAAEAAAABAAAAAAASAAIAAAABAAAAAAASAAcAAAABAAAAAAASAAgAAAABAAAAAAASAAkAAAABAAAAAAASAAoAAAABAAAAAAASABsAAAABAAAAAAASABwAAAABAAAAAAASAB0AAAABAAAAAAASAB4AAAABAAAAAAASAB8AAAABAAAAAAASACAAAAABAAAAAAASACEAAAABAAAAAAATABsAAAABAAAAAAATABwAAAABAAAAAAATAB0AAAABAAAAAAATAB4AAAABAAAAAAATAB8AAAABAAAAAAATACAAAAABAAAAAAATACEAAAABAAAAAAAUABsAAAABAAAAAAAUABwAAAABAAAAAAAUAB0AAAABAAAAAAAUAB4AAAABAAAAAAAUAB8AAAABAAAAAAAUACAAAAABAAAAAAAUACEAAAABAAAAAAAVABsAAAABAAAAAAAVABwAAAABAAAAAAAVAB0AAAABAAAAAAAVAB4AAAABAAAAAAAVAB8AAAABAAAAAAAVACAAAAABAAAAAAAVACEAAAABAAAAAAAWAAAAAAABAAAAAAAWAAEAAAABAAAAAAAWAAIAAAABAAAAAAAWAAgAAAABAAAAAAAWAAkAAAABAAAAAAAWAAoAAAABAAAAAAAWABsAAAABAAAAAAAWABwAAAABAAAAAAAWAB0AAAABAAAAAAAWAB4AAAABAAAAAAAWAB8AAAABAAAAAAAWACAAAAABAAAAAAAWACEAAAABAAAAAAAXAAAAAAABAAAAAAAXAAEAAAABAAAAAAAXAAIAAAABAAAAAAAXAAgAAAABAAAAAAAXAAkAAAABAAAAAAAXAAoAAAABAAAAAAAXABsAAAABAAAAAAAXABwAAAABAAAAAAAXAB0AAAABAAAAAAAXAB4AAAABAAAAAAAXAB8AAAABAAAAAAAXACAAAAABAAAAAAAXACEAAAABAAAAAAAYAAAAAAABAAAAAAAYAAEAAAABAAAAAAAYAAIAAAABAAAAAAAYAAgAAAABAAAAAAAYAAkAAAABAAAAAAAYAAoAAAABAAAAAAAYABsAAAABAAAAAAAYABwAAAABAAAAAAAYAB0AAAABAAAAAAAYAB4AAAABAAAAAAAYAB8AAAABAAAAAAAYACAAAAABAAAAAAAYACEAAAABAAAAAAAZAAAAAAABAAAAAAAZAAEAAAABAAAAAAAZAAIAAAABAAAAAAAZAAgAAAABAAAAAAAZAAkAAAABAAAAAAAZAAoAAAABAAAAAAAZABoAAAABAAAAAAAZABsAAAABAAAAAAAZABwAAAABAAAAAAAZAB0AAAABAAAAAAAZAB4AAAABAAAAAAAZAB8AAAABAAAAAAAZACAAAAABAAAAAAAZACEAAAABAAAAAAAaAAAAAAABAAAAAAAaAAEAAAABAAAAAAAaAAIAAAABAAAAAAAaAAMAAAABAAAAAAAaAAgAAAABAAAAAAAaAAkAAAABAAAAAAAaAAoAAAABAAAAAAAaABoAAAABAAAAAAAaABsAAAABAAAAAAAaABwAAAABAAAAAAAaAB0AAAABAAAAAAAaAB4AAAABAAAAAAAaAB8AAAABAAAAAAAaACAAAAABAAAAAAAaACEAAAABAAAAAAAbAAAAAAABAAAAAAAbAAEAAAABAAAAAAAbAAIAAAABAAAAAAAbAAMAAAABAAAAAAAbAAgAAAABAAAAAAAbAAkAAAABAAAAAAAbAAoAAAABAAAAAAAbABoAAAABAAAAAAAbABsAAAABAAAAAAAbABwAAAABAAAAAAAbAB0AAAABAAAAAAAbAB4AAAABAAAAAAAbAB8AAAABAAAAAAAbACAAAAABAAAAAAAbACEAAAABAAAAAAAcAAAAAAABAAAAAAAcAAEAAAABAAAAAAAcAAIAAAABAAAAAAAcAAMAAAABAAAAAAAcAAgAAAABAAAAAAAcAAkAAAABAAAAAAAcAAoAAAABAAAAAAAcABoAAAABAAAAAAAcABsAAAABAAAAAAAcABwAAAABAAAAAAAcAB0AAAABAAAAAAAcAB4AAAABAAAAAAAcAB8AAAABAAAAAAAcACAAAAABAAAAAAAcACEAAAABAAAAAAAdAAAAAAABAAAAAAAdAAEAAAABAAAAAAAdAAIAAAABAAAAAAAdAAkAAAABAAAAAAAdAAoAAAABAAAAAAAeAAAAAAABAAAAAAAeAAEAAAABAAAAAAAeAAIAAAABAAAAAAAeAAkAAAABAAAAAAAeAAoAAAABAAAAAAAfAAAAAAABAAAAAAAfAAEAAAABAAAAAAAfAAIAAAABAAAAAAAfAAkAAAABAAAAAAAfAAoAAAABAAAAAAAgAAAAAAABAAAAAAAgAAEAAAABAAAAAAAgAAIAAAABAAAAAAAgAAkAAAABAAAAAAAgAAoAAAABAAAAAAAhAAAAAAABAAAAAAAhAAEAAAABAAAAAAAhAAIAAAABAAAAAAAhAAkAAAABAAAAAAAhAAoAAAABAAAAAAAhABoAAAABAAAAAAAhABsAAAABAAAAAAAhABwAAAABAAAAAAAhAB0AAAABAAAAAAAhAB4AAAABAAAAAAAhAB8AAAABAAAAAAAhACAAAAABAAAAAAAhACEAAAABAAAAAAAiAAAAAAABAAAAAAAiAAEAAAABAAAAAAAiAAIAAAABAAAAAAAiAAkAAAABAAAAAAAiAAoAAAABAAAAAAAiABoAAAABAAAAAAAiABsAAAABAAAAAAAiABwAAAABAAAAAAAiAB0AAAABAAAAAAAiAB4AAAABAAAAAAAiAB8AAAABAAAAAAAiACAAAAABAAAAAAAiACEAAAABAAAAAAAjAAAAAAABAAAAAAAjAAEAAAABAAAAAAAjAAIAAAABAAAAAAAjAAkAAAABAAAAAAAjAAoAAAABAAAAAAAjABoAAAABAAAAAAAjABsAAAABAAAAAAAjABwAAAABAAAAAAAjAB0AAAABAAAAAAAjAB4AAAABAAAAAAAjAB8AAAABAAAAAAAjACAAAAABAAAAAAAjACEAAAABAAAAAAAkAAAAAAABAAAAAAAkAAEAAAABAAAAAAAkAAIAAAABAAAAAAAkAAkAAAABAAAAAAAkAAoAAAABAAAAAAAkABoAAAABAAAAAAAkABsAAAABAAAAAAAkABwAAAABAAAAAAAkAB0AAAABAAAAAAAkAB4AAAABAAAAAAAkAB8AAAABAAAAAAAkACAAAAABAAAAAAAkACEAAAABAAAAAAAlAAAAAAABAAAAAAAlAAEAAAABAAAAAAAlAAIAAAABAAAAAAAlAAkAAAABAAAAAAAlAAoAAAABAAAAAAAlABoAAAABAAAAAAAlABsAAAABAAAAAAAlABwAAAABAAAAAAAlAB0AAAABAAAAAAAlAB4AAAABAAAAAAAlAB8AAAABAAAAAAAlACAAAAABAAAAAAAlACEAAAABAAAAAAAmAAAAAAABAAAAAAAmAAEAAAABAAAAAAAmAAIAAAABAAAAAAAmAAMAAAABAAAAAAAmAAkAAAABAAAAAAAmAAoAAAABAAAAAAAmABoAAAABAAAAAAAmABsAAAABAAAAAAAmABwAAAABAAAAAAAmAB0AAAABAAAAAAAmAB4AAAABAAAAAAAmAB8AAAABAAAAAAAmACAAAAABAAAAAAAmACEAAAABAAAAAAAnAAAAAAABAAAAAAAnAAEAAAABAAAAAAAnAAIAAAABAAAAAAAnAAMAAAABAAAAAAAnAAkAAAABAAAAAAAnAAoAAAABAAAAAAAnABoAAAABAAAAAAAnABsAAAABAAAAAAAnABwAAAABAAAAAAAnAB0AAAABAAAAAAAnAB4AAAABAAAAAAAnAB8AAAABAAAAAAAnACAAAAABAAAAAAAnACEAAAABAAAAAAAoAAAAAAABAAAAAAAoAAEAAAABAAAAAAAoAAIAAAABAAAAAAAoAAMAAAABAAAAAAAoAAkAAAABAAAAAAAoAAoAAAABAAAAAAAoABoAAAABAAAAAAAoABsAAAABAAAAAAAoABwAAAABAAAAAAAoAB0AAAABAAAAAAAoAB4AAAABAAAAAAAoAB8AAAABAAAAAAAoACAAAAABAAAAAAAoACEAAAABAAAAAAApAAAAAAABAAAAAAApAAEAAAABAAAAAAApAAIAAAABAAAAAAApAAMAAAABAAAAAAApAAkAAAABAAAAAAApAAoAAAABAAAAAAApABoAAAABAAAAAAApABsAAAABAAAAAAApABwAAAABAAAAAAApAB0AAAABAAAAAAApAB4AAAABAAAAAAApAB8AAAABAAAAAAApACAAAAABAAAAAAApACEAAAABAAAAAAAqAAAAAAABAAAAAAAqAAEAAAABAAAAAAAqAAIAAAABAAAAAAAqAAMAAAABAAAAAAAqAAkAAAABAAAAAAAqAAoAAAABAAAAAAAqABoAAAABAAAAAAAqABsAAAABAAAAAAAqABwAAAABAAAAAAAqAB0AAAABAAAAAAAqAB4AAAABAAAAAAAqAB8AAAABAAAAAAAqACAAAAABAAAAAAAqACEAAAABAAAAAAArAAAAAAABAAAAAAArAAEAAAABAAAAAAArAAIAAAABAAAAAAArAAMAAAABAAAAAAArAAkAAAABAAAAAAArAAoAAAABAAAAAAArABoAAAABAAAAAAArABsAAAABAAAAAAArABwAAAABAAAAAAArAB0AAAABAAAAAAArAB4AAAABAAAAAAArAB8AAAABAAAAAAArACAAAAABAAAAAAArACEAAAABAAAAAAAsAAAAAAABAAAAAAAsAAEAAAABAAAAAAAsAAIAAAABAAAAAAAsAAMAAAABAAAAAAAsAAkAAAABAAAAAAAsAAoAAAABAAAAAAAsABoAAAABAAAAAAAsABsAAAABAAAAAAAsABwAAAABAAAAAAAsAB0AAAABAAAAAAAsAB4AAAABAAAAAAAsAB8AAAABAAAAAAAsACAAAAABAAAAAAAsACEAAAABAAAAAAAtAAAAAAABAAAAAAAtAAEAAAABAAAAAAAtAAIAAAABAAAAAAAtAAMAAAABAAAAAAAtAAkAAAABAAAAAAAtAAoAAAABAAAAAAAtABoAAAABAAAAAAAtABsAAAABAAAAAAAtABwAAAABAAAAAAAtAB0AAAABAAAAAAAtAB4AAAABAAAAAAAtAB8AAAABAAAAAAAtACAAAAABAAAAAAAtACEAAAABAAAAAAAuAAAAAAABAAAAAAAuAAEAAAABAAAAAAAuABoAAAABAAAAAAAuABsAAAABAAAAAAAuABwAAAABAAAAAAAuAB0AAAABAAAAAAAuAB4AAAABAAAAAAAuAB8AAAABAAAAAAAuACAAAAABAAAAAAAuACEAAAABAAAAAAAvAAAAAAABAAAAAAAvAAEAAAABAAAAAAAvABoAAAABAAAAAAAvABsAAAABAAAAAAAvABwAAAABAAAAAAAvAB0AAAABAAAAAAAvAB4AAAABAAAAAAAvAB8AAAABAAAAAAAvACAAAAABAAAAAAAvACEAAAABAAAAAAAwAAAAAAABAAAAAAAwAAEAAAABAAAAAAAwABoAAAABAAAAAAAwABsAAAABAAAAAAAwABwAAAABAAAAAAAwAB0AAAABAAAAAAAwAB4AAAABAAAAAAAwAB8AAAABAAAAAAAwACAAAAABAAAAAAAwACEAAAABAAAAAAAxAAAAAAABAAAAAAAxAAEAAAABAAAAAAAxABoAAAABAAAAAAAxABsAAAABAAAAAAAxABwAAAABAAAAAAAxAB0AAAABAAAAAAAxAB4AAAABAAAAAAAxAB8AAAABAAAAAAAxACAAAAABAAAAAAAxACEAAAABAAAAAAAyAAAAAAABAAAAAAAyAAEAAAABAAAAAAAyAAcAAAABAAAAAAAyAAgAAAABAAAAAAAyAAkAAAABAAAAAAAyAAoAAAABAAAAAAAyABoAAAABAAAAAAAyABsAAAABAAAAAAAyABwAAAABAAAAAAAyAB0AAAABAAAAAAAyAB4AAAABAAAAAAAyAB8AAAABAAAAAAAyACAAAAABAAAAAAAyACEAAAABAAAAAAAzAAAAAAABAAAAAAAzAAEAAAABAAAAAAAzAAcAAAABAAAAAAAzAAgAAAABAAAAAAAzAAkAAAABAAAAAAAzAAoAAAABAAAAAAAzABoAAAABAAAAAAAzABsAAAABAAAAAAAzABwAAAABAAAAAAAzAB0AAAABAAAAAAAzAB4AAAABAAAAAAAzAB8AAAABAAAAAAAzACAAAAABAAAAAAAzACEAAAABAAAAAAA0AAAAAAABAAAAAAA0AAEAAAABAAAAAAA0AAcAAAABAAAAAAA0AAgAAAABAAAAAAA0AAkAAAABAAAAAAA0AAoAAAABAAAAAAA0ABoAAAABAAAAAAA0ABsAAAABAAAAAAA0ABwAAAABAAAAAAA0AB0AAAABAAAAAAA0AB4AAAABAAAAAAA0AB8AAAABAAAAAAA0ACAAAAABAAAAAAA0ACEAAAABAAAAAAA1AAAAAAABAAAAAAA1AAEAAAABAAAAAAA1AAcAAAABAAAAAAA1AAgAAAABAAAAAAA1AAkAAAABAAAAAAA1AAoAAAABAAAAAAA1ABoAAAABAAAAAAA1ABsAAAABAAAAAAA1ABwAAAABAAAAAAA1AB0AAAABAAAAAAA1AB4AAAABAAAAAAA1AB8AAAABAAAAAAA1ACAAAAABAAAAAAA1ACEAAAABAAAAAAA2AAAAAAABAAAAAAA2AAEAAAABAAAAAAA2AAcAAAABAAAAAAA2AAgAAAABAAAAAAA2AAkAAAABAAAAAAA2AAoAAAABAAAAAAA2AAsAAAABAAAAAAA2AAwAAAABAAAAAAA2AA0AAAABAAAAAAA2AA4AAAABAAAAAAA2AA8AAAABAAAAAAA2ABAAAAABAAAAAAA2ABEAAAABAAAAAAA2ABIAAAABAAAAAAA2ABMAAAABAAAAAAA2ABQAAAABAAAAAAA2ABUAAAABAAAAAAA2ABoAAAABAAAAAAA2ABsAAAABAAAAAAA2ABwAAAABAAAAAAA2AB0AAAABAAAAAAA2AB4AAAABAAAAAAA2AB8AAAABAAAAAAA2ACAAAAABAAAAAAA2ACEAAAABAAAAAAA3AAAAAAABAAAAAAA3AAEAAAABAAAAAAA3AAcAAAABAAAAAAA3AAgAAAABAAAAAAA3AAkAAAABAAAAAAA3AAoAAAABAAAAAAA3AAsAAAABAAAAAAA3AAwAAAABAAAAAAA3AA0AAAABAAAAAAA3AA4AAAABAAAAAAA3AA8AAAABAAAAAAA3ABAAAAABAAAAAAA3ABEAAAABAAAAAAA3ABIAAAABAAAAAAA3ABMAAAABAAAAAAA3ABQAAAABAAAAAAA3ABUAAAABAAAAAAA3ABoAAAABAAAAAAA3ABsAAAABAAAAAAA3ABwAAAABAAAAAAA3AB0AAAABAAAAAAA3AB4AAAABAAAAAAA3AB8AAAABAAAAAAA3ACAAAAABAAAAAAA3ACEAAAABAAAAAAA4AAAAAAABAAAAAAA4AAEAAAABAAAAAAA4AAcAAAABAAAAAAA4AAgAAAABAAAAAAA4AAkAAAABAAAAAAA4AAoAAAABAAAAAAA4AAsAAAABAAAAAAA4AAwAAAABAAAAAAA4AA0AAAABAAAAAAA4AA4AAAABAAAAAAA4AA8AAAABAAAAAAA4ABAAAAABAAAAAAA4ABEAAAABAAAAAAA4ABIAAAABAAAAAAA4ABMAAAABAAAAAAA4ABQAAAABAAAAAAA4ABUAAAABAAAAAAA4ABoAAAABAAAAAAA4ABsAAAABAAAAAAA4ABwAAAABAAAAAAA4AB0AAAABAAAAAAA4AB4AAAABAAAAAAA4AB8AAAABAAAAAAA4ACAAAAABAAAAAAA4ACEAAAABAAAAAAA5AAAAAAABAAAAAAA5AAEAAAABAAAAAAA5AAcAAAABAAAAAAA5AAgAAAABAAAAAAA5AAkAAAABAAAAAAA5AAoAAAABAAAAAAA5AAsAAAABAAAAAAA5AAwAAAABAAAAAAA5AA0AAAABAAAAAAA5AA4AAAABAAAAAAA5AA8AAAABAAAAAAA5ABAAAAABAAAAAAA5ABEAAAABAAAAAAA5ABIAAAABAAAAAAA5ABMAAAABAAAAAAA5ABQAAAABAAAAAAA5ABUAAAABAAAAAAA5ABoAAAABAAAAAAA5ABsAAAABAAAAAAA5ABwAAAABAAAAAAA5AB0AAAABAAAAAAA5AB4AAAABAAAAAAA5AB8AAAABAAAAAAA5ACAAAAABAAAAAAA5ACEAAAABAAAAAAA=")
 tile_set = ExtResource("10_oqypf")
 
-[node name="Masses" type="TileMapLayer" parent="." unique_id=2026121746 groups=["solid_tiles"]]
+[node name="Masses" type="TileMapLayer" parent="." unique_id=222467778 groups=["solid_tiles"]]
 visible = false
 tile_map_data = PackedByteArray("AAANABEAAAABAAAAAAAOABEAAAABAAAAAAAPABEAAAABAAAAAAAQABEAAAABAAAAAAARABEAAAABAAAAAAASABEAAAABAAAAAAATABEAAAABAAAAAAAUABEAAAABAAAAAAAVABEAAAABAAAAAAAWABEAAAABAAAAAAAXABEAAAABAAAAAAAYABEAAAABAAAAAAAZABEAAAABAAAAAAAaABEAAAABAAAAAAAbABEAAAABAAAAAAAHABQAAAABAAAAAAAIABQAAAABAAAAAAAKABYAAAABAAAAAAALABYAAAABAAAAAAADABAAAAABAAAAAAAEABAAAAABAAAAAAAFABAAAAABAAAAAAAWABYAAAABAAAAAAAXABYAAAABAAAAAAAdABYAAAABAAAAAAAeABYAAAABAAAAAAAfABIAAAABAAAAAAAgABIAAAABAAAAAAAiABEAAAABAAAAAAAjABEAAAABAAAAAAAlABAAAAABAAAAAAAmABAAAAABAAAAAAApABIAAAABAAAAAAAqABIAAAABAAAAAAArABIAAAABAAAAAAAsABIAAAABAAAAAAAtABIAAAABAAAAAAAuABIAAAABAAAAAAAvAA0AAAABAAAAAAAwAA0AAAABAAAAAAAzABUAAAABAAAAAAA0ABUAAAABAAAAAAA1ABUAAAABAAAAAAA=")
 tile_set = ExtResource("10_oqypf")
 metadata/under_art = true
 
-[node name="Edge" type="StaticBody2D" parent="." unique_id=1622142736]
+[node name="Edge" type="StaticBody2D" parent="." unique_id=440163247]
 
-[node name="Shape" type="CollisionShape2D" parent="Edge" unique_id=2003659373]
+[node name="Shape" type="CollisionShape2D" parent="Edge" unique_id=364442154]
 shape = SubResource("WorldBoundaryShape2D_f5dqn")
 
-[node name="Edge2" type="StaticBody2D" parent="." unique_id=1939432589]
+[node name="Edge2" type="StaticBody2D" parent="." unique_id=448741050]
 position = Vector2(928, 0)
 
-[node name="Shape" type="CollisionShape2D" parent="Edge2" unique_id=1187106202]
+[node name="Shape" type="CollisionShape2D" parent="Edge2" unique_id=1761877039]
 shape = SubResource("WorldBoundaryShape2D_3bm44")
 
-[node name="TerrainSkin" type="Node2D" parent="." unique_id=1145045137 node_paths=PackedStringArray("solid_layer", "mass_layer")]
+[node name="TerrainSkin" type="Node2D" parent="." unique_id=222995059 node_paths=PackedStringArray("solid_layer", "mass_layer")]
 modulate = Color(0.8, 0.77, 0.86, 1)
 z_index = 4
 script = ExtResource("11_qvhqn")
@@ -1464,39 +1487,39 @@ materials = Array[ExtResource("12_18vac")]([ExtResource("13_ex223"), ExtResource
 room_rect = Rect2i(0, 0, 58, 34)
 skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 3, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(51, 21, 3, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
 
-[node name="PlacedArt" type="Node2D" parent="." unique_id=2028281636]
+[node name="PlacedArt" type="Node2D" parent="." unique_id=1667302720]
 modulate = Color(0.82, 0.76, 0.74, 1)
 z_index = 5
 
-[node name="ShrineIsland" type="Sprite2D" parent="PlacedArt" unique_id=118300203]
+[node name="ShrineIsland" type="Sprite2D" parent="PlacedArt" unique_id=1082251031]
 position = Vector2(136, 192)
 texture = ExtResource("15_d3mbd")
 centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 384, 192)
 
-[node name="Pedestal" type="Sprite2D" parent="PlacedArt" unique_id=1917601498]
+[node name="Pedestal" type="Sprite2D" parent="PlacedArt" unique_id=1677262696]
 position = Vector2(160, 345)
 texture = ExtResource("16_p2an7")
 centered = false
 region_enabled = true
 region_rect = Rect2(304, 96, 32, 80)
 
-[node name="ArchIsland" type="Sprite2D" parent="PlacedArt" unique_id=1114872553]
+[node name="ArchIsland" type="Sprite2D" parent="PlacedArt" unique_id=1500483882]
 position = Vector2(656, 238)
 texture = ExtResource("16_p2an7")
 centered = false
 region_enabled = true
 region_rect = Rect2(8, 8, 96, 88)
 
-[node name="WestIsland" type="Sprite2D" parent="PlacedArt" unique_id=1531182351]
+[node name="WestIsland" type="Sprite2D" parent="PlacedArt" unique_id=1846464648]
 position = Vector2(109, 312)
 texture = ExtResource("17_odds7")
 centered = false
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="Nook" type="Sprite2D" parent="PlacedArt" unique_id=1377739060]
+[node name="Nook" type="Sprite2D" parent="PlacedArt" unique_id=650964815]
 position = Vector2(349, 344)
 texture = ExtResource("17_odds7")
 centered = false
@@ -1504,14 +1527,14 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="PitLedge" type="Sprite2D" parent="PlacedArt" unique_id=991072729]
+[node name="PitLedge" type="Sprite2D" parent="PlacedArt" unique_id=1618610049]
 position = Vector2(461, 344)
 texture = ExtResource("17_odds7")
 centered = false
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="Plate" type="Sprite2D" parent="PlacedArt" unique_id=623800195]
+[node name="Plate" type="Sprite2D" parent="PlacedArt" unique_id=852240904]
 position = Vector2(493, 280)
 texture = ExtResource("17_odds7")
 centered = false
@@ -1519,14 +1542,14 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="Plate2" type="Sprite2D" parent="PlacedArt" unique_id=1767460793]
+[node name="Plate2" type="Sprite2D" parent="PlacedArt" unique_id=596089054]
 position = Vector2(541, 264)
 texture = ExtResource("17_odds7")
 centered = false
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="Plate3" type="Sprite2D" parent="PlacedArt" unique_id=1724148206]
+[node name="Plate3" type="Sprite2D" parent="PlacedArt" unique_id=466966773]
 position = Vector2(589, 248)
 texture = ExtResource("17_odds7")
 centered = false
@@ -1534,21 +1557,21 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="GapLedge" type="Sprite2D" parent="PlacedArt" unique_id=1354739598]
+[node name="GapLedge" type="Sprite2D" parent="PlacedArt" unique_id=1836180390]
 position = Vector2(749, 200)
 texture = ExtResource("17_odds7")
 centered = false
 region_enabled = true
 region_rect = Rect2(228, 21, 38, 30)
 
-[node name="WestWallLedge" type="Sprite2D" parent="PlacedArt" unique_id=997499041]
+[node name="WestWallLedge" type="Sprite2D" parent="PlacedArt" unique_id=1933151829]
 position = Vector2(40, 246)
 texture = ExtResource("18_q4kkq")
 centered = false
 region_enabled = true
 region_rect = Rect2(104, 54, 55, 44)
 
-[node name="EastShelf" type="Sprite2D" parent="PlacedArt" unique_id=258727477]
+[node name="EastShelf" type="Sprite2D" parent="PlacedArt" unique_id=1794297582]
 position = Vector2(817, 326)
 texture = ExtResource("18_q4kkq")
 centered = false
@@ -1556,10 +1579,10 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(104, 54, 55, 44)
 
-[node name="Front" type="Node2D" parent="." unique_id=1955405101]
+[node name="Front" type="Node2D" parent="." unique_id=1321596191]
 z_index = 20
 
-[node name="GalleryBackWall" type="Node2D" parent="." unique_id=2121559166]
+[node name="GalleryBackWall" type="Node2D" parent="." unique_id=1654511283]
 z_index = -2
 texture_repeat = 2
 script = ExtResource("19_cnitd")
@@ -1567,11 +1590,11 @@ regions = Array[Rect2i]([Rect2i(0, 3, 14, 5), Rect2i(8, 2, 5, 1), Rect2i(14, 3, 
 fill = ExtResource("20_0b7jv")
 brightness = 0.62
 
-[node name="GalleryBands" type="Node2D" parent="." unique_id=15427373]
+[node name="GalleryBands" type="Node2D" parent="." unique_id=203470763]
 modulate = Color(1.7, 1.65, 1.6, 1)
 z_index = 5
 
-[node name="FloorBand" type="Sprite2D" parent="GalleryBands" unique_id=2146735215]
+[node name="FloorBand" type="Sprite2D" parent="GalleryBands" unique_id=2053545332]
 texture_repeat = 2
 position = Vector2(0, 128)
 texture = ExtResource("21_tytmi")
@@ -1579,7 +1602,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 224, 45)
 
-[node name="FloorBand2" type="Sprite2D" parent="GalleryBands" unique_id=1711389006]
+[node name="FloorBand2" type="Sprite2D" parent="GalleryBands" unique_id=1989304374]
 texture_repeat = 2
 position = Vector2(224, 112)
 texture = ExtResource("21_tytmi")
@@ -1587,7 +1610,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(224, 0, 80, 45)
 
-[node name="FloorBand3" type="Sprite2D" parent="GalleryBands" unique_id=1690652119]
+[node name="FloorBand3" type="Sprite2D" parent="GalleryBands" unique_id=804874941]
 texture_repeat = 2
 position = Vector2(352, 128)
 texture = ExtResource("21_tytmi")
@@ -1595,7 +1618,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 112, 45)
 
-[node name="FloorBand4" type="Sprite2D" parent="GalleryBands" unique_id=292843400]
+[node name="FloorBand4" type="Sprite2D" parent="GalleryBands" unique_id=387850617]
 texture_repeat = 2
 position = Vector2(464, 144)
 texture = ExtResource("21_tytmi")
@@ -1603,7 +1626,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(464, 0, 272, 45)
 
-[node name="FloorBand5" type="Sprite2D" parent="GalleryBands" unique_id=459832364]
+[node name="FloorBand5" type="Sprite2D" parent="GalleryBands" unique_id=243852319]
 texture_repeat = 2
 position = Vector2(800, 112)
 texture = ExtResource("21_tytmi")
@@ -1611,7 +1634,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 64, 45)
 
-[node name="CeilingBand" type="Sprite2D" parent="GalleryBands" unique_id=572956337]
+[node name="CeilingBand" type="Sprite2D" parent="GalleryBands" unique_id=999201899]
 texture_repeat = 2
 position = Vector2(0, -3)
 texture = ExtResource("22_5l5ko")
@@ -1619,7 +1642,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 128, 51)
 
-[node name="CeilingBand2" type="Sprite2D" parent="GalleryBands" unique_id=977019314]
+[node name="CeilingBand2" type="Sprite2D" parent="GalleryBands" unique_id=1786452149]
 texture_repeat = 2
 position = Vector2(128, -19)
 texture = ExtResource("22_5l5ko")
@@ -1627,7 +1650,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(128, 0, 80, 51)
 
-[node name="CeilingBand3" type="Sprite2D" parent="GalleryBands" unique_id=1464347900]
+[node name="CeilingBand3" type="Sprite2D" parent="GalleryBands" unique_id=1954133688]
 texture_repeat = 2
 position = Vector2(208, -3)
 texture = ExtResource("22_5l5ko")
@@ -1635,7 +1658,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(208, 0, 96, 51)
 
-[node name="CeilingBand4" type="Sprite2D" parent="GalleryBands" unique_id=1755652815]
+[node name="CeilingBand4" type="Sprite2D" parent="GalleryBands" unique_id=2021202600]
 texture_repeat = 2
 position = Vector2(352, -3)
 texture = ExtResource("22_5l5ko")
@@ -1643,7 +1666,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 64, 51)
 
-[node name="CeilingBand5" type="Sprite2D" parent="GalleryBands" unique_id=1200492106]
+[node name="CeilingBand5" type="Sprite2D" parent="GalleryBands" unique_id=956332250]
 texture_repeat = 2
 position = Vector2(416, 13)
 texture = ExtResource("22_5l5ko")
@@ -1651,7 +1674,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(416, 0, 48, 51)
 
-[node name="CeilingBand6" type="Sprite2D" parent="GalleryBands" unique_id=58726563]
+[node name="CeilingBand6" type="Sprite2D" parent="GalleryBands" unique_id=569615157]
 texture_repeat = 2
 position = Vector2(464, -3)
 texture = ExtResource("22_5l5ko")
@@ -1659,7 +1682,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(464, 0, 144, 51)
 
-[node name="CeilingBand7" type="Sprite2D" parent="GalleryBands" unique_id=477639451]
+[node name="CeilingBand7" type="Sprite2D" parent="GalleryBands" unique_id=1035533220]
 texture_repeat = 2
 position = Vector2(608, 13)
 texture = ExtResource("22_5l5ko")
@@ -1667,7 +1690,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(608, 0, 128, 51)
 
-[node name="CeilingBand8" type="Sprite2D" parent="GalleryBands" unique_id=1439742901]
+[node name="CeilingBand8" type="Sprite2D" parent="GalleryBands" unique_id=994866404]
 texture_repeat = 2
 position = Vector2(736, -19)
 texture = ExtResource("22_5l5ko")
@@ -1675,7 +1698,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(736, 0, 64, 51)
 
-[node name="CeilingBand9" type="Sprite2D" parent="GalleryBands" unique_id=1643142801]
+[node name="CeilingBand9" type="Sprite2D" parent="GalleryBands" unique_id=1527723190]
 texture_repeat = 2
 position = Vector2(800, -19)
 texture = ExtResource("22_5l5ko")
@@ -1683,7 +1706,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 128, 51)
 
-[node name="Underside" type="Sprite2D" parent="GalleryBands" unique_id=1769267720]
+[node name="Underside" type="Sprite2D" parent="GalleryBands" unique_id=325804131]
 texture_repeat = 2
 position = Vector2(0, 170)
 texture = ExtResource("23_yr1m5")
@@ -1691,7 +1714,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 0, 304, 48)
 
-[node name="Underside2" type="Sprite2D" parent="GalleryBands" unique_id=549473158]
+[node name="Underside2" type="Sprite2D" parent="GalleryBands" unique_id=79175017]
 texture_repeat = 2
 position = Vector2(352, 170)
 texture = ExtResource("23_yr1m5")
@@ -1699,7 +1722,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(352, 0, 384, 48)
 
-[node name="Underside3" type="Sprite2D" parent="GalleryBands" unique_id=2062719053]
+[node name="Underside3" type="Sprite2D" parent="GalleryBands" unique_id=110450899]
 texture_repeat = 2
 position = Vector2(800, 170)
 texture = ExtResource("23_yr1m5")
@@ -1707,14 +1730,14 @@ centered = false
 region_enabled = true
 region_rect = Rect2(800, 0, 64, 48)
 
-[node name="FloorStep" type="Sprite2D" parent="GalleryBands" unique_id=959001340]
+[node name="FloorStep" type="Sprite2D" parent="GalleryBands" unique_id=1477438588]
 position = Vector2(223, 112)
 texture = ExtResource("24_xxjw4")
 centered = false
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="FloorStep2" type="Sprite2D" parent="GalleryBands" unique_id=212685400]
+[node name="FloorStep2" type="Sprite2D" parent="GalleryBands" unique_id=320318820]
 position = Vector2(383, 128)
 texture = ExtResource("24_xxjw4")
 centered = false
@@ -1722,7 +1745,7 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep" type="Sprite2D" parent="GalleryBands" unique_id=1973538056]
+[node name="CeilingStep" type="Sprite2D" parent="GalleryBands" unique_id=595163038]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(47, 5)
 texture = ExtResource("24_xxjw4")
@@ -1732,7 +1755,7 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep2" type="Sprite2D" parent="GalleryBands" unique_id=1291793886]
+[node name="CeilingStep2" type="Sprite2D" parent="GalleryBands" unique_id=637752627]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(207, 5)
 texture = ExtResource("24_xxjw4")
@@ -1741,7 +1764,7 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="CeilingStep3" type="Sprite2D" parent="GalleryBands" unique_id=2018963158]
+[node name="CeilingStep3" type="Sprite2D" parent="GalleryBands" unique_id=1545779062]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(415, 21)
 texture = ExtResource("24_xxjw4")
@@ -1750,7 +1773,7 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 25, 43)
 
-[node name="CeilingStep4" type="Sprite2D" parent="GalleryBands" unique_id=476203313]
+[node name="CeilingStep4" type="Sprite2D" parent="GalleryBands" unique_id=1795863313]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(440, 21)
 texture = ExtResource("24_xxjw4")
@@ -1760,7 +1783,7 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 25, 43)
 
-[node name="CeilingStep5" type="Sprite2D" parent="GalleryBands" unique_id=413540429]
+[node name="CeilingStep5" type="Sprite2D" parent="GalleryBands" unique_id=984381333]
 modulate = Color(0.62, 0.66, 0.8, 1)
 position = Vector2(607, 21)
 texture = ExtResource("24_xxjw4")
@@ -1769,148 +1792,148 @@ flip_v = true
 region_enabled = true
 region_rect = Rect2(93, 1, 82, 43)
 
-[node name="Breakable" type="Node2D" parent="." unique_id=316783045]
+[node name="Breakable" type="Node2D" parent="." unique_id=77974262]
 z_index = 6
 position = Vector2(690, 144)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable" unique_id=1080534113]
+[node name="Art" type="Sprite2D" parent="Breakable" unique_id=375528413]
 position = Vector2(-10, -21)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(212, 24, 20, 22)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable" unique_id=375144912]
+[node name="Hurtbox" type="Area2D" parent="Breakable" unique_id=682627937]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable/Hurtbox" unique_id=2091183495]
+[node name="Shape" type="CollisionShape2D" parent="Breakable/Hurtbox" unique_id=1712669680]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_x54cl")
 
-[node name="Breakable2" type="Node2D" parent="." unique_id=1194930472]
+[node name="Breakable2" type="Node2D" parent="." unique_id=287435061]
 z_index = 6
 position = Vector2(706, 144)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable2" unique_id=1839272225]
+[node name="Art" type="Sprite2D" parent="Breakable2" unique_id=1180767333]
 position = Vector2(-8, -19)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable2" unique_id=698199960]
+[node name="Hurtbox" type="Area2D" parent="Breakable2" unique_id=263425540]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable2/Hurtbox" unique_id=798609999]
+[node name="Shape" type="CollisionShape2D" parent="Breakable2/Hurtbox" unique_id=2136308048]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_g3hmd")
 
-[node name="Breakable3" type="Node2D" parent="." unique_id=1291752772]
+[node name="Breakable3" type="Node2D" parent="." unique_id=1465351458]
 z_index = 6
 position = Vector2(800, 416)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable3" unique_id=1029311232]
+[node name="Art" type="Sprite2D" parent="Breakable3" unique_id=1808072479]
 position = Vector2(-10, -21)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(212, 24, 20, 22)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable3" unique_id=461488436]
+[node name="Hurtbox" type="Area2D" parent="Breakable3" unique_id=554518932]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable3/Hurtbox" unique_id=1996807577]
+[node name="Shape" type="CollisionShape2D" parent="Breakable3/Hurtbox" unique_id=1239568715]
 position = Vector2(0, -11)
 shape = SubResource("RectangleShape2D_d5v0i")
 
-[node name="Breakable4" type="Node2D" parent="." unique_id=281284259]
+[node name="Breakable4" type="Node2D" parent="." unique_id=1524776858]
 z_index = 6
 position = Vector2(820, 416)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 511
 
-[node name="Art" type="Sprite2D" parent="Breakable4" unique_id=1206969848]
+[node name="Art" type="Sprite2D" parent="Breakable4" unique_id=1088784568]
 position = Vector2(-14, -29)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(184, 16, 27, 30)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable4" unique_id=1656620914]
+[node name="Hurtbox" type="Area2D" parent="Breakable4" unique_id=897759205]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable4/Hurtbox" unique_id=1347985112]
+[node name="Shape" type="CollisionShape2D" parent="Breakable4/Hurtbox" unique_id=1873315839]
 position = Vector2(0, -15)
 shape = SubResource("RectangleShape2D_v0lww")
 
-[node name="Breakable5" type="Node2D" parent="." unique_id=1907384785]
+[node name="Breakable5" type="Node2D" parent="." unique_id=1795302319]
 z_index = 6
 position = Vector2(80, 256)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable5" unique_id=303893278]
+[node name="Art" type="Sprite2D" parent="Breakable5" unique_id=307932708]
 position = Vector2(-8, -19)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable5" unique_id=101457154]
+[node name="Hurtbox" type="Area2D" parent="Breakable5" unique_id=1382842530]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable5/Hurtbox" unique_id=1757686088]
+[node name="Shape" type="CollisionShape2D" parent="Breakable5/Hurtbox" unique_id=1142850226]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_xd1wy")
 
-[node name="Breakable6" type="Node2D" parent="." unique_id=1163283575]
+[node name="Breakable6" type="Node2D" parent="." unique_id=935110643]
 z_index = 6
 position = Vector2(368, 352)
 script = ExtResource("25_muchq")
 chip_color = Color(0.7, 0.45, 0.32, 1)
 piece_mask = 15
 
-[node name="Art" type="Sprite2D" parent="Breakable6" unique_id=111739736]
+[node name="Art" type="Sprite2D" parent="Breakable6" unique_id=1160785427]
 position = Vector2(-8, -19)
 texture = ExtResource("26_l5i7t")
 centered = false
 region_enabled = true
 region_rect = Rect2(235, 30, 15, 20)
 
-[node name="Hurtbox" type="Area2D" parent="Breakable6" unique_id=797407448]
+[node name="Hurtbox" type="Area2D" parent="Breakable6" unique_id=417225887]
 collision_layer = 4
 collision_mask = 0
 monitoring = false
 
-[node name="Shape" type="CollisionShape2D" parent="Breakable6/Hurtbox" unique_id=1240944544]
+[node name="Shape" type="CollisionShape2D" parent="Breakable6/Hurtbox" unique_id=478714940]
 position = Vector2(0, -10)
 shape = SubResource("RectangleShape2D_kyqi2")
 
-[node name="Darkness" type="CanvasModulate" parent="." unique_id=1625132565]
+[node name="Darkness" type="CanvasModulate" parent="." unique_id=1508029252]
 color = Color(0.36, 0.46, 0.52, 1)
 
-[node name="Fog" type="ColorRect" parent="." unique_id=491458976]
+[node name="Fog" type="ColorRect" parent="." unique_id=1544316077]
 material = SubResource("ShaderMaterial_81a7l")
 offset_left = 48.0
 offset_top = 350.0
@@ -1918,7 +1941,7 @@ offset_right = 848.0
 offset_bottom = 420.0
 mouse_filter = 2
 
-[node name="Dust" type="CPUParticles2D" parent="." unique_id=648863258]
+[node name="Dust" type="CPUParticles2D" parent="." unique_id=624923519]
 z_index = 14
 material = SubResource("CanvasItemMaterial_i6ur6")
 position = Vector2(458, 240)
@@ -1936,13 +1959,13 @@ initial_velocity_max = 6.0
 scale_amount_min = 0.5
 color = Color(0.8, 0.86, 1, 0.7)
 
-[node name="Foreground" type="Parallax2D" parent="." unique_id=2121130861]
+[node name="Foreground" type="Parallax2D" parent="." unique_id=951403543]
 z_index = 30
 scroll_scale = Vector2(1.15, 0)
 repeat_size = Vector2(960, 0)
 repeat_times = 3
 
-[node name="MidPiece" type="Sprite2D" parent="Foreground" unique_id=952443984]
+[node name="MidPiece" type="Sprite2D" parent="Foreground" unique_id=1992369094]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(60, -6)
@@ -1952,7 +1975,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="MidPiece2" type="Sprite2D" parent="Foreground" unique_id=1302222025]
+[node name="MidPiece2" type="Sprite2D" parent="Foreground" unique_id=937483548]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(420, -10)
@@ -1962,7 +1985,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(88, 112, 24, 64)
 
-[node name="MidPiece3" type="Sprite2D" parent="Foreground" unique_id=1480700201]
+[node name="MidPiece3" type="Sprite2D" parent="Foreground" unique_id=887240939]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(700, -4)
@@ -1972,7 +1995,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(184, 112, 16, 32)
 
-[node name="MidPiece4" type="Sprite2D" parent="Foreground" unique_id=1982395611]
+[node name="MidPiece4" type="Sprite2D" parent="Foreground" unique_id=1484258941]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(180, 290)
@@ -1981,7 +2004,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(0, 250, 120, 110)
 
-[node name="MidPiece5" type="Sprite2D" parent="Foreground" unique_id=1172645208]
+[node name="MidPiece5" type="Sprite2D" parent="Foreground" unique_id=657035857]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(520, 310)
@@ -1991,7 +2014,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(152, 0, 64, 40)
 
-[node name="MidPiece6" type="Sprite2D" parent="Foreground" unique_id=1578141180]
+[node name="MidPiece6" type="Sprite2D" parent="Foreground" unique_id=1487465213]
 modulate = Color(0.4, 0.36, 0.5, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(820, 302)
@@ -2001,7 +2024,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(224, 80, 16, 32)
 
-[node name="ScreenFog" type="ColorRect" parent="Foreground" unique_id=1756262294]
+[node name="ScreenFog" type="ColorRect" parent="Foreground" unique_id=910717614]
 material = SubResource("ShaderMaterial_f25rc")
 offset_left = -400.0
 offset_top = 250.0
@@ -2009,13 +2032,13 @@ offset_right = 1606.4
 offset_bottom = 370.0
 mouse_filter = 2
 
-[node name="ForegroundNear" type="Parallax2D" parent="." unique_id=492351929]
+[node name="ForegroundNear" type="Parallax2D" parent="." unique_id=592921904]
 z_index = 31
 scroll_scale = Vector2(1.5, 0)
 repeat_size = Vector2(1500, 0)
 repeat_times = 3
 
-[node name="Silhouette" type="Sprite2D" parent="ForegroundNear" unique_id=496662101]
+[node name="Silhouette" type="Sprite2D" parent="ForegroundNear" unique_id=2133639184]
 modulate = Color(0.03, 0.022, 0.05, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(260, -14)
@@ -2025,7 +2048,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(224, 112, 20, 64)
 
-[node name="Silhouette2" type="Sprite2D" parent="ForegroundNear" unique_id=1400856476]
+[node name="Silhouette2" type="Sprite2D" parent="ForegroundNear" unique_id=1313928870]
 modulate = Color(0.03, 0.022, 0.05, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(640, 316)
@@ -2035,7 +2058,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(400, 290, 80, 70)
 
-[node name="Silhouette3" type="Sprite2D" parent="ForegroundNear" unique_id=1405354969]
+[node name="Silhouette3" type="Sprite2D" parent="ForegroundNear" unique_id=1656025740]
 modulate = Color(0.03, 0.022, 0.05, 1)
 material = SubResource("CanvasItemMaterial_5jny5")
 position = Vector2(1100, -20)
@@ -2045,22 +2068,22 @@ centered = false
 region_enabled = true
 region_rect = Rect2(272, 32, 20, 80)
 
-[node name="BarkPlateW1b" type="StaticBody2D" parent="." unique_id=586362617]
+[node name="BarkPlateW1b" type="StaticBody2D" parent="." unique_id=738433908]
 z_index = 8
 position = Vector2(464, 496)
 
-[node name="Shape" type="CollisionShape2D" parent="BarkPlateW1b" unique_id=1790157403]
+[node name="Shape" type="CollisionShape2D" parent="BarkPlateW1b" unique_id=1795216830]
 position = Vector2(32, 8)
 shape = SubResource("RectangleShape2D_1pt40")
 
-[node name="Art" type="Sprite2D" parent="BarkPlateW1b" unique_id=1865885875]
+[node name="Art" type="Sprite2D" parent="BarkPlateW1b" unique_id=952126916]
 position = Vector2(0, -4)
 texture = ExtResource("29_pt6bu")
 centered = false
 region_enabled = true
 region_rect = Rect2(65, 97, 63, 29)
 
-[node name="ShaftDraught" type="CPUParticles2D" parent="." unique_id=1311208386]
+[node name="ShaftDraught" type="CPUParticles2D" parent="." unique_id=154738534]
 z_index = 21
 material = SubResource("CanvasItemMaterial_i6ur6")
 position = Vector2(496, 489.6)
@@ -2079,22 +2102,22 @@ scale_amount_min = 0.5
 scale_amount_max = 0.5
 color = Color(0.8, 0.92, 1, 0.75)
 
-[node name="WestWallSecret" type="Node2D" parent="." unique_id=966388842]
+[node name="WestWallSecret" type="Node2D" parent="." unique_id=421140266]
 z_index = 22
 script = ExtResource("30_fch6n")
 flag = "ib05_west_secret"
 
-[node name="FakeRock" type="TileMapLayer" parent="WestWallSecret" unique_id=1265865504]
+[node name="FakeRock" type="TileMapLayer" parent="WestWallSecret" unique_id=198349989]
 visible = false
 tile_map_data = PackedByteArray("AAAAAAAAAAABAAAAAAAAAAEAAAABAAAAAAAAAAIAAAABAAAAAAAAAAgAAAABAAAAAAAAAAkAAAABAAAAAAAAAAoAAAABAAAAAAAAAAsAAAABAAAAAAAAAAwAAAABAAAAAAAAABAAAAABAAAAAAAAABEAAAABAAAAAAAAABIAAAABAAAAAAAAABMAAAABAAAAAAAAABQAAAABAAAAAAAAABoAAAABAAAAAAAAABsAAAABAAAAAAAAABwAAAABAAAAAAAAAB0AAAABAAAAAAAAAB4AAAABAAAAAAAAAB8AAAABAAAAAAAAACAAAAABAAAAAAAAACEAAAABAAAAAAABAAAAAAABAAAAAAABAAEAAAABAAAAAAABAAIAAAABAAAAAAABAAgAAAABAAAAAAABAAkAAAABAAAAAAABAAoAAAABAAAAAAABAAsAAAABAAAAAAABAAwAAAABAAAAAAABABAAAAABAAAAAAABABEAAAABAAAAAAABABIAAAABAAAAAAABABMAAAABAAAAAAABABQAAAABAAAAAAABABoAAAABAAAAAAABABsAAAABAAAAAAABABwAAAABAAAAAAABAB0AAAABAAAAAAABAB4AAAABAAAAAAABAB8AAAABAAAAAAABACAAAAABAAAAAAABACEAAAABAAAAAAACAAAAAAABAAAAAAACAAEAAAABAAAAAAACAAIAAAABAAAAAAACAAgAAAABAAAAAAACAAkAAAABAAAAAAACAAoAAAABAAAAAAACAAsAAAABAAAAAAACAAwAAAABAAAAAAACABAAAAABAAAAAAACABEAAAABAAAAAAACABIAAAABAAAAAAACABMAAAABAAAAAAACABQAAAABAAAAAAACABoAAAABAAAAAAACABsAAAABAAAAAAACABwAAAABAAAAAAACAB0AAAABAAAAAAACAB4AAAABAAAAAAACAB8AAAABAAAAAAACACAAAAABAAAAAAACACEAAAABAAAAAAADAAAAAAABAAAAAAADAAEAAAABAAAAAAADAAIAAAABAAAAAAADAAgAAAABAAAAAAADAAkAAAABAAAAAAADAAoAAAABAAAAAAADABoAAAABAAAAAAADABsAAAABAAAAAAADABwAAAABAAAAAAADAB0AAAABAAAAAAADAB4AAAABAAAAAAADAB8AAAABAAAAAAADACAAAAABAAAAAAADACEAAAABAAAAAAAEAAAAAAABAAAAAAAEAAEAAAABAAAAAAAEAAIAAAABAAAAAAAEAAgAAAABAAAAAAAEAAkAAAABAAAAAAAEAAoAAAABAAAAAAAEABoAAAABAAAAAAAEABsAAAABAAAAAAAEABwAAAABAAAAAAAEAB0AAAABAAAAAAAEAB4AAAABAAAAAAAEAB8AAAABAAAAAAAEACAAAAABAAAAAAAEACEAAAABAAAAAAAFAAAAAAABAAAAAAAFAAEAAAABAAAAAAAFAAIAAAABAAAAAAAFAAgAAAABAAAAAAAFAAkAAAABAAAAAAAFAAoAAAABAAAAAAAFABoAAAABAAAAAAAFABsAAAABAAAAAAAFABwAAAABAAAAAAAFAB0AAAABAAAAAAAFAB4AAAABAAAAAAAFAB8AAAABAAAAAAAFACAAAAABAAAAAAAFACEAAAABAAAAAAAGAAAAAAABAAAAAAAGAAEAAAABAAAAAAAGAAIAAAABAAAAAAAGAAgAAAABAAAAAAAGAAkAAAABAAAAAAAGAAoAAAABAAAAAAAGABoAAAABAAAAAAAGABsAAAABAAAAAAAGABwAAAABAAAAAAAGAB0AAAABAAAAAAAGAB4AAAABAAAAAAAGAB8AAAABAAAAAAAGACAAAAABAAAAAAAGACEAAAABAAAAAAAHAAAAAAABAAAAAAAHAAEAAAABAAAAAAAHAAIAAAABAAAAAAAHAAgAAAABAAAAAAAHAAkAAAABAAAAAAAHAAoAAAABAAAAAAAHABoAAAABAAAAAAAHABsAAAABAAAAAAAHABwAAAABAAAAAAAHAB0AAAABAAAAAAAHAB4AAAABAAAAAAAHAB8AAAABAAAAAAAHACAAAAABAAAAAAAHACEAAAABAAAAAAAIAAAAAAABAAAAAAAIAAEAAAABAAAAAAAIAAgAAAABAAAAAAAIAAkAAAABAAAAAAAIAAoAAAABAAAAAAAIABoAAAABAAAAAAAIABsAAAABAAAAAAAIABwAAAABAAAAAAAIAB0AAAABAAAAAAAIAB4AAAABAAAAAAAIAB8AAAABAAAAAAAIACAAAAABAAAAAAAIACEAAAABAAAAAAAJAAAAAAABAAAAAAAJAAEAAAABAAAAAAAJAAgAAAABAAAAAAAJAAkAAAABAAAAAAAJAAoAAAABAAAAAAAJABoAAAABAAAAAAAJABsAAAABAAAAAAAJABwAAAABAAAAAAAJAB0AAAABAAAAAAAJAB4AAAABAAAAAAAJAB8AAAABAAAAAAAJACAAAAABAAAAAAAJACEAAAABAAAAAAAKAAAAAAABAAAAAAAKAAEAAAABAAAAAAAKAAgAAAABAAAAAAAKAAkAAAABAAAAAAAKAAoAAAABAAAAAAAKABoAAAABAAAAAAAKABsAAAABAAAAAAAKABwAAAABAAAAAAAKAB0AAAABAAAAAAAKAB4AAAABAAAAAAAKAB8AAAABAAAAAAAKACAAAAABAAAAAAAKACEAAAABAAAAAAALAAAAAAABAAAAAAALAAEAAAABAAAAAAALAAgAAAABAAAAAAALAAkAAAABAAAAAAALAAoAAAABAAAAAAALABoAAAABAAAAAAALABsAAAABAAAAAAALABwAAAABAAAAAAALAB0AAAABAAAAAAALAB4AAAABAAAAAAALAB8AAAABAAAAAAALACAAAAABAAAAAAALACEAAAABAAAAAAAMAAAAAAABAAAAAAAMAAEAAAABAAAAAAAMAAgAAAABAAAAAAAMAAkAAAABAAAAAAAMAAoAAAABAAAAAAAMABoAAAABAAAAAAAMABsAAAABAAAAAAAMABwAAAABAAAAAAAMAB0AAAABAAAAAAAMAB4AAAABAAAAAAAMAB8AAAABAAAAAAAMACAAAAABAAAAAAAMACEAAAABAAAAAAANAAAAAAABAAAAAAANAAEAAAABAAAAAAANAAIAAAABAAAAAAANAAgAAAABAAAAAAANAAkAAAABAAAAAAANAAoAAAABAAAAAAANABoAAAABAAAAAAANABsAAAABAAAAAAANABwAAAABAAAAAAANAB0AAAABAAAAAAANAB4AAAABAAAAAAANAB8AAAABAAAAAAANACAAAAABAAAAAAANACEAAAABAAAAAAAOAAAAAAABAAAAAAAOAAEAAAABAAAAAAAOAAIAAAABAAAAAAAOAAcAAAABAAAAAAAOAAgAAAABAAAAAAAOAAkAAAABAAAAAAAOAAoAAAABAAAAAAAOABoAAAABAAAAAAAOABsAAAABAAAAAAAOABwAAAABAAAAAAAOAB0AAAABAAAAAAAOAB4AAAABAAAAAAAOAB8AAAABAAAAAAAOACAAAAABAAAAAAAOACEAAAABAAAAAAAPAAAAAAABAAAAAAAPAAEAAAABAAAAAAAPAAIAAAABAAAAAAAPAAcAAAABAAAAAAAPAAgAAAABAAAAAAAPAAkAAAABAAAAAAAPAAoAAAABAAAAAAAPABsAAAABAAAAAAAPABwAAAABAAAAAAAPAB0AAAABAAAAAAAPAB4AAAABAAAAAAAPAB8AAAABAAAAAAAPACAAAAABAAAAAAAPACEAAAABAAAAAAAQAAAAAAABAAAAAAAQAAEAAAABAAAAAAAQAAIAAAABAAAAAAAQAAcAAAABAAAAAAAQAAgAAAABAAAAAAAQAAkAAAABAAAAAAAQAAoAAAABAAAAAAAQABsAAAABAAAAAAAQABwAAAABAAAAAAAQAB0AAAABAAAAAAAQAB4AAAABAAAAAAAQAB8AAAABAAAAAAAQACAAAAABAAAAAAAQACEAAAABAAAAAAARAAAAAAABAAAAAAARAAEAAAABAAAAAAARAAIAAAABAAAAAAARAAcAAAABAAAAAAARAAgAAAABAAAAAAARAAkAAAABAAAAAAARAAoAAAABAAAAAAARABsAAAABAAAAAAARABwAAAABAAAAAAARAB0AAAABAAAAAAARAB4AAAABAAAAAAARAB8AAAABAAAAAAARACAAAAABAAAAAAARACEAAAABAAAAAAASAAAAAAABAAAAAAASAAEAAAABAAAAAAASAAIAAAABAAAAAAASAAcAAAABAAAAAAASAAgAAAABAAAAAAASAAkAAAABAAAAAAASAAoAAAABAAAAAAASABsAAAABAAAAAAASABwAAAABAAAAAAASAB0AAAABAAAAAAASAB4AAAABAAAAAAASAB8AAAABAAAAAAASACAAAAABAAAAAAASACEAAAABAAAAAAATABsAAAABAAAAAAATABwAAAABAAAAAAATAB0AAAABAAAAAAATAB4AAAABAAAAAAATAB8AAAABAAAAAAATACAAAAABAAAAAAATACEAAAABAAAAAAAUABsAAAABAAAAAAAUABwAAAABAAAAAAAUAB0AAAABAAAAAAAUAB4AAAABAAAAAAAUAB8AAAABAAAAAAAUACAAAAABAAAAAAAUACEAAAABAAAAAAAVABsAAAABAAAAAAAVABwAAAABAAAAAAAVAB0AAAABAAAAAAAVAB4AAAABAAAAAAAVAB8AAAABAAAAAAAVACAAAAABAAAAAAAVACEAAAABAAAAAAAWAAAAAAABAAAAAAAWAAEAAAABAAAAAAAWAAIAAAABAAAAAAAWAAgAAAABAAAAAAAWAAkAAAABAAAAAAAWAAoAAAABAAAAAAAWABsAAAABAAAAAAAWABwAAAABAAAAAAAWAB0AAAABAAAAAAAWAB4AAAABAAAAAAAWAB8AAAABAAAAAAAWACAAAAABAAAAAAAWACEAAAABAAAAAAAXAAAAAAABAAAAAAAXAAEAAAABAAAAAAAXAAIAAAABAAAAAAAXAAgAAAABAAAAAAAXAAkAAAABAAAAAAAXAAoAAAABAAAAAAAXABsAAAABAAAAAAAXABwAAAABAAAAAAAXAB0AAAABAAAAAAAXAB4AAAABAAAAAAAXAB8AAAABAAAAAAAXACAAAAABAAAAAAAXACEAAAABAAAAAAAYAAAAAAABAAAAAAAYAAEAAAABAAAAAAAYAAIAAAABAAAAAAAYAAgAAAABAAAAAAAYAAkAAAABAAAAAAAYAAoAAAABAAAAAAAYABsAAAABAAAAAAAYABwAAAABAAAAAAAYAB0AAAABAAAAAAAYAB4AAAABAAAAAAAYAB8AAAABAAAAAAAYACAAAAABAAAAAAAYACEAAAABAAAAAAAZAAAAAAABAAAAAAAZAAEAAAABAAAAAAAZAAIAAAABAAAAAAAZAAgAAAABAAAAAAAZAAkAAAABAAAAAAAZAAoAAAABAAAAAAAZABoAAAABAAAAAAAZABsAAAABAAAAAAAZABwAAAABAAAAAAAZAB0AAAABAAAAAAAZAB4AAAABAAAAAAAZAB8AAAABAAAAAAAZACAAAAABAAAAAAAZACEAAAABAAAAAAAaAAAAAAABAAAAAAAaAAEAAAABAAAAAAAaAAIAAAABAAAAAAAaAAMAAAABAAAAAAAaAAgAAAABAAAAAAAaAAkAAAABAAAAAAAaAAoAAAABAAAAAAAaABoAAAABAAAAAAAaABsAAAABAAAAAAAaABwAAAABAAAAAAAaAB0AAAABAAAAAAAaAB4AAAABAAAAAAAaAB8AAAABAAAAAAAaACAAAAABAAAAAAAaACEAAAABAAAAAAAbAAAAAAABAAAAAAAbAAEAAAABAAAAAAAbAAIAAAABAAAAAAAbAAMAAAABAAAAAAAbAAgAAAABAAAAAAAbAAkAAAABAAAAAAAbAAoAAAABAAAAAAAbABoAAAABAAAAAAAbABsAAAABAAAAAAAbABwAAAABAAAAAAAbAB0AAAABAAAAAAAbAB4AAAABAAAAAAAbAB8AAAABAAAAAAAbACAAAAABAAAAAAAbACEAAAABAAAAAAAcAAAAAAABAAAAAAAcAAEAAAABAAAAAAAcAAIAAAABAAAAAAAcAAMAAAABAAAAAAAcAAgAAAABAAAAAAAcAAkAAAABAAAAAAAcAAoAAAABAAAAAAAcABoAAAABAAAAAAAcABsAAAABAAAAAAAcABwAAAABAAAAAAAcAB0AAAABAAAAAAAcAB4AAAABAAAAAAAcAB8AAAABAAAAAAAcACAAAAABAAAAAAAcACEAAAABAAAAAAAdAAAAAAABAAAAAAAdAAEAAAABAAAAAAAdAAIAAAABAAAAAAAdAAkAAAABAAAAAAAdAAoAAAABAAAAAAAeAAAAAAABAAAAAAAeAAEAAAABAAAAAAAeAAIAAAABAAAAAAAeAAkAAAABAAAAAAAeAAoAAAABAAAAAAAfAAAAAAABAAAAAAAfAAEAAAABAAAAAAAfAAIAAAABAAAAAAAfAAkAAAABAAAAAAAfAAoAAAABAAAAAAAgAAAAAAABAAAAAAAgAAEAAAABAAAAAAAgAAIAAAABAAAAAAAgAAkAAAABAAAAAAAgAAoAAAABAAAAAAAhAAAAAAABAAAAAAAhAAEAAAABAAAAAAAhAAIAAAABAAAAAAAhAAkAAAABAAAAAAAhAAoAAAABAAAAAAAhABoAAAABAAAAAAAhABsAAAABAAAAAAAhABwAAAABAAAAAAAhAB0AAAABAAAAAAAhAB4AAAABAAAAAAAhAB8AAAABAAAAAAAhACAAAAABAAAAAAAhACEAAAABAAAAAAAiAAAAAAABAAAAAAAiAAEAAAABAAAAAAAiAAIAAAABAAAAAAAiAAkAAAABAAAAAAAiAAoAAAABAAAAAAAiABoAAAABAAAAAAAiABsAAAABAAAAAAAiABwAAAABAAAAAAAiAB0AAAABAAAAAAAiAB4AAAABAAAAAAAiAB8AAAABAAAAAAAiACAAAAABAAAAAAAiACEAAAABAAAAAAAjAAAAAAABAAAAAAAjAAEAAAABAAAAAAAjAAIAAAABAAAAAAAjAAkAAAABAAAAAAAjAAoAAAABAAAAAAAjABoAAAABAAAAAAAjABsAAAABAAAAAAAjABwAAAABAAAAAAAjAB0AAAABAAAAAAAjAB4AAAABAAAAAAAjAB8AAAABAAAAAAAjACAAAAABAAAAAAAjACEAAAABAAAAAAAkAAAAAAABAAAAAAAkAAEAAAABAAAAAAAkAAIAAAABAAAAAAAkAAkAAAABAAAAAAAkAAoAAAABAAAAAAAkABoAAAABAAAAAAAkABsAAAABAAAAAAAkABwAAAABAAAAAAAkAB0AAAABAAAAAAAkAB4AAAABAAAAAAAkAB8AAAABAAAAAAAkACAAAAABAAAAAAAkACEAAAABAAAAAAAlAAAAAAABAAAAAAAlAAEAAAABAAAAAAAlAAIAAAABAAAAAAAlAAkAAAABAAAAAAAlAAoAAAABAAAAAAAlABoAAAABAAAAAAAlABsAAAABAAAAAAAlABwAAAABAAAAAAAlAB0AAAABAAAAAAAlAB4AAAABAAAAAAAlAB8AAAABAAAAAAAlACAAAAABAAAAAAAlACEAAAABAAAAAAAmAAAAAAABAAAAAAAmAAEAAAABAAAAAAAmAAIAAAABAAAAAAAmAAMAAAABAAAAAAAmAAkAAAABAAAAAAAmAAoAAAABAAAAAAAmABoAAAABAAAAAAAmABsAAAABAAAAAAAmABwAAAABAAAAAAAmAB0AAAABAAAAAAAmAB4AAAABAAAAAAAmAB8AAAABAAAAAAAmACAAAAABAAAAAAAmACEAAAABAAAAAAAnAAAAAAABAAAAAAAnAAEAAAABAAAAAAAnAAIAAAABAAAAAAAnAAMAAAABAAAAAAAnAAkAAAABAAAAAAAnAAoAAAABAAAAAAAnABoAAAABAAAAAAAnABsAAAABAAAAAAAnABwAAAABAAAAAAAnAB0AAAABAAAAAAAnAB4AAAABAAAAAAAnAB8AAAABAAAAAAAnACAAAAABAAAAAAAnACEAAAABAAAAAAAoAAAAAAABAAAAAAAoAAEAAAABAAAAAAAoAAIAAAABAAAAAAAoAAMAAAABAAAAAAAoAAkAAAABAAAAAAAoAAoAAAABAAAAAAAoABoAAAABAAAAAAAoABsAAAABAAAAAAAoABwAAAABAAAAAAAoAB0AAAABAAAAAAAoAB4AAAABAAAAAAAoAB8AAAABAAAAAAAoACAAAAABAAAAAAAoACEAAAABAAAAAAApAAAAAAABAAAAAAApAAEAAAABAAAAAAApAAIAAAABAAAAAAApAAMAAAABAAAAAAApAAkAAAABAAAAAAApAAoAAAABAAAAAAApABoAAAABAAAAAAApABsAAAABAAAAAAApABwAAAABAAAAAAApAB0AAAABAAAAAAApAB4AAAABAAAAAAApAB8AAAABAAAAAAApACAAAAABAAAAAAApACEAAAABAAAAAAAqAAAAAAABAAAAAAAqAAEAAAABAAAAAAAqAAIAAAABAAAAAAAqAAMAAAABAAAAAAAqAAkAAAABAAAAAAAqAAoAAAABAAAAAAAqABoAAAABAAAAAAAqABsAAAABAAAAAAAqABwAAAABAAAAAAAqAB0AAAABAAAAAAAqAB4AAAABAAAAAAAqAB8AAAABAAAAAAAqACAAAAABAAAAAAAqACEAAAABAAAAAAArAAAAAAABAAAAAAArAAEAAAABAAAAAAArAAIAAAABAAAAAAArAAMAAAABAAAAAAArAAkAAAABAAAAAAArAAoAAAABAAAAAAArABoAAAABAAAAAAArABsAAAABAAAAAAArABwAAAABAAAAAAArAB0AAAABAAAAAAArAB4AAAABAAAAAAArAB8AAAABAAAAAAArACAAAAABAAAAAAArACEAAAABAAAAAAAsAAAAAAABAAAAAAAsAAEAAAABAAAAAAAsAAIAAAABAAAAAAAsAAMAAAABAAAAAAAsAAkAAAABAAAAAAAsAAoAAAABAAAAAAAsABoAAAABAAAAAAAsABsAAAABAAAAAAAsABwAAAABAAAAAAAsAB0AAAABAAAAAAAsAB4AAAABAAAAAAAsAB8AAAABAAAAAAAsACAAAAABAAAAAAAsACEAAAABAAAAAAAtAAAAAAABAAAAAAAtAAEAAAABAAAAAAAtAAIAAAABAAAAAAAtAAMAAAABAAAAAAAtAAkAAAABAAAAAAAtAAoAAAABAAAAAAAtABoAAAABAAAAAAAtABsAAAABAAAAAAAtABwAAAABAAAAAAAtAB0AAAABAAAAAAAtAB4AAAABAAAAAAAtAB8AAAABAAAAAAAtACAAAAABAAAAAAAtACEAAAABAAAAAAAuAAAAAAABAAAAAAAuAAEAAAABAAAAAAAuABoAAAABAAAAAAAuABsAAAABAAAAAAAuABwAAAABAAAAAAAuAB0AAAABAAAAAAAuAB4AAAABAAAAAAAuAB8AAAABAAAAAAAuACAAAAABAAAAAAAuACEAAAABAAAAAAAvAAAAAAABAAAAAAAvAAEAAAABAAAAAAAvABoAAAABAAAAAAAvABsAAAABAAAAAAAvABwAAAABAAAAAAAvAB0AAAABAAAAAAAvAB4AAAABAAAAAAAvAB8AAAABAAAAAAAvACAAAAABAAAAAAAvACEAAAABAAAAAAAwAAAAAAABAAAAAAAwAAEAAAABAAAAAAAwABoAAAABAAAAAAAwABsAAAABAAAAAAAwABwAAAABAAAAAAAwAB0AAAABAAAAAAAwAB4AAAABAAAAAAAwAB8AAAABAAAAAAAwACAAAAABAAAAAAAwACEAAAABAAAAAAAxAAAAAAABAAAAAAAxAAEAAAABAAAAAAAxABoAAAABAAAAAAAxABsAAAABAAAAAAAxABwAAAABAAAAAAAxAB0AAAABAAAAAAAxAB4AAAABAAAAAAAxAB8AAAABAAAAAAAxACAAAAABAAAAAAAxACEAAAABAAAAAAAyAAAAAAABAAAAAAAyAAEAAAABAAAAAAAyAAcAAAABAAAAAAAyAAgAAAABAAAAAAAyAAkAAAABAAAAAAAyAAoAAAABAAAAAAAyABoAAAABAAAAAAAyABsAAAABAAAAAAAyABwAAAABAAAAAAAyAB0AAAABAAAAAAAyAB4AAAABAAAAAAAyAB8AAAABAAAAAAAyACAAAAABAAAAAAAyACEAAAABAAAAAAAzAAAAAAABAAAAAAAzAAEAAAABAAAAAAAzAAcAAAABAAAAAAAzAAgAAAABAAAAAAAzAAkAAAABAAAAAAAzAAoAAAABAAAAAAAzABoAAAABAAAAAAAzABsAAAABAAAAAAAzABwAAAABAAAAAAAzAB0AAAABAAAAAAAzAB4AAAABAAAAAAAzAB8AAAABAAAAAAAzACAAAAABAAAAAAAzACEAAAABAAAAAAA0AAAAAAABAAAAAAA0AAEAAAABAAAAAAA0AAcAAAABAAAAAAA0AAgAAAABAAAAAAA0AAkAAAABAAAAAAA0AAoAAAABAAAAAAA0ABoAAAABAAAAAAA0ABsAAAABAAAAAAA0ABwAAAABAAAAAAA0AB0AAAABAAAAAAA0AB4AAAABAAAAAAA0AB8AAAABAAAAAAA0ACAAAAABAAAAAAA0ACEAAAABAAAAAAA1AAAAAAABAAAAAAA1AAEAAAABAAAAAAA1AAcAAAABAAAAAAA1AAgAAAABAAAAAAA1AAkAAAABAAAAAAA1AAoAAAABAAAAAAA1ABoAAAABAAAAAAA1ABsAAAABAAAAAAA1ABwAAAABAAAAAAA1AB0AAAABAAAAAAA1AB4AAAABAAAAAAA1AB8AAAABAAAAAAA1ACAAAAABAAAAAAA1ACEAAAABAAAAAAA2AAAAAAABAAAAAAA2AAEAAAABAAAAAAA2AAcAAAABAAAAAAA2AAgAAAABAAAAAAA2AAkAAAABAAAAAAA2AAoAAAABAAAAAAA2AAsAAAABAAAAAAA2AAwAAAABAAAAAAA2AA0AAAABAAAAAAA2AA4AAAABAAAAAAA2AA8AAAABAAAAAAA2ABAAAAABAAAAAAA2ABEAAAABAAAAAAA2ABIAAAABAAAAAAA2ABMAAAABAAAAAAA2ABQAAAABAAAAAAA2ABUAAAABAAAAAAA2ABoAAAABAAAAAAA2ABsAAAABAAAAAAA2ABwAAAABAAAAAAA2AB0AAAABAAAAAAA2AB4AAAABAAAAAAA2AB8AAAABAAAAAAA2ACAAAAABAAAAAAA2ACEAAAABAAAAAAA3AAAAAAABAAAAAAA3AAEAAAABAAAAAAA3AAcAAAABAAAAAAA3AAgAAAABAAAAAAA3AAkAAAABAAAAAAA3AAoAAAABAAAAAAA3AAsAAAABAAAAAAA3AAwAAAABAAAAAAA3AA0AAAABAAAAAAA3AA4AAAABAAAAAAA3AA8AAAABAAAAAAA3ABAAAAABAAAAAAA3ABEAAAABAAAAAAA3ABIAAAABAAAAAAA3ABMAAAABAAAAAAA3ABQAAAABAAAAAAA3ABUAAAABAAAAAAA3ABoAAAABAAAAAAA3ABsAAAABAAAAAAA3ABwAAAABAAAAAAA3AB0AAAABAAAAAAA3AB4AAAABAAAAAAA3AB8AAAABAAAAAAA3ACAAAAABAAAAAAA3ACEAAAABAAAAAAA4AAAAAAABAAAAAAA4AAEAAAABAAAAAAA4AAcAAAABAAAAAAA4AAgAAAABAAAAAAA4AAkAAAABAAAAAAA4AAoAAAABAAAAAAA4AAsAAAABAAAAAAA4AAwAAAABAAAAAAA4AA0AAAABAAAAAAA4AA4AAAABAAAAAAA4AA8AAAABAAAAAAA4ABAAAAABAAAAAAA4ABEAAAABAAAAAAA4ABIAAAABAAAAAAA4ABMAAAABAAAAAAA4ABQAAAABAAAAAAA4ABUAAAABAAAAAAA4ABoAAAABAAAAAAA4ABsAAAABAAAAAAA4ABwAAAABAAAAAAA4AB0AAAABAAAAAAA4AB4AAAABAAAAAAA4AB8AAAABAAAAAAA4ACAAAAABAAAAAAA4ACEAAAABAAAAAAA5AAAAAAABAAAAAAA5AAEAAAABAAAAAAA5AAcAAAABAAAAAAA5AAgAAAABAAAAAAA5AAkAAAABAAAAAAA5AAoAAAABAAAAAAA5AAsAAAABAAAAAAA5AAwAAAABAAAAAAA5AA0AAAABAAAAAAA5AA4AAAABAAAAAAA5AA8AAAABAAAAAAA5ABAAAAABAAAAAAA5ABEAAAABAAAAAAA5ABIAAAABAAAAAAA5ABMAAAABAAAAAAA5ABQAAAABAAAAAAA5ABUAAAABAAAAAAA5ABoAAAABAAAAAAA5ABsAAAABAAAAAAA5ABwAAAABAAAAAAA5AB0AAAABAAAAAAA5AB4AAAABAAAAAAA5AB8AAAABAAAAAAA5ACAAAAABAAAAAAA5ACEAAAABAAAAAAAAAA0AAAABAAAAAAAAAA4AAAABAAAAAAAAAA8AAAABAAAAAAABAA0AAAABAAAAAAABAA4AAAABAAAAAAABAA8AAAABAAAAAAACAA0AAAABAAAAAAACAA4AAAABAAAAAAACAA8AAAABAAAAAAA=")
 tile_set = ExtResource("10_oqypf")
 collision_enabled = false
 
-[node name="Clip" type="Polygon2D" parent="WestWallSecret" unique_id=785092768]
+[node name="Clip" type="Polygon2D" parent="WestWallSecret" unique_id=972173868]
 clip_children = 1
 polygon = PackedVector2Array(-48, 160, 48, 160, 48, 304, -48, 304)
 
-[node name="FakeSkin" type="Node2D" parent="WestWallSecret/Clip" unique_id=1491379 node_paths=PackedStringArray("solid_layer", "mass_layer")]
+[node name="FakeSkin" type="Node2D" parent="WestWallSecret/Clip" unique_id=1750866873 node_paths=PackedStringArray("solid_layer", "mass_layer")]
 modulate = Color(0.8, 0.77, 0.86, 1)
 script = ExtResource("11_qvhqn")
 solid_layer = NodePath("../../FakeRock")
@@ -2103,13 +2126,13 @@ materials = Array[ExtResource("12_18vac")]([ExtResource("13_ex223"), ExtResource
 room_rect = Rect2i(0, 7, 9, 15)
 skip_regions = Array[Rect2i]([Rect2i(13, 17, 15, 1), Rect2i(7, 20, 2, 1), Rect2i(10, 22, 2, 1), Rect2i(3, 16, 3, 1), Rect2i(22, 22, 2, 1), Rect2i(29, 22, 2, 1), Rect2i(31, 18, 2, 1), Rect2i(34, 17, 2, 1), Rect2i(37, 16, 2, 1), Rect2i(41, 18, 6, 1), Rect2i(47, 13, 2, 1), Rect2i(51, 21, 3, 1), Rect2i(0, 0, 19, 3), Rect2i(8, 2, 5, 1), Rect2i(0, 8, 19, 3), Rect2i(14, 7, 5, 1), Rect2i(22, 0, 24, 3), Rect2i(26, 3, 3, 1), Rect2i(38, 3, 8, 1), Rect2i(22, 8, 24, 3), Rect2i(46, 0, 4, 2), Rect2i(50, 0, 8, 2), Rect2i(50, 7, 4, 4)])
 
-[node name="Trigger" type="Area2D" parent="WestWallSecret" unique_id=76926235]
+[node name="Trigger" type="Area2D" parent="WestWallSecret" unique_id=211848604]
 
-[node name="Shape" type="CollisionShape2D" parent="WestWallSecret/Trigger" unique_id=1118879143]
+[node name="Shape" type="CollisionShape2D" parent="WestWallSecret/Trigger" unique_id=1799763235]
 position = Vector2(24, 232)
 shape = SubResource("RectangleShape2D_v6r43")
 
-[node name="WestWallDraught" type="CPUParticles2D" parent="." unique_id=2088247734]
+[node name="WestWallDraught" type="CPUParticles2D" parent="." unique_id=2087288074]
 z_index = 21
 material = SubResource("CanvasItemMaterial_gdvs4")
 position = Vector2(67.2, 232)
@@ -2128,360 +2151,360 @@ scale_amount_min = 0.5
 scale_amount_max = 0.5
 color = Color(0.85, 0.95, 0.8, 0.8)
 
-[node name="Resin" type="Area2D" parent="." unique_id=1207900089]
+[node name="Resin" type="Area2D" parent="." unique_id=547995981]
 z_index = 15
 position = Vector2(10, 246)
 script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_0"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin" unique_id=1126166469]
+[node name="Shape" type="CollisionShape2D" parent="Resin" unique_id=1948224881]
 shape = SubResource("CircleShape2D_vu7x0")
 
-[node name="Art" type="Sprite2D" parent="Resin" unique_id=727820855]
+[node name="Art" type="Sprite2D" parent="Resin" unique_id=578460813]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_rsxmf")
 texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="Resin2" type="Area2D" parent="." unique_id=1421001239]
+[node name="Resin2" type="Area2D" parent="." unique_id=1736413014]
 z_index = 15
 position = Vector2(24, 240)
 script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_1"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin2" unique_id=1696447749]
+[node name="Shape" type="CollisionShape2D" parent="Resin2" unique_id=691912351]
 shape = SubResource("CircleShape2D_3sb1g")
 
-[node name="Art" type="Sprite2D" parent="Resin2" unique_id=1936907271]
+[node name="Art" type="Sprite2D" parent="Resin2" unique_id=952449414]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_cowi2")
 texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="Resin3" type="Area2D" parent="." unique_id=2102650894]
+[node name="Resin3" type="Area2D" parent="." unique_id=2135207347]
 z_index = 15
 position = Vector2(38, 246)
 script = ExtResource("31_t6h2o")
 flag = "ib05_west_resin_2"
 
-[node name="Shape" type="CollisionShape2D" parent="Resin3" unique_id=1989581485]
+[node name="Shape" type="CollisionShape2D" parent="Resin3" unique_id=830376236]
 shape = SubResource("CircleShape2D_2i6is")
 
-[node name="Art" type="Sprite2D" parent="Resin3" unique_id=993732284]
+[node name="Art" type="Sprite2D" parent="Resin3" unique_id=1572535030]
 texture_filter = 1
 material = SubResource("CanvasItemMaterial_dtmy7")
 texture = ExtResource("32_8e04v")
 hframes = 6
 
-[node name="EdgeShade" type="Polygon2D" parent="." unique_id=1596688694]
+[node name="EdgeShade" type="Polygon2D" parent="." unique_id=2123469176]
 z_index = 25
 polygon = PackedVector2Array(0, 0, 16, 0, 32, 0, 48, 0, 64, 0, 64, 544, 48, 544, 32, 544, 16, 544, 0, 544)
 vertex_colors = PackedColorArray(0.043, 0.031, 0.071, 1, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 1)
 
-[node name="EdgeShade2" type="Polygon2D" parent="." unique_id=1319225022]
+[node name="EdgeShade2" type="Polygon2D" parent="." unique_id=1410557858]
 z_index = 25
 polygon = PackedVector2Array(928, 0, 912, 0, 896, 0, 880, 0, 864, 0, 864, 544, 880, 544, 896, 544, 912, 544, 928, 544)
 vertex_colors = PackedColorArray(0.043, 0.031, 0.071, 1, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0, 0.043, 0.031, 0.071, 0.10881882, 0.043, 0.031, 0.071, 0.329877, 0.043, 0.031, 0.071, 0.63109976, 0.043, 0.031, 0.071, 1)
 
-[node name="Doors" type="Node2D" parent="." unique_id=1156521858]
+[node name="Doors" type="Node2D" parent="." unique_id=2020144379]
 
-[node name="East" type="Marker2D" parent="Doors" unique_id=1881471224]
+[node name="East" type="Marker2D" parent="Doors" unique_id=1218701597]
 position = Vector2(888, 112)
 metadata/facing = -1
 
-[node name="EastExit" type="Area2D" parent="Doors" unique_id=96201200]
+[node name="EastExit" type="Area2D" parent="Doors" unique_id=400373909]
 script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_test_room.tscn"
 target_door = "WestLower"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/EastExit" unique_id=1809290672]
+[node name="Shape" type="CollisionShape2D" parent="Doors/EastExit" unique_id=1444259142]
 position = Vector2(921, 72)
 shape = SubResource("RectangleShape2D_ciegg")
 
-[node name="West" type="Marker2D" parent="Doors" unique_id=712938769]
+[node name="West" type="Marker2D" parent="Doors" unique_id=699550072]
 position = Vector2(40, 128)
 metadata/facing = 1
 
-[node name="WestExit" type="Area2D" parent="Doors" unique_id=1744362488]
+[node name="WestExit" type="Area2D" parent="Doors" unique_id=76715742]
 script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_02_old_crypt.tscn"
 target_door = "East"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/WestExit" unique_id=531964535]
+[node name="Shape" type="CollisionShape2D" parent="Doors/WestExit" unique_id=831340785]
 position = Vector2(7, 88)
 shape = SubResource("RectangleShape2D_djf3f")
 
-[node name="WestLower" type="Marker2D" parent="Doors" unique_id=1289541194]
+[node name="WestLower" type="Marker2D" parent="Doors" unique_id=186861976]
 position = Vector2(40, 416)
 metadata/facing = 1
 
-[node name="WestLowerExit" type="Area2D" parent="Doors" unique_id=1312724809]
+[node name="WestLowerExit" type="Area2D" parent="Doors" unique_id=1133167502]
 script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_02_old_crypt.tscn"
 target_door = "EastLower"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/WestLowerExit" unique_id=1590897810]
+[node name="Shape" type="CollisionShape2D" parent="Doors/WestLowerExit" unique_id=1633743273]
 position = Vector2(7, 376)
 shape = SubResource("RectangleShape2D_lfacg")
 
-[node name="EastLower" type="Marker2D" parent="Doors" unique_id=1541110279]
+[node name="EastLower" type="Marker2D" parent="Doors" unique_id=369723923]
 position = Vector2(888, 416)
 metadata/facing = -1
 
-[node name="EastLowerExit" type="Area2D" parent="Doors" unique_id=1125394787]
+[node name="EastLowerExit" type="Area2D" parent="Doors" unique_id=1157343818]
 script = ExtResource("33_rp4xg")
 target_scene = "res://scenes/rooms/ironbark_06_undercroft.tscn"
 target_door = "West"
 
-[node name="Shape" type="CollisionShape2D" parent="Doors/EastLowerExit" unique_id=296558047]
+[node name="Shape" type="CollisionShape2D" parent="Doors/EastLowerExit" unique_id=1213979692]
 position = Vector2(921, 384)
 shape = SubResource("RectangleShape2D_svucq")
 
-[node name="Hanging" type="Node2D" parent="." unique_id=2004172203]
+[node name="Hanging" type="Node2D" parent="." unique_id=2008180623]
 z_index = 3
 
-[node name="Hang" type="Sprite2D" parent="Hanging" unique_id=1739950334]
+[node name="Hang" type="Sprite2D" parent="Hanging" unique_id=846273064]
 position = Vector2(123, 29)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(158, 8, 32, 55)
 
-[node name="Hang2" type="Sprite2D" parent="Hanging" unique_id=1895390349]
+[node name="Hang2" type="Sprite2D" parent="Hanging" unique_id=1292499941]
 position = Vector2(155, 29)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(56, 8, 29, 48)
 
-[node name="Hang3" type="Sprite2D" parent="Hanging" unique_id=981395777]
+[node name="Hang3" type="Sprite2D" parent="Hanging" unique_id=1452458004]
 position = Vector2(193, 29)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(56, 8, 29, 48)
 
-[node name="Hang4" type="Sprite2D" parent="Hanging" unique_id=2082193274]
+[node name="Hang4" type="Sprite2D" parent="Hanging" unique_id=187964973]
 position = Vector2(772, 29)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(135, 8, 15, 46)
 
-[node name="Hang5" type="Sprite2D" parent="Hanging" unique_id=27917746]
+[node name="Hang5" type="Sprite2D" parent="Hanging" unique_id=308987480]
 position = Vector2(852, 29)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(111, 98, 13, 14)
 
-[node name="Hang6" type="Sprite2D" parent="Hanging" unique_id=1408823766]
+[node name="Hang6" type="Sprite2D" parent="Hanging" unique_id=1189520700]
 position = Vector2(59, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 99, 9, 8)
 
-[node name="Hang7" type="Sprite2D" parent="Hanging" unique_id=1584418707]
+[node name="Hang7" type="Sprite2D" parent="Hanging" unique_id=1418880095]
 position = Vector2(69, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(137, 96, 15, 21)
 
-[node name="Hang8" type="Sprite2D" parent="Hanging" unique_id=798933700]
+[node name="Hang8" type="Sprite2D" parent="Hanging" unique_id=501700894]
 position = Vector2(82, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(137, 96, 15, 21)
 
-[node name="Hang9" type="Sprite2D" parent="Hanging" unique_id=596745719]
+[node name="Hang9" type="Sprite2D" parent="Hanging" unique_id=950142015]
 position = Vector2(207, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(197, 8, 20, 34)
 
-[node name="Hang10" type="Sprite2D" parent="Hanging" unique_id=2051797321]
+[node name="Hang10" type="Sprite2D" parent="Hanging" unique_id=438751940]
 position = Vector2(232, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(111, 98, 13, 14)
 
-[node name="Hang11" type="Sprite2D" parent="Hanging" unique_id=880548330]
+[node name="Hang11" type="Sprite2D" parent="Hanging" unique_id=1804236036]
 position = Vector2(245, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 99, 12, 11)
 
-[node name="Hang12" type="Sprite2D" parent="Hanging" unique_id=1468413090]
+[node name="Hang12" type="Sprite2D" parent="Hanging" unique_id=348785514]
 position = Vector2(388, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 99, 9, 8)
 
-[node name="Hang13" type="Sprite2D" parent="Hanging" unique_id=1698839384]
+[node name="Hang13" type="Sprite2D" parent="Hanging" unique_id=542153345]
 position = Vector2(407, 45)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 99, 12, 11)
 
-[node name="Hang14" type="Sprite2D" parent="Hanging" unique_id=317913353]
+[node name="Hang14" type="Sprite2D" parent="Hanging" unique_id=163360048]
 position = Vector2(442, 61)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 99, 9, 8)
 
-[node name="Hang15" type="Sprite2D" parent="Hanging" unique_id=73578050]
+[node name="Hang15" type="Sprite2D" parent="Hanging" unique_id=328035207]
 position = Vector2(642, 61)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(137, 96, 15, 21)
 
-[node name="Hang16" type="Sprite2D" parent="Hanging" unique_id=4597855]
+[node name="Hang16" type="Sprite2D" parent="Hanging" unique_id=1684871575]
 position = Vector2(692, 61)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(197, 8, 20, 34)
 
-[node name="CornerMoss" type="Sprite2D" parent="Hanging" unique_id=819007566]
+[node name="CornerMoss" type="Sprite2D" parent="Hanging" unique_id=875069220]
 position = Vector2(284, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(197, 8, 20, 34)
 
-[node name="CornerMoss2" type="Sprite2D" parent="Hanging" unique_id=827689519]
+[node name="CornerMoss2" type="Sprite2D" parent="Hanging" unique_id=1239840973]
 position = Vector2(352, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(135, 8, 15, 46)
 
-[node name="Hang17" type="Sprite2D" parent="Hanging" unique_id=1635250848]
+[node name="Hang17" type="Sprite2D" parent="Hanging" unique_id=68764683]
 position = Vector2(57, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 99, 12, 11)
 
-[node name="Hang18" type="Sprite2D" parent="Hanging" unique_id=934543050]
+[node name="Hang18" type="Sprite2D" parent="Hanging" unique_id=1051630299]
 position = Vector2(85, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(64, 99, 9, 8)
 
-[node name="Hang19" type="Sprite2D" parent="Hanging" unique_id=217961473]
+[node name="Hang19" type="Sprite2D" parent="Hanging" unique_id=472471694]
 position = Vector2(94, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(158, 8, 32, 55)
 
-[node name="Hang20" type="Sprite2D" parent="Hanging" unique_id=1561767152]
+[node name="Hang20" type="Sprite2D" parent="Hanging" unique_id=95748217]
 position = Vector2(127, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(164, 94, 18, 26)
 
-[node name="Hang21" type="Sprite2D" parent="Hanging" unique_id=283215882]
+[node name="Hang21" type="Sprite2D" parent="Hanging" unique_id=1711414466]
 position = Vector2(154, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(158, 8, 32, 55)
 
-[node name="Hang22" type="Sprite2D" parent="Hanging" unique_id=1969752217]
+[node name="Hang22" type="Sprite2D" parent="Hanging" unique_id=1451434378]
 position = Vector2(184, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(135, 8, 15, 46)
 
-[node name="Hang23" type="Sprite2D" parent="Hanging" unique_id=1833204091]
+[node name="Hang23" type="Sprite2D" parent="Hanging" unique_id=51959575]
 position = Vector2(190, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(56, 8, 29, 48)
 
-[node name="Hang24" type="Sprite2D" parent="Hanging" unique_id=64597106]
+[node name="Hang24" type="Sprite2D" parent="Hanging" unique_id=2117858271]
 position = Vector2(242, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(164, 94, 18, 26)
 
-[node name="Hang25" type="Sprite2D" parent="Hanging" unique_id=234367908]
+[node name="Hang25" type="Sprite2D" parent="Hanging" unique_id=2017763632]
 position = Vector2(399, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(56, 8, 29, 48)
 
-[node name="Hang26" type="Sprite2D" parent="Hanging" unique_id=1118075876]
+[node name="Hang26" type="Sprite2D" parent="Hanging" unique_id=886995571]
 position = Vector2(451, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(164, 94, 18, 26)
 
-[node name="Hang27" type="Sprite2D" parent="Hanging" unique_id=1819232512]
+[node name="Hang27" type="Sprite2D" parent="Hanging" unique_id=696830829]
 position = Vector2(465, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(360, 8, 16, 111)
 
-[node name="Hang28" type="Sprite2D" parent="Hanging" unique_id=108469780]
+[node name="Hang28" type="Sprite2D" parent="Hanging" unique_id=2028930229]
 position = Vector2(514, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 99, 12, 11)
 
-[node name="Hang29" type="Sprite2D" parent="Hanging" unique_id=876497529]
+[node name="Hang29" type="Sprite2D" parent="Hanging" unique_id=1803988749]
 position = Vector2(637, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(257, 8, 22, 69)
 
-[node name="Hang30" type="Sprite2D" parent="Hanging" unique_id=459461401]
+[node name="Hang30" type="Sprite2D" parent="Hanging" unique_id=1052297222]
 position = Vector2(674, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(316, 8, 16, 57)
 
-[node name="Hang31" type="Sprite2D" parent="Hanging" unique_id=1799529881]
+[node name="Hang31" type="Sprite2D" parent="Hanging" unique_id=36933199]
 position = Vector2(710, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(88, 99, 12, 11)
 
-[node name="Hang32" type="Sprite2D" parent="Hanging" unique_id=1917143347]
+[node name="Hang32" type="Sprite2D" parent="Hanging" unique_id=997558178]
 position = Vector2(830, 173)
 texture = ExtResource("34_wvgjp")
 centered = false
 region_enabled = true
 region_rect = Rect2(56, 8, 29, 48)
 
-[node name="FloorMid" type="Node2D" parent="." unique_id=1802285511]
+[node name="FloorMid" type="Node2D" parent="." unique_id=1160731720]
 z_index = 26
 
-[node name="FloorMid" type="Sprite2D" parent="FloorMid" unique_id=1427594844]
+[node name="FloorMid" type="Sprite2D" parent="FloorMid" unique_id=356551494]
 modulate = Color(0.5, 0.48, 0.6, 1)
 material = SubResource("CanvasItemMaterial_2sqo2")
 position = Vector2(624, 391)
@@ -2491,7 +2514,7 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(10, 181, 112, 46)
 
-[node name="FloorMid2" type="Sprite2D" parent="FloorMid" unique_id=1684671112]
+[node name="FloorMid2" type="Sprite2D" parent="FloorMid" unique_id=36174080]
 modulate = Color(0.5, 0.48, 0.6, 1)
 material = SubResource("CanvasItemMaterial_2sqo2")
 position = Vector2(722, 385)
@@ -2501,7 +2524,7 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(62, 245, 108, 56)
 
-[node name="FloorMid3" type="Sprite2D" parent="FloorMid" unique_id=1164716520]
+[node name="FloorMid3" type="Sprite2D" parent="FloorMid" unique_id=1983409504]
 modulate = Color(0.5, 0.48, 0.6, 1)
 material = SubResource("CanvasItemMaterial_2sqo2")
 position = Vector2(754, 385)
@@ -2511,59 +2534,59 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(62, 245, 108, 56)
 
-[node name="Tops" type="Node2D" parent="." unique_id=224475716]
+[node name="Tops" type="Node2D" parent="." unique_id=129329892]
 z_index = 3
 
-[node name="Top" type="Sprite2D" parent="Tops" unique_id=1429805175]
+[node name="Top" type="Sprite2D" parent="Tops" unique_id=2121155197]
 position = Vector2(225, 97)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(25, 49, 47, 16)
 
-[node name="Top2" type="Sprite2D" parent="Tops" unique_id=1342466251]
+[node name="Top2" type="Sprite2D" parent="Tops" unique_id=1377262526]
 position = Vector2(805, 98)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(205, 51, 38, 15)
 
-[node name="Top3" type="Sprite2D" parent="Tops" unique_id=1847415188]
+[node name="Top3" type="Sprite2D" parent="Tops" unique_id=1732142746]
 position = Vector2(833, 97)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(25, 49, 47, 16)
 
-[node name="Top4" type="Sprite2D" parent="Tops" unique_id=1450938624]
+[node name="Top4" type="Sprite2D" parent="Tops" unique_id=2144150045]
 position = Vector2(149, 108)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(157, 18, 38, 21)
 
-[node name="Top5" type="Sprite2D" parent="Tops" unique_id=1831799379]
+[node name="Top5" type="Sprite2D" parent="Tops" unique_id=46884999]
 position = Vector2(433, 113)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(25, 49, 47, 16)
 
-[node name="Top6" type="Sprite2D" parent="Tops" unique_id=383413197]
+[node name="Top6" type="Sprite2D" parent="Tops" unique_id=768975851]
 position = Vector2(517, 124)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(157, 18, 38, 21)
 
-[node name="Top7" type="Sprite2D" parent="Tops" unique_id=626342514]
+[node name="Top7" type="Sprite2D" parent="Tops" unique_id=151856761]
 position = Vector2(586, 130)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(282, 24, 28, 15)
 
-[node name="Top8" type="Sprite2D" parent="Tops" unique_id=1798808499]
+[node name="Top8" type="Sprite2D" parent="Tops" unique_id=1989560114]
 position = Vector2(634, 134)
 texture = ExtResource("36_iy6hr")
 centered = false
@@ -2571,21 +2594,21 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(328, 28, 28, 11)
 
-[node name="Top9" type="Sprite2D" parent="Tops" unique_id=1852407814]
+[node name="Top9" type="Sprite2D" parent="Tops" unique_id=208971507]
 position = Vector2(437, 396)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(157, 18, 38, 21)
 
-[node name="Top10" type="Sprite2D" parent="Tops" unique_id=893967672]
+[node name="Top10" type="Sprite2D" parent="Tops" unique_id=1134977656]
 position = Vector2(588, 384)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(27, 6, 57, 33)
 
-[node name="Top11" type="Sprite2D" parent="Tops" unique_id=263032969]
+[node name="Top11" type="Sprite2D" parent="Tops" unique_id=1823359067]
 position = Vector2(803, 404)
 texture = ExtResource("36_iy6hr")
 centered = false
@@ -2593,17 +2616,17 @@ flip_h = true
 region_enabled = true
 region_rect = Rect2(189, 107, 43, 13)
 
-[node name="Top12" type="Sprite2D" parent="Tops" unique_id=1778956611]
+[node name="Top12" type="Sprite2D" parent="Tops" unique_id=1702670931]
 position = Vector2(321, 417)
 texture = ExtResource("36_iy6hr")
 centered = false
 region_enabled = true
 region_rect = Rect2(25, 49, 47, 16)
 
-[node name="FloorNear" type="Node2D" parent="." unique_id=1377258885]
+[node name="FloorNear" type="Node2D" parent="." unique_id=929630189]
 z_index = 27
 
-[node name="FloorNear" type="Sprite2D" parent="FloorNear" unique_id=224248054]
+[node name="FloorNear" type="Sprite2D" parent="FloorNear" unique_id=1630429003]
 modulate = Color(0.04, 0.03, 0.06, 1)
 material = SubResource("CanvasItemMaterial_2sqo2")
 position = Vector2(53, 402)
@@ -2612,7 +2635,7 @@ centered = false
 region_enabled = true
 region_rect = Rect2(592, 190, 167, 39)
 
-[node name="DeepFog" type="ColorRect" parent="." unique_id=1484976645]
+[node name="DeepFog" type="ColorRect" parent="." unique_id=1473088667]
 z_index = 1
 material = SubResource("ShaderMaterial_g16gs")
 offset_top = 244.8
@@ -2620,7 +2643,7 @@ offset_right = 928.0
 offset_bottom = 571.2
 mouse_filter = 2
 
-[node name="FloorFog0" type="ColorRect" parent="." unique_id=907721901]
+[node name="FloorFog0" type="ColorRect" parent="." unique_id=1555845657]
 z_index = 3
 material = SubResource("ShaderMaterial_t0xkd")
 offset_left = -24.0
@@ -2629,7 +2652,7 @@ offset_right = 328.0
 offset_bottom = 6.3999977
 mouse_filter = 2
 
-[node name="FloorFogFront0" type="ColorRect" parent="." unique_id=1789978146]
+[node name="FloorFogFront0" type="ColorRect" parent="." unique_id=544634954]
 z_index = 12
 material = SubResource("ShaderMaterial_5eads")
 offset_left = -24.0
@@ -2638,7 +2661,7 @@ offset_right = 328.0
 offset_bottom = 9.6
 mouse_filter = 2
 
-[node name="FloorFog1" type="ColorRect" parent="." unique_id=263114844]
+[node name="FloorFog1" type="ColorRect" parent="." unique_id=85974968]
 z_index = 3
 material = SubResource("ShaderMaterial_c66m7")
 offset_left = 328.0
@@ -2647,7 +2670,7 @@ offset_right = 952.0
 offset_bottom = 6.3999977
 mouse_filter = 2
 
-[node name="FloorFogFront1" type="ColorRect" parent="." unique_id=1101510602]
+[node name="FloorFogFront1" type="ColorRect" parent="." unique_id=1696509376]
 z_index = 12
 material = SubResource("ShaderMaterial_k6pd7")
 offset_left = 328.0
@@ -2656,7 +2679,7 @@ offset_right = 952.0
 offset_bottom = 9.6
 mouse_filter = 2
 
-[node name="FloorFog2" type="ColorRect" parent="." unique_id=1230571455]
+[node name="FloorFog2" type="ColorRect" parent="." unique_id=1764101388]
 z_index = 3
 material = SubResource("ShaderMaterial_ue1t8")
 offset_left = 200.0
@@ -2665,7 +2688,7 @@ offset_right = 328.0
 offset_bottom = 118.399994
 mouse_filter = 2
 
-[node name="FloorFogFront2" type="ColorRect" parent="." unique_id=1324161350]
+[node name="FloorFogFront2" type="ColorRect" parent="." unique_id=6724303]
 z_index = 12
 material = SubResource("ShaderMaterial_f11ht")
 offset_left = 200.0
@@ -2674,7 +2697,7 @@ offset_right = 328.0
 offset_bottom = 121.6
 mouse_filter = 2
 
-[node name="FloorFog3" type="ColorRect" parent="." unique_id=346771150]
+[node name="FloorFog3" type="ColorRect" parent="." unique_id=1258811844]
 z_index = 3
 material = SubResource("ShaderMaterial_r60hl")
 offset_left = 776.0
@@ -2683,7 +2706,7 @@ offset_right = 952.0
 offset_bottom = 118.399994
 mouse_filter = 2
 
-[node name="FloorFogFront3" type="ColorRect" parent="." unique_id=433225033]
+[node name="FloorFogFront3" type="ColorRect" parent="." unique_id=958508031]
 z_index = 12
 material = SubResource("ShaderMaterial_nsudb")
 offset_left = 776.0
@@ -2692,7 +2715,7 @@ offset_right = 952.0
 offset_bottom = 121.6
 mouse_filter = 2
 
-[node name="FloorFog4" type="ColorRect" parent="." unique_id=1459648804]
+[node name="FloorFog4" type="ColorRect" parent="." unique_id=155019302]
 z_index = 3
 material = SubResource("ShaderMaterial_ltqlp")
 offset_left = -24.0
@@ -2701,7 +2724,7 @@ offset_right = 248.0
 offset_bottom = 134.4
 mouse_filter = 2
 
-[node name="FloorFogFront4" type="ColorRect" parent="." unique_id=1602337913]
+[node name="FloorFogFront4" type="ColorRect" parent="." unique_id=1691080873]
 z_index = 12
 material = SubResource("ShaderMaterial_h0n5b")
 offset_left = -24.0
@@ -2710,7 +2733,7 @@ offset_right = 248.0
 offset_bottom = 137.6
 mouse_filter = 2
 
-[node name="FloorFog5" type="ColorRect" parent="." unique_id=133026081]
+[node name="FloorFog5" type="ColorRect" parent="." unique_id=1519040475]
 z_index = 3
 material = SubResource("ShaderMaterial_rrt77")
 offset_left = 328.0
@@ -2719,7 +2742,7 @@ offset_right = 488.0
 offset_bottom = 134.4
 mouse_filter = 2
 
-[node name="FloorFogFront5" type="ColorRect" parent="." unique_id=1823713600]
+[node name="FloorFogFront5" type="ColorRect" parent="." unique_id=1863804323]
 z_index = 12
 material = SubResource("ShaderMaterial_0brp7")
 offset_left = 328.0
@@ -2728,7 +2751,7 @@ offset_right = 488.0
 offset_bottom = 137.6
 mouse_filter = 2
 
-[node name="FloorFog6" type="ColorRect" parent="." unique_id=1176738802]
+[node name="FloorFog6" type="ColorRect" parent="." unique_id=1880267288]
 z_index = 3
 material = SubResource("ShaderMaterial_ru1aq")
 offset_left = 440.0
@@ -2737,7 +2760,7 @@ offset_right = 760.0
 offset_bottom = 150.4
 mouse_filter = 2
 
-[node name="FloorFogFront6" type="ColorRect" parent="." unique_id=972610986]
+[node name="FloorFogFront6" type="ColorRect" parent="." unique_id=1998820341]
 z_index = 12
 material = SubResource("ShaderMaterial_7v6t8")
 offset_left = 440.0
@@ -2746,7 +2769,7 @@ offset_right = 760.0
 offset_bottom = 153.6
 mouse_filter = 2
 
-[node name="FloorFog7" type="ColorRect" parent="." unique_id=881550501]
+[node name="FloorFog7" type="ColorRect" parent="." unique_id=1728623441]
 z_index = 3
 material = SubResource("ShaderMaterial_wv77o")
 offset_left = -24.0
@@ -2755,7 +2778,7 @@ offset_right = 120.0
 offset_bottom = 262.4
 mouse_filter = 2
 
-[node name="FloorFogFront7" type="ColorRect" parent="." unique_id=1149463983]
+[node name="FloorFogFront7" type="ColorRect" parent="." unique_id=454883171]
 z_index = 12
 material = SubResource("ShaderMaterial_87d7m")
 offset_left = -24.0
@@ -2764,7 +2787,7 @@ offset_right = 120.0
 offset_bottom = 265.6
 mouse_filter = 2
 
-[node name="FloorFog8" type="ColorRect" parent="." unique_id=1950074118]
+[node name="FloorFog8" type="ColorRect" parent="." unique_id=1997281035]
 z_index = 3
 material = SubResource("ShaderMaterial_5yo3u")
 offset_left = 184.0
@@ -2773,7 +2796,7 @@ offset_right = 472.0
 offset_bottom = 278.4
 mouse_filter = 2
 
-[node name="FloorFogFront8" type="ColorRect" parent="." unique_id=1127110123]
+[node name="FloorFogFront8" type="ColorRect" parent="." unique_id=1715258454]
 z_index = 12
 material = SubResource("ShaderMaterial_v1yrw")
 offset_left = 184.0
@@ -2782,7 +2805,7 @@ offset_right = 472.0
 offset_bottom = 281.6
 mouse_filter = 2
 
-[node name="FloorFog9" type="ColorRect" parent="." unique_id=1106601298]
+[node name="FloorFog9" type="ColorRect" parent="." unique_id=1520460552]
 z_index = 3
 material = SubResource("ShaderMaterial_26141")
 offset_left = 632.0
@@ -2791,7 +2814,7 @@ offset_right = 776.0
 offset_bottom = 294.4
 mouse_filter = 2
 
-[node name="FloorFogFront9" type="ColorRect" parent="." unique_id=608913841]
+[node name="FloorFogFront9" type="ColorRect" parent="." unique_id=1405426202]
 z_index = 12
 material = SubResource("ShaderMaterial_ia6va")
 offset_left = 632.0
@@ -2800,7 +2823,7 @@ offset_right = 776.0
 offset_bottom = 297.6
 mouse_filter = 2
 
-[node name="FloorFog10" type="ColorRect" parent="." unique_id=1254810234]
+[node name="FloorFog10" type="ColorRect" parent="." unique_id=100046341]
 z_index = 3
 material = SubResource("ShaderMaterial_6fp3s")
 offset_left = -24.0
@@ -2809,7 +2832,7 @@ offset_right = 264.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront10" type="ColorRect" parent="." unique_id=1005078365]
+[node name="FloorFogFront10" type="ColorRect" parent="." unique_id=1869989582]
 z_index = 12
 material = SubResource("ShaderMaterial_hm5ah")
 offset_left = -24.0
@@ -2818,7 +2841,7 @@ offset_right = 264.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog11" type="ColorRect" parent="." unique_id=1115312209]
+[node name="FloorFog11" type="ColorRect" parent="." unique_id=1059640230]
 z_index = 3
 material = SubResource("ShaderMaterial_t8fd4")
 offset_left = 376.0
@@ -2827,7 +2850,7 @@ offset_right = 488.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront11" type="ColorRect" parent="." unique_id=1291035377]
+[node name="FloorFogFront11" type="ColorRect" parent="." unique_id=1307366900]
 z_index = 12
 material = SubResource("ShaderMaterial_mkywh")
 offset_left = 376.0
@@ -2836,7 +2859,7 @@ offset_right = 488.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog12" type="ColorRect" parent="." unique_id=1529967305]
+[node name="FloorFog12" type="ColorRect" parent="." unique_id=1450960606]
 z_index = 3
 material = SubResource("ShaderMaterial_aw362")
 offset_left = 504.0
@@ -2845,7 +2868,7 @@ offset_right = 952.0
 offset_bottom = 422.4
 mouse_filter = 2
 
-[node name="FloorFogFront12" type="ColorRect" parent="." unique_id=462689928]
+[node name="FloorFogFront12" type="ColorRect" parent="." unique_id=734528202]
 z_index = 12
 material = SubResource("ShaderMaterial_vwjh5")
 offset_left = 504.0
@@ -2854,7 +2877,7 @@ offset_right = 952.0
 offset_bottom = 425.6
 mouse_filter = 2
 
-[node name="FloorFog13" type="ColorRect" parent="." unique_id=1472984880]
+[node name="FloorFog13" type="ColorRect" parent="." unique_id=2002859197]
 z_index = 3
 material = SubResource("ShaderMaterial_ktf4k")
 offset_left = 216.0
@@ -2863,7 +2886,7 @@ offset_right = 424.0
 offset_bottom = 438.4
 mouse_filter = 2
 
-[node name="FloorFogFront13" type="ColorRect" parent="." unique_id=2113644859]
+[node name="FloorFogFront13" type="ColorRect" parent="." unique_id=2140195540]
 z_index = 12
 material = SubResource("ShaderMaterial_wntqx")
 offset_left = 216.0
@@ -2872,7 +2895,1178 @@ offset_right = 424.0
 offset_bottom = 441.6
 mouse_filter = 2
 
-[node name="Kleo" type="CharacterBody2D" parent="." unique_id=299292702 instance=ExtResource("37_cbmh6")]
+[node name="RimLight" type="Node2D" parent="." unique_id=1944549464]
+z_index = 6
+
+[node name="Rim" type="ColorRect" parent="RimLight" unique_id=1841159558]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 224.0
+offset_top = 112.0
+offset_right = 304.0
+offset_bottom = 113.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit" type="ColorRect" parent="RimLight" unique_id=1257624961]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 224.0
+offset_top = 112.0
+offset_right = 304.0
+offset_bottom = 113.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim2" type="ColorRect" parent="RimLight" unique_id=1058767399]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 224.0
+offset_top = 113.0
+offset_right = 304.0
+offset_bottom = 114.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit2" type="ColorRect" parent="RimLight" unique_id=1771965876]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 224.0
+offset_top = 113.0
+offset_right = 304.0
+offset_bottom = 114.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim3" type="ColorRect" parent="RimLight" unique_id=1682015012]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 224.0
+offset_top = 114.0
+offset_right = 304.0
+offset_bottom = 115.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit3" type="ColorRect" parent="RimLight" unique_id=1967742352]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 224.0
+offset_top = 114.0
+offset_right = 304.0
+offset_bottom = 115.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim4" type="ColorRect" parent="RimLight" unique_id=1430779021]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 800.0
+offset_top = 112.0
+offset_right = 928.0
+offset_bottom = 113.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit4" type="ColorRect" parent="RimLight" unique_id=505537753]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 800.0
+offset_top = 112.0
+offset_right = 928.0
+offset_bottom = 113.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim5" type="ColorRect" parent="RimLight" unique_id=606463434]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 800.0
+offset_top = 113.0
+offset_right = 928.0
+offset_bottom = 114.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit5" type="ColorRect" parent="RimLight" unique_id=1231870356]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 800.0
+offset_top = 113.0
+offset_right = 928.0
+offset_bottom = 114.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim6" type="ColorRect" parent="RimLight" unique_id=8418926]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 800.0
+offset_top = 114.0
+offset_right = 928.0
+offset_bottom = 115.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit6" type="ColorRect" parent="RimLight" unique_id=1804987006]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 800.0
+offset_top = 114.0
+offset_right = 928.0
+offset_bottom = 115.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim7" type="ColorRect" parent="RimLight" unique_id=428847990]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 128.0
+offset_right = 224.0
+offset_bottom = 129.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit7" type="ColorRect" parent="RimLight" unique_id=1612123190]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 128.0
+offset_right = 224.0
+offset_bottom = 129.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim8" type="ColorRect" parent="RimLight" unique_id=1684412282]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 129.0
+offset_right = 224.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit8" type="ColorRect" parent="RimLight" unique_id=731138981]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 129.0
+offset_right = 224.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim9" type="ColorRect" parent="RimLight" unique_id=543465912]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 130.0
+offset_right = 224.0
+offset_bottom = 131.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit9" type="ColorRect" parent="RimLight" unique_id=1277598436]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 130.0
+offset_right = 224.0
+offset_bottom = 131.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim10" type="ColorRect" parent="RimLight" unique_id=1997635101]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 128.0
+offset_right = 464.0
+offset_bottom = 129.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit10" type="ColorRect" parent="RimLight" unique_id=1261492885]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 128.0
+offset_right = 464.0
+offset_bottom = 129.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim11" type="ColorRect" parent="RimLight" unique_id=339521970]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 129.0
+offset_right = 464.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit11" type="ColorRect" parent="RimLight" unique_id=429973436]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 129.0
+offset_right = 464.0
+offset_bottom = 130.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim12" type="ColorRect" parent="RimLight" unique_id=77859856]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 130.0
+offset_right = 464.0
+offset_bottom = 131.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit12" type="ColorRect" parent="RimLight" unique_id=437331739]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 130.0
+offset_right = 464.0
+offset_bottom = 131.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim13" type="ColorRect" parent="RimLight" unique_id=69642750]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 144.0
+offset_right = 736.0
+offset_bottom = 145.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit13" type="ColorRect" parent="RimLight" unique_id=1304447332]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 144.0
+offset_right = 736.0
+offset_bottom = 145.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim14" type="ColorRect" parent="RimLight" unique_id=1134484653]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 145.0
+offset_right = 736.0
+offset_bottom = 146.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit14" type="ColorRect" parent="RimLight" unique_id=737716963]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 145.0
+offset_right = 736.0
+offset_bottom = 146.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim15" type="ColorRect" parent="RimLight" unique_id=1773027291]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 146.0
+offset_right = 736.0
+offset_bottom = 147.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit15" type="ColorRect" parent="RimLight" unique_id=676980381]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 146.0
+offset_right = 736.0
+offset_bottom = 147.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim16" type="ColorRect" parent="RimLight" unique_id=1245600266]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 752.0
+offset_top = 208.0
+offset_right = 784.0
+offset_bottom = 209.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit16" type="ColorRect" parent="RimLight" unique_id=1863442945]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 752.0
+offset_top = 208.0
+offset_right = 784.0
+offset_bottom = 209.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim17" type="ColorRect" parent="RimLight" unique_id=1214006548]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 752.0
+offset_top = 209.0
+offset_right = 784.0
+offset_bottom = 210.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit17" type="ColorRect" parent="RimLight" unique_id=496932345]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 752.0
+offset_top = 209.0
+offset_right = 784.0
+offset_bottom = 210.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim18" type="ColorRect" parent="RimLight" unique_id=122389975]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 752.0
+offset_top = 210.0
+offset_right = 784.0
+offset_bottom = 211.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit18" type="ColorRect" parent="RimLight" unique_id=1217480541]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 752.0
+offset_top = 210.0
+offset_right = 784.0
+offset_bottom = 211.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim19" type="ColorRect" parent="RimLight" unique_id=524329293]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 256.0
+offset_right = 96.0
+offset_bottom = 257.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit19" type="ColorRect" parent="RimLight" unique_id=802511509]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 256.0
+offset_right = 96.0
+offset_bottom = 257.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim20" type="ColorRect" parent="RimLight" unique_id=633802208]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 257.0
+offset_right = 96.0
+offset_bottom = 258.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit20" type="ColorRect" parent="RimLight" unique_id=1051939942]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 257.0
+offset_right = 96.0
+offset_bottom = 258.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim21" type="ColorRect" parent="RimLight" unique_id=479925633]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 258.0
+offset_right = 96.0
+offset_bottom = 259.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit21" type="ColorRect" parent="RimLight" unique_id=1465008569]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 258.0
+offset_right = 96.0
+offset_bottom = 259.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim22" type="ColorRect" parent="RimLight" unique_id=1849538726]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 592.0
+offset_top = 256.0
+offset_right = 624.0
+offset_bottom = 257.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit22" type="ColorRect" parent="RimLight" unique_id=974529857]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 592.0
+offset_top = 256.0
+offset_right = 624.0
+offset_bottom = 257.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim23" type="ColorRect" parent="RimLight" unique_id=1833577794]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 592.0
+offset_top = 257.0
+offset_right = 624.0
+offset_bottom = 258.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit23" type="ColorRect" parent="RimLight" unique_id=1775472397]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 592.0
+offset_top = 257.0
+offset_right = 624.0
+offset_bottom = 258.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim24" type="ColorRect" parent="RimLight" unique_id=174862601]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 592.0
+offset_top = 258.0
+offset_right = 624.0
+offset_bottom = 259.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit24" type="ColorRect" parent="RimLight" unique_id=1141385030]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 592.0
+offset_top = 258.0
+offset_right = 624.0
+offset_bottom = 259.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim25" type="ColorRect" parent="RimLight" unique_id=2080320709]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 208.0
+offset_top = 272.0
+offset_right = 448.0
+offset_bottom = 273.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit25" type="ColorRect" parent="RimLight" unique_id=8183544]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 208.0
+offset_top = 272.0
+offset_right = 448.0
+offset_bottom = 273.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim26" type="ColorRect" parent="RimLight" unique_id=436590292]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 208.0
+offset_top = 273.0
+offset_right = 448.0
+offset_bottom = 274.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit26" type="ColorRect" parent="RimLight" unique_id=215435245]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 208.0
+offset_top = 273.0
+offset_right = 448.0
+offset_bottom = 274.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim27" type="ColorRect" parent="RimLight" unique_id=913730045]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 208.0
+offset_top = 274.0
+offset_right = 448.0
+offset_bottom = 275.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit27" type="ColorRect" parent="RimLight" unique_id=1234258864]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 208.0
+offset_top = 274.0
+offset_right = 448.0
+offset_bottom = 275.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim28" type="ColorRect" parent="RimLight" unique_id=976720139]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 544.0
+offset_top = 272.0
+offset_right = 576.0
+offset_bottom = 273.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit28" type="ColorRect" parent="RimLight" unique_id=555644576]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 544.0
+offset_top = 272.0
+offset_right = 576.0
+offset_bottom = 273.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim29" type="ColorRect" parent="RimLight" unique_id=2098831906]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 544.0
+offset_top = 273.0
+offset_right = 576.0
+offset_bottom = 274.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit29" type="ColorRect" parent="RimLight" unique_id=554385758]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 544.0
+offset_top = 273.0
+offset_right = 576.0
+offset_bottom = 274.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim30" type="ColorRect" parent="RimLight" unique_id=13275306]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 544.0
+offset_top = 274.0
+offset_right = 576.0
+offset_bottom = 275.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit30" type="ColorRect" parent="RimLight" unique_id=128727427]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 544.0
+offset_top = 274.0
+offset_right = 576.0
+offset_bottom = 275.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim31" type="ColorRect" parent="RimLight" unique_id=1146999379]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 496.0
+offset_top = 288.0
+offset_right = 528.0
+offset_bottom = 289.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit31" type="ColorRect" parent="RimLight" unique_id=1118052651]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 496.0
+offset_top = 288.0
+offset_right = 528.0
+offset_bottom = 289.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim32" type="ColorRect" parent="RimLight" unique_id=1731051359]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 496.0
+offset_top = 289.0
+offset_right = 528.0
+offset_bottom = 290.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit32" type="ColorRect" parent="RimLight" unique_id=1186910735]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 496.0
+offset_top = 289.0
+offset_right = 528.0
+offset_bottom = 290.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim33" type="ColorRect" parent="RimLight" unique_id=141847054]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 496.0
+offset_top = 290.0
+offset_right = 528.0
+offset_bottom = 291.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit33" type="ColorRect" parent="RimLight" unique_id=687116708]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 496.0
+offset_top = 290.0
+offset_right = 528.0
+offset_bottom = 291.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim34" type="ColorRect" parent="RimLight" unique_id=1342343145]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 656.0
+offset_top = 288.0
+offset_right = 752.0
+offset_bottom = 289.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit34" type="ColorRect" parent="RimLight" unique_id=1642202374]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 656.0
+offset_top = 288.0
+offset_right = 752.0
+offset_bottom = 289.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim35" type="ColorRect" parent="RimLight" unique_id=1607461977]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 656.0
+offset_top = 289.0
+offset_right = 752.0
+offset_bottom = 290.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit35" type="ColorRect" parent="RimLight" unique_id=1376591076]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 656.0
+offset_top = 289.0
+offset_right = 752.0
+offset_bottom = 290.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim36" type="ColorRect" parent="RimLight" unique_id=463592238]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 656.0
+offset_top = 290.0
+offset_right = 752.0
+offset_bottom = 291.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit36" type="ColorRect" parent="RimLight" unique_id=848025293]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 656.0
+offset_top = 290.0
+offset_right = 752.0
+offset_bottom = 291.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim37" type="ColorRect" parent="RimLight" unique_id=966820534]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 112.0
+offset_top = 320.0
+offset_right = 144.0
+offset_bottom = 321.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit37" type="ColorRect" parent="RimLight" unique_id=436932643]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 112.0
+offset_top = 320.0
+offset_right = 144.0
+offset_bottom = 321.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim38" type="ColorRect" parent="RimLight" unique_id=1810082750]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 112.0
+offset_top = 321.0
+offset_right = 144.0
+offset_bottom = 322.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit38" type="ColorRect" parent="RimLight" unique_id=979533270]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 112.0
+offset_top = 321.0
+offset_right = 144.0
+offset_bottom = 322.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim39" type="ColorRect" parent="RimLight" unique_id=769839006]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 112.0
+offset_top = 322.0
+offset_right = 144.0
+offset_bottom = 323.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit39" type="ColorRect" parent="RimLight" unique_id=1569665903]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 112.0
+offset_top = 322.0
+offset_right = 144.0
+offset_bottom = 323.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim40" type="ColorRect" parent="RimLight" unique_id=675684081]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 816.0
+offset_top = 336.0
+offset_right = 864.0
+offset_bottom = 337.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit40" type="ColorRect" parent="RimLight" unique_id=688127204]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 816.0
+offset_top = 336.0
+offset_right = 864.0
+offset_bottom = 337.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim41" type="ColorRect" parent="RimLight" unique_id=2134261629]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 816.0
+offset_top = 337.0
+offset_right = 864.0
+offset_bottom = 338.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit41" type="ColorRect" parent="RimLight" unique_id=520729017]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 816.0
+offset_top = 337.0
+offset_right = 864.0
+offset_bottom = 338.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim42" type="ColorRect" parent="RimLight" unique_id=57504752]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 816.0
+offset_top = 338.0
+offset_right = 864.0
+offset_bottom = 339.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit42" type="ColorRect" parent="RimLight" unique_id=1305045841]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 816.0
+offset_top = 338.0
+offset_right = 864.0
+offset_bottom = 339.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim43" type="ColorRect" parent="RimLight" unique_id=1050677632]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 160.0
+offset_top = 352.0
+offset_right = 192.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit43" type="ColorRect" parent="RimLight" unique_id=612986288]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 160.0
+offset_top = 352.0
+offset_right = 192.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim44" type="ColorRect" parent="RimLight" unique_id=1384005843]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 160.0
+offset_top = 353.0
+offset_right = 192.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit44" type="ColorRect" parent="RimLight" unique_id=749809100]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 160.0
+offset_top = 353.0
+offset_right = 192.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim45" type="ColorRect" parent="RimLight" unique_id=1304609999]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 160.0
+offset_top = 354.0
+offset_right = 192.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit45" type="ColorRect" parent="RimLight" unique_id=472435852]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 160.0
+offset_top = 354.0
+offset_right = 192.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim46" type="ColorRect" parent="RimLight" unique_id=257361404]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 352.0
+offset_right = 384.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit46" type="ColorRect" parent="RimLight" unique_id=1127889367]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 352.0
+offset_right = 384.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim47" type="ColorRect" parent="RimLight" unique_id=538121627]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 353.0
+offset_right = 384.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit47" type="ColorRect" parent="RimLight" unique_id=1437182802]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 353.0
+offset_right = 384.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim48" type="ColorRect" parent="RimLight" unique_id=695750676]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 352.0
+offset_top = 354.0
+offset_right = 384.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit48" type="ColorRect" parent="RimLight" unique_id=1378086778]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 352.0
+offset_top = 354.0
+offset_right = 384.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim49" type="ColorRect" parent="RimLight" unique_id=920118491]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 352.0
+offset_right = 496.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit49" type="ColorRect" parent="RimLight" unique_id=1138930348]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 352.0
+offset_right = 496.0
+offset_bottom = 353.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim50" type="ColorRect" parent="RimLight" unique_id=1485745202]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 353.0
+offset_right = 496.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit50" type="ColorRect" parent="RimLight" unique_id=2107248994]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 353.0
+offset_right = 496.0
+offset_bottom = 354.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim51" type="ColorRect" parent="RimLight" unique_id=844872306]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 464.0
+offset_top = 354.0
+offset_right = 496.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit51" type="ColorRect" parent="RimLight" unique_id=1752125198]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 464.0
+offset_top = 354.0
+offset_right = 496.0
+offset_bottom = 355.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim52" type="ColorRect" parent="RimLight" unique_id=373021449]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 416.0
+offset_right = 240.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit52" type="ColorRect" parent="RimLight" unique_id=1688015076]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 416.0
+offset_right = 240.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim53" type="ColorRect" parent="RimLight" unique_id=316900652]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 417.0
+offset_right = 240.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit53" type="ColorRect" parent="RimLight" unique_id=114166536]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 417.0
+offset_right = 240.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim54" type="ColorRect" parent="RimLight" unique_id=1699970185]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_top = 418.0
+offset_right = 240.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit54" type="ColorRect" parent="RimLight" unique_id=153580247]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_top = 418.0
+offset_right = 240.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim55" type="ColorRect" parent="RimLight" unique_id=2036118558]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 400.0
+offset_top = 416.0
+offset_right = 464.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit55" type="ColorRect" parent="RimLight" unique_id=855048203]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 400.0
+offset_top = 416.0
+offset_right = 464.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim56" type="ColorRect" parent="RimLight" unique_id=1089280361]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 400.0
+offset_top = 417.0
+offset_right = 464.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit56" type="ColorRect" parent="RimLight" unique_id=74548281]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 400.0
+offset_top = 417.0
+offset_right = 464.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim57" type="ColorRect" parent="RimLight" unique_id=385784442]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 400.0
+offset_top = 418.0
+offset_right = 464.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit57" type="ColorRect" parent="RimLight" unique_id=1805029802]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 400.0
+offset_top = 418.0
+offset_right = 464.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim58" type="ColorRect" parent="RimLight" unique_id=646338530]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 528.0
+offset_top = 416.0
+offset_right = 928.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit58" type="ColorRect" parent="RimLight" unique_id=1862676233]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 528.0
+offset_top = 416.0
+offset_right = 928.0
+offset_bottom = 417.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim59" type="ColorRect" parent="RimLight" unique_id=892279826]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 528.0
+offset_top = 417.0
+offset_right = 928.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit59" type="ColorRect" parent="RimLight" unique_id=44490773]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 528.0
+offset_top = 417.0
+offset_right = 928.0
+offset_bottom = 418.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim60" type="ColorRect" parent="RimLight" unique_id=1659809832]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 528.0
+offset_top = 418.0
+offset_right = 928.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit60" type="ColorRect" parent="RimLight" unique_id=679301872]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 528.0
+offset_top = 418.0
+offset_right = 928.0
+offset_bottom = 419.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="Rim61" type="ColorRect" parent="RimLight" unique_id=1813513296]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 240.0
+offset_top = 432.0
+offset_right = 400.0
+offset_bottom = 433.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.16)
+
+[node name="RimLit61" type="ColorRect" parent="RimLight" unique_id=1828005262]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 240.0
+offset_top = 432.0
+offset_right = 400.0
+offset_bottom = 433.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.75)
+
+[node name="Rim62" type="ColorRect" parent="RimLight" unique_id=167289338]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 240.0
+offset_top = 433.0
+offset_right = 400.0
+offset_bottom = 434.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.08)
+
+[node name="RimLit62" type="ColorRect" parent="RimLight" unique_id=1066200605]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 240.0
+offset_top = 433.0
+offset_right = 400.0
+offset_bottom = 434.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.4)
+
+[node name="Rim63" type="ColorRect" parent="RimLight" unique_id=1211973]
+material = SubResource("CanvasItemMaterial_7ii0p")
+offset_left = 240.0
+offset_top = 434.0
+offset_right = 400.0
+offset_bottom = 435.0
+mouse_filter = 2
+color = Color(1, 0.72, 0.42, 0.03)
+
+[node name="RimLit63" type="ColorRect" parent="RimLight" unique_id=356795206]
+material = SubResource("CanvasItemMaterial_rkebu")
+offset_left = 240.0
+offset_top = 434.0
+offset_right = 400.0
+offset_bottom = 435.0
+mouse_filter = 2
+color = Color(1, 0.84, 0.58, 0.15)
+
+[node name="WarmGlow" type="Node2D" parent="." unique_id=1018246677]
+z_index = 7
+
+[node name="Halo" type="Sprite2D" parent="WarmGlow" unique_id=284052783]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(297, 255)
+scale = Vector2(0.5282812, 0.5282812)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo2" type="Sprite2D" parent="WarmGlow" unique_id=405386904]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(387, 255)
+scale = Vector2(0.5282812, 0.5282812)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo3" type="Sprite2D" parent="WarmGlow" unique_id=1883012158]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(328, 234)
+scale = Vector2(0.4375, 0.4375)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo4" type="Sprite2D" parent="WarmGlow" unique_id=2129276280]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(72, 78)
+scale = Vector2(1.00625, 1.00625)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo5" type="Sprite2D" parent="WarmGlow" unique_id=1435955236]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(860, 62)
+scale = Vector2(1.00625, 1.00625)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo6" type="Sprite2D" parent="WarmGlow" unique_id=973964121]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(72, 366)
+scale = Vector2(1.00625, 1.00625)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Halo7" type="Sprite2D" parent="WarmGlow" unique_id=1844951214]
+modulate = Color(0.95, 0.55, 0.22, 0.55)
+material = SubResource("CanvasItemMaterial_bxil2")
+position = Vector2(860, 366)
+scale = Vector2(1.00625, 1.00625)
+texture = SubResource("GradientTexture2D_wfc0y")
+
+[node name="Kleo" type="CharacterBody2D" parent="." unique_id=1531304287 instance=ExtResource("37_cbmh6")]
 z_index = 10
 position = Vector2(888, 112)
 collision_layer = 2
@@ -2880,15 +4074,15 @@ collision_mask = 65
 floor_snap_length = 4.0
 script = ExtResource("1_p5lty")
 
-[node name="Camera" type="Camera2D" parent="." unique_id=689591075]
+[node name="Camera" type="Camera2D" parent="." unique_id=989088441]
 position = Vector2(888, 112)
 script = ExtResource("39_qklo1")
 
-[node name="Screen" type="CanvasLayer" parent="." unique_id=555830047]
+[node name="Screen" type="CanvasLayer" parent="." unique_id=797740866]
 layer = 50
 
-[node name="Vignette" type="ColorRect" parent="Screen" unique_id=1851475404]
-material = SubResource("ShaderMaterial_7ii0p")
+[node name="Vignette" type="ColorRect" parent="Screen" unique_id=367256236]
+material = SubResource("ShaderMaterial_m0dn5")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0

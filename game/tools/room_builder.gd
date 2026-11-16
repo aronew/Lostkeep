@@ -109,6 +109,10 @@ var _ch_detail := false
 ## Where the detail pass stays away from, if not the skin's skip regions (a
 ## room whose painted bands are in `skip` still wants hangings under them).
 var detail_skip = null
+## Warm light along every walking edge, as in the moody mockup (the creative
+## lead: "a little bit of light effect to the tops of the platforms"). See
+## _rim_light(). IB-05 first, for approval.
+var _rim := false
 
 
 func _use_crypt_y_stone() -> void:
@@ -430,6 +434,9 @@ func _finish() -> void:
 		_room_detail(_detail_kind == "surface")
 	if _mood:
 		_moody()
+	if _rim:
+		_rim_light()
+		_warm_glow()
 	var kleo: Node = load(KLEO_PATH).instantiate()
 	kleo.name = "Kleo"
 	_node(kleo, "Kleo", _root, false)
@@ -1348,3 +1355,112 @@ func _ch_room_detail(is_solid: Callable, skipped: Callable, hang_node: Node2D, m
 				nr.modulate = CH_NEAR_TINT
 				nr.material = unlit
 				nr.flip_h = _cellhash(c, 14) % 2 == 0
+
+
+# --- Rim light along the walking edges --------------------------------------------------------
+
+const RIM_BASE := Color(1.0, 0.72, 0.42)   # the faint warm line on every top
+const RIM_LIT := Color(1.0, 0.84, 0.58)    # brighter where a light reaches
+
+
+## Along every walking edge (a solid cell with open air over it, runs of two
+## tiles or more): a faint warm line, 3 px deep and fading down, added over the
+## stone; and a brighter one drawn only where lights reach it, so the rims glow
+## near the torches and braziers, as the mockup's do.
+func _rim_light() -> void:
+	var cells := {}
+	for layer_name in ["Solid", "Masses"]:
+		var tm := _root.get_node_or_null(layer_name) as TileMapLayer
+		if tm:
+			for c in tm.get_used_cells():
+				cells[c] = true
+	var rows := {}
+	for c in cells:
+		if not cells.has(c + Vector2i(0, -1)) and room.has_point(c + Vector2i(0, -1)):
+			if not rows.has(c.y):
+				rows[c.y] = []
+			rows[c.y].append(c.x)
+	var node := _node(Node2D.new(), "RimLight", _root) as Node2D
+	node.z_index = 6
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	var lit := CanvasItemMaterial.new()
+	lit.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	lit.light_mode = CanvasItemMaterial.LIGHT_MODE_LIGHT_ONLY
+	var keys := rows.keys()
+	keys.sort()
+	for y in keys:
+		var xs: Array = rows[y]
+		xs.sort()
+		var start: int = xs[0]
+		var prev: int = xs[0]
+		for i in range(1, xs.size() + 1):
+			if i < xs.size() and xs[i] == prev + 1:
+				prev = xs[i]
+				continue
+			if prev - start + 1 >= 2:
+				var x0 := float(start * TILE)
+				var w := float((prev - start + 1) * TILE)
+				for k in 3:
+					var base := _node(ColorRect.new(), "Rim", node) as ColorRect
+					base.position = Vector2(x0, y * TILE + k)
+					base.size = Vector2(w, 1)
+					base.color = Color(RIM_BASE.r, RIM_BASE.g, RIM_BASE.b, [0.16, 0.08, 0.03][k])
+					base.material = add
+					base.mouse_filter = Control.MOUSE_FILTER_IGNORE
+					var glow := _node(ColorRect.new(), "RimLit", node) as ColorRect
+					glow.position = Vector2(x0, y * TILE + k)
+					glow.size = Vector2(w, 1)
+					glow.color = Color(RIM_LIT.r, RIM_LIT.g, RIM_LIT.b, [0.75, 0.4, 0.15][k])
+					glow.material = lit
+					glow.mouse_filter = Control.MOUSE_FILTER_IGNORE
+			if i < xs.size():
+				start = xs[i]
+				prev = xs[i]
+
+
+# --- Warm glow round the flames --------------------------------------------------------------
+
+const GLOW_LIGHT := Color(1.0, 0.6, 0.27)   # the flames' light, toward amber
+const GLOW_HALO := Color(0.95, 0.55, 0.22)  # the halo in the air round a flame
+
+
+## The mockup's warm glow (the creative lead: "a warmer glow to the lights"):
+## every warm light turns toward amber, and gets a halo in the air round it, a
+## soft additive disc in four stepped rings (pixel art, not a smooth blur),
+## sized to the light. Glows stay off the tiles: the halo is its own sprite.
+func _warm_glow() -> void:
+	var tex := _halo_texture()
+	var node := _node(Node2D.new(), "WarmGlow", _root) as Node2D
+	node.z_index = 7
+	var add := CanvasItemMaterial.new()
+	add.blend_mode = CanvasItemMaterial.BLEND_MODE_ADD
+	add.light_mode = CanvasItemMaterial.LIGHT_MODE_UNSHADED
+	for l in _root.find_children("*", "PointLight2D", true, false):
+		var pl := l as PointLight2D
+		if pl.color.r <= pl.color.b:
+			continue
+		pl.color = GLOW_LIGHT
+		var halo := _node(Sprite2D.new(), "Halo", node) as Sprite2D
+		halo.texture = tex
+		halo.global_position = pl.global_position
+		var size := clampf(pl.texture_scale * 70.0, 28.0, 96.0)
+		halo.scale = Vector2.ONE * (size / 64.0)
+		halo.modulate = Color(GLOW_HALO.r, GLOW_HALO.g, GLOW_HALO.b, 0.55)
+		halo.material = add
+
+
+func _halo_texture() -> GradientTexture2D:
+	var g := Gradient.new()
+	g.interpolation_mode = Gradient.GRADIENT_INTERPOLATE_CONSTANT
+	g.offsets = PackedFloat32Array([0.0, 0.22, 0.45, 0.7, 0.95])
+	g.colors = PackedColorArray([Color(1, 1, 1, 0.55), Color(1, 1, 1, 0.32), Color(1, 1, 1, 0.16), Color(1, 1, 1, 0.06), Color(1, 1, 1, 0.0)])
+	var t := GradientTexture2D.new()
+	t.gradient = g
+	t.fill = GradientTexture2D.FILL_RADIAL
+	t.fill_from = Vector2(0.5, 0.5)
+	t.fill_to = Vector2(1.0, 0.5)
+	t.width = 64
+	t.height = 64
+	return t

@@ -683,7 +683,10 @@ She steps forward with every hit.
 - **IB-05 is dressed in the CH pieces** (step 1, awaiting the creative lead's
   approval before the other crypts get them): CH1 slabs for its small plates,
   CH2 corbels for its wall ledges, and `_ch_detail` (the detail pass in CH4,
-  CH5 and CH8 pieces; `detail_skip` keeps it on the CH9 galleries). Next, once
+  CH5 and CH8 pieces; `detail_skip` keeps it on the CH9 galleries). Also `_rim`
+  (in `room_builder.gd`): a warm rim light along every walking edge, brighter
+  where lights reach (`_rim_light()`), and amber halos round every flame
+  (`_warm_glow()`). Next, once
   approved: the same in IB-06 and IB-07 (whose SH4 plates the creative lead
   called weird) and IB-02, then the Keep's foundations.
 - IB-02 has no enemies yet; its long gallery and cave are shaped for them (the

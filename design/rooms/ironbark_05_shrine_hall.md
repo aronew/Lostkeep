@@ -153,3 +153,15 @@ Image: `docs/rooms/ironbark_05/ch9_steps.png`.
   Image: `docs/rooms/ironbark_05/shrine_lit.png`.
 - Validation: `check_room.py ib05` as before (coverage 100 %, no traps, all
   exits); `mode=tour` and `mode=upper` pass.
+
+## Rim light and warm glow (after the moody mockup)
+
+The creative lead: "a little bit of light effect to the tops of the platforms
+like in the mock up" and "a warmer glow to the lights". `_rim = true`:
+- `_rim_light()`: along every walking edge of two tiles or more, a faint warm
+  line 3 px deep fading down (additive), and a brighter one drawn only where
+  lights reach (light-only), so the rims glow near the flames.
+- `_warm_glow()`: every warm light turns toward amber (`GLOW_LIGHT`) and gets a
+  halo in the air round it, an additive disc in four stepped rings sized to
+  the light (its own sprite, never baked into tiles).
+Image: `docs/rooms/ironbark_05/warm_glow.png`.
