@@ -671,7 +671,10 @@ She steps forward with every hit.
   half as bright as the CY bands. Comparison: `docs/rooms/ironbark_05/ch9_vs_mockup.png`.
   Its floor step is used at every gallery step (`_ch9_step()`): only its
   face and upper floor (it is painted 18 px tall, a step is 16), on the upper
-  walking line, mirrored for steps down, upside down for ceiling steps. Its
+  walking line, mirrored for steps down, upside down for ceiling steps. Ceiling steps are
+  tinted toward the ceiling band (`CH9_CEILING_STEP_TINT`: the floor's cap is
+  painted warm and twice as bright) and cut at the next step, so the two that
+  face each other across the bulkhead (x 26 to 29) don't overlap. Its
   second piece joins a ceiling to a floor and is not used. Don't use the CH1 slab with the icy-blue
   crystal (the Prism's colour). New PNGs need `godot --headless --import`
   before a builder can load them.
